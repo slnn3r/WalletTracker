@@ -1,0 +1,99 @@
+{
+  "project_info": {
+    "project_number": "866059954529",
+    "firebase_url": "https://wallettracker-lustdxz.firebaseio.com",
+    "project_id": "wallettracker-lustdxz",
+    "storage_bucket": "wallettracker-lustdxz.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:866059954529:android:28aaf7a2842bd311",
+        "android_client_info": {
+          "package_name": "com.example.slnn3r.wallettracker"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "866059954529-470t5tuh3tqthpbnaje507im5ailvd9q.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.slnn3r.wallettracker",
+            "certificate_hash": "cd1557ad552f8d091e9ef3b57ae93e1082519d16"
+          }
+        },
+        {
+          "client_id": "866059954529-u7ki0u0si1veh1ul9slartd6ejnq0js7.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCQGW9QME80OvE41a3s2dRYLNyvROABDSk"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "866059954529-u7ki0u0si1veh1ul9slartd6ejnq0js7.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:866059954529:android:3473f968251c1aa9",
+        "android_client_info": {
+          "package_name": "com.example.slnn3r.wallettrackermvp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "866059954529-82ttru2qa8chg725pblsm7easc19kusv.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.slnn3r.wallettrackermvp",
+            "certificate_hash": "cd1557ad552f8d091e9ef3b57ae93e1082519d16"
+          }
+        },
+        {
+          "client_id": "866059954529-u7ki0u0si1veh1ul9slartd6ejnq0js7.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCQGW9QME80OvE41a3s2dRYLNyvROABDSk"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "866059954529-u7ki0u0si1veh1ul9slartd6ejnq0js7.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
