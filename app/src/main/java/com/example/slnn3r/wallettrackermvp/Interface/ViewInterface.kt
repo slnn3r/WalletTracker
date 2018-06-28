@@ -15,17 +15,17 @@ interface ViewInterface{
 
     interface LoginView{
 
-        fun loginSuccess(mainContext: Context?)
-        fun loginFail(mainContext: Context?)
+        fun loginSuccess(mainContext: Context?, successLoginMessage:String)
+        fun loginFail(mainContext: Context?, errorMessage:String)
 
-        fun displayLoginOption(mainContext:Context, fragment:FragmentActivity ,intent: Intent, REQUEST_CODE_SIGN_IN:Int)
+        fun displayLoginAccount(mainContext:Context, fragment:FragmentActivity ,intent: Intent, REQUEST_CODE_SIGN_IN:Int)
 
     }
 
     interface MenuView{
 
-        fun logoutSuccess(mainContext: Context)
-        fun logoutFail(mainContext: Context)
+        fun logoutSuccess(mainContext: Context, successLogoutMessage:String)
+        fun logoutFail(mainContext: Context, errorMessage:String)
 
     }
 

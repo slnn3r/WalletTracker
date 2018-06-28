@@ -15,10 +15,10 @@ interface PresenterInterface{
         fun loginGoogleExecute(mainContext: Context?, requestCode: Int, resultCode: Int, data: Intent)
 
         fun displayLoginFragment(mainContext:Context, fragment: FragmentActivity ,intent: Intent, REQUEST_CODE_SIGN_IN:Int)
-        fun loginGoogleStatus(mainContext: Context?, loginStatus: Boolean)
+        fun loginGoogleStatus(mainContext: Context?, loginStatus: Boolean, statusMessage:String)
 
         fun logoutGoogleExecute(mainContext: Context)
-        fun logoutGoogleStatus(mainContext: Context, logourStatus:Boolean)
+        fun logoutGoogleStatus(mainContext: Context, logourStatus:Boolean, statusMessage:String)
 
     }
     

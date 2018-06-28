@@ -103,18 +103,18 @@ class MenuActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     }
 
 
-    override fun logoutSuccess(mainContext: Context) {
+    override fun logoutSuccess(mainContext: Context, successLogoutMessage: String) {
 
 
         val myIntent = Intent(mainContext, LoginActivity::class.java)
         mainContext?.startActivity(myIntent)
-        Toast.makeText(mainContext, "Logout Success", Toast.LENGTH_LONG).show()
+        Toast.makeText(mainContext, successLogoutMessage, Toast.LENGTH_LONG).show()
         (mainContext as Activity).finish()
 
     }
 
-    override fun logoutFail(mainContext: Context) {
-        Toast.makeText(mainContext, "Logout Fail", Toast.LENGTH_LONG).show()
+    override fun logoutFail(mainContext: Context, errorMessage: String) {
+        Toast.makeText(mainContext, errorMessage, Toast.LENGTH_LONG).show()
     }
 
 }

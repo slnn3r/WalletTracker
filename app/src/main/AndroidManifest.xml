@@ -26,7 +26,7 @@
         </activity>
         <activity android:name=".View.LoginActivity"
             android:label="@string/title_activity_login"
-            android:noHistory="true"
+
             />
         <activity
             android:name=".View.MenuActivity"

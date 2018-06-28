@@ -1,7 +1,8 @@
 package com.example.slnn3r.wallettrackermvp.View
 
+
 import android.app.Activity
-import android.app.Fragment
+import android.app.ProgressDialog
 import android.content.Context
 import android.content.Intent
 import android.support.v7.app.AppCompatActivity
@@ -21,7 +22,6 @@ class LoginActivity : AppCompatActivity(), ViewInterface.LoginView {
 
     private lateinit var presenter: PresenterInterface.Presenter
 
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
@@ -32,26 +32,31 @@ class LoginActivity : AppCompatActivity(), ViewInterface.LoginView {
         SignInButton.setOnClickListener(){
 
             presenter.loginGoogleRequest(this)
+
         }
+
 
     }
 
-    override fun loginSuccess(mainContext: Context?) {
+    override fun loginSuccess(mainContext: Context?, successLoginMessage: String) {
+
 
         val myIntent = Intent(mainContext, MenuActivity::class.java)
         mainContext?.startActivity(myIntent)
-        Toast.makeText(mainContext, "Login Success",Toast.LENGTH_LONG).show()
-        // Manifested - android:noHistory="true"
+        Toast.makeText(mainContext, successLoginMessage,Toast.LENGTH_LONG).show()
+
+        (mainContext as Activity).finish()
+
     }
 
-    override fun loginFail(mainContext: Context?) {
+    override fun loginFail(mainContext: Context?, errorMessage: String) {
         Log.d("sdfsadfasdfa","LOGINFAIL?!!")
 
-            Toast.makeText(mainContext, "No Internet Connection",Toast.LENGTH_LONG).show()
+            Toast.makeText(mainContext, errorMessage,Toast.LENGTH_LONG).show()
 
     }
 
-    override fun displayLoginOption(mainContext: Context, fragment: FragmentActivity, intent: Intent, REQUEST_CODE_SIGN_IN: Int) {
+    override fun displayLoginAccount(mainContext: Context, fragment: FragmentActivity, intent: Intent, REQUEST_CODE_SIGN_IN: Int) {
 
         fragment.startActivityForResult(intent, REQUEST_CODE_SIGN_IN)
 
@@ -59,6 +64,12 @@ class LoginActivity : AppCompatActivity(), ViewInterface.LoginView {
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent) {
 
-        presenter.loginGoogleExecute(this.applicationContext,requestCode,resultCode,data)
+        //ProgressDialog.show(this, "Loading", "Wait while loading...");
+        presenter.loginGoogleExecute(this,requestCode,resultCode,data)
     }
+
+
+
+
+
 }

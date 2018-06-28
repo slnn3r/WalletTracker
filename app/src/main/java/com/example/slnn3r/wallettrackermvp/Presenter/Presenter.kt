@@ -55,23 +55,30 @@ class Presenter: PresenterInterface.Presenter{
     }
 
     override fun loginGoogleExecute(mainContext: Context?, requestCode: Int, resultCode: Int, data: Intent) {
-        firebaseModel.loginGoogleFirebaseExecute(mainContext, requestCode,resultCode,data)
+
+        if(resultCode!=0){
+            firebaseModel.loginGoogleFirebaseExecute(mainContext, requestCode,resultCode,data)
+        }else{
+            var errorMessage:String = "Login Cancelled"
+            loginView.loginFail(mainContext, errorMessage)
+        }
+
     }
 
 
-    override fun loginGoogleStatus(mainContext: Context?, loginStatus: Boolean) {
+    override fun loginGoogleStatus(mainContext: Context?, loginStatus: Boolean, statusMessage: String) {
 
         if(loginStatus){
-            loginView.loginSuccess(mainContext)
+            loginView.loginSuccess(mainContext, statusMessage)
         }else{
-            loginView.loginFail(mainContext)
+            loginView.loginFail(mainContext, statusMessage)
 
         }
 
     }
 
     override fun displayLoginFragment(mainContext: Context, fragment:FragmentActivity,intent: Intent, REQUEST_CODE_SIGN_IN: Int) {
-        loginView.displayLoginOption(mainContext, fragment,intent,REQUEST_CODE_SIGN_IN)
+        loginView.displayLoginAccount(mainContext, fragment,intent,REQUEST_CODE_SIGN_IN)
     }
 
 
@@ -80,12 +87,12 @@ class Presenter: PresenterInterface.Presenter{
         firebaseModel.logOutGoogleFirebase(mainContext)
     }
 
-    override fun logoutGoogleStatus(mainContext: Context, logoutStatus: Boolean) {
+    override fun logoutGoogleStatus(mainContext: Context, logoutStatus: Boolean, statusMessage: String) {
 
         if(logoutStatus){
-            menuView.logoutSuccess(mainContext)
+            menuView.logoutSuccess(mainContext,statusMessage)
         }else{
-            menuView.logoutFail(mainContext)
+            menuView.logoutFail(mainContext,statusMessage)
 
         }
     }
