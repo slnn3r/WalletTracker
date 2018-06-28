@@ -31,17 +31,14 @@ class MainActivity : AppCompatActivity(),ViewInterface.MainView {
 
         val myIntent = Intent(mainContext, LoginActivity::class.java)
         mainContext.startActivity(myIntent)
-        finish()
-
+        // Manifested - android:noHistory="true"
     }
 
     override fun navigateToMenuScreen(mainContext: Context) {
 
-
         val myIntent = Intent(mainContext, MenuActivity::class.java)
         mainContext.startActivity(myIntent)
-        finish()
-
+        // Manifested - android:noHistory="true"
     }
 
 

@@ -1,5 +1,7 @@
 package com.example.slnn3r.wallettrackermvp.View
 
+import android.app.Activity
+import android.app.Fragment
 import android.content.Context
 import android.content.Intent
 import android.support.v7.app.AppCompatActivity
@@ -38,16 +40,13 @@ class LoginActivity : AppCompatActivity(), ViewInterface.LoginView {
         val myIntent = Intent(mainContext, MenuActivity::class.java)
         mainContext?.startActivity(myIntent)
         Toast.makeText(mainContext, "Login Success",Toast.LENGTH_LONG).show()
-        finish()
-
+        // Manifested - android:noHistory="true"
     }
 
     override fun loginFail(mainContext: Context?) {
         Log.d("sdfsadfasdfa","LOGINFAIL?!!")
 
             Toast.makeText(mainContext, "No Internet Connection",Toast.LENGTH_LONG).show()
-
-
 
     }
 

@@ -18,10 +18,14 @@ import com.example.slnn3r.wallettrackermvp.View.MenuActivity
 import com.google.android.gms.auth.api.Auth
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
-import com.google.android.gms.common.ConnectionResult
 import com.google.android.gms.common.api.GoogleApiClient
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.GoogleAuthProvider
+
+import android.os.Bundle
+
+import com.google.android.gms.common.api.ResultCallback
+import com.google.android.gms.common.api.Status
 
 
 class FirebaseAccess: ModelInterface.FirebaseAccess{
@@ -150,32 +154,47 @@ class FirebaseAccess: ModelInterface.FirebaseAccess{
                 .addApi(Auth.GOOGLE_SIGN_IN_API, gso)
                 .build()
 
-
-        mAuth!!.signOut()
-        presenter.logoutGoogleStatus(mainContext, true) //test
-
-        // sign out Google
-
-//        var count=0
-//
-//
-//        Auth.GoogleSignInApi.signOut(mGoogleApiClient).setResultCallback {
-//            count+=1
-//        }
-//
-//        Auth.GoogleSignInApi.revokeAccess(mGoogleApiClient).setResultCallback {
-//            count+=1
-//        }
-//
-//        if(count>1){
-//            presenter.logoutGoogleStatus(mainContext, true)
-//        }else{
-//            presenter.logoutGoogleStatus(mainContext, false)
-//
-//        }
+        logOutGoogleFireBaseExecute(mainContext);
 
     }
 
+
+    fun logOutGoogleFireBaseExecute(mainContext: Context) {
+
+        mGoogleApiClient?.connect()
+        mGoogleApiClient?.registerConnectionCallbacks(object : GoogleApiClient.ConnectionCallbacks {
+            override fun onConnected(bundle: Bundle?) {
+
+                FirebaseAuth.getInstance().signOut()
+                if (mGoogleApiClient!!.isConnected()) {
+                    Auth.GoogleSignInApi.signOut(mGoogleApiClient).setResultCallback(object : ResultCallback<Status> {
+                        override fun onResult(status: Status) {
+                            if (status.isSuccess()) {
+                                Log.d("jbvkjdbnvkjsdf", "User Logged out")
+
+                                presenter.logoutGoogleStatus(mainContext, true)
+
+                                mGoogleApiClient?.stopAutoManage(mainContext as FragmentActivity)
+                                mGoogleApiClient?.disconnect()
+
+                            }else{
+                                presenter.logoutGoogleStatus(mainContext, false)
+
+                                mGoogleApiClient?.stopAutoManage(mainContext as FragmentActivity)
+                                mGoogleApiClient?.disconnect()
+                            }
+                        }
+                    })
+                }
+            }
+
+            override fun onConnectionSuspended(i: Int) {
+                presenter.logoutGoogleStatus(mainContext, false)
+                mGoogleApiClient?.stopAutoManage(mainContext as FragmentActivity)
+                mGoogleApiClient?.disconnect()
+            }
+        })
+    }
 
 
 }

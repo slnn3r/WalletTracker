@@ -3,8 +3,7 @@ package com.example.slnn3r.wallettrackermvp.Presenter
 import android.content.Context
 import android.content.Intent
 import android.support.v4.app.FragmentActivity
-import android.support.v7.view.menu.MenuView
-import android.view.View
+
 import com.example.slnn3r.wallettrackermvp.Interface.PresenterInterface
 
 import com.example.slnn3r.wallettrackermvp.Interface.ViewInterface

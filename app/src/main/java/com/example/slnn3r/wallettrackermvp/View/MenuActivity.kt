@@ -1,6 +1,7 @@
 
 package com.example.slnn3r.wallettrackermvp.View
 
+import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
@@ -16,10 +17,7 @@ import com.example.slnn3r.wallettrackermvp.Interface.PresenterInterface
 import com.example.slnn3r.wallettrackermvp.Interface.ViewInterface
 import com.example.slnn3r.wallettrackermvp.Presenter.Presenter
 import com.example.slnn3r.wallettrackermvp.R
-import com.google.android.gms.auth.api.Auth
-import com.google.android.gms.auth.api.signin.GoogleSignInOptions
-import com.google.android.gms.common.api.GoogleApiClient
-import com.google.firebase.auth.FirebaseAuth
+
 import kotlinx.android.synthetic.main.activity_menu.*
 import kotlinx.android.synthetic.main.app_bar_menu.*
 
@@ -107,10 +105,12 @@ class MenuActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
     override fun logoutSuccess(mainContext: Context) {
 
+
         val myIntent = Intent(mainContext, LoginActivity::class.java)
         mainContext?.startActivity(myIntent)
         Toast.makeText(mainContext, "Logout Success", Toast.LENGTH_LONG).show()
-        finish()
+        (mainContext as Activity).finish()
+
     }
 
     override fun logoutFail(mainContext: Context) {
