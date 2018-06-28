@@ -26,6 +26,7 @@ class LoginActivity : AppCompatActivity(), ViewInterface.LoginView {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
 
+
         presenter = Presenter(this)
 
         SignInButton.setOnClickListener(){
