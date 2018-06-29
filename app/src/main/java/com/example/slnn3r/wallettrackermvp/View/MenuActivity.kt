@@ -21,15 +21,11 @@ import com.example.slnn3r.wallettrackermvp.R
 import kotlinx.android.synthetic.main.activity_menu.*
 import kotlinx.android.synthetic.main.app_bar_menu.*
 import com.google.gson.Gson
-import android.content.SharedPreferences
-import android.os.Handler
-import android.util.Log
 import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
 import com.example.slnn3r.wallettrackermvp.Model.UserProfile
 import com.squareup.picasso.Picasso
-import android.os.Looper
 
 
 
@@ -70,21 +66,8 @@ class MenuActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         }
     }
 
-    override fun onCreateOptionsMenu(menu: Menu): Boolean {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        menuInflater.inflate(R.menu.menu, menu)
-        return true
-    }
 
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        when (item.itemId) {
-            R.id.action_settings -> return true
-            else -> return super.onOptionsItemSelected(item)
-        }
-    }
+
 
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
 
@@ -95,7 +78,6 @@ class MenuActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         when (item.itemId) {
             R.id.nav_camera -> {
 
-                presenter.logoutGoogleExecute(this)
 
             }
             R.id.nav_gallery -> {
@@ -104,15 +86,12 @@ class MenuActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             R.id.nav_slideshow -> {
 
             }
-            R.id.nav_manage -> {
 
-            }
             R.id.nav_share -> {
+                presenter.logoutGoogleExecute(this)
 
             }
-            R.id.nav_send -> {
 
-            }
         }
 
         drawer_layout.closeDrawer(GravityCompat.START)

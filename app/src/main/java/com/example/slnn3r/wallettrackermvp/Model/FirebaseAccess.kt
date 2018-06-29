@@ -4,7 +4,6 @@ import android.app.Activity
 import android.app.ProgressDialog
 import android.content.Context
 import android.content.Intent
-import android.database.Observable
 import android.support.v4.app.FragmentActivity
 import android.util.Log
 import com.example.slnn3r.wallettrackermvp.Interface.ModelInterface
