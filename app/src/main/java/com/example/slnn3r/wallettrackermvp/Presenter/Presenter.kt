@@ -62,57 +62,11 @@ class Presenter: PresenterInterface.Presenter{
         firebaseModel.loginGoogleFirebaseRequest(mainContext)
     }
 
-    // RX JAVA
-    fun rxLogin(mainContext: Context?, requestCode: Int, resultCode: Int, data: Intent, loginloading: ProgressDialog): Observable<Unit>{
-
-        return Observable.defer(object : Callable<ObservableSource<out Unit>>
-        {
-            @Throws(Exception::class)
-            override fun call(): Observable<Unit>?
-            {
-                return Observable.just(firebaseModel.loginGoogleFirebaseExecute(mainContext, requestCode,resultCode,data,loginloading))
-            }
-        })
-
-    }
 
     override fun loginGoogleExecute(mainContext: Context?, requestCode: Int, resultCode: Int, data: Intent){
 
         if(resultCode!=0){
-
-            //RX JAVA
-            rxLogin(mainContext, requestCode, resultCode,data,loginView.displayLoginLoading(mainContext!!))
-                    .subscribeOn(Schedulers.io())
-                    .observeOn(AndroidSchedulers.mainThread())
-                    .subscribe(object : Observer<Unit>
-                    {
-                        override fun onSubscribe(d: Disposable)
-                        {
-                            //Suppposingly Call displayLoginLoading() Here
-                        }
-
-                        override fun onNext(value: Unit)
-                        {
-                            //Suppposingly Call dismissLoginLoading() Here
-                            // Check (RXJAVA ISSUE) comment at FireBaseAccess.kt
-                        }
-
-
-                        override fun onError(e: Throwable)
-                        {
-                              Log.e("GG", "onError: ${e.toString()}", e)
-                        }
-
-                        override fun onComplete()
-                        {
-                            Log.e("GG", "COMPLEte: ")
-
-                        }
-                    })
-
-
-            //loginView.displayLoginLoading()
-            //firebaseModel.loginGoogleFirebaseExecute(mainContext, requestCode,resultCode,data)
+            firebaseModel.loginGoogleFirebaseExecute(mainContext, requestCode,resultCode,data,loginView.displayLoginLoading(mainContext!!))
         }else{
             var errorMessage:String= "Login Cancelled"
 
