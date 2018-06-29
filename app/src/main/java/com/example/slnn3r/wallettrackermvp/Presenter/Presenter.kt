@@ -11,6 +11,7 @@ import com.example.slnn3r.wallettrackermvp.Interface.ModelInterface
 import com.example.slnn3r.wallettrackermvp.Model.FirebaseAccess;
 import android.net.NetworkInfo
 import android.util.Log
+import com.example.slnn3r.wallettrackermvp.Model.UserProfile
 import io.reactivex.Observable
 import io.reactivex.ObservableSource
 import io.reactivex.Observer
@@ -22,11 +23,9 @@ import java.util.concurrent.Callable
 
 class Presenter: PresenterInterface.Presenter{
 
-
     private lateinit var mainView: ViewInterface.MainView
     private lateinit var loginView: ViewInterface.LoginView
     private lateinit var menuView: ViewInterface.MenuView
-
 
 
     private val firebaseModel: ModelInterface.FirebaseAccess = FirebaseAccess()

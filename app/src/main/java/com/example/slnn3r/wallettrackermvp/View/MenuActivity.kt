@@ -20,6 +20,19 @@ import com.example.slnn3r.wallettrackermvp.R
 
 import kotlinx.android.synthetic.main.activity_menu.*
 import kotlinx.android.synthetic.main.app_bar_menu.*
+import com.google.gson.Gson
+import android.content.SharedPreferences
+import android.os.Handler
+import android.util.Log
+import android.view.View
+import android.widget.ImageView
+import android.widget.TextView
+import com.example.slnn3r.wallettrackermvp.Model.UserProfile
+import com.squareup.picasso.Picasso
+import android.os.Looper
+
+
+
 
 class MenuActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener,  ViewInterface.MenuView {
 
@@ -30,6 +43,10 @@ class MenuActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_menu)
         setSupportActionBar(toolbar)
+
+
+        // display User info to Drawer
+        displayUserInfo()
 
 
         fab.setOnClickListener { view ->
@@ -105,6 +122,10 @@ class MenuActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
     override fun logoutSuccess(mainContext: Context, successLogoutMessage: String) {
 
+        // remove SharedPreference data
+        val editor = mainContext.getSharedPreferences("UserProfile", MODE_PRIVATE).edit()
+        editor.remove("UserProfile").commit()
+        editor.remove("UserProfile").apply()
 
         val myIntent = Intent(mainContext, LoginActivity::class.java)
         mainContext?.startActivity(myIntent)
@@ -116,5 +137,32 @@ class MenuActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     override fun logoutFail(mainContext: Context, errorMessage: String) {
         Toast.makeText(mainContext, errorMessage, Toast.LENGTH_LONG).show()
     }
+
+
+    fun displayUserInfo() {
+
+        // Get SharedPreference data
+        val editor = getSharedPreferences("UserProfile", MODE_PRIVATE)
+
+        // user GSON convert to object
+        val gson = Gson()
+        val json = editor.getString("UserProfile", "")
+
+        val userProfile = gson.fromJson<UserProfile>(json, UserProfile::class.java!!)
+
+
+        val navigationView = findViewById<View>(R.id.nav_view) as NavigationView
+        val headerView = navigationView.getHeaderView(0)
+
+        val navUserName = headerView.findViewById(R.id.userProfileName) as TextView
+        val navUserEmail = headerView.findViewById(R.id.userProfileEmail) as TextView
+        val navUserPicture = headerView.findViewById(R.id.userProfileImageView) as ImageView
+
+        navUserName.text = userProfile.userName
+        navUserEmail.text = userProfile.userEmail
+        Picasso.get().load(userProfile.userPicURL).into(navUserPicture)
+
+    }
+
 
 }

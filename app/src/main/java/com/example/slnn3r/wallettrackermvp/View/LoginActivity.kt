@@ -31,6 +31,7 @@ class LoginActivity : AppCompatActivity(), ViewInterface.LoginView {
         }
 
 
+
     }
 
     override fun loginSuccess(mainContext: Context?, successLoginMessage: String) {
@@ -63,10 +64,8 @@ class LoginActivity : AppCompatActivity(), ViewInterface.LoginView {
         return loginLoading
     }
 
-
     override fun dismissLoginLoading(loginLoading:ProgressDialog) {
         loginLoading?.dismiss()
-
     }
 
 

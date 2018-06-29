@@ -16,7 +16,6 @@ import com.example.slnn3r.wallettrackermvp.View.MainActivity;
 import com.example.slnn3r.wallettrackermvp.View.LoginActivity;
 import com.example.slnn3r.wallettrackermvp.View.MenuActivity
 
-
 import com.google.android.gms.auth.api.Auth
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
@@ -28,6 +27,8 @@ import android.os.Bundle
 
 import com.google.android.gms.common.api.ResultCallback
 import com.google.android.gms.common.api.Status
+import android.content.Context.MODE_PRIVATE
+import com.google.gson.Gson
 
 
 class FirebaseAccess: ModelInterface.FirebaseAccess{
@@ -118,6 +119,8 @@ class FirebaseAccess: ModelInterface.FirebaseAccess{
         var errorMessage:String = "Sign In With Credential Failure - No Internet Connection"
 
 
+
+
         val credential = GoogleAuthProvider.getCredential(acct.idToken, null)
         mAuth!!.signInWithCredential(credential)
                 .addOnCompleteListener(activity!!) { task ->    // RXJAVA ISSUE: Before Firebase Response to here, RXJava will thought the function have complete and call onNext
@@ -125,7 +128,23 @@ class FirebaseAccess: ModelInterface.FirebaseAccess{
                         // Sign in success
                         val user = mAuth!!.currentUser
 
+
+                        // Store to SharedPreference
+                        val editor = mainContext!!.getSharedPreferences("UserProfile", MODE_PRIVATE)!!.edit()
+
+                        // User GSON convert object to JSON String to store to shared Preference
+                        val gson = Gson()
+                        var userProfile = UserProfile(user!!.uid, user?.displayName.toString(),user?.email.toString(),user?.photoUrl.toString())
+                        val json = gson.toJson(userProfile)
+
+                        editor.putString("UserProfile", json)
+                        editor.apply()
+                        editor.commit()
+                        // Store to SharedPreference
+
+
                         presenter.loginGoogleStatus(mainContext,true,successLoginMessage,loginLoading)
+
 
                     } else {
                         // Sign in fails
