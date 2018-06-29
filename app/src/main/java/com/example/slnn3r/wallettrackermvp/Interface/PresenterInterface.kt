@@ -1,5 +1,6 @@
 package com.example.slnn3r.wallettrackermvp.Interface
 
+import android.app.ProgressDialog
 import android.content.Context
 import android.content.Intent
 import android.support.v4.app.FragmentActivity
@@ -15,7 +16,7 @@ interface PresenterInterface{
         fun loginGoogleExecute(mainContext: Context?, requestCode: Int, resultCode: Int, data: Intent)
 
         fun displayLoginFragment(mainContext:Context, fragment: FragmentActivity ,intent: Intent, REQUEST_CODE_SIGN_IN:Int)
-        fun loginGoogleStatus(mainContext: Context?, loginStatus: Boolean, statusMessage:String)
+        fun loginGoogleStatus(mainContext: Context?, loginStatus: Boolean, statusMessage:String, loginLoading:ProgressDialog?)
 
         fun logoutGoogleExecute(mainContext: Context)
         fun logoutGoogleStatus(mainContext: Context, logourStatus:Boolean, statusMessage:String)

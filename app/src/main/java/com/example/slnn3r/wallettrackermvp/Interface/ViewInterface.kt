@@ -1,5 +1,6 @@
 package com.example.slnn3r.wallettrackermvp.Interface
 
+import android.app.ProgressDialog
 import android.content.Context
 import android.content.Intent
 import android.support.v4.app.FragmentActivity
@@ -19,6 +20,10 @@ interface ViewInterface{
         fun loginFail(mainContext: Context?, errorMessage:String)
 
         fun displayLoginAccount(mainContext:Context, fragment:FragmentActivity ,intent: Intent, REQUEST_CODE_SIGN_IN:Int)
+
+        fun displayLoginLoading(mainContext:Context): ProgressDialog
+        fun dismissLoginLoading(loginLoading:ProgressDialog)
+
 
     }
 

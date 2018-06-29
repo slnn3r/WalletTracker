@@ -38,7 +38,10 @@ dependencies {
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
 
     // 3rd Party Library
-    implementation "io.reactivex.rxjava2:rxjava:2.1.14" // RxJava - Asynchronous Task
+
+    implementation 'io.reactivex.rxjava2:rxandroid:2.0.1'
+    implementation 'io.reactivex.rxjava2:rxjava:2.1.1'
+
     implementation 'com.google.firebase:firebase-core:16.0.0' // Firebase Online Database
     implementation 'com.firebaseui:firebase-ui-auth:4.0.0' // Firebase Auth
 

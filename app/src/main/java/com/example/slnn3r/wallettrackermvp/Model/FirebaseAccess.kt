@@ -1,8 +1,10 @@
 package com.example.slnn3r.wallettrackermvp.Model
 
 import android.app.Activity
+import android.app.ProgressDialog
 import android.content.Context
 import android.content.Intent
+import android.database.Observable
 import android.support.v4.app.FragmentActivity
 import android.util.Log
 import com.example.slnn3r.wallettrackermvp.Interface.ModelInterface
@@ -30,17 +32,15 @@ import com.google.android.gms.common.api.Status
 
 class FirebaseAccess: ModelInterface.FirebaseAccess{
 
-
-
     private lateinit var presenter: PresenterInterface.Presenter
 
     private var mAuth: FirebaseAuth? = null
     private val REQUEST_CODE_SIGN_IN= 1
     private var activity:Activity? = null
     private var mGoogleApiClient: GoogleApiClient? = null
-
     private val key="866059954529-u7ki0u0si1veh1ul9slartd6ejnq0js7.apps.googleusercontent.com";
 
+    private val loginLoading: ProgressDialog? = null
 
     override fun checkLoginFirebase(mainContext: Context) {
 
@@ -50,11 +50,11 @@ class FirebaseAccess: ModelInterface.FirebaseAccess{
         val currentUser = mAuth!!.currentUser
 
         if(currentUser!=null){
+
             presenter.checkLoginResult(mainContext, loginResult = true)
-
         }else{
-            presenter.checkLoginResult(mainContext, loginResult = false )
 
+            presenter.checkLoginResult(mainContext, loginResult = false )
         }
 
     }
@@ -78,7 +78,7 @@ class FirebaseAccess: ModelInterface.FirebaseAccess{
         mGoogleApiClient = GoogleApiClient.Builder(mainContext)
                 .enableAutoManage(fragment, GoogleApiClient.OnConnectionFailedListener{
                     presenter= Presenter(LoginActivity())
-                    presenter.loginGoogleStatus(mainContext,false, errorMessage)
+                    presenter.loginGoogleStatus(mainContext,false, errorMessage, loginLoading)
                 })
                 .addApi(Auth.GOOGLE_SIGN_IN_API, gso)
                 .build()
@@ -93,7 +93,7 @@ class FirebaseAccess: ModelInterface.FirebaseAccess{
 
     }
 
-    override fun loginGoogleFirebaseExecute(mainContext: Context?, requestCode: Int, resultCode: Int, data: Intent) {
+    override fun loginGoogleFirebaseExecute(mainContext: Context?, requestCode: Int, resultCode: Int, data: Intent, loginLoading:ProgressDialog){
 
         var errorMessage:String = "Firebase Auth With Google Failure"
 
@@ -102,19 +102,17 @@ class FirebaseAccess: ModelInterface.FirebaseAccess{
             if (result.isSuccess) {
                 // successful -> authenticate with Firebase
                 val account = result.signInAccount
-                firebaseAuthWithGoogle(account!!, mainContext)
+                firebaseAuthWithGoogle(account!!, mainContext, loginLoading)
             } else {
                 // failed -> update UI
-                presenter.loginGoogleStatus(mainContext,false, errorMessage)
+                presenter.loginGoogleStatus(mainContext,false, errorMessage,loginLoading)
             }
         }
 
     }
 
 
-    private fun firebaseAuthWithGoogle(acct: GoogleSignInAccount, mainContext: Context?) {
-
-        presenter= Presenter(LoginActivity())
+    private fun firebaseAuthWithGoogle(acct: GoogleSignInAccount, mainContext: Context?,loginLoading:ProgressDialog){
 
         var successLoginMessage = "Successfully Login"
         var errorMessage:String = "Sign In With Credential Failure - No Internet Connection"
@@ -122,18 +120,20 @@ class FirebaseAccess: ModelInterface.FirebaseAccess{
 
         val credential = GoogleAuthProvider.getCredential(acct.idToken, null)
         mAuth!!.signInWithCredential(credential)
-                .addOnCompleteListener(activity!!) { task ->
-                    if (task.isSuccessful) {
+                .addOnCompleteListener(activity!!) { task ->    // RXJAVA ISSUE: Before Firebase Response to here, RXJava will thought the function have complete and call onNext
+                    if (task.isSuccessful) {                    // So without wait for Firebase loading, the ProgressDialog will be dismiss immediately at the onNext
                         // Sign in success
                         val user = mAuth!!.currentUser
-                        presenter.loginGoogleStatus(mainContext,true,successLoginMessage)
+
+                        presenter.loginGoogleStatus(mainContext,true,successLoginMessage,loginLoading)
 
                     } else {
                         // Sign in fails
-                        presenter.loginGoogleStatus(mainContext,false, errorMessage)
+                        presenter.loginGoogleStatus(mainContext,false, errorMessage,loginLoading)
 
                     }
                 }
+
     }
 
 
@@ -145,7 +145,6 @@ class FirebaseAccess: ModelInterface.FirebaseAccess{
         val fragment = activity as FragmentActivity
 
         var errorMessage:String = "Google API Client Connection Failure"
-
 
         mAuth = FirebaseAuth.getInstance()
 
@@ -163,7 +162,6 @@ class FirebaseAccess: ModelInterface.FirebaseAccess{
                 .build()
 
         logOutGoogleFireBaseExecute(mainContext);
-
     }
 
 
