@@ -46,13 +46,14 @@ dependencies {
     implementation 'com.firebaseui:firebase-ui-auth:4.0.0' // Firebase Auth
     implementation 'com.google.code.gson:gson:2.8.5' //GSON
     implementation 'com.squareup.picasso:picasso:2.71828' //PICASSO
+    implementation 'com.jjoe64:graphview:4.2.2' // Graph
 
 
     // Android Navigation Library
     def nav_version = "1.0.0-alpha02"
     implementation "android.arch.navigation:navigation-fragment-ktx:$nav_version"
     // use -ktx for Kotlin
-    implementation "android.arch.navigation:navigation-ui-ktx:$nav_version" // use -ktx for Kotlin
+    implementation "android.arch.navigation:navigation-ui-ktx:$nav_version"
 
 
 }
