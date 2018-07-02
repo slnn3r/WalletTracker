@@ -5,15 +5,14 @@ import android.app.ProgressDialog
 import android.content.Context
 import android.content.Intent
 import android.support.v4.app.FragmentActivity
-import android.util.Log
 import com.example.slnn3r.wallettrackermvp.Interface.ModelInterface
 import com.example.slnn3r.wallettrackermvp.Interface.PresenterInterface
 
 import com.example.slnn3r.wallettrackermvp.Presenter.Presenter
 
-import com.example.slnn3r.wallettrackermvp.View.MainActivity;
-import com.example.slnn3r.wallettrackermvp.View.LoginActivity;
-import com.example.slnn3r.wallettrackermvp.View.MenuActivity
+import com.example.slnn3r.wallettrackermvp.View.Activity.MainActivity;
+import com.example.slnn3r.wallettrackermvp.View.Activity.LoginActivity;
+import com.example.slnn3r.wallettrackermvp.View.Activity.MenuActivity
 
 import com.google.android.gms.auth.api.Auth
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount

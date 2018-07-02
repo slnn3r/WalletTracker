@@ -11,17 +11,17 @@
 
 
         <item
-            android:id="@+id/nav_camera"
+            android:id="@+id/nav_WalletAccount"
             android:icon="@drawable/ic_menu_camera"
             android:title="Wallet Account" />
 
             <item
-                android:id="@+id/nav_slideshow"
+                android:id="@+id/nav_TrxCategory"
                 android:icon="@drawable/ic_menu_slideshow"
                 android:title="Transaction Category" />
 
         <item
-            android:id="@+id/nav_gallery"
+            android:id="@+id/nav_TrxHistory"
             android:icon="@drawable/ic_menu_gallery"
             android:title="Transaction History" />
 
@@ -36,7 +36,7 @@
     <item android:title="My Account">
         <menu>
             <item
-                android:id="@+id/nav_share"
+                android:id="@+id/nav_SignOut"
                 android:icon="@drawable/ic_menu_share"
                 android:title="Sign Out" />
 

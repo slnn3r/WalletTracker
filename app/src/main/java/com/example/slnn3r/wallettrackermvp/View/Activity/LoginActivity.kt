@@ -1,4 +1,4 @@
-package com.example.slnn3r.wallettrackermvp.View
+package com.example.slnn3r.wallettrackermvp.View.Activity
 
 import android.app.Activity
 import android.app.ProgressDialog

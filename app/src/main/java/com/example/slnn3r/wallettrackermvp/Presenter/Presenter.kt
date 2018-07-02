@@ -42,6 +42,8 @@ class Presenter: PresenterInterface.Presenter{
         this.menuView = menuView
     }
 
+
+    // Main Activity
     override fun checkLogin(mainContext: Context) {
         firebaseModel.checkLoginFirebase(mainContext)
     }
@@ -57,10 +59,10 @@ class Presenter: PresenterInterface.Presenter{
     }
 
 
+    // Login activity
     override fun loginGoogleRequest(mainContext: Context) {
         firebaseModel.loginGoogleFirebaseRequest(mainContext)
     }
-
 
     override fun loginGoogleExecute(mainContext: Context?, requestCode: Int, resultCode: Int, data: Intent){
 
@@ -83,7 +85,6 @@ class Presenter: PresenterInterface.Presenter{
 
     }
 
-
     override fun loginGoogleStatus(mainContext: Context?, loginStatus: Boolean, statusMessage: String, loginloading: ProgressDialog?) {
 
         if(loginStatus){
@@ -104,7 +105,7 @@ class Presenter: PresenterInterface.Presenter{
     }
 
 
-
+    // Menu Activity
     override fun logoutGoogleExecute(mainContext: Context) {
         firebaseModel.logOutGoogleFirebase(mainContext)
     }

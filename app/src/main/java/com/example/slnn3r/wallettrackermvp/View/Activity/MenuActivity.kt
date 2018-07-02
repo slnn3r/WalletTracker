@@ -1,12 +1,10 @@
 
-package com.example.slnn3r.wallettrackermvp.View
+package com.example.slnn3r.wallettrackermvp.View.Activity
 
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
-import android.graphics.Color
 import android.os.Bundle
-import android.support.design.widget.Snackbar
 import android.support.design.widget.NavigationView
 import android.support.v4.view.GravityCompat
 import android.support.v7.app.ActionBarDrawerToggle
@@ -33,7 +31,6 @@ import android.widget.ArrayAdapter
 
 
 
-
 class MenuActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener,  ViewInterface.MenuView {
 
     private lateinit var presenter: PresenterInterface.Presenter
@@ -48,10 +45,8 @@ class MenuActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         // display User info to Drawer
         displayUserInfo()
 
-
         fab.setOnClickListener { view ->
-            Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                    .setAction("Action", null).show()
+
         }
 
         val toggle = ActionBarDrawerToggle(
@@ -113,18 +108,20 @@ class MenuActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
         // Handle navigation view item clicks here.
         when (item.itemId) {
-            R.id.nav_camera -> {
+            R.id.nav_WalletAccount -> {
 
-
-            }
-            R.id.nav_gallery -> {
-
-            }
-            R.id.nav_slideshow -> {
+                val myIntent = Intent(this, WalletAccountActivity::class.java)
+                this.startActivity(myIntent)
 
             }
+            R.id.nav_TrxCategory -> {
 
-            R.id.nav_share -> {
+            }
+            R.id.nav_TrxHistory -> {
+
+            }
+
+            R.id.nav_SignOut -> {
                 presenter.logoutGoogleExecute(this)
 
             }
@@ -179,6 +176,7 @@ class MenuActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         Picasso.get().load(userProfile.userPicURL).into(navUserPicture)
 
     }
+
 
 
 }

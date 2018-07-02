@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/wallet_account_nav_graph"
+    app:startDestination="@id/viewWalletAccountFragment">
+
+    <fragment
+        android:id="@+id/viewWalletAccountFragment"
+        android:name="com.example.slnn3r.wallettrackermvp.View.Fragment.WalletAccount.ViewWalletAccountFragment"
+        android:label="Wallet Account List"
+        tools:layout="@layout/fragment_view_wallet_account" >
+        <action
+            android:id="@+id/goto_createWalletAccountFragment"
+            app:destination="@id/createWalletAccountFragment" />
+        <action
+            android:id="@+id/goto__detailsWalletAccountFragment"
+            app:destination="@id/detailsWalletAccountFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/createWalletAccountFragment"
+        android:name="com.example.slnn3r.wallettrackermvp.View.Fragment.WalletAccount.CreateWalletAccountFragment"
+        android:label="Create Wallet Account"
+        tools:layout="@layout/fragment_create_wallet_account" />
+    <fragment
+        android:id="@+id/detailsWalletAccountFragment"
+        android:name="com.example.slnn3r.wallettrackermvp.View.Fragment.WalletAccount.DetailsWalletAccountFragment"
+        android:label="Wallet Account Details"
+        tools:layout="@layout/fragment_details_wallet_account" />
+</navigation>

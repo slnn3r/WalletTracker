@@ -20,4 +20,10 @@ interface ModelInterface {
 
     }
 
+    interface RealmAccess{
+
+        
+
+    }
+
 }
