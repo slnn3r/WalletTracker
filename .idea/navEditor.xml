@@ -8,6 +8,18 @@
             <LayoutPositions>
               <option name="myPositions">
                 <map>
+                  <entry key="addNewTrx">
+                    <value>
+                      <LayoutPositions>
+                        <option name="myPosition">
+                          <Point>
+                            <option name="x" value="-650" />
+                            <option name="y" value="429" />
+                          </Point>
+                        </option>
+                      </LayoutPositions>
+                    </value>
+                  </entry>
                   <entry key="createTrxCategoryFragment">
                     <value>
                       <LayoutPositions>
@@ -43,12 +55,7 @@
                         </option>
                         <option name="myPositions">
                           <map>
-                            <entry key="action_dashBoardFragment_to_expenseTrxFragment">
-                              <value>
-                                <LayoutPositions />
-                              </value>
-                            </entry>
-                            <entry key="action_dashBoardFragment_to_incomeTrxFragment">
+                            <entry key="action_dashBoardFragment_to_addNewTrx">
                               <value>
                                 <LayoutPositions />
                               </value>
@@ -87,30 +94,6 @@
                           <Point>
                             <option name="x" value="238" />
                             <option name="y" value="185" />
-                          </Point>
-                        </option>
-                      </LayoutPositions>
-                    </value>
-                  </entry>
-                  <entry key="expenseTrxFragment">
-                    <value>
-                      <LayoutPositions>
-                        <option name="myPosition">
-                          <Point>
-                            <option name="x" value="-691" />
-                            <option name="y" value="396" />
-                          </Point>
-                        </option>
-                      </LayoutPositions>
-                    </value>
-                  </entry>
-                  <entry key="incomeTrxFragment">
-                    <value>
-                      <LayoutPositions>
-                        <option name="myPosition">
-                          <Point>
-                            <option name="x" value="-937" />
-                            <option name="y" value="399" />
                           </Point>
                         </option>
                       </LayoutPositions>

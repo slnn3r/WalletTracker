@@ -140,6 +140,8 @@ class MenuActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             }
             R.id.nav_TrxCategory -> {
 
+                setupNavigationMode()
+                Navigation.findNavController(this, R.id.navMenu).navigate(R.id.action_dashBoardFragment_to_viewTrxCategoryFragment)
             }
             R.id.nav_TrxHistory -> {
 

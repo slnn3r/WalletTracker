@@ -75,7 +75,7 @@ class DashBoardFragment : Fragment() {
 
             // Testing Purpose
             val navController = view.findNavController()
-            navController.navigate(R.id.action_dashBoardFragment_to_incomeTrxFragment)
+            navController.navigate(R.id.action_dashBoardFragment_to_addNewTrx)
             (activity as MenuActivity).setupNavigationMode()
 
             Toast.makeText(context,"Add",Toast.LENGTH_LONG).show()
@@ -87,7 +87,7 @@ class DashBoardFragment : Fragment() {
 
             // Testing Purpose
             val navController = view.findNavController()
-            navController.navigate(R.id.action_dashBoardFragment_to_expenseTrxFragment)
+            navController.navigate(R.id.action_dashBoardFragment_to_addNewTrx)
             (activity as MenuActivity).setupNavigationMode()
 
             Toast.makeText(context,"Minus",Toast.LENGTH_LONG).show()

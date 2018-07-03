@@ -17,11 +17,8 @@
             android:id="@+id/action_dashBoardFragment_to_viewTrxCategoryFragment"
             app:destination="@id/viewTrxCategoryFragment" />
         <action
-            android:id="@+id/action_dashBoardFragment_to_expenseTrxFragment"
-            app:destination="@id/expenseTrxFragment" />
-        <action
-            android:id="@+id/action_dashBoardFragment_to_incomeTrxFragment"
-            app:destination="@id/incomeTrxFragment" />
+            android:id="@+id/action_dashBoardFragment_to_addNewTrx"
+            app:destination="@id/addNewTrx" />
     </fragment>
     <fragment
         android:id="@+id/viewTrxCategoryFragment"
@@ -68,13 +65,8 @@
         android:label="fragment_details_trx_category"
         tools:layout="@layout/fragment_details_trx_category" />
     <fragment
-        android:id="@+id/expenseTrxFragment"
-        android:name="com.example.slnn3r.wallettrackermvp.View.Fragment.TrxManagement.ExpenseTrxFragment"
-        android:label="fragment_expense_trx"
-        tools:layout="@layout/fragment_expense_trx" />
-    <fragment
-        android:id="@+id/incomeTrxFragment"
-        android:name="com.example.slnn3r.wallettrackermvp.View.Fragment.TrxManagement.IncomeTrxFragment"
-        android:label="fragment_income_trx"
-        tools:layout="@layout/fragment_income_trx" />
+        android:id="@+id/addNewTrx"
+        android:name="com.example.slnn3r.wallettrackermvp.View.Fragment.TrxManagement.AddNewTrx"
+        android:label="fragment_add_new_trx"
+        tools:layout="@layout/fragment_add_new_trx" />
 </navigation>
