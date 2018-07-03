@@ -35,4 +35,9 @@ interface ViewInterface{
 
     }
 
+    interface DashBoardView{
+
+        fun populateWalletAccountSpinner()
+    }
+
 }

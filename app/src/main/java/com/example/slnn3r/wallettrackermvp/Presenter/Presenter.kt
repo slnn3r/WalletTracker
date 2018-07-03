@@ -8,7 +8,7 @@ import android.support.v4.app.FragmentActivity
 import com.example.slnn3r.wallettrackermvp.Interface.PresenterInterface
 import com.example.slnn3r.wallettrackermvp.Interface.ViewInterface
 import com.example.slnn3r.wallettrackermvp.Interface.ModelInterface
-import com.example.slnn3r.wallettrackermvp.Model.FirebaseAccess;
+import com.example.slnn3r.wallettrackermvp.Model.FirebaseAccess
 import android.net.NetworkInfo
 import android.util.Log
 import com.example.slnn3r.wallettrackermvp.Model.UserProfile
@@ -69,7 +69,7 @@ class Presenter: PresenterInterface.Presenter{
         if(resultCode!=0){
             firebaseModel.loginGoogleFirebaseExecute(mainContext, requestCode,resultCode,data,loginView.displayLoginLoading(mainContext!!))
         }else{
-            var errorMessage:String= "Login Cancelled"
+            var errorMessage= "Login Cancelled"
 
             val cm = mainContext?.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
             val activeNetwork: NetworkInfo? = cm.activeNetworkInfo
@@ -120,5 +120,25 @@ class Presenter: PresenterInterface.Presenter{
         }
     }
 
+
+    // DashBoard Fragment
+
+    // In Progress
+
+    override fun checkWalletAccount() {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
+
+    override fun checkWallterAccountResult() {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
+
+    override fun syncWalletAccount() {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
+
+    override fun syncWalletAccountResult() {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
 
 }

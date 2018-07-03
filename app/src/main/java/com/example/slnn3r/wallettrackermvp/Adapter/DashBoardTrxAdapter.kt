@@ -19,7 +19,7 @@ class DashBoardTrxAdapter(val homeFeed: UserProfile): RecyclerView.Adapter<DashB
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): DashBoardViewHolder {
 
-        val layoutInflater = LayoutInflater.from(parent?.context)
+        val layoutInflater = LayoutInflater.from(parent.context)
         val cellForRow = layoutInflater.inflate(R.layout.transaction_list_row, parent, false)
 
 
@@ -30,9 +30,9 @@ class DashBoardTrxAdapter(val homeFeed: UserProfile): RecyclerView.Adapter<DashB
 
         val video = homeFeed.userName.get(position)
 
-        holder?.view?.adapterDateView?.text = video.toString();
-        holder?.view?.adapterCategoryView?.text = video.toString();
-        holder?.view?.adapterAmountView?.text = video.toString();
+        holder.view.adapterDateView.text = video.toString()
+        holder.view.adapterCategoryView.text = video.toString()
+        holder.view.adapterAmountView.text = video.toString()
 
 
     }

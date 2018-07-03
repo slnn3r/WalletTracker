@@ -18,12 +18,14 @@ import com.example.slnn3r.wallettrackermvp.View.Activity.MenuActivity
 import com.google.gson.Gson
 import kotlinx.android.synthetic.main.fragment_dash_board.*
 import android.widget.Toast
+import com.example.slnn3r.wallettrackermvp.Interface.ViewInterface
 import com.firebase.ui.auth.AuthUI.getApplicationContext
 
 
 
 
-class DashBoardFragment : Fragment() {
+class DashBoardFragment : Fragment(),ViewInterface.DashBoardView {
+
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
@@ -50,7 +52,7 @@ class DashBoardFragment : Fragment() {
         val gson = Gson()
         val json = editor.getString("UserProfile", "")
 
-        val userProfile = gson.fromJson<UserProfile>(json, UserProfile::class.java!!)
+        val userProfile = gson.fromJson<UserProfile>(json, UserProfile::class.java)
 
         dashBoardRecyclerView.adapter = DashBoardTrxAdapter(userProfile)
         /////
@@ -96,6 +98,13 @@ class DashBoardFragment : Fragment() {
         }
 
 
+    }
+
+
+    //// In Progress
+
+    override fun populateWalletAccountSpinner() {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
 }

@@ -33,11 +33,7 @@ class CreateTrxCategoryFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
 
-        button3.setOnClickListener(){
-            val navController = view.findNavController()
-            navController.navigate(R.id.action_viewTrxCategoryFragment_to_detailsTrxCategoryFragment)
-            (activity as MenuActivity).setupNavigationMode()
-        }
+
     }
 
 }

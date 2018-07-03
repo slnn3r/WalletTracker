@@ -25,6 +25,12 @@ interface PresenterInterface{
         fun logoutGoogleExecute(mainContext: Context)
         fun logoutGoogleStatus(mainContext: Context, logourStatus:Boolean, statusMessage:String)
 
+        // DashBoard Fragment
+        fun checkWalletAccount()
+        fun checkWallterAccountResult()
+
+        fun syncWalletAccount()
+        fun syncWalletAccountResult()
 
     }
     

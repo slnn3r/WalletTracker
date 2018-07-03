@@ -47,7 +47,7 @@ class ViewWalletAccountFragment : Fragment() {
         val gson = Gson()
         val json = editor.getString("UserProfile", "")
 
-        val userProfile = gson.fromJson<UserProfile>(json, UserProfile::class.java!!)
+        val userProfile = gson.fromJson<UserProfile>(json, UserProfile::class.java)
 
         walletAccountRecyclerView.adapter = WalletAccountAdapter(userProfile)
         /////

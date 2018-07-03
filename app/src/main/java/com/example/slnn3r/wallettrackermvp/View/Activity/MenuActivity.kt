@@ -36,6 +36,7 @@ import androidx.navigation.findNavController
 
 class MenuActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener,  ViewInterface.MenuView {
 
+
     private lateinit var presenter: PresenterInterface.Presenter
 
     private var isNavigated:Boolean =false // Set Initial Navigation Status to false
@@ -167,7 +168,7 @@ class MenuActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         editor.remove("UserProfile").apply()
 
         val myIntent = Intent(mainContext, LoginActivity::class.java)
-        mainContext?.startActivity(myIntent)
+        mainContext.startActivity(myIntent)
         Toast.makeText(mainContext, successLogoutMessage, Toast.LENGTH_LONG).show()
         (mainContext as Activity).finish()
 
@@ -187,7 +188,7 @@ class MenuActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         val gson = Gson()
         val json = editor.getString("UserProfile", "")
 
-        val userProfile = gson.fromJson<UserProfile>(json, UserProfile::class.java!!)
+        val userProfile = gson.fromJson<UserProfile>(json, UserProfile::class.java)
 
 
         val navigationView = findViewById<View>(R.id.nav_view) as NavigationView
@@ -202,6 +203,9 @@ class MenuActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         Picasso.get().load(userProfile.userPicURL).into(navUserPicture)
 
     }
+
+
+
 
 
 

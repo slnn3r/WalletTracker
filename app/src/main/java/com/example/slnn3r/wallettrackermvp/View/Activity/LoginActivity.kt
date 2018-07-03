@@ -11,7 +11,7 @@ import android.widget.Toast
 import com.example.slnn3r.wallettrackermvp.R
 import com.example.slnn3r.wallettrackermvp.Interface.ViewInterface
 import com.example.slnn3r.wallettrackermvp.Interface.PresenterInterface
-import com.example.slnn3r.wallettrackermvp.Presenter.Presenter;
+import com.example.slnn3r.wallettrackermvp.Presenter.Presenter
 import kotlinx.android.synthetic.main.activity_login.*
 
 
@@ -60,12 +60,12 @@ class LoginActivity : AppCompatActivity(), ViewInterface.LoginView {
 
     // if not need rx then call them during onActivityResult and Login Success/faill
     override fun displayLoginLoading(mainContext:Context):ProgressDialog {
-        var loginLoading: ProgressDialog = ProgressDialog.show(mainContext, "Loading", "Signing with your Google Account...")
+        val loginLoading: ProgressDialog = ProgressDialog.show(mainContext, "Loading", "Signing with your Google Account...")
         return loginLoading
     }
 
     override fun dismissLoginLoading(loginLoading:ProgressDialog) {
-        loginLoading?.dismiss()
+        loginLoading.dismiss()
     }
 
 

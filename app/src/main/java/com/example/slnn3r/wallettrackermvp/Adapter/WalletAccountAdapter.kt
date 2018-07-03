@@ -22,7 +22,7 @@ class WalletAccountAdapter(val homeFeed: UserProfile): RecyclerView.Adapter<Wall
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): WalletAccountViewHolder {
 
-        val layoutInflater = LayoutInflater.from(parent?.context)
+        val layoutInflater = LayoutInflater.from(parent.context)
         val cellForRow = layoutInflater.inflate(R.layout.transaction_list_row, parent, false)
 
 
@@ -33,9 +33,9 @@ class WalletAccountAdapter(val homeFeed: UserProfile): RecyclerView.Adapter<Wall
 
         val video = homeFeed.userName.get(position)
 
-        holder?.view?.adapterDateView?.text = video.toString();
-        holder?.view?.adapterCategoryView?.text = video.toString();
-        holder?.view?.adapterAmountView?.text = video.toString();
+        holder.view.adapterDateView.text = video.toString()
+        holder.view.adapterCategoryView.text = video.toString()
+        holder.view.adapterAmountView.text = video.toString()
 
 
     }

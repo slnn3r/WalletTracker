@@ -18,11 +18,18 @@ interface ModelInterface {
         // Menu Activity
         fun logOutGoogleFirebase(mainContext: Context)
 
+
+        // DashBoard Fragment
+        fun syncWalletAccountFirebase()
+
+
     }
 
     interface RealmAccess{
 
-        
+        // DashBoard Fragment
+        fun checkWalletAccountRealm()
+
 
     }
 
