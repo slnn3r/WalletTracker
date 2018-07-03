@@ -31,9 +31,7 @@
             android:name=".View.Activity.MenuActivity"
             android:label="@string/title_activity_menu"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".View.Activity.WalletAccountActivity"
-            />
-        <activity android:name=".View.Activity.WalletCategoryActivity"></activity>
+
     </application>
 
 </manifest>

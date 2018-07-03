@@ -7,9 +7,10 @@ import android.content.Intent
 import android.os.Bundle
 import android.support.design.widget.NavigationView
 import android.support.v4.view.GravityCompat
+import android.support.v4.widget.DrawerLayout
 import android.support.v7.app.ActionBarDrawerToggle
 import android.support.v7.app.AppCompatActivity
-import android.support.v7.widget.LinearLayoutManager
+import android.util.Log
 import android.view.MenuItem
 import android.widget.Toast
 import com.example.slnn3r.wallettrackermvp.Interface.PresenterInterface
@@ -23,11 +24,13 @@ import com.google.gson.Gson
 import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
-import com.example.slnn3r.wallettrackermvp.Adapter.dashBoardTransactionAdapter
 import com.example.slnn3r.wallettrackermvp.Model.UserProfile
 import com.squareup.picasso.Picasso
-import kotlinx.android.synthetic.main.content_menu.*
-import android.widget.ArrayAdapter
+
+import androidx.navigation.Navigation
+import androidx.navigation.findNavController
+
+
 
 
 
@@ -35,63 +38,87 @@ class MenuActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
     private lateinit var presenter: PresenterInterface.Presenter
 
+    private var isNavigated:Boolean =false // Set Initial Navigation Status to false
+    private val initialScreen:Int = R.id.dashBoardFragment
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_menu)
         setSupportActionBar(toolbar)
 
-
         // display User info to Drawer
         displayUserInfo()
 
-        fab.setOnClickListener { view ->
+        nav_view.setNavigationItemSelectedListener(this)
 
-        }
+        setupNavigationUpButton()
 
+    }
+
+
+    private fun setupNavigationUpButton() {
+
+        // Display the Navigation Drawer Button (Default Generated Function)
         val toggle = ActionBarDrawerToggle(
                 this, drawer_layout, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close)
         drawer_layout.addDrawerListener(toggle)
         toggle.syncState()
 
-        nav_view.setNavigationItemSelectedListener(this)
-
-        ///// Dummy RecycleView
-        dashBoardRecyclerView.layoutManager = LinearLayoutManager(this)
+        toolbar.setNavigationIcon(R.drawable.ic_drawer_icon)
 
 
-        val editor = getSharedPreferences("UserProfile", MODE_PRIVATE)
+        // Setup Custom Navigation Drawer Button Listener
+        toolbar.setNavigationOnClickListener {
 
-        // user GSON convert to object
-        val gson = Gson()
-        val json = editor.getString("UserProfile", "")
-
-        val userProfile = gson.fromJson<UserProfile>(json, UserProfile::class.java!!)
-
-        dashBoardRecyclerView.adapter = dashBoardTransactionAdapter(userProfile)
-        /////
-
-        ///// Dummy Spinner
-        val categories = ArrayList<String>()
-        categories.add("Personal")
-        categories.add("Business Services")
-        categories.add("Education")
-
-        // Creating adapter for spinner
-        val dataAdapter = ArrayAdapter(this, android.R.layout.simple_spinner_item, categories)
-
-        // Drop down layout style - list view with radio button
-        dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-
-        dashBoardSpinner.adapter = dataAdapter
-
-        /////
+            // Check if Screen is navigated or not
+            if (isNavigated) { //
+                setupNavigationFlow()
+            } else {
+                drawer_layout.openDrawer(GravityCompat.START)
+            }
+        }
 
     }
+
+    private fun setupNavigationFlow() {
+
+        onSupportNavigateUp() // Override the Navigation Up Button
+
+        val currentScreen = findNavController(R.id.navMenu).currentDestination.id
+
+        if (currentScreen == initialScreen) { // if Current screen is initial screen (Dashboard), switch Navigation Up button back to Drawer function
+            setupDrawerMode()
+        }
+
+    }
+
+    override fun onSupportNavigateUp() = findNavController(R.id.navMenu).navigateUp()
+
+    fun setupNavigationMode() {
+        isNavigated = true
+        drawer_layout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED)
+        toolbar.setNavigationIcon(R.drawable.abc_ic_ab_back_material)
+
+    }
+
+    fun setupDrawerMode() {
+        isNavigated = false
+        drawer_layout.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED)
+        toolbar.setNavigationIcon(R.drawable.ic_drawer_icon)
+
+    }
+
+
+    ////
+
 
     override fun onBackPressed() {
         if (drawer_layout.isDrawerOpen(GravityCompat.START)) {
             drawer_layout.closeDrawer(GravityCompat.START)
+        } else if (isNavigated) {
+            setupNavigationFlow()
+
         } else{
             super.onBackPressed()
 
@@ -99,19 +126,16 @@ class MenuActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     }
 
 
-
-
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
 
         presenter = Presenter(this)
-
 
         // Handle navigation view item clicks here.
         when (item.itemId) {
             R.id.nav_WalletAccount -> {
 
-                val myIntent = Intent(this, WalletAccountActivity::class.java)
-                this.startActivity(myIntent)
+                setupNavigationMode()
+                Navigation.findNavController(this, R.id.navMenu).navigate(R.id.action_dashBoardFragment_to_viewWalletAccountFragment)
 
             }
             R.id.nav_TrxCategory -> {

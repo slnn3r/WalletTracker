@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/menu_nav_graph"
+    app:startDestination="@id/dashBoardFragment">
+
+    <fragment
+        android:id="@+id/dashBoardFragment"
+        android:name="com.example.slnn3r.wallettrackermvp.View.Fragment.DashBoardFragment"
+        android:label="fragment_dash_board"
+        tools:layout="@layout/fragment_dash_board" >
+        <action
+            android:id="@+id/action_dashBoardFragment_to_viewWalletAccountFragment"
+            app:destination="@id/viewWalletAccountFragment" />
+        <action
+            android:id="@+id/action_dashBoardFragment_to_viewTrxCategoryFragment"
+            app:destination="@id/viewTrxCategoryFragment" />
+        <action
+            android:id="@+id/action_dashBoardFragment_to_expenseTrxFragment"
+            app:destination="@id/expenseTrxFragment" />
+        <action
+            android:id="@+id/action_dashBoardFragment_to_incomeTrxFragment"
+            app:destination="@id/incomeTrxFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/viewTrxCategoryFragment"
+        android:name="com.example.slnn3r.wallettrackermvp.View.Fragment.TrxCategory.ViewTrxCategoryFragment"
+        android:label="fragment_view_trx_category"
+        tools:layout="@layout/fragment_view_trx_category" >
+        <action
+            android:id="@+id/action_viewTrxCategoryFragment_to_createTrxCategoryFragment"
+            app:destination="@id/createTrxCategoryFragment" />
+        <action
+            android:id="@+id/action_viewTrxCategoryFragment_to_detailsTrxCategoryFragment"
+            app:destination="@id/detailsTrxCategoryFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/viewWalletAccountFragment"
+        android:name="com.example.slnn3r.wallettrackermvp.View.Fragment.WalletAccount.ViewWalletAccountFragment"
+        android:label="fragment_view_wallet_account"
+        tools:layout="@layout/fragment_view_wallet_account" >
+        <action
+            android:id="@+id/action_viewWalletAccountFragment_to_createWalletAccountFragment"
+            app:destination="@+id/createWalletAccountFragment" />
+        <action
+            android:id="@+id/action_viewWalletAccountFragment_to_detailsWalletAccountFragment"
+            app:destination="@id/detailsWalletAccountFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/createTrxCategoryFragment"
+        android:name="com.example.slnn3r.wallettrackermvp.View.Fragment.TrxCategory.CreateTrxCategoryFragment"
+        android:label="fragment_create_trx_category"
+        tools:layout="@layout/fragment_create_trx_category" />
+    <fragment
+        android:id="@+id/createWalletAccountFragment"
+        android:name="com.example.slnn3r.wallettrackermvp.View.Fragment.WalletAccount.CreateWalletAccountFragment"
+        android:label="fragment_create_wallet_account"
+        tools:layout="@layout/fragment_create_wallet_account" />
+    <fragment
+        android:id="@+id/detailsWalletAccountFragment"
+        android:name="com.example.slnn3r.wallettrackermvp.View.Fragment.WalletAccount.DetailsWalletAccountFragment"
+        android:label="fragment_details_wallet_account"
+        tools:layout="@layout/fragment_details_wallet_account" />
+    <fragment
+        android:id="@+id/detailsTrxCategoryFragment"
+        android:name="com.example.slnn3r.wallettrackermvp.View.Fragment.TrxCategory.DetailsTrxCategoryFragment"
+        android:label="fragment_details_trx_category"
+        tools:layout="@layout/fragment_details_trx_category" />
+    <fragment
+        android:id="@+id/expenseTrxFragment"
+        android:name="com.example.slnn3r.wallettrackermvp.View.Fragment.TrxManagement.ExpenseTrxFragment"
+        android:label="fragment_expense_trx"
+        tools:layout="@layout/fragment_expense_trx" />
+    <fragment
+        android:id="@+id/incomeTrxFragment"
+        android:name="com.example.slnn3r.wallettrackermvp.View.Fragment.TrxManagement.IncomeTrxFragment"
+        android:label="fragment_income_trx"
+        tools:layout="@layout/fragment_income_trx" />
+</navigation>
