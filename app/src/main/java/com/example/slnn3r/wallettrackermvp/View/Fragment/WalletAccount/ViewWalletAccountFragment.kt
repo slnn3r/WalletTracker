@@ -37,7 +37,7 @@ class ViewWalletAccountFragment : Fragment() {
 
         ///// Dummy RecycleView
 
-        walletAccountRecyclerView.layoutManager = LinearLayoutManager(context)
+        VWARecyclerView.layoutManager = LinearLayoutManager(context)
         //.layoutManager = LinearLayoutManager(context)
 
 
@@ -49,10 +49,10 @@ class ViewWalletAccountFragment : Fragment() {
 
         val userProfile = gson.fromJson<UserProfile>(json, UserProfile::class.java)
 
-        walletAccountRecyclerView.adapter = WalletAccountAdapter(userProfile)
+        VWARecyclerView.adapter = WalletAccountAdapter(userProfile)
         /////
 
-        button2.setOnClickListener(){
+        WVAGoToCWA.setOnClickListener(){
 
             val navController = view.findNavController()
             navController.navigate(R.id.action_viewWalletAccountFragment_to_createWalletAccountFragment)

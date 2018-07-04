@@ -1,7 +1,5 @@
 package com.example.slnn3r.wallettrackermvp.Adapter
 
-import android.os.Parcel
-import android.os.Parcelable
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
@@ -23,7 +21,7 @@ class WalletAccountAdapter(val homeFeed: UserProfile): RecyclerView.Adapter<Wall
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): WalletAccountViewHolder {
 
         val layoutInflater = LayoutInflater.from(parent.context)
-        val cellForRow = layoutInflater.inflate(R.layout.transaction_list_row, parent, false)
+        val cellForRow = layoutInflater.inflate(R.layout.wallet_account_list_row, parent, false)
 
 
         return WalletAccountViewHolder(cellForRow)
@@ -33,9 +31,8 @@ class WalletAccountAdapter(val homeFeed: UserProfile): RecyclerView.Adapter<Wall
 
         val video = homeFeed.userName.get(position)
 
-        holder.view.adapterDateView.text = video.toString()
-        holder.view.adapterCategoryView.text = video.toString()
-        holder.view.adapterAmountView.text = video.toString()
+        holder.view.VWAAccNameTextView.text = video.toString()
+        holder.view.VWABalTextView.text = video.toString()
 
 
     }

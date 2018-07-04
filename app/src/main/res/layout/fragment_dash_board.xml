@@ -2,87 +2,86 @@
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/frameLayoutDashBoard"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".View.Fragment.DashBoardFragment">
 
     <Spinner
-        android:id="@+id/dashBoardSpinner"
+        android:id="@+id/DBAccountSpinner"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="32dp"
-        app:layout_constraintBottom_toTopOf="@+id/dashBoardGraph"
+        android:layout_height="24dp"
+        android:layout_marginTop="12dp"
+        android:layout_marginEnd="64dp"
+        android:background="@color/colorPrimaryDark"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toEndOf="@+id/dashBoardTextView1"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_chainStyle="spread_inside" />
+        app:layout_constraintStart_toEndOf="@+id/DBAccountLabel"
+        app:layout_constraintTop_toBottomOf="@+id/DBTrxGraph" />
 
 
     <com.jjoe64.graphview.GraphView
-        android:id="@+id/dashBoardGraph"
+        android:id="@+id/DBTrxGraph"
         android:layout_width="match_parent"
         android:layout_height="200dip"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="24dp"
+        android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
-        android:layout_marginBottom="24dp"
-        app:layout_constraintBottom_toTopOf="@+id/dashBoardTextView2"
+        android:layout_marginBottom="16dp"
+        app:layout_constraintBottom_toTopOf="@+id/DBAccountSpinner"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/dashBoardSpinner" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_chainStyle="spread_inside" />
 
     <android.support.v7.widget.RecyclerView
-        android:id="@+id/dashBoardRecyclerView"
+        android:id="@+id/DBTrxRecyclerView"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginBottom="8dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/dashBoardTextView2" />
+        app:layout_constraintTop_toBottomOf="@+id/DBRecentLabel"
+        app:layout_constraintVertical_bias="1.0" />
 
     <TextView
-        android:id="@+id/dashBoardTextView2"
-        android:layout_width="wrap_content"
+        android:id="@+id/DBRecentLabel"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
-        android:layout_marginBottom="8dp"
-        android:text="Recent Transaction List"
+        android:text="@string/DBRecentLabel"
+        android:textAlignment="center"
         android:textAllCaps="true"
         android:textStyle="bold"
-        app:layout_constraintBottom_toTopOf="@+id/dashBoardRecyclerView"
+        app:layout_constraintBottom_toTopOf="@+id/DBTrxRecyclerView"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/dashBoardGraph" />
+        app:layout_constraintTop_toBottomOf="@+id/DBMonthTextView" />
 
     <TextView
-        android:id="@+id/dashBoardTextView1"
+        android:id="@+id/DBAccountLabel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="32dp"
-        android:layout_marginTop="10dp"
+        android:layout_marginStart="64dp"
+        android:layout_marginTop="16dp"
         android:layout_marginEnd="8dp"
-        android:layout_marginBottom="8dp"
-        android:text="Account : "
+        android:text="@string/DBAccountLabel"
         android:textAllCaps="true"
         android:textStyle="bold"
-        app:layout_constraintBottom_toTopOf="@+id/dashBoardGraph"
-        app:layout_constraintEnd_toStartOf="@+id/dashBoardSpinner"
+        app:layout_constraintEnd_toStartOf="@+id/DBAccountSpinner"
+        app:layout_constraintHorizontal_chainStyle="packed"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintTop_toBottomOf="@+id/DBTrxGraph" />
 
     <android.support.design.widget.FloatingActionButton
-        android:id="@+id/fabIncome"
+        android:id="@+id/DBIncomeFab"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|end"
@@ -92,17 +91,17 @@
         android:layout_marginEnd="8dp"
         android:layout_marginBottom="8dp"
         app:backgroundTint="@color/fui_bgPhone"
-        app:layout_constraintBottom_toTopOf="@+id/fabExpense"
+        app:layout_constraintBottom_toTopOf="@+id/DBExpenseFab"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/dashBoardRecyclerView"
+        app:layout_constraintTop_toTopOf="@+id/DBTrxRecyclerView"
         app:layout_constraintVertical_bias="1.0"
-        app:srcCompat="@drawable/money_icon" />
+        app:srcCompat="@drawable/income_icon" />
 
 
     <android.support.design.widget.FloatingActionButton
-        android:id="@+id/fabExpense"
+        android:id="@+id/DBExpenseFab"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|end"
@@ -114,7 +113,81 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.975"
         app:layout_constraintStart_toStartOf="parent"
-        app:srcCompat="@drawable/money_icon" />
+        app:srcCompat="@drawable/expense_icon" />
 
+
+    <View
+        android:id="@+id/DBDividerLine"
+        android:layout_width="0dp"
+        android:layout_height="1dp"
+
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
+        android:background="@android:color/darker_gray"
+        app:layout_constraintBottom_toTopOf="@+id/DBTrxRecyclerView"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/DBRecentLabel"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <TextView
+        android:id="@+id/DBCurrentBalLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="100dp"
+        android:layout_marginTop="8dp"
+        android:text="@string/DBCurrentBalLabel"
+        app:layout_constraintEnd_toStartOf="@+id/DBCurrentBalTextView"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/DBAccountLabel" />
+
+    <TextView
+        android:id="@+id/DBMonthTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:text="@string/DummyMonth"
+        app:layout_constraintBottom_toTopOf="@+id/DBRecentLabel"
+        app:layout_constraintEnd_toStartOf="@+id/DBMonthlyExpTextView"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/DBExpensesLabel"
+        app:layout_constraintTop_toBottomOf="@+id/DBCurrentBalLabel"
+        app:layout_constraintVertical_bias="0.6" />
+
+    <TextView
+        android:id="@+id/DBMonthlyExpTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="4dp"
+        android:layout_marginEnd="100dp"
+        android:text="@string/DummyAmount2"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/DBMonthTextView"
+        app:layout_constraintTop_toBottomOf="@+id/DBCurrentBalTextView" />
+
+    <TextView
+        android:id="@+id/DBCurrentBalTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="7dp"
+        android:layout_marginEnd="100dp"
+        android:text="@string/DummyAmount2"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/DBCurrentBalLabel"
+        app:layout_constraintTop_toBottomOf="@+id/DBAccountSpinner" />
+
+    <TextView
+        android:id="@+id/DBExpensesLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="100dp"
+        android:text="@string/DBExpensesLabel"
+        app:layout_constraintEnd_toStartOf="@+id/DBMonthTextView"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/DBMonthTextView" />
 
 </android.support.constraint.ConstraintLayout>

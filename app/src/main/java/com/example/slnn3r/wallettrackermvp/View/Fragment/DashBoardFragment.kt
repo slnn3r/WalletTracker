@@ -2,7 +2,6 @@ package com.example.slnn3r.wallettrackermvp.View.Fragment
 
 
 import android.content.Context.MODE_PRIVATE
-import android.graphics.Color
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v7.app.AppCompatActivity
@@ -19,9 +18,6 @@ import com.google.gson.Gson
 import kotlinx.android.synthetic.main.fragment_dash_board.*
 import android.widget.Toast
 import com.example.slnn3r.wallettrackermvp.Interface.ViewInterface
-import com.firebase.ui.auth.AuthUI.getApplicationContext
-
-
 
 
 class DashBoardFragment : Fragment(),ViewInterface.DashBoardView {
@@ -43,7 +39,7 @@ class DashBoardFragment : Fragment(),ViewInterface.DashBoardView {
         super.onViewCreated(view, savedInstanceState)
 
         ///// Dummy RecycleView
-        dashBoardRecyclerView.layoutManager = LinearLayoutManager(context)
+        DBTrxRecyclerView.layoutManager = LinearLayoutManager(context)
 
 
         val editor = context!!.getSharedPreferences("UserProfile", MODE_PRIVATE)
@@ -54,7 +50,7 @@ class DashBoardFragment : Fragment(),ViewInterface.DashBoardView {
 
         val userProfile = gson.fromJson<UserProfile>(json, UserProfile::class.java)
 
-        dashBoardRecyclerView.adapter = DashBoardTrxAdapter(userProfile)
+        DBTrxRecyclerView.adapter = DashBoardTrxAdapter(userProfile)
         /////
 
         ///// Dummy Spinner
@@ -69,11 +65,11 @@ class DashBoardFragment : Fragment(),ViewInterface.DashBoardView {
         // Drop down layout style - list view with radio button
         dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
 
-        dashBoardSpinner.adapter = dataAdapter
+        DBAccountSpinner.adapter = dataAdapter
 
         /////
 
-        fabIncome.setOnClickListener(){
+        DBIncomeFab.setOnClickListener(){
 
             // Testing Purpose
             val navController = view.findNavController()
@@ -85,7 +81,7 @@ class DashBoardFragment : Fragment(),ViewInterface.DashBoardView {
         }
 
 
-        fabExpense.setOnClickListener(){
+        DBExpenseFab.setOnClickListener(){
 
             // Testing Purpose
             val navController = view.findNavController()

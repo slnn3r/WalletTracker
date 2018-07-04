@@ -5,40 +5,44 @@
 
     <group android:checkableBehavior="single">
 
-        <item android:title="Wallet Tracker Management">
-
-        <menu>
-
-
         <item
-            android:id="@+id/nav_WalletAccount"
-            android:icon="@drawable/ic_menu_camera"
-            android:title="Wallet Account" />
+            android:id="@+id/navDrawer_title1"
+            android:title="@string/navDrawer_title1">
 
-            <item
-                android:id="@+id/nav_TrxCategory"
-                android:icon="@drawable/ic_menu_slideshow"
-                android:title="Transaction Category" />
-
-        <item
-            android:id="@+id/nav_TrxHistory"
-            android:icon="@drawable/ic_menu_gallery"
-            android:title="Transaction History" />
+            <menu>
 
 
-        </menu>
+                <item
+                    android:id="@+id/navDrawer_WalletAccount"
+                    android:icon="@drawable/wallet_acc_icon"
+                    android:title="@string/navDrawer_WalletAccount" />
+
+                <item
+                    android:id="@+id/navDrawer_TrxCategory"
+                    android:icon="@drawable/category_icon"
+                    android:title="@string/navDrawer_TrxCategory" />
+
+                <item
+                    android:id="@+id/navDrawer_TrxHistory"
+                    android:icon="@drawable/trx_history_icon"
+                    android:title="@string/navDrawer_TrxHistory" />
+
+
+            </menu>
         </item>
 
 
     </group>
 
 
-    <item android:title="My Account">
+    <item
+        android:id="@+id/navDrawer_title2"
+        android:title="@string/navDrawer_title2">
         <menu>
             <item
-                android:id="@+id/nav_SignOut"
-                android:icon="@drawable/ic_menu_share"
-                android:title="Sign Out" />
+                android:id="@+id/navDrawer_SignOut"
+                android:icon="@android:drawable/ic_menu_set_as"
+                android:title="@string/navDrawer_SignOut" />
 
         </menu>
     </item>

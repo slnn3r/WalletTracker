@@ -2,65 +2,111 @@
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/linearLayout"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:focusable="true"
     android:background="?android:selectableItemBackground"
-    >
+    android:focusable="true">
 
     <TextView
-        android:id="@+id/adapterDateView"
+        android:id="@+id/VWAAccNameTextView"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
+        android:layout_marginStart="42dp"
         android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        android:text="Date: 12/12/2019"
+        android:layout_marginBottom="8dp"
+        android:text="@string/DummyDate"
         android:textAllCaps="false"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/VWABalTextView"
+        app:layout_constraintStart_toEndOf="@+id/VWAAccNameLabel"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/adapterCategoryView"
+        android:id="@+id/VWABalTextView"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        android:text="Category: Income"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/adapterDateView" />
+        android:layout_marginStart="18dp"
+        android:text="@string/DummyAmount1"
+        app:layout_constraintBottom_toTopOf="@+id/DBTrxCategoryTextView"
+        app:layout_constraintStart_toEndOf="@+id/VWABalLabel"
+        app:layout_constraintTop_toBottomOf="@+id/VWAAccNameTextView" />
 
     <TextView
-        android:id="@+id/adapterAmountView"
+        android:id="@+id/DBTrxCategoryTextView"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
+        android:layout_marginStart="4dp"
         android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        android:text="Amount: 1000"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/adapterCategoryView" />
+        android:layout_marginBottom="8dp"
+        android:text="@string/DummyCategory"
+        app:layout_constraintBottom_toTopOf="@+id/DBDividerLine"
+        app:layout_constraintStart_toEndOf="@+id/DBTrxCategoryLabel"
+        app:layout_constraintTop_toBottomOf="@+id/VWABalTextView" />
 
     <View
-        android:layout_width="match_parent"
+        android:id="@+id/DBDividerLine"
+        android:layout_width="0dp"
         android:layout_height="1dp"
-        android:layout_marginStart="8dp"
 
+        android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
-        android:layout_marginBottom="8dp"
         android:background="@android:color/darker_gray"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/adapterAmountView" />
+        app:layout_constraintTop_toBottomOf="@+id/DBTrxCategoryTextView"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <TextView
+        android:id="@+id/VWAAccNameLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:text="@string/DBTrxDateLabel"
+        android:textAllCaps="true"
+        app:layout_constraintBottom_toTopOf="@+id/VWABalLabel"
+        app:layout_constraintEnd_toStartOf="@+id/VWAAccNameTextView"
+        app:layout_constraintStart_toEndOf="@+id/DBTrxImageView"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/VWABalLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:text="@string/DBTrxAmountLabel"
+        android:textAllCaps="true"
+        app:layout_constraintBottom_toTopOf="@+id/DBTrxCategoryLabel"
+        app:layout_constraintEnd_toStartOf="@+id/VWABalTextView"
+        app:layout_constraintStart_toEndOf="@+id/DBTrxImageView"
+        app:layout_constraintTop_toBottomOf="@+id/VWAAccNameLabel" />
+
+    <TextView
+        android:id="@+id/DBTrxCategoryLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:layout_marginBottom="8dp"
+        android:text="@string/DBTrxCategoryLabel"
+        android:textAllCaps="true"
+        app:layout_constraintBottom_toTopOf="@+id/DBDividerLine"
+        app:layout_constraintEnd_toStartOf="@+id/DBTrxCategoryTextView"
+        app:layout_constraintStart_toEndOf="@+id/DBTrxImageView"
+        app:layout_constraintTop_toBottomOf="@+id/VWABalLabel" />
+
+    <ImageView
+        android:id="@+id/DBTrxImageView"
+        android:layout_width="56dp"
+        android:layout_height="58dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="8dp"
+        android:background="@drawable/fui_idp_button_background_email"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.347"
+        app:srcCompat="@drawable/expense_icon" />
 
 </android.support.constraint.ConstraintLayout>

@@ -30,9 +30,11 @@ class DashBoardTrxAdapter(val homeFeed: UserProfile): RecyclerView.Adapter<DashB
 
         val video = homeFeed.userName.get(position)
 
-        holder.view.adapterDateView.text = video.toString()
-        holder.view.adapterCategoryView.text = video.toString()
-        holder.view.adapterAmountView.text = video.toString()
+        //"${context.getString(R.string.mymessage)} ${it.myinfo.codeid}"
+
+        holder.view.VWAAccNameTextView.text = video.toString()
+        holder.view.VWABalTextView.text = video.toString()
+        holder.view.DBTrxCategoryTextView.text = video.toString()
 
 
     }

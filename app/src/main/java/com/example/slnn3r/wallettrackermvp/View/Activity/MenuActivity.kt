@@ -133,22 +133,22 @@ class MenuActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
         // Handle navigation view item clicks here.
         when (item.itemId) {
-            R.id.nav_WalletAccount -> {
+            R.id.navDrawer_WalletAccount -> {
 
                 setupNavigationMode()
                 Navigation.findNavController(this, R.id.navMenu).navigate(R.id.action_dashBoardFragment_to_viewWalletAccountFragment)
 
             }
-            R.id.nav_TrxCategory -> {
+            R.id.navDrawer_TrxCategory -> {
 
                 setupNavigationMode()
                 Navigation.findNavController(this, R.id.navMenu).navigate(R.id.action_dashBoardFragment_to_viewTrxCategoryFragment)
             }
-            R.id.nav_TrxHistory -> {
+            R.id.navDrawer_TrxHistory -> {
 
             }
 
-            R.id.nav_SignOut -> {
+            R.id.navDrawer_SignOut -> {
                 presenter.logoutGoogleExecute(this)
 
             }

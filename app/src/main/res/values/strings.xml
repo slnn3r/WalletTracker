@@ -14,6 +14,62 @@
 
     <string name="action_settings">Settings</string>
 
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <!-- activity_menu_drawer -->
+    <string name="navDrawer_title1">Wallet Tracker Management</string>
+    <string name="navDrawer_WalletAccount">Wallet Account</string>
+    <string name="navDrawer_TrxCategory">Transaction Category</string>
+    <string name="navDrawer_TrxHistory">Transaction History</string>
+    <string name="navDrawer_title2">My Account</string>
+    <string name="navDrawer_SignOut">Sign Out</string>
+
+
+    <!-- Dummy Data for View Purpose-->
+    <string name="DummyDate">: 12/12/2018</string>
+    <string name="DummyAccountName">: Personal Account</string>
+    <string name="DummyAmount1">: $ 100000</string>
+    <string name="DummyCategory">: Food and Drink</string>
+    <string name="DummyMonth">(July)</string>
+    <string name="DummyAmount2">$ 5000</string>
+
+    <!-- fragment_dash_board -->
+    <string name="DBAccountLabel">Account : </string>
+    <string name="DBRecentLabel">Recent Transaction List</string>
+    <string name="DBCurrentBalLabel">Current Balance : </string>
+    <string name="DBExpensesLabel">Expenses : </string>
+
+    <!-- transaction_list_row -->
+    <string name="DBTrxDateLabel">Date</string>
+    <string name="DBTrxAmountLabel">Amount</string>
+    <string name="DBTrxCategoryLabel">Category</string>
+
+    <!-- fragment_add_new_trx -->
+    <string name="ANTTrxTypeLabel">Transaction Type</string>
+    <string name="ANTTrxCategoryLabel">Transaction Category</string>
+    <string name="ANTAmountInput">Amount</string>
+    <string name="ANTRemarksInput">Remarks</string>
+    <string name="ANTTrxSubmit">Submit Transaction</string>
+    <string name="ANTReminderLabel">Please fill up the Empty Fields</string>
+
+    <!-- fragment_create_wallet_account -->
+    <string name="CWARemindLabel">Please Fill Up the Empty Fields</string>
+    <string name="CWAAccNameInput">Account Name</string>
+    <string name="CWAAccBalanceInput">Initial Balance</string>
+    <string name="CWACreateSubmit">Create Account Now</string>
+
+    <!-- fragment_view_wallet_account -->
+    <string name="WVAGoToCWA">New Account</string>
+    <string name="VWAReminderLabel">Only 5 Accounts is Allowed to be Create</string>
+
+    <!-- wallet_account_list_row -->
+    <string name="VWAAccNameLabel">Account Name</string>
+    <string name="VWABalLabel">Initial Balance</string>
+
+    <!-- fragment_details_wallet_account -->
+    <string name="DWAReminderLabel">Click on the Field to Edit</string>
+    <string name="DWAAccNameInput">Account Name (Editable)</string>
+    <string name="DWAAccBalanceInput">Initial Balance (Editable)</string>
+    <string name="DWAUpdateSubmit">Update Account Info</string>
+    <string name="DWADeleteSubmit">Delete Account</string>
+
+
 </resources>
