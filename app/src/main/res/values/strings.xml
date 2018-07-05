@@ -37,6 +37,7 @@
     <string name="DBRecentLabel">Recent Transaction List</string>
     <string name="DBCurrentBalLabel">Current Balance : </string>
     <string name="DBExpensesLabel">Expenses : </string>
+    <string name="DBOverviewLabel">Recent Expenses Graph</string>
 
     <!-- transaction_list_row -->
 

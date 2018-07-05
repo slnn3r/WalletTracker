@@ -48,7 +48,6 @@ class NewTrxFragment : Fragment() {
 
         NewTrxTypeSpinner.adapter = dataAdapter
 
-
         // Creating adapter for Category spinner
         val data2Adapter = ArrayAdapter(context, android.R.layout.simple_spinner_item, DummyDataCategorySpinner().getSpinnerItem())
 
@@ -107,6 +106,20 @@ class NewTrxFragment : Fragment() {
 
         // Initial Date
         NewTrxDateInput.setText(sdf.format(myCalendar.getTime()))
+
+
+        // Receive Argumemt
+        val TrxTypeSelection = arguments?.getString("TrxTypeSelection")
+
+        // Set Transaction Type based on Argument
+        val spinnerPosition = dataAdapter.getPosition(TrxTypeSelection)
+        NewTrxTypeSpinner.setSelection(spinnerPosition)
+
+
+
+
+
+
 
     }
 

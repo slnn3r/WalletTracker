@@ -5,6 +5,7 @@ import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.os.Handler
 import android.support.design.widget.NavigationView
 import android.support.v4.view.GravityCompat
 import android.support.v4.widget.DrawerLayout
@@ -41,6 +42,8 @@ class MenuActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
     private var isNavigated:Boolean =false // Set Initial Navigation Status to false
     private val initialScreen:Int = R.id.dashBoardFragment
+
+    private var doubleBackToExitPressedOnce = false
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -121,7 +124,24 @@ class MenuActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             setupNavigationFlow()
 
         } else{
-            super.onBackPressed()
+
+            val currentScreen = findNavController(R.id.navMenu).currentDestination.id
+
+            if(currentScreen==initialScreen){
+                if (doubleBackToExitPressedOnce) {
+                    super.onBackPressed()
+                    return
+                }
+
+                this.doubleBackToExitPressedOnce = true
+                Toast.makeText(this, "Please click BACK again to exit", Toast.LENGTH_SHORT).show()
+
+                Handler().postDelayed(Runnable { doubleBackToExitPressedOnce = false }, 2000)
+            }else{
+                super.onBackPressed()
+
+            }
+
 
         }
     }

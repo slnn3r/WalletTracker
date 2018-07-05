@@ -18,6 +18,11 @@ import kotlinx.android.synthetic.main.fragment_dash_board.*
 import android.widget.Toast
 import com.example.slnn3r.wallettrackermvp.Interface.ViewInterface
 import com.example.slnn3r.wallettrackermvp.Utility.DummyDataTrxListItem
+import com.jjoe64.graphview.GraphView
+import com.jjoe64.graphview.helper.DateAsXAxisLabelFormatter
+import com.jjoe64.graphview.series.DataPoint
+import com.jjoe64.graphview.series.LineGraphSeries
+import java.util.*
 
 
 class DashBoardFragment : Fragment(),ViewInterface.DashBoardView {
@@ -65,10 +70,14 @@ class DashBoardFragment : Fragment(),ViewInterface.DashBoardView {
 
             // Testing Purpose
             val navController = view.findNavController()
-            navController.navigate(R.id.action_dashBoardFragment_to_addNewTrx)
+
+
+            val bundle = Bundle()
+            bundle.putString("TrxTypeSelection", "Income")
+            navController.navigate(R.id.action_dashBoardFragment_to_addNewTrx, bundle)
+
             (activity as MenuActivity).setupNavigationMode()
 
-            Toast.makeText(context,"Add",Toast.LENGTH_SHORT).show()
 
         }
 
@@ -77,16 +86,61 @@ class DashBoardFragment : Fragment(),ViewInterface.DashBoardView {
 
             // Testing Purpose
             val navController = view.findNavController()
-            navController.navigate(R.id.action_dashBoardFragment_to_addNewTrx)
+
+            val bundle = Bundle()
+            bundle.putString("TrxTypeSelection", "Expense")
+            navController.navigate(R.id.action_dashBoardFragment_to_addNewTrx,bundle)
+
             (activity as MenuActivity).setupNavigationMode()
 
-            Toast.makeText(context,"Minus",Toast.LENGTH_SHORT).show()
+
 
 
         }
 
 
 
+        //// Dummy Graph Setup
+
+        // generate Dates
+        val calendar = Calendar.getInstance()
+
+        val d1 = calendar.time
+
+        calendar.add(Calendar.DATE, 1)
+        val d2 = calendar.time
+
+        calendar.add(Calendar.DATE, 1)
+        val d3 = calendar.time
+
+        calendar.add(Calendar.DATE, 1)
+        val d4 = calendar.time
+
+        calendar.add(Calendar.DATE, 1)
+        val d5 = calendar.time
+
+
+        val graph = DBTrxGraph as GraphView
+
+        // you can directly pass Date objects to DataPoint-Constructor
+        // this will convert the Date to double via Date#getTime()
+        val series = LineGraphSeries<DataPoint>(arrayOf<DataPoint>(DataPoint(d1, 55.0), DataPoint(d2, 23.0), DataPoint(d3, 3.0), DataPoint(d4, 13.0),DataPoint(d5, 8.0)))
+
+        graph.addSeries(series)
+
+        // set date label formatter
+        graph.gridLabelRenderer.labelFormatter = DateAsXAxisLabelFormatter(activity)
+        graph.gridLabelRenderer.numHorizontalLabels = 5
+
+        // set manual x bounds to have nice steps
+        graph.viewport.setMinX(d1.time.toDouble())
+        graph.viewport.setMaxX(d5.time.toDouble())
+        graph.viewport.isXAxisBoundsManual = true
+
+        // as we use dates as labels, the human rounding to nice readable numbers
+        // is not necessary
+        graph.gridLabelRenderer.setHumanRounding(false)
+        ////
 
     }
 

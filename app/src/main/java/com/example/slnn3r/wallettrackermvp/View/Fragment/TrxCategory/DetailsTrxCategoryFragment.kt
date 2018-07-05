@@ -7,6 +7,7 @@ import android.support.v7.app.AppCompatActivity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.AdapterView
 import android.widget.ArrayAdapter
 
 import com.example.slnn3r.wallettrackermvp.R
@@ -40,6 +41,29 @@ class DetailsTrxCategoryFragment : Fragment() {
         DTCTrxTypeSpinner.adapter = dataAdapter
 
         /////
+
+
+        // Setup Spinner listener
+        DTCTrxTypeSpinner.setOnItemSelectedListener(object : AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(parentView: AdapterView<*>, selectedItemView: View, position: Int, id: Long) {
+                if(DTCTrxTypeSpinner.selectedItem=="Expense"){
+
+                    DTCImageView.setImageDrawable(getResources().getDrawable(R.drawable.expense_icon))
+                    DTCImageView.setBackground(getResources().getDrawable(R.drawable.fui_idp_button_background_email))
+
+                }else{
+                    DTCImageView.setImageDrawable(getResources().getDrawable(R.drawable.income_icon))
+                    DTCImageView.setBackground(getResources().getDrawable(R.drawable.fui_idp_button_background_phone))
+
+                }
+
+            }
+
+            override fun onNothingSelected(parentView: AdapterView<*>) {
+                // your code here
+            }
+
+        })
 
     }
 
