@@ -1,112 +1,79 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="?android:selectableItemBackground"
     android:focusable="true">
 
-    <TextView
-        android:id="@+id/VWAAccNameTextView"
-        android:layout_width="0dp"
+
+    <android.support.v7.widget.CardView
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="42dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginBottom="8dp"
-        android:text="@string/DummyDate"
-        android:textAllCaps="false"
-        app:layout_constraintBottom_toTopOf="@+id/VWABalTextView"
-        app:layout_constraintStart_toEndOf="@+id/VWAAccNameLabel"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <TextView
-        android:id="@+id/VWABalTextView"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="18dp"
-        android:text="@string/DummyAmount1"
-        app:layout_constraintBottom_toTopOf="@+id/DBTrxCategoryTextView"
-        app:layout_constraintStart_toEndOf="@+id/VWABalLabel"
-        app:layout_constraintTop_toBottomOf="@+id/VWAAccNameTextView" />
-
-    <TextView
-        android:id="@+id/DBTrxCategoryTextView"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="4dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginBottom="8dp"
-        android:text="@string/DummyCategory"
-        app:layout_constraintBottom_toTopOf="@+id/DBDividerLine"
-        app:layout_constraintStart_toEndOf="@+id/DBTrxCategoryLabel"
-        app:layout_constraintTop_toBottomOf="@+id/VWABalTextView" />
-
-    <View
-        android:id="@+id/DBDividerLine"
-        android:layout_width="0dp"
-        android:layout_height="1dp"
-
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
-        android:background="@android:color/darker_gray"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/DBTrxCategoryTextView"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintTop_toTopOf="parent">
 
-    <TextView
-        android:id="@+id/VWAAccNameLabel"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="24dp"
-        android:text="@string/DBTrxDateLabel"
-        android:textAllCaps="true"
-        app:layout_constraintBottom_toTopOf="@+id/VWABalLabel"
-        app:layout_constraintEnd_toStartOf="@+id/VWAAccNameTextView"
-        app:layout_constraintStart_toEndOf="@+id/DBTrxImageView"
-        app:layout_constraintTop_toTopOf="parent" />
+        <android.support.constraint.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
 
-    <TextView
-        android:id="@+id/VWABalLabel"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="24dp"
-        android:text="@string/DBTrxAmountLabel"
-        android:textAllCaps="true"
-        app:layout_constraintBottom_toTopOf="@+id/DBTrxCategoryLabel"
-        app:layout_constraintEnd_toStartOf="@+id/VWABalTextView"
-        app:layout_constraintStart_toEndOf="@+id/DBTrxImageView"
-        app:layout_constraintTop_toBottomOf="@+id/VWAAccNameLabel" />
+            <TextView
+                android:id="@+id/DBAccNameTextView"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="7dp"
+                android:text="@string/DummyDate"
+                android:textAllCaps="true"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toTopOf="@+id/DBBalTextView"
+                app:layout_constraintStart_toEndOf="@+id/DBTrxImageView"
+                app:layout_constraintTop_toTopOf="parent" />
 
-    <TextView
-        android:id="@+id/DBTrxCategoryLabel"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="24dp"
-        android:layout_marginBottom="8dp"
-        android:text="@string/DBTrxCategoryLabel"
-        android:textAllCaps="true"
-        app:layout_constraintBottom_toTopOf="@+id/DBDividerLine"
-        app:layout_constraintEnd_toStartOf="@+id/DBTrxCategoryTextView"
-        app:layout_constraintStart_toEndOf="@+id/DBTrxImageView"
-        app:layout_constraintTop_toBottomOf="@+id/VWABalLabel" />
+            <TextView
+                android:id="@+id/DBBalTextView"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:text="@string/DummyAmount1"
+                app:layout_constraintBottom_toTopOf="@+id/DBTrxCategoryTextView"
+                app:layout_constraintStart_toEndOf="@+id/DBTrxImageView"
+                app:layout_constraintTop_toBottomOf="@+id/DBAccNameTextView" />
 
-    <ImageView
-        android:id="@+id/DBTrxImageView"
-        android:layout_width="56dp"
-        android:layout_height="58dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginBottom="8dp"
-        android:background="@drawable/fui_idp_button_background_email"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.347"
-        app:srcCompat="@drawable/expense_icon" />
+            <TextView
+                android:id="@+id/DBTrxCategoryTextView"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginBottom="8dp"
+                android:text="@string/DummyCategory"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/DBTrxImageView"
+                app:layout_constraintTop_toBottomOf="@+id/DBBalTextView" />
+
+
+            <ImageView
+                android:id="@+id/DBTrxImageView"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="8dp"
+                android:background="@drawable/fui_idp_button_background_email"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.347"
+                app:srcCompat="@drawable/expense_icon" />
+
+        </android.support.constraint.ConstraintLayout>
+
+    </android.support.v7.widget.CardView>
+
+
 
 </android.support.constraint.ConstraintLayout>

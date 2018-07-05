@@ -8,26 +8,88 @@
 
 
     <TextView
-        android:id="@+id/textView4"
+        android:id="@+id/CTCTrxTypeLabel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="24dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="42dp"
+        android:text="@string/CTCTrxTypeLabel"
+        app:layout_constraintEnd_toStartOf="@+id/CTCImageView"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/CTCReminderLabel" />
+
+    <Spinner
+        android:id="@+id/CTCTrxTypeSpinner"
+        android:layout_width="0dp"
+        android:layout_height="24dp"
+        android:layout_marginTop="40dp"
+        android:layout_marginEnd="32dp"
+        android:background="@drawable/spinner_background"
+
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/CTCImageView"
+        app:layout_constraintTop_toBottomOf="@+id/CTCReminderLabel" />
+
+    <TextView
+        android:id="@+id/CTCReminderLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="24dp"
         android:layout_marginEnd="8dp"
-        android:text="TextView"
-        app:layout_constraintEnd_toStartOf="@+id/spinner2"
+        android:text="@string/CTCReminderLabel"
+        android:textAllCaps="true"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <Spinner
-        android:id="@+id/spinner2"
+    <ImageView
+        android:id="@+id/CTCImageView"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="32dp"
+        android:layout_marginEnd="8dp"
+        android:background="@drawable/fui_idp_button_background_email"
+        android:src="@drawable/expense_icon"
+        app:layout_constraintBottom_toTopOf="@+id/CTCCategoryNameInputLayout"
+        app:layout_constraintEnd_toStartOf="@+id/CTCTrxTypeSpinner"
+        app:layout_constraintStart_toEndOf="@+id/CTCTrxTypeLabel"
+        app:layout_constraintTop_toBottomOf="@+id/CTCReminderLabel" />
+
+
+    <android.support.design.widget.TextInputLayout
+        android:id="@+id/CTCCategoryNameInputLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="24dp"
+        android:layout_marginEnd="8dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/CTCImageView">
+
+        <EditText
+            android:id="@+id/CTCCategoryNameInput"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/CTCCategoryNameInput"
+            android:inputType="text" />
+
+    </android.support.design.widget.TextInputLayout>
+
+    <Button
+        android:id="@+id/CTCCreateSubmit"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="16dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="8dp"
+        android:text="@string/CTCCreateSubmit"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/textView4"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintStart_toStartOf="parent" />
 
 </android.support.constraint.ConstraintLayout>

@@ -1,24 +1,25 @@
 package com.example.slnn3r.wallettrackermvp.View.Fragment.TrxCategory
 
 
+import android.content.Context
 import android.os.Bundle
 import android.support.v4.app.Fragment
+import android.support.v7.app.AppCompatActivity
+import android.support.v7.widget.LinearLayoutManager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ArrayAdapter
 import androidx.navigation.findNavController
+import com.example.slnn3r.wallettrackermvp.Adapter.TrxCategoryAdapter
+import com.example.slnn3r.wallettrackermvp.Model.UserProfile
 
 import com.example.slnn3r.wallettrackermvp.R
+import com.example.slnn3r.wallettrackermvp.Utility.DummyDataCategoryListItem
+import com.example.slnn3r.wallettrackermvp.Utility.FilterTrxTypeSpinnerItem
+import com.google.gson.Gson
 import kotlinx.android.synthetic.main.fragment_view_trx_category.*
 
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
-
-/**
- * A simple [Fragment] subclass.
- *
- */
 
 class ViewTrxCategoryFragment : Fragment() {
 
@@ -26,7 +27,7 @@ class ViewTrxCategoryFragment : Fragment() {
                               savedInstanceState: Bundle?): View? {
 
 
-
+        (activity as? AppCompatActivity)?.supportActionBar?.title = "Transaction Category List"
 
         return inflater.inflate(R.layout.fragment_view_trx_category, container, false)
     }
@@ -35,11 +36,31 @@ class ViewTrxCategoryFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        button4.setOnClickListener(){
+        VTCGoToCTC.setOnClickListener(){
             val navController = view.findNavController()
             navController.navigate(R.id.action_viewTrxCategoryFragment_to_createTrxCategoryFragment)
 
         }
+
+        ///// Dummy RecycleView
+        VTCRecyclerView.layoutManager = LinearLayoutManager(context)
+
+
+        VTCRecyclerView.adapter = TrxCategoryAdapter(DummyDataCategoryListItem().getListItem())
+        /////
+
+
+        ///// Populate Spinner Item
+
+        // Creating adapter for spinner
+        val dataAdapter = ArrayAdapter(context, android.R.layout.simple_spinner_item, FilterTrxTypeSpinnerItem().getSpinnerItem())
+
+        // Drop down layout style - list view with radio button
+        dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+
+        VTCTrxTypeSpinner.adapter = dataAdapter
+
+        /////
 
     }
 

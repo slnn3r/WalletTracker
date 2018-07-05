@@ -10,7 +10,6 @@ import android.view.*
 import android.widget.ArrayAdapter
 import androidx.navigation.findNavController
 import com.example.slnn3r.wallettrackermvp.Adapter.DashBoardTrxAdapter
-import com.example.slnn3r.wallettrackermvp.Model.UserProfile
 
 import com.example.slnn3r.wallettrackermvp.R
 import com.example.slnn3r.wallettrackermvp.View.Activity.MenuActivity
@@ -18,6 +17,7 @@ import com.google.gson.Gson
 import kotlinx.android.synthetic.main.fragment_dash_board.*
 import android.widget.Toast
 import com.example.slnn3r.wallettrackermvp.Interface.ViewInterface
+import com.example.slnn3r.wallettrackermvp.Utility.DummyDataTrxListItem
 
 
 class DashBoardFragment : Fragment(),ViewInterface.DashBoardView {
@@ -42,15 +42,7 @@ class DashBoardFragment : Fragment(),ViewInterface.DashBoardView {
         DBTrxRecyclerView.layoutManager = LinearLayoutManager(context)
 
 
-        val editor = context!!.getSharedPreferences("UserProfile", MODE_PRIVATE)
-
-        // user GSON convert to object
-        val gson = Gson()
-        val json = editor.getString("UserProfile", "")
-
-        val userProfile = gson.fromJson<UserProfile>(json, UserProfile::class.java)
-
-        DBTrxRecyclerView.adapter = DashBoardTrxAdapter(userProfile)
+        DBTrxRecyclerView.adapter = DashBoardTrxAdapter(DummyDataTrxListItem().getListItem())
         /////
 
         ///// Dummy Spinner
@@ -76,7 +68,7 @@ class DashBoardFragment : Fragment(),ViewInterface.DashBoardView {
             navController.navigate(R.id.action_dashBoardFragment_to_addNewTrx)
             (activity as MenuActivity).setupNavigationMode()
 
-            Toast.makeText(context,"Add",Toast.LENGTH_LONG).show()
+            Toast.makeText(context,"Add",Toast.LENGTH_SHORT).show()
 
         }
 
@@ -88,10 +80,12 @@ class DashBoardFragment : Fragment(),ViewInterface.DashBoardView {
             navController.navigate(R.id.action_dashBoardFragment_to_addNewTrx)
             (activity as MenuActivity).setupNavigationMode()
 
-            Toast.makeText(context,"Minus",Toast.LENGTH_LONG).show()
+            Toast.makeText(context,"Minus",Toast.LENGTH_SHORT).show()
 
 
         }
+
+
 
 
     }

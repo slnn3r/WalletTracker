@@ -5,16 +5,23 @@ import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.navigation.findNavController
 import com.example.slnn3r.wallettrackermvp.Model.UserProfile
 import com.example.slnn3r.wallettrackermvp.R
+import com.example.slnn3r.wallettrackermvp.View.Activity.MenuActivity
 import kotlinx.android.synthetic.main.transaction_list_row.view.*
+import kotlin.coroutines.experimental.coroutineContext
+import android.content.Intent
+import android.support.v4.content.ContextCompat.startActivity
+import com.example.slnn3r.wallettrackermvp.Model.Transaction
 
-class DashBoardTrxAdapter(val homeFeed: UserProfile): RecyclerView.Adapter<DashBoardViewHolder>(){
+
+class DashBoardTrxAdapter(val homeFeed: ArrayList<Transaction>): RecyclerView.Adapter<DashBoardViewHolder>(){
 
 
     // numberOfItems
     override  fun getItemCount(): Int{
-        return homeFeed.userName.count()
+        return homeFeed.count()
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): DashBoardViewHolder {
@@ -28,14 +35,11 @@ class DashBoardTrxAdapter(val homeFeed: UserProfile): RecyclerView.Adapter<DashB
 
     override fun onBindViewHolder(holder: DashBoardViewHolder, position: Int) {
 
-        val video = homeFeed.userName.get(position)
+        val video = homeFeed.get(position)
 
-        //"${context.getString(R.string.mymessage)} ${it.myinfo.codeid}"
-
-        holder.view.VWAAccNameTextView.text = video.toString()
-        holder.view.VWABalTextView.text = video.toString()
-        holder.view.DBTrxCategoryTextView.text = video.toString()
-
+        holder.view.DBAccNameTextView.text = video.trxDateTime
+        holder.view.DBBalTextView.text = video.trxCategoryID
+        holder.view.DBTrxCategoryTextView.text = "$ ${video.trxAmount}"
 
     }
 
@@ -47,10 +51,12 @@ class DashBoardViewHolder(val view: View): RecyclerView.ViewHolder(view){
 
     init{
         view.setOnClickListener{
-            println("click")
 
+            val navController = view.findNavController()
+            navController.navigate(R.id.action_dashBoardFragment_to_detailsTrxFragment)
 
-
+            val context = view.context
+            (context as MenuActivity).setupNavigationMode()
         }
     }
 

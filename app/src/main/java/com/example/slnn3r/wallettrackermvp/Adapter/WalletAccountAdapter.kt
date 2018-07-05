@@ -6,16 +6,18 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.navigation.findNavController
 import com.example.slnn3r.wallettrackermvp.Model.UserProfile
+import com.example.slnn3r.wallettrackermvp.Model.WalletAccount
 import com.example.slnn3r.wallettrackermvp.R
 import kotlinx.android.synthetic.main.transaction_list_row.view.*
+import kotlinx.android.synthetic.main.wallet_account_list_row.view.*
 
 
-class WalletAccountAdapter(val homeFeed: UserProfile): RecyclerView.Adapter<WalletAccountViewHolder>(){
+class WalletAccountAdapter(val homeFeed: ArrayList<WalletAccount>): RecyclerView.Adapter<WalletAccountViewHolder>(){
 
 
     // numberOfItems
     override  fun getItemCount(): Int{
-        return homeFeed.userName.count()
+        return homeFeed.count()
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): WalletAccountViewHolder {
@@ -29,10 +31,9 @@ class WalletAccountAdapter(val homeFeed: UserProfile): RecyclerView.Adapter<Wall
 
     override fun onBindViewHolder(holder: WalletAccountViewHolder, position: Int) {
 
-        val video = homeFeed.userName.get(position)
+        val video = homeFeed.get(position)
 
-        holder.view.VWAAccNameTextView.text = video.toString()
-        holder.view.VWABalTextView.text = video.toString()
+        holder.view.VWAAccNameTextView.text = video.WalletAccountName
 
 
     }

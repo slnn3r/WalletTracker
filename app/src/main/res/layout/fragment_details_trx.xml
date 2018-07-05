@@ -1,0 +1,195 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".View.Fragment.TrxManagement.DetailsTrxFragment">
+
+
+    <TextView
+        android:id="@+id/DetailsTrxTypeLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="32dp"
+        android:text="@string/DetailsTrxTypeLabel"
+        app:layout_constraintEnd_toStartOf="@+id/DetailsTrxTypeImageView"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/DetailsReminderLabel" />
+
+    <Spinner
+        android:id="@+id/DetailsTrxCategorySpinner"
+        android:layout_width="0dp"
+        android:layout_height="24dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="17dp"
+        android:layout_marginEnd="16dp"
+
+        android:background="@drawable/spinner_background"
+        app:layout_constraintEnd_toEndOf="parent"
+
+        app:layout_constraintStart_toEndOf="@+id/DetailsTrxCategoryLabel"
+        app:layout_constraintTop_toBottomOf="@+id/DetailsTrxTypeImageView" />
+
+    <TextView
+        android:id="@+id/DetailsTrxCategoryLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="32dp"
+        android:text="@string/DetailsTrxCategoryLabel"
+        app:layout_constraintEnd_toStartOf="@+id/DetailsTrxCategorySpinner"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/DetailsTrxTypeLabel" />
+
+
+    <android.support.design.widget.TextInputLayout
+        android:id="@+id/DetailsAmountInputLayout"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="8dp"
+        app:layout_constraintBottom_toTopOf="@+id/DetailsTrxUpdateSubmit"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/DetailsRemarksLayout">
+
+        <EditText
+            android:id="@+id/DetailsAmountInput"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:hint="@string/DetailsAmountInput"
+            android:inputType="numberDecimal"
+
+            android:textAlignment="center"
+            android:textSize="36sp" />
+
+    </android.support.design.widget.TextInputLayout>
+
+
+    <android.support.design.widget.TextInputLayout
+        android:id="@+id/DetailsRemarksLayout"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="16dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/DetailsTrxDateLayout">
+
+        <EditText
+            android:id="@+id/DetailsRemarksInput"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:hint="@string/DetailsTrxRemarksInput"
+            android:inputType="text"
+
+            android:textAlignment="center" />
+
+    </android.support.design.widget.TextInputLayout>
+
+    <Button
+        android:id="@+id/DetailsTrxDeleteSubmit"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="8dp"
+        android:background="@drawable/fui_idp_button_background_email"
+        android:text="@string/DetailsTrxDeleteSubmit"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
+        android:id="@+id/DetailsReminderLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="24dp"
+        android:layout_marginEnd="8dp"
+        android:text="@string/DetailsTrxReminderLabel"
+        android:textAllCaps="true"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/DetailsTrxTypeImageView"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="24dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="8dp"
+        android:background="@drawable/fui_idp_button_background_email"
+        android:src="@drawable/expense_icon"
+        app:layout_constraintBottom_toTopOf="@+id/DetailsTrxCategorySpinner"
+        app:layout_constraintEnd_toStartOf="@+id/DetailsTrxTypeSpinner"
+        app:layout_constraintStart_toEndOf="@+id/DetailsTrxTypeLabel"
+        app:layout_constraintTop_toBottomOf="@+id/DetailsReminderLabel" />
+
+    <Spinner
+        android:id="@+id/DetailsTrxTypeSpinner"
+        android:layout_width="0dp"
+        android:layout_height="24dp"
+        android:layout_marginTop="15dp"
+        android:layout_marginEnd="32dp"
+        android:layout_marginBottom="8dp"
+        android:background="@drawable/spinner_background"
+
+        app:layout_constraintBottom_toTopOf="@+id/DetailsTrxCategorySpinner"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.509"
+        app:layout_constraintStart_toEndOf="@+id/DetailsTrxTypeImageView"
+        app:layout_constraintTop_toBottomOf="@+id/DetailsReminderLabel"
+        app:layout_constraintVertical_bias="0.463" />
+
+    <android.support.design.widget.TextInputLayout
+        android:id="@+id/DetailsTrxDateLayout"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="24dp"
+        android:layout_marginEnd="16dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/DetailsTrxCategorySpinner">
+
+        <EditText
+            android:id="@+id/DetailsTrxDateInput"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:clickable="true"
+            android:focusable="false"
+            android:hint="@string/DetailsTrxDateInput"
+            android:inputType="date"
+
+            android:textAlignment="center" />
+
+    </android.support.design.widget.TextInputLayout>
+
+    <Button
+        android:id="@+id/DetailsTrxUpdateSubmit"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="8dp"
+        android:background="@drawable/fui_idp_button_background_phone"
+        android:text="@string/DetailsTrxUpdateSubmit"
+        app:layout_constraintBottom_toTopOf="@+id/DetailsTrxDeleteSubmit"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.496"
+        app:layout_constraintStart_toStartOf="parent" />
+
+
+</android.support.constraint.ConstraintLayout>

@@ -17,7 +17,7 @@
         app:layout_constraintBottom_toTopOf="@+id/WVAGoToCWA"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/DBDividerLine" />
+        app:layout_constraintTop_toBottomOf="@+id/VWAReminderLabel" />
 
     <Button
         android:id="@+id/WVAGoToCWA"
@@ -38,28 +38,14 @@
         android:layout_marginStart="8dp"
         android:layout_marginTop="24dp"
         android:layout_marginEnd="8dp"
-        android:layout_marginBottom="24dp"
+        android:layout_marginBottom="32dp"
         android:text="@string/VWAReminderLabel"
         android:textAllCaps="true"
         android:textStyle="bold"
-        app:layout_constraintBottom_toTopOf="@+id/DBDividerLine"
+        app:layout_constraintBottom_toTopOf="@+id/VWARecyclerView"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <View
-        android:id="@+id/DBDividerLine"
-        android:layout_width="0dp"
-        android:layout_height="1dp"
-
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        android:background="@android:color/darker_gray"
-        app:layout_constraintBottom_toTopOf="@+id/VWARecyclerView"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/VWAReminderLabel" />
 
 </android.support.constraint.ConstraintLayout>

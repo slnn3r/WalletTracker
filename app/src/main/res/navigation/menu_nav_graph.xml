@@ -19,6 +19,9 @@
         <action
             android:id="@+id/action_dashBoardFragment_to_addNewTrx"
             app:destination="@id/addNewTrx" />
+        <action
+            android:id="@+id/action_dashBoardFragment_to_detailsTrxFragment"
+            app:destination="@id/detailsTrxFragment" />
     </fragment>
     <fragment
         android:id="@+id/viewTrxCategoryFragment"
@@ -66,7 +69,12 @@
         tools:layout="@layout/fragment_details_trx_category" />
     <fragment
         android:id="@+id/addNewTrx"
-        android:name="com.example.slnn3r.wallettrackermvp.View.Fragment.TrxManagement.AddNewTrx"
+        android:name="com.example.slnn3r.wallettrackermvp.View.Fragment.TrxManagement.NewTrxFragment"
         android:label="fragment_add_new_trx"
-        tools:layout="@layout/fragment_add_new_trx" />
+        tools:layout="@layout/fragment_new_trx" />
+    <fragment
+        android:id="@+id/detailsTrxFragment"
+        android:name="com.example.slnn3r.wallettrackermvp.View.Fragment.TrxManagement.DetailsTrxFragment"
+        android:label="fragment_details_trx"
+        tools:layout="@layout/fragment_details_trx" />
 </navigation>

@@ -24,12 +24,13 @@
 
 
     <!-- Dummy Data for View Purpose-->
-    <string name="DummyDate">: 12/12/2018</string>
-    <string name="DummyAccountName">: Personal Account</string>
-    <string name="DummyAmount1">: $ 100000</string>
-    <string name="DummyCategory">: Food and Drink</string>
+    <string name="DummyDate">12/12/2018</string>
+    <string name="DummyAccountName">Personal Account</string>
+    <string name="DummyAmount1">$ 100000</string>
+    <string name="DummyCategory">Food and Drink</string>
     <string name="DummyMonth">(July)</string>
     <string name="DummyAmount2">$ 5000</string>
+
 
     <!-- fragment_dash_board -->
     <string name="DBAccountLabel">Account : </string>
@@ -38,17 +39,32 @@
     <string name="DBExpensesLabel">Expenses : </string>
 
     <!-- transaction_list_row -->
-    <string name="DBTrxDateLabel">Date</string>
-    <string name="DBTrxAmountLabel">Amount</string>
-    <string name="DBTrxCategoryLabel">Category</string>
 
-    <!-- fragment_add_new_trx -->
-    <string name="ANTTrxTypeLabel">Transaction Type</string>
-    <string name="ANTTrxCategoryLabel">Transaction Category</string>
-    <string name="ANTAmountInput">Amount</string>
-    <string name="ANTRemarksInput">Remarks</string>
-    <string name="ANTTrxSubmit">Submit Transaction</string>
-    <string name="ANTReminderLabel">Please fill up the Empty Fields</string>
+
+    <!-- fragment_new_trx -->
+    <string name="NewTrxTypeLabel">Transaction Type : </string>
+    <string name="NewTrxCategoryLabel">Transaction Category : </string>
+    <string name="NewAmountInput">Amount</string>
+    <string name="NewRemarksInput">Remarks</string>
+    <string name="NewTrxSubmit">Submit Transaction</string>
+    <string name="NewTrxReminderLabel">Please fill up the Empty Fields</string>
+    <string name="NewTrxDateInput">Date</string>
+
+    <!-- fragment_details_trx -->
+    <string name="DetailsTrxTypeLabel">Transaction Type : </string>
+    <string name="DetailsTrxCategoryLabel">Transaction Category : </string>
+    <string name="DetailsAmountInput">Amount</string>
+    <string name="DetailsTrxRemarksInput">Remarks</string>
+    <string name="DetailsTrxDeleteSubmit">Delete Transaction</string>
+    <string name="DetailsTrxReminderLabel">Please fill up the Empty Fields</string>
+    <string name="DetailsTrxDateInput">Date</string>
+    <string name="DetailsTrxUpdateSubmit">Edit Transaction Info</string>
+
+    <!-- fragment_view_wallet_account -->
+    <string name="WVAGoToCWA">New Account</string>
+    <string name="VWAReminderLabel">Only 5 Accounts is Allowed to be Create</string>
+
+    <!-- wallet_account_list_row -->
 
     <!-- fragment_create_wallet_account -->
     <string name="CWARemindLabel">Please Fill Up the Empty Fields</string>
@@ -56,20 +72,32 @@
     <string name="CWAAccBalanceInput">Initial Balance</string>
     <string name="CWACreateSubmit">Create Account Now</string>
 
-    <!-- fragment_view_wallet_account -->
-    <string name="WVAGoToCWA">New Account</string>
-    <string name="VWAReminderLabel">Only 5 Accounts is Allowed to be Create</string>
-
-    <!-- wallet_account_list_row -->
-    <string name="VWAAccNameLabel">Account Name</string>
-    <string name="VWABalLabel">Initial Balance</string>
-
     <!-- fragment_details_wallet_account -->
     <string name="DWAReminderLabel">Click on the Field to Edit</string>
     <string name="DWAAccNameInput">Account Name (Editable)</string>
     <string name="DWAAccBalanceInput">Initial Balance (Editable)</string>
     <string name="DWAUpdateSubmit">Update Account Info</string>
     <string name="DWADeleteSubmit">Delete Account</string>
+
+
+    <!-- fragment_view_trx_category -->
+    <string name="CTVGoToCTC">New Category</string>
+    <string name="CTVTrxTypeLabel">Transaction Type : </string>
+    <string name="CTVReminderLabel">Use the Drop Down List for Filter Data</string>
+
+    <!-- fragment_create_trx_category -->
+    <string name="CTCTrxTypeLabel">Transaction Type : </string>
+    <string name="CTCReminderLabel">Please fill up the empty field</string>
+    <string name="CTCCategoryNameInput">Category Name</string>
+    <string name="CTCCreateSubmit">Create Category Now</string>
+
+    <!-- fragment_details_trx_category -->
+    <string name="DTCReminderLabel">Click on the Field to Edit</string>
+    <string name="DTCTrxTypeLabel">Transaction Type : </string>
+    <string name="DTCCategoryNameInput">Category Name (Editable)</string>
+    <string name="DTCUpdateSubmit">Edit Category Info</string>
+    <string name="DTCDeleteSubmit">Delete Category</string>
+
 
 
 </resources>

@@ -7,4 +7,105 @@
     tools:context=".View.Fragment.TrxCategory.DetailsTrxCategoryFragment">
 
 
+    <TextView
+        android:id="@+id/DTCReminderLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="24dp"
+        android:layout_marginEnd="8dp"
+        android:text="@string/DTCReminderLabel"
+        android:textAllCaps="true"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/DTCTrxTypeLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="42dp"
+        android:text="@string/DTCTrxTypeLabel"
+        app:layout_constraintEnd_toStartOf="@+id/DTCImageView"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/DTCReminderLabel" />
+
+    <Spinner
+        android:id="@+id/DTCTrxTypeSpinner"
+        android:layout_width="0dp"
+        android:layout_height="24dp"
+        android:layout_marginTop="40dp"
+        android:layout_marginEnd="32dp"
+        android:background="@drawable/spinner_background"
+
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toEndOf="@+id/DTCImageView"
+        app:layout_constraintTop_toBottomOf="@+id/DTCReminderLabel" />
+
+    <ImageView
+        android:id="@+id/DTCImageView"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="32dp"
+        android:layout_marginEnd="8dp"
+        android:background="@drawable/fui_idp_button_background_email"
+        android:src="@drawable/expense_icon"
+        app:layout_constraintEnd_toStartOf="@+id/DTCTrxTypeSpinner"
+        app:layout_constraintStart_toEndOf="@+id/DTCTrxTypeLabel"
+        app:layout_constraintTop_toBottomOf="@+id/DTCReminderLabel" />
+
+
+    <android.support.design.widget.TextInputLayout
+        android:id="@+id/DTCCategoryNameInputLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="24dp"
+        android:layout_marginEnd="8dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/DTCImageView">
+
+        <EditText
+            android:id="@+id/DTCCategoryNameInput"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/DTCCategoryNameInput"
+            android:inputType="text" />
+
+    </android.support.design.widget.TextInputLayout>
+
+    <Button
+        android:id="@+id/DTCUpdateSubmit"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="8dp"
+        android:background="@drawable/fui_idp_button_background_phone"
+        android:text="@string/DTCUpdateSubmit"
+        app:layout_constraintBottom_toTopOf="@+id/DTCDeleteSubmit"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <Button
+        android:id="@+id/DTCDeleteSubmit"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="8dp"
+        android:background="@drawable/fui_idp_button_background_email"
+        android:text="@string/DTCDeleteSubmit"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent" />
+
 </android.support.constraint.ConstraintLayout>

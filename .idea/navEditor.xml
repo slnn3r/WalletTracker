@@ -60,6 +60,11 @@
                                 <LayoutPositions />
                               </value>
                             </entry>
+                            <entry key="action_dashBoardFragment_to_detailsTrxFragment">
+                              <value>
+                                <LayoutPositions />
+                              </value>
+                            </entry>
                             <entry key="action_dashBoardFragment_to_viewTrxCategoryFragment">
                               <value>
                                 <LayoutPositions />
@@ -82,6 +87,18 @@
                           <Point>
                             <option name="x" value="234" />
                             <option name="y" value="809" />
+                          </Point>
+                        </option>
+                      </LayoutPositions>
+                    </value>
+                  </entry>
+                  <entry key="detailsTrxFragment">
+                    <value>
+                      <LayoutPositions>
+                        <option name="myPosition">
+                          <Point>
+                            <option name="x" value="-896" />
+                            <option name="y" value="499" />
                           </Point>
                         </option>
                       </LayoutPositions>

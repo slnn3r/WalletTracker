@@ -14,6 +14,7 @@ import com.example.slnn3r.wallettrackermvp.Adapter.WalletAccountAdapter
 import com.example.slnn3r.wallettrackermvp.Model.UserProfile
 
 import com.example.slnn3r.wallettrackermvp.R
+import com.example.slnn3r.wallettrackermvp.Utility.DummyDataAccListItem
 import com.google.gson.Gson
 import kotlinx.android.synthetic.main.fragment_view_wallet_account.*
 
@@ -38,18 +39,7 @@ class ViewWalletAccountFragment : Fragment() {
         ///// Dummy RecycleView
 
         VWARecyclerView.layoutManager = LinearLayoutManager(context)
-        //.layoutManager = LinearLayoutManager(context)
-
-
-        val editor = context!!.getSharedPreferences("UserProfile", Context.MODE_PRIVATE)
-
-        // user GSON convert to object
-        val gson = Gson()
-        val json = editor.getString("UserProfile", "")
-
-        val userProfile = gson.fromJson<UserProfile>(json, UserProfile::class.java)
-
-        VWARecyclerView.adapter = WalletAccountAdapter(userProfile)
+        VWARecyclerView.adapter = WalletAccountAdapter(DummyDataAccListItem().getListItem())
         /////
 
         WVAGoToCWA.setOnClickListener(){
