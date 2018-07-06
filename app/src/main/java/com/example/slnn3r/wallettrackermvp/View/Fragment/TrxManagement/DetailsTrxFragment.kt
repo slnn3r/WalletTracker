@@ -2,6 +2,7 @@ package com.example.slnn3r.wallettrackermvp.View.Fragment.TrxManagement
 
 
 import android.app.DatePickerDialog
+import android.app.TimePickerDialog
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v7.app.AppCompatActivity
@@ -15,6 +16,7 @@ import com.example.slnn3r.wallettrackermvp.R
 import com.example.slnn3r.wallettrackermvp.Utility.DummyDataCategorySpinner
 import com.example.slnn3r.wallettrackermvp.Utility.SelectionTrxTypeSpinnerItem
 import kotlinx.android.synthetic.main.fragment_details_trx.*
+import java.sql.Time
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -23,7 +25,12 @@ class DetailsTrxFragment : Fragment() {
 
     val myCalendar = Calendar.getInstance()
     val myFormat = "dd/MM/yy"
-    val sdf = SimpleDateFormat(myFormat, Locale.US)
+    val simpleDateFormat = SimpleDateFormat(myFormat, Locale.US)
+
+    val mcurrentTime = Calendar.getInstance()
+    val hour = mcurrentTime.get(Calendar.HOUR_OF_DAY)
+    val minute = mcurrentTime.get(Calendar.MINUTE)
+    val simpleTimeFormat = SimpleDateFormat("h:mma")
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
@@ -86,7 +93,7 @@ class DetailsTrxFragment : Fragment() {
             myCalendar.set(Calendar.YEAR, year)
             myCalendar.set(Calendar.MONTH, monthOfYear)
             myCalendar.set(Calendar.DAY_OF_MONTH, dayOfMonth)
-            DetailsTrxDateInput.setText(sdf.format(myCalendar.getTime()))
+            DetailsTrxDateInput.setText(simpleDateFormat.format(myCalendar.getTime()))
         }
 
         DetailsTrxDateInput.setOnClickListener() {
@@ -98,6 +105,29 @@ class DetailsTrxFragment : Fragment() {
         }
 
 
+
+        // Setup Time picker
+        DetailsTrxTimeInput.setOnClickListener{
+
+            val mTimePicker: TimePickerDialog
+
+            mTimePicker = TimePickerDialog(context, TimePickerDialog.OnTimeSetListener { timePicker, selectedHour, selectedMinute ->
+
+
+                //NewTrxTimeInput.setText(selectedHour.toString() + ":" + selectedMinute)
+
+
+                val time = Time(selectedHour, selectedMinute, 0)
+                val s = simpleTimeFormat.format(time)
+
+                DetailsTrxTimeInput.setText(s)
+
+
+            }, hour, minute, false)//Yes 24 hour time
+            mTimePicker.setTitle("Select Time")
+            mTimePicker.show()
+
+        }
 
 
     }

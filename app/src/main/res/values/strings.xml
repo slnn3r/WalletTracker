@@ -26,17 +26,17 @@
     <!-- Dummy Data for View Purpose-->
     <string name="DummyDate">12/12/2018</string>
     <string name="DummyAccountName">Personal Account</string>
-    <string name="DummyAmount1">$ 100000</string>
+    <string name="DummyAmount1">$ 100000.00</string>
     <string name="DummyCategory">Food and Drink</string>
     <string name="DummyMonth">(July)</string>
-    <string name="DummyAmount2">$ 5000</string>
+    <string name="DummyAmount2">$ 5000.00</string>
 
 
     <!-- fragment_dash_board -->
     <string name="DBAccountLabel">Account : </string>
     <string name="DBRecentLabel">Recent Transaction List</string>
-    <string name="DBCurrentBalLabel">Current Balance : </string>
-    <string name="DBExpensesLabel">Expenses : </string>
+    <string name="DBCurrentBalLabel">Current Account Balance : </string>
+    <string name="DBExpensesLabel">This Month Expenses : </string>
     <string name="DBOverviewLabel">Recent Expenses Graph</string>
 
     <!-- transaction_list_row -->
@@ -50,16 +50,18 @@
     <string name="NewTrxSubmit">Submit Transaction</string>
     <string name="NewTrxReminderLabel">Please fill up the Empty Fields</string>
     <string name="NewTrxDateInput">Date</string>
+    <string name="NewTrxTimeInput">Time</string>
 
     <!-- fragment_details_trx -->
     <string name="DetailsTrxTypeLabel">Transaction Type : </string>
     <string name="DetailsTrxCategoryLabel">Transaction Category : </string>
-    <string name="DetailsAmountInput">Amount</string>
-    <string name="DetailsTrxRemarksInput">Remarks</string>
+    <string name="DetailsAmountInput">Amount (Editable)</string>
+    <string name="DetailsTrxRemarksInput">Remarks (Editable)</string>
     <string name="DetailsTrxDeleteSubmit">Delete Transaction</string>
-    <string name="DetailsTrxReminderLabel">Please fill up the Empty Fields</string>
-    <string name="DetailsTrxDateInput">Date</string>
+    <string name="DetailsTrxReminderLabel">Click on the Field to Edit</string>
+    <string name="DetailsTrxDateInput">Date (Editable)</string>
     <string name="DetailsTrxUpdateSubmit">Edit Transaction Info</string>
+    <string name="DetailsTrxTimeInput">Time (Editable)</string>
 
     <!-- fragment_view_wallet_account -->
     <string name="WVAGoToCWA">New Account</string>

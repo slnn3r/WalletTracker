@@ -218,9 +218,9 @@ class MenuActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         val navUserEmail = headerView.findViewById(R.id.userProfileEmail) as TextView
         val navUserPicture = headerView.findViewById(R.id.userProfileImageView) as ImageView
 
-        navUserName.text = userProfile.userName
-        navUserEmail.text = userProfile.userEmail
-        Picasso.get().load(userProfile.userPicURL).into(navUserPicture)
+        navUserName.text = userProfile.UserName
+        navUserEmail.text = userProfile.UserEmail
+        Picasso.get().load(userProfile.UserPicURL).into(navUserPicture)
 
     }
 

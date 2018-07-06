@@ -37,9 +37,9 @@ class DashBoardTrxAdapter(val homeFeed: ArrayList<Transaction>): RecyclerView.Ad
 
         val video = homeFeed.get(position)
 
-        holder.view.DBAccNameTextView.text = video.trxDateTime
-        holder.view.DBBalTextView.text = video.trxCategoryID
-        holder.view.DBTrxCategoryTextView.text = "$ ${video.trxAmount}"
+        holder.view.DBAccNameTextView.text = video.TransactionDate + " (" +video.TransactionTime+")"
+        holder.view.DBBalTextView.text = video.TransactionCategoryID
+        holder.view.DBTrxCategoryTextView.text = "$ " + video.TransactionAmount
 
     }
 

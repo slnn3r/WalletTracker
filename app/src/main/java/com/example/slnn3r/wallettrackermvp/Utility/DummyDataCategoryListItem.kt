@@ -11,16 +11,16 @@ class DummyDataCategoryListItem{
         val spinnerItem = ArrayList<TransactionCategory>()
 
 
-        spinnerItem.add(TransactionCategory("1","Food and Drink","Expense","Default"))
-        spinnerItem.add(TransactionCategory("1","Entertainment","Expense","Default"))
-        spinnerItem.add(TransactionCategory("1","Transportion","Expense","Default"))
-        spinnerItem.add(TransactionCategory("1","Dance Dance","Expense","Default"))
-        spinnerItem.add(TransactionCategory("1","Yammmmm Seng","Expense","Default"))
-        spinnerItem.add(TransactionCategory("1","Game","Expense","Default"))
-        spinnerItem.add(TransactionCategory("1","Internet Service","Expense","Default"))
-        spinnerItem.add(TransactionCategory("1","Computer Gadget","Expense","Default"))
-        spinnerItem.add(TransactionCategory("1","Insurance","Expense","Default"))
-        spinnerItem.add(TransactionCategory("1","House","Expense","Default"))
+        spinnerItem.add(TransactionCategory("1","Food and Drink","Expense","Default","01"))
+        spinnerItem.add(TransactionCategory("1","Entertainment","Expense","Default","01"))
+        spinnerItem.add(TransactionCategory("1","Transportion","Expense","Default","01"))
+        spinnerItem.add(TransactionCategory("1","Dance Dance","Income","Default","01"))
+        spinnerItem.add(TransactionCategory("1","Salary","Income","Default","01"))
+        spinnerItem.add(TransactionCategory("1","Game","Expense","Default","01"))
+        spinnerItem.add(TransactionCategory("1","Internet Service","Expense","Default","01"))
+        spinnerItem.add(TransactionCategory("1","Computer Gadget","Expense","Default","01"))
+        spinnerItem.add(TransactionCategory("1","Insurance","Expense","Default","01"))
+        spinnerItem.add(TransactionCategory("1","House","Expense","Default","01"))
 
 
 
