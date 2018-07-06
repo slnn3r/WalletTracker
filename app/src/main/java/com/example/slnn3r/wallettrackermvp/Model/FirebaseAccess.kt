@@ -26,6 +26,7 @@ import android.os.Bundle
 import com.google.android.gms.common.api.ResultCallback
 import com.google.android.gms.common.api.Status
 import android.content.Context.MODE_PRIVATE
+import com.example.slnn3r.wallettrackermvp.Model.ObjectClass.UserProfile
 import com.google.gson.Gson
 
 
@@ -135,7 +136,7 @@ class FirebaseAccess: ModelInterface.FirebaseAccess{
 
                         // User GSON convert object to JSON String to store to shared Preference
                         val gson = Gson()
-                        val userProfile = UserProfile(user!!.uid, user.displayName.toString(),user.email.toString(),user.photoUrl.toString())
+                        val userProfile = UserProfile(user!!.uid, user.displayName.toString(), user.email.toString(), user.photoUrl.toString())
                         val json = gson.toJson(userProfile)
 
                         editor.putString("UserProfile", json)
@@ -235,9 +236,6 @@ class FirebaseAccess: ModelInterface.FirebaseAccess{
 
     // DashBoard Fragment
 
-    override fun syncWalletAccountFirebase() {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-    }
 
 
 }

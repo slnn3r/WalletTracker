@@ -5,7 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.navigation.findNavController
-import com.example.slnn3r.wallettrackermvp.Model.TransactionCategory
+import com.example.slnn3r.wallettrackermvp.Model.ObjectClass.TransactionCategory
 import com.example.slnn3r.wallettrackermvp.R
 import kotlinx.android.synthetic.main.wallet_account_list_row.view.*
 

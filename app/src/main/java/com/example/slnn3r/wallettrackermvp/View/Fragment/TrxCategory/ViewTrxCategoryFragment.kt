@@ -1,7 +1,6 @@
 package com.example.slnn3r.wallettrackermvp.View.Fragment.TrxCategory
 
 
-import android.content.Context
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v7.app.AppCompatActivity
@@ -12,12 +11,10 @@ import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import androidx.navigation.findNavController
 import com.example.slnn3r.wallettrackermvp.Adapter.TrxCategoryAdapter
-import com.example.slnn3r.wallettrackermvp.Model.UserProfile
 
 import com.example.slnn3r.wallettrackermvp.R
 import com.example.slnn3r.wallettrackermvp.Utility.DummyDataCategoryListItem
 import com.example.slnn3r.wallettrackermvp.Utility.FilterTrxTypeSpinnerItem
-import com.google.gson.Gson
 import kotlinx.android.synthetic.main.fragment_view_trx_category.*
 
 

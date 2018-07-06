@@ -1,7 +1,6 @@
 package com.example.slnn3r.wallettrackermvp.View.Fragment.WalletAccount
 
 
-import android.content.Context
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v7.app.AppCompatActivity
@@ -11,11 +10,9 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.navigation.findNavController
 import com.example.slnn3r.wallettrackermvp.Adapter.WalletAccountAdapter
-import com.example.slnn3r.wallettrackermvp.Model.UserProfile
 
 import com.example.slnn3r.wallettrackermvp.R
 import com.example.slnn3r.wallettrackermvp.Utility.DummyDataAccListItem
-import com.google.gson.Gson
 import kotlinx.android.synthetic.main.fragment_view_wallet_account.*
 
 

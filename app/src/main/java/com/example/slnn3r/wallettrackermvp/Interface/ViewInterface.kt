@@ -4,7 +4,7 @@ import android.app.ProgressDialog
 import android.content.Context
 import android.content.Intent
 import android.support.v4.app.FragmentActivity
-import com.example.slnn3r.wallettrackermvp.Model.UserProfile
+import com.example.slnn3r.wallettrackermvp.Model.ObjectClass.WalletAccount
 
 interface ViewInterface{
 
@@ -37,7 +37,10 @@ interface ViewInterface{
 
     interface DashBoardView{
 
-        fun populateWalletAccountSpinner()
+        fun firstTimeSetup(mainContext: Context)
+        fun populateWalletAccountSpinner(mainContext: Context, walletAccountList: ArrayList<WalletAccount>)
+
+        fun firstTimeComplete(mainContext: Context, walletAccount: WalletAccount)
     }
 
 }

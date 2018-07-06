@@ -20,7 +20,6 @@ interface ModelInterface {
 
 
         // DashBoard Fragment
-        fun syncWalletAccountFirebase()
 
 
     }
@@ -28,8 +27,9 @@ interface ModelInterface {
     interface RealmAccess{
 
         // DashBoard Fragment
-        fun checkWalletAccountRealm()
+        fun checkWalletAccountRealm(mainContext: Context, userID: String)
 
+        fun firstTimeRealmSetup(mainContext: Context, userID:String)
 
     }
 

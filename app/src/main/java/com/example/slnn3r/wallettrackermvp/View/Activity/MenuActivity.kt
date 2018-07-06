@@ -11,7 +11,6 @@ import android.support.v4.view.GravityCompat
 import android.support.v4.widget.DrawerLayout
 import android.support.v7.app.ActionBarDrawerToggle
 import android.support.v7.app.AppCompatActivity
-import android.util.Log
 import android.view.MenuItem
 import android.widget.Toast
 import com.example.slnn3r.wallettrackermvp.Interface.PresenterInterface
@@ -25,7 +24,7 @@ import com.google.gson.Gson
 import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
-import com.example.slnn3r.wallettrackermvp.Model.UserProfile
+import com.example.slnn3r.wallettrackermvp.Model.ObjectClass.UserProfile
 import com.squareup.picasso.Picasso
 
 import androidx.navigation.Navigation

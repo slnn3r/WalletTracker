@@ -6,14 +6,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.navigation.findNavController
-import com.example.slnn3r.wallettrackermvp.Model.UserProfile
 import com.example.slnn3r.wallettrackermvp.R
 import com.example.slnn3r.wallettrackermvp.View.Activity.MenuActivity
 import kotlinx.android.synthetic.main.transaction_list_row.view.*
-import kotlin.coroutines.experimental.coroutineContext
-import android.content.Intent
-import android.support.v4.content.ContextCompat.startActivity
-import com.example.slnn3r.wallettrackermvp.Model.Transaction
+import com.example.slnn3r.wallettrackermvp.Model.ObjectClass.Transaction
 
 
 class DashBoardTrxAdapter(val homeFeed: ArrayList<Transaction>): RecyclerView.Adapter<DashBoardViewHolder>(){

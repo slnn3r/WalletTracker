@@ -10,25 +10,24 @@ import com.example.slnn3r.wallettrackermvp.Interface.ViewInterface
 import com.example.slnn3r.wallettrackermvp.Interface.ModelInterface
 import com.example.slnn3r.wallettrackermvp.Model.FirebaseAccess
 import android.net.NetworkInfo
-import android.util.Log
-import com.example.slnn3r.wallettrackermvp.Model.UserProfile
-import io.reactivex.Observable
-import io.reactivex.ObservableSource
-import io.reactivex.Observer
-import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.disposables.Disposable
-import io.reactivex.schedulers.Schedulers
-import java.util.concurrent.Callable
+import com.example.slnn3r.wallettrackermvp.Model.ObjectClass.WalletAccount
+import com.example.slnn3r.wallettrackermvp.Model.RealmAccess
+import com.example.slnn3r.wallettrackermvp.View.Fragment.DashBoardFragment
 
 
 class Presenter: PresenterInterface.Presenter{
+
 
     private lateinit var mainView: ViewInterface.MainView
     private lateinit var loginView: ViewInterface.LoginView
     private lateinit var menuView: ViewInterface.MenuView
 
+    private lateinit var dashBoardView: ViewInterface.DashBoardView
+
 
     private val firebaseModel: ModelInterface.FirebaseAccess = FirebaseAccess()
+    private val realmModel: ModelInterface.RealmAccess = RealmAccess()
+
 
     constructor(mainView: ViewInterface.MainView){
         this.mainView = mainView
@@ -42,6 +41,9 @@ class Presenter: PresenterInterface.Presenter{
         this.menuView = menuView
     }
 
+    constructor(dashBoardView: ViewInterface.DashBoardView){
+        this.dashBoardView=dashBoardView
+    }
 
     // Main Activity
     override fun checkLogin(mainContext: Context) {
@@ -124,21 +126,32 @@ class Presenter: PresenterInterface.Presenter{
     // DashBoard Fragment
 
     // In Progress
-
-    override fun checkWalletAccount() {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    override fun checkWalletAccount(mainContext: Context, userID: String) {
+        realmModel.checkWalletAccountRealm(mainContext,userID)
     }
 
-    override fun checkWallterAccountResult() {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    override fun checkWalletAccountResult(mainContext: Context, walletAccountList: ArrayList<WalletAccount>) {
+
+        if(walletAccountList.size<1){
+            dashBoardView.firstTimeSetup(mainContext)
+        }else{
+            dashBoardView.populateWalletAccountSpinner(mainContext,walletAccountList)
+        }
+
     }
 
-    override fun syncWalletAccount() {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    override fun firstTimeDatabaseSetup(mainContext: Context, userID: String) {
+
+        realmModel.firstTimeRealmSetup(mainContext,userID)
+
     }
 
-    override fun syncWalletAccountResult() {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    override fun firstTimeSetupStatus(mainContext: Context, walletAccount: WalletAccount) {
+
+        dashBoardView.firstTimeComplete(mainContext,walletAccount)
     }
+
+
+
 
 }

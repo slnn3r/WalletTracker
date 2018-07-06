@@ -5,10 +5,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.navigation.findNavController
-import com.example.slnn3r.wallettrackermvp.Model.UserProfile
-import com.example.slnn3r.wallettrackermvp.Model.WalletAccount
+import com.example.slnn3r.wallettrackermvp.Model.ObjectClass.WalletAccount
 import com.example.slnn3r.wallettrackermvp.R
-import kotlinx.android.synthetic.main.transaction_list_row.view.*
 import kotlinx.android.synthetic.main.wallet_account_list_row.view.*
 
 

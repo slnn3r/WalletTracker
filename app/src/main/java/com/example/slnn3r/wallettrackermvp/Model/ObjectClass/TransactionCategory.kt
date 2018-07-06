@@ -1,4 +1,4 @@
-package com.example.slnn3r.wallettrackermvp.Model
+package com.example.slnn3r.wallettrackermvp.Model.ObjectClass
 
 class TransactionCategory(val TransactionCategoryID:String,
                           val TransactionCategoryName: String,
