@@ -4,7 +4,10 @@ import android.content.Context
 import android.widget.Toast
 import com.example.slnn3r.wallettrackermvp.Interface.ModelInterface
 import com.example.slnn3r.wallettrackermvp.Interface.PresenterInterface
+import com.example.slnn3r.wallettrackermvp.Model.ObjectClass.Transaction
+import com.example.slnn3r.wallettrackermvp.Model.ObjectClass.TransactionCategory
 import com.example.slnn3r.wallettrackermvp.Model.ObjectClass.WalletAccount
+import com.example.slnn3r.wallettrackermvp.Model.RealmClass.TransactionRealm
 import com.example.slnn3r.wallettrackermvp.Model.RealmClass.WalletAccountRealm
 import com.example.slnn3r.wallettrackermvp.Presenter.Presenter
 import com.example.slnn3r.wallettrackermvp.View.Activity.MenuActivity
@@ -13,6 +16,7 @@ import io.realm.Realm
 import io.realm.RealmConfiguration
 
 class RealmAccess: ModelInterface.RealmAccess{
+
 
     private lateinit var presenter: PresenterInterface.Presenter
 
@@ -39,14 +43,19 @@ class RealmAccess: ModelInterface.RealmAccess{
 
         getWalletAccount.forEach{
             dataList->
-                WalletAccountData.add(
-                        WalletAccount(
-                                dataList.WalletAccountID!!,
-                                dataList.WalletAccountName!!,
-                                dataList.WalletAccountInitialBalance!!,
-                                dataList.UserID!!
-                        )
-                )
+
+                if(userID==dataList.UserID){
+                    WalletAccountData.add(
+                            WalletAccount(
+                                    dataList.WalletAccountID!!,
+                                    dataList.WalletAccountName!!,
+                                    dataList.WalletAccountInitialBalance!!,
+                                    dataList.UserID!!
+                            )
+                    )
+                }
+
+
         }
 
         realm.commitTransaction()
@@ -80,9 +89,74 @@ class RealmAccess: ModelInterface.RealmAccess{
         realm.commitTransaction()
 
 
-
-
         presenter.firstTimeSetupStatus(mainContext,WalletAccount(userID+1,"Personal",0.0,userID))
+
+    }
+
+
+    override fun checkTransactionRealm(mainContext: Context, accountID: String) {
+
+
+        presenter= Presenter(DashBoardFragment())
+
+
+        Realm.init(mainContext)
+
+        val config = RealmConfiguration.Builder()
+                .name("transaction.realm")
+                .build()
+
+        val realm = Realm.getInstance(config)
+
+        realm.beginTransaction()
+
+        val getWalletAccount = realm.where(TransactionRealm::class.java).findAll()
+
+        var TransactionData=ArrayList<Transaction>()
+
+        var TransactionCategoryGSON= TransactionCategory("","","","","")
+
+        getWalletAccount.forEach{
+            dataList->
+
+            if(dataList.WalletAccountID==accountID) {
+
+
+
+                TransactionData.add(
+                        Transaction(
+                                dataList.TransactionID!!,
+                                dataList.TransactionDate!!,
+                                dataList.TransactionTime!!,
+                                dataList.TransactionAmount!!,
+                                dataList.TransactionRemark!!,
+                                TransactionCategoryGSON,
+                                dataList.WalletAccountID!!
+                        )
+                )
+
+            }
+
+
+        }
+
+        realm.commitTransaction()
+
+        if(TransactionData.size<1){
+            TransactionData.add(
+                    Transaction(
+                            "No Search Found",
+                            "No Search Found",
+                            "No Search Found",
+                            0.0,
+                            "No Search Found",
+                            TransactionCategoryGSON,
+                            "No Search Found"
+                    )
+            )
+        }
+
+        presenter.checkTransactionResult(mainContext, TransactionData)
 
     }
 

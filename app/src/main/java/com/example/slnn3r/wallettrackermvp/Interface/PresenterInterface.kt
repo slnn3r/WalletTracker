@@ -4,6 +4,7 @@ import android.app.ProgressDialog
 import android.content.Context
 import android.content.Intent
 import android.support.v4.app.FragmentActivity
+import com.example.slnn3r.wallettrackermvp.Model.ObjectClass.Transaction
 import com.example.slnn3r.wallettrackermvp.Model.ObjectClass.WalletAccount
 
 interface PresenterInterface{
@@ -31,6 +32,10 @@ interface PresenterInterface{
 
         fun firstTimeDatabaseSetup(mainContext: Context, userID:String)
         fun firstTimeSetupStatus(mainContext: Context, walletAccount: WalletAccount)
+
+        fun checkTransaction(mainContext: Context, accountID: String)
+        fun checkTransactionResult(mainContext: Context, transactionList: ArrayList<Transaction>)
+
 
     }
     

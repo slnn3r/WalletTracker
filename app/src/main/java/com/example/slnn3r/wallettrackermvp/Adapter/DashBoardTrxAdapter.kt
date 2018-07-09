@@ -1,15 +1,19 @@
 package com.example.slnn3r.wallettrackermvp.Adapter
 
 
+import android.content.Context
 import android.support.v7.widget.RecyclerView
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.navigation.findNavController
 import com.example.slnn3r.wallettrackermvp.R
 import com.example.slnn3r.wallettrackermvp.View.Activity.MenuActivity
 import kotlinx.android.synthetic.main.transaction_list_row.view.*
 import com.example.slnn3r.wallettrackermvp.Model.ObjectClass.Transaction
+import com.squareup.picasso.Picasso
 
 
 class DashBoardTrxAdapter(val homeFeed: ArrayList<Transaction>): RecyclerView.Adapter<DashBoardViewHolder>(){
@@ -33,9 +37,30 @@ class DashBoardTrxAdapter(val homeFeed: ArrayList<Transaction>): RecyclerView.Ad
 
         val video = homeFeed.get(position)
 
-        holder.view.DBAccNameTextView.text = video.TransactionDate + " (" +video.TransactionTime+")"
-        holder.view.DBBalTextView.text = video.TransactionCategoryID
-        holder.view.DBTrxCategoryTextView.text = "$ " + video.TransactionAmount
+        if(video.TransactionDate.equals("No Search Found")){
+
+
+            Picasso.get().load(R.drawable.not_found).into(holder.view.DBTrxImageView)
+            holder.view.DBAccNameTextView.text = video.TransactionDate
+            holder.view.DBBalTextView.text = "There is no data in the database"
+            holder.view.DBTrxCategoryTextView.text = "Tab the Floating Button to add Transaction"
+
+        }else{1
+
+            holder.view.DBAccNameTextView.text = video.TransactionDate + " (" +video.TransactionTime+")"
+            holder.view.DBBalTextView.text = video.TransactionCategory.TransactionCategoryName
+            holder.view.DBTrxCategoryTextView.text = "$ " + video.TransactionAmount
+
+            if(video.TransactionCategory.TransactionCategoryType.equals("Expense")){
+                Picasso.get().load(R.drawable.expense_icon).into(holder.view.DBTrxImageView)
+            }else{
+                Picasso.get().load(R.drawable.income_icon).into(holder.view.DBTrxImageView)
+
+            }
+
+        }
+
+
 
     }
 
@@ -48,11 +73,20 @@ class DashBoardViewHolder(val view: View): RecyclerView.ViewHolder(view){
     init{
         view.setOnClickListener{
 
-            val navController = view.findNavController()
-            navController.navigate(R.id.action_dashBoardFragment_to_detailsTrxFragment)
-
             val context = view.context
-            (context as MenuActivity).setupNavigationMode()
+
+            if(view.DBAccNameTextView.text.equals("No Search Found")){
+
+                Toast.makeText(context, "No Search Found", Toast.LENGTH_SHORT).show()
+
+            }else{
+
+                val navController = view.findNavController()
+                navController.navigate(R.id.action_dashBoardFragment_to_detailsTrxFragment)
+
+                (context as MenuActivity).setupNavigationMode()
+
+            }
         }
     }
 

@@ -10,6 +10,7 @@ import com.example.slnn3r.wallettrackermvp.Interface.ViewInterface
 import com.example.slnn3r.wallettrackermvp.Interface.ModelInterface
 import com.example.slnn3r.wallettrackermvp.Model.FirebaseAccess
 import android.net.NetworkInfo
+import com.example.slnn3r.wallettrackermvp.Model.ObjectClass.Transaction
 import com.example.slnn3r.wallettrackermvp.Model.ObjectClass.WalletAccount
 import com.example.slnn3r.wallettrackermvp.Model.RealmAccess
 import com.example.slnn3r.wallettrackermvp.View.Fragment.DashBoardFragment
@@ -151,6 +152,17 @@ class Presenter: PresenterInterface.Presenter{
         dashBoardView.firstTimeComplete(mainContext,walletAccount)
     }
 
+
+    override fun checkTransaction(mainContext: Context, accountID: String) {
+        realmModel.checkTransactionRealm(mainContext,accountID)
+    }
+
+    override fun checkTransactionResult(mainContext: Context, transactionList: ArrayList<Transaction>) {
+
+        dashBoardView.populateTransactionRecycleView(mainContext, transactionList)
+
+
+    }
 
 
 

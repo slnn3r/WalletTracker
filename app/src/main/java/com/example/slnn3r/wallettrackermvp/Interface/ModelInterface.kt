@@ -31,6 +31,8 @@ interface ModelInterface {
 
         fun firstTimeRealmSetup(mainContext: Context, userID:String)
 
+        fun checkTransactionRealm(mainContext: Context, accountID: String)
+
     }
 
 }

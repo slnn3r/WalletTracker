@@ -5,5 +5,5 @@ class Transaction(val TransactionID:String,
                   val TransactionTime:String,
                   val TransactionAmount:Double,
                   val TransactionRemark: String,
-                  val TransactionCategoryID: String,
+                  val TransactionCategory: TransactionCategory,
                   val WalletAccountID:String)

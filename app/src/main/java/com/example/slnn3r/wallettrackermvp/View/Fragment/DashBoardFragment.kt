@@ -9,8 +9,6 @@ import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
 import android.util.Log
 import android.view.*
-import android.widget.ArrayAdapter
-import android.widget.Spinner
 import androidx.navigation.findNavController
 import com.example.slnn3r.wallettrackermvp.Adapter.DashBoardTrxAdapter
 
@@ -18,7 +16,6 @@ import com.example.slnn3r.wallettrackermvp.R
 import com.example.slnn3r.wallettrackermvp.View.Activity.MenuActivity
 import com.google.gson.Gson
 import kotlinx.android.synthetic.main.fragment_dash_board.*
-import android.widget.Toast
 import com.example.slnn3r.wallettrackermvp.Interface.PresenterInterface
 import com.example.slnn3r.wallettrackermvp.Interface.ViewInterface
 import com.example.slnn3r.wallettrackermvp.Model.ObjectClass.UserProfile
@@ -31,12 +28,14 @@ import com.jjoe64.graphview.series.DataPoint
 import com.jjoe64.graphview.series.LineGraphSeries
 import java.util.*
 import android.app.Activity
-import android.widget.TextView
-
-
+import android.support.v7.widget.RecyclerView
+import android.widget.*
+import com.example.slnn3r.wallettrackermvp.Model.ObjectClass.Transaction
+import kotlin.collections.ArrayList
 
 
 class DashBoardFragment : Fragment(),ViewInterface.DashBoardView {
+
 
 
     private lateinit var presenter: PresenterInterface.Presenter
@@ -58,12 +57,7 @@ class DashBoardFragment : Fragment(),ViewInterface.DashBoardView {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        ///// Dummy RecycleView
-        DBTrxRecyclerView.layoutManager = LinearLayoutManager(context)
 
-
-        DBTrxRecyclerView.adapter = DashBoardTrxAdapter(DummyDataTrxListItem().getListItem())
-        /////
 
 
         DBIncomeFab.setOnClickListener(){
@@ -166,8 +160,6 @@ class DashBoardFragment : Fragment(),ViewInterface.DashBoardView {
     //// In Progress
     override fun firstTimeSetup(mainContext: Context) {
 
-        Toast.makeText(mainContext,"First Time",Toast.LENGTH_SHORT).show()
-
         ////
         ////
         val editor = mainContext!!.getSharedPreferences("UserProfile", AppCompatActivity.MODE_PRIVATE)
@@ -187,9 +179,17 @@ class DashBoardFragment : Fragment(),ViewInterface.DashBoardView {
 
     }
 
+
+    override fun firstTimeComplete(mainContext: Context, walletAccount: WalletAccount) {
+
+        presenter = Presenter(this)
+        presenter.checkWalletAccount(mainContext, walletAccount.userUID )
+    }
+
+
     override fun populateWalletAccountSpinner(mainContext: Context, walletAccountList: ArrayList<WalletAccount>) {
 
-        Toast.makeText(mainContext,walletAccountList.toString(),Toast.LENGTH_SHORT).show()
+        presenter = Presenter(this)
 
         val categories = ArrayList<String>()
 
@@ -210,14 +210,37 @@ class DashBoardFragment : Fragment(),ViewInterface.DashBoardView {
         spinner.adapter = dataAdapter
 
 
+        spinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener{
+
+            override fun onNothingSelected(parent: AdapterView<*>?) {
+
+            }
+
+            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+                //Log.d("234jhgj12341jh2g3412312", walletAccountList[spinner.selectedItemPosition].WalletAccountID.toString())
+
+                presenter.checkTransaction(mainContext, walletAccountList[spinner.selectedItemPosition].WalletAccountID.toString())
+            }
+        }
+
+
+
+
     }
 
 
-    override fun firstTimeComplete(mainContext: Context, walletAccount: WalletAccount) {
+    override fun populateTransactionRecycleView(mainContext: Context, transactionList: ArrayList<Transaction>) {
 
-        Log.d("edfwfqefqwe12342356345",walletAccount.toString())
+        val DBTrxRecyclerView = (mainContext as Activity).findViewById(R.id.DBTrxRecyclerView) as RecyclerView
+
+
+        DBTrxRecyclerView.layoutManager = LinearLayoutManager(mainContext)
+        DBTrxRecyclerView.adapter = DashBoardTrxAdapter(transactionList)
+
 
     }
+
+
 
 
 }
