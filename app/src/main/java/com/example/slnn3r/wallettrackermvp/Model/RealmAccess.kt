@@ -227,7 +227,7 @@ class RealmAccess: ModelInterface.RealmAccess{
 
     // ViewWalletAccount Fragment
 
-    override fun checkWalletAccountCountRealm(mainContext: Context) {
+    override fun checkWalletAccountCountRealm(mainContext: Context, userID: String) {
 
         presenter= Presenter(ViewWalletAccountFragment())
 
@@ -252,11 +252,15 @@ class RealmAccess: ModelInterface.RealmAccess{
 
         getWalletAccount.forEach{
             data ->
-            count+=1
+
+            if(data.UserID==userID){
+                count+=1
+            }
+
         }
 
 
-        presenter.checkWalletAccountCountResult(mainContext,getWalletAccount.size)
+        presenter.checkWalletAccountCountResult(mainContext,count)
 
     }
 

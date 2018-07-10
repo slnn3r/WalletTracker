@@ -73,7 +73,7 @@ class ViewWalletAccountFragment : Fragment(), ViewInterface.WalletAccountView {
         presenter = Presenter(this)
         presenter.checkWalletAccount(context!!, userID)
 
-        presenter.checkWalletAccountCount(context!!)
+        presenter.checkWalletAccountCount(context!!, userID)
 
     }
 

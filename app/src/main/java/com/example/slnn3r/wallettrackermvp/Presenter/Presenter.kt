@@ -222,9 +222,9 @@ class Presenter: PresenterInterface.Presenter{
 
     // ViewWalletAccount Fragment
 
-    override fun checkWalletAccountCount(mainContext: Context) {
+    override fun checkWalletAccountCount(mainContext: Context, userID: String) {
 
-        realmModel.checkWalletAccountCountRealm(mainContext)
+        realmModel.checkWalletAccountCountRealm(mainContext, userID)
     }
 
     override fun checkWalletAccountCountResult(mainContext: Context, walletAccountCount: Int) {

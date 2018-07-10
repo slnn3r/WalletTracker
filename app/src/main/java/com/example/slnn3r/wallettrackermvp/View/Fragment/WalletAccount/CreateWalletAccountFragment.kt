@@ -26,6 +26,7 @@ import com.example.slnn3r.wallettrackermvp.Presenter.Presenter
 import com.example.slnn3r.wallettrackermvp.R
 import com.google.gson.Gson
 import kotlinx.android.synthetic.main.fragment_create_wallet_account.*
+import java.text.NumberFormat
 import java.util.*
 
 
@@ -86,7 +87,12 @@ class CreateWalletAccountFragment : Fragment(), ViewInterface.CreateWalletAccoun
         }
 
 
+
+
         //// TextWatcher Validation
+
+        CWAAccNameInput.error="Please Enter"
+        CWAAccBalanceInput.error="Please Enter"
 
         CWAAccNameInput.addTextChangedListener(object: TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
@@ -95,16 +101,11 @@ class CreateWalletAccountFragment : Fragment(), ViewInterface.CreateWalletAccoun
             }
 
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                Log.d("","")
-
-            }
-
-            override fun afterTextChanged(s: Editable?) {
 
                 val rex = "^[a-zA-Z\\s]+".toRegex()
 
                 if (CWAAccNameInput.length()>15){
-                    CWAAccNameInput.error="Too Long"
+                    CWAAccNameInput.error="Max length 15 Character only"
                     CWACreateSubmit.isEnabled = false
                 }else if(!CWAAccNameInput.text.toString().matches(rex)){
                     CWAAccNameInput.error="Invalid Name"
@@ -112,10 +113,15 @@ class CreateWalletAccountFragment : Fragment(), ViewInterface.CreateWalletAccoun
 
                 }else{
                     CWAAccNameInput.error=null
-                    CWACreateSubmit.isEnabled = true
                 }
 
+            }
 
+            override fun afterTextChanged(s: Editable?) {
+
+                if(CWAAccNameInput.error==null&&CWAAccBalanceInput.error==null){
+                    CWACreateSubmit.isEnabled = true
+                }
 
             }
 
@@ -128,26 +134,29 @@ class CreateWalletAccountFragment : Fragment(), ViewInterface.CreateWalletAccoun
             }
 
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                Log.d("","")
+
+
+                if (CWAAccBalanceInput.text.toString().isEmpty()){
+                    CWAAccBalanceInput.error="Please enter a value"
+                    CWACreateSubmit.isEnabled = false
+                }else{
+                    CWAAccBalanceInput.error=null
+
+                }
 
             }
 
             override fun afterTextChanged(s: Editable?) {
 
-
-                if (!CWAAccBalanceInput.text.toString().isEmpty()){
-                    CWAAccBalanceInput.error=null
+                if(CWAAccNameInput.error==null&&CWAAccBalanceInput.error==null){
                     CWACreateSubmit.isEnabled = true
-                }else{
-                    CWAAccBalanceInput.error="At least enter 0"
-                    CWACreateSubmit.isEnabled = false
-
                 }
 
             }
 
         })
 
+        // issue, number input not 2 decimal place!!!!!!
 
         CWACreateSubmit.isEnabled = false
 

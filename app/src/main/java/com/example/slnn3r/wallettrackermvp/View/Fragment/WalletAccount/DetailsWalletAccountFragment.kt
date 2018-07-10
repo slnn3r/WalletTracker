@@ -79,8 +79,6 @@ class DetailsWalletAccountFragment : Fragment(), ViewInterface.DetailsWalletAcco
 
         //// TextWatcher Validation
 
-        //// TextWatcher Validation
-
         DWAAccNameInput.addTextChangedListener(object: TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
                 Log.d("","")
@@ -88,16 +86,11 @@ class DetailsWalletAccountFragment : Fragment(), ViewInterface.DetailsWalletAcco
             }
 
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                Log.d("","")
-
-            }
-
-            override fun afterTextChanged(s: Editable?) {
 
                 val rex = "^[a-zA-Z\\s]+".toRegex()
 
                 if (DWAAccNameInput.length()>15){
-                    DWAAccNameInput.error="Too Long"
+                    DWAAccNameInput.error="Max length 15 Character only"
                     DWAUpdateSubmit.isEnabled = false
                 }else if(!DWAAccNameInput.text.toString().matches(rex)){
                     DWAAccNameInput.error="Invalid Name"
@@ -105,10 +98,16 @@ class DetailsWalletAccountFragment : Fragment(), ViewInterface.DetailsWalletAcco
 
                 }else{
                     DWAAccNameInput.error=null
-                    DWAUpdateSubmit.isEnabled = true
                 }
 
+            }
 
+            override fun afterTextChanged(s: Editable?) {
+
+                if(DWAAccNameInput.error==null && DWAAccBalanceInput.error==null){
+                    DWAUpdateSubmit.isEnabled = true
+
+                }
 
             }
 
@@ -121,21 +120,25 @@ class DetailsWalletAccountFragment : Fragment(), ViewInterface.DetailsWalletAcco
             }
 
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                Log.d("","")
+
+                if (DWAAccBalanceInput.text.toString().isEmpty()){
+                    DWAAccBalanceInput.error="Please enter a value"
+                    DWAUpdateSubmit.isEnabled = false
+                }else{
+                    DWAAccBalanceInput.error=null
+
+                }
+
 
             }
 
             override fun afterTextChanged(s: Editable?) {
 
-
-                if (!DWAAccBalanceInput.text.toString().isEmpty()){
-                    DWAAccBalanceInput.error=null
+                if(DWAAccNameInput.error==null && DWAAccBalanceInput.error==null){
                     DWAUpdateSubmit.isEnabled = true
-                }else{
-                    DWAAccBalanceInput.error="At least enter 0"
-                    DWAUpdateSubmit.isEnabled = false
 
                 }
+
 
             }
 

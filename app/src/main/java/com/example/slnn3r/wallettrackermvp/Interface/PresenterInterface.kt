@@ -41,7 +41,7 @@ interface PresenterInterface{
         fun createWalletAccountStatus(mainContext:Context, createStatus:String)
 
         // ViewWalletAccount Fragment
-        fun checkWalletAccountCount(mainContext: Context)
+        fun checkWalletAccountCount(mainContext: Context, userID: String)
         fun checkWalletAccountCountResult(mainContext: Context, walletAccountCount:Int)
 
 
