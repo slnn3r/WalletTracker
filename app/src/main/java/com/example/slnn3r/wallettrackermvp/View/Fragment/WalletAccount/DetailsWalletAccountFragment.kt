@@ -6,6 +6,8 @@ import android.content.Context
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v7.app.AppCompatActivity
+import android.text.Editable
+import android.text.TextWatcher
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -74,6 +76,70 @@ class DetailsWalletAccountFragment : Fragment(), ViewInterface.DetailsWalletAcco
 
         }
 
+
+        //// TextWatcher Validation
+
+        //// TextWatcher Validation
+
+        DWAAccNameInput.addTextChangedListener(object: TextWatcher {
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+                Log.d("","")
+
+            }
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                Log.d("","")
+
+            }
+
+            override fun afterTextChanged(s: Editable?) {
+
+                val rex = "^[a-zA-Z\\s]+".toRegex()
+
+                if (DWAAccNameInput.length()>15){
+                    DWAAccNameInput.error="Too Long"
+                    DWAUpdateSubmit.isEnabled = false
+                }else if(!DWAAccNameInput.text.toString().matches(rex)){
+                    DWAAccNameInput.error="Invalid Name"
+                    DWAUpdateSubmit.isEnabled = false
+
+                }else{
+                    DWAAccNameInput.error=null
+                    DWAUpdateSubmit.isEnabled = true
+                }
+
+
+
+            }
+
+        })
+
+        DWAAccBalanceInput.addTextChangedListener(object: TextWatcher {
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+                Log.d("","")
+
+            }
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                Log.d("","")
+
+            }
+
+            override fun afterTextChanged(s: Editable?) {
+
+
+                if (!DWAAccBalanceInput.text.toString().isEmpty()){
+                    DWAAccBalanceInput.error=null
+                    DWAUpdateSubmit.isEnabled = true
+                }else{
+                    DWAAccBalanceInput.error="At least enter 0"
+                    DWAUpdateSubmit.isEnabled = false
+
+                }
+
+            }
+
+        })
 
 
     }

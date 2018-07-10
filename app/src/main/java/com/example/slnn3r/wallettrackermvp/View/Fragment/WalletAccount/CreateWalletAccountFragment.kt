@@ -6,10 +6,14 @@ import android.content.Context
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v7.app.AppCompatActivity
+import android.text.Editable
+import android.text.TextWatcher
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.EditText
 import android.widget.Toast
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
@@ -81,6 +85,71 @@ class CreateWalletAccountFragment : Fragment(), ViewInterface.CreateWalletAccoun
 
         }
 
+
+        //// TextWatcher Validation
+
+        CWAAccNameInput.addTextChangedListener(object: TextWatcher {
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+                Log.d("","")
+
+            }
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                Log.d("","")
+
+            }
+
+            override fun afterTextChanged(s: Editable?) {
+
+                val rex = "^[a-zA-Z\\s]+".toRegex()
+
+                if (CWAAccNameInput.length()>15){
+                    CWAAccNameInput.error="Too Long"
+                    CWACreateSubmit.isEnabled = false
+                }else if(!CWAAccNameInput.text.toString().matches(rex)){
+                    CWAAccNameInput.error="Invalid Name"
+                    CWACreateSubmit.isEnabled = false
+
+                }else{
+                    CWAAccNameInput.error=null
+                    CWACreateSubmit.isEnabled = true
+                }
+
+
+
+            }
+
+        })
+
+        CWAAccBalanceInput.addTextChangedListener(object: TextWatcher {
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+                Log.d("","")
+
+            }
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                Log.d("","")
+
+            }
+
+            override fun afterTextChanged(s: Editable?) {
+
+
+                if (!CWAAccBalanceInput.text.toString().isEmpty()){
+                    CWAAccBalanceInput.error=null
+                    CWACreateSubmit.isEnabled = true
+                }else{
+                    CWAAccBalanceInput.error="At least enter 0"
+                    CWACreateSubmit.isEnabled = false
+
+                }
+
+            }
+
+        })
+
+
+        CWACreateSubmit.isEnabled = false
 
 
     }
