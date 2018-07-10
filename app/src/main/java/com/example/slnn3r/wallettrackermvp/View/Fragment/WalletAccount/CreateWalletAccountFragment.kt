@@ -135,6 +135,12 @@ class CreateWalletAccountFragment : Fragment(), ViewInterface.CreateWalletAccoun
 
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
 
+                val text = CWAAccBalanceInput.text.toString()
+                if (text.contains(".") && text.substring(text.indexOf(".") + 1).length > 2) {
+                    CWAAccBalanceInput.setText(text.substring(0, text.length - 1))
+                    CWAAccBalanceInput.setSelection(CWAAccBalanceInput.text.length)
+                }         // issue, number input not 2 decimal place (SOLVED)
+
 
                 if (CWAAccBalanceInput.text.toString().isEmpty()){
                     CWAAccBalanceInput.error="Please enter a value"
@@ -156,7 +162,6 @@ class CreateWalletAccountFragment : Fragment(), ViewInterface.CreateWalletAccoun
 
         })
 
-        // issue, number input not 2 decimal place!!!!!!
 
         CWACreateSubmit.isEnabled = false
 

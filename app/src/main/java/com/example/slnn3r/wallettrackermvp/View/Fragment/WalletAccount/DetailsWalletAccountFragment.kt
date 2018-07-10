@@ -87,6 +87,7 @@ class DetailsWalletAccountFragment : Fragment(), ViewInterface.DetailsWalletAcco
 
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
 
+
                 val rex = "^[a-zA-Z\\s]+".toRegex()
 
                 if (DWAAccNameInput.length()>15){
@@ -120,6 +121,13 @@ class DetailsWalletAccountFragment : Fragment(), ViewInterface.DetailsWalletAcco
             }
 
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+
+                val text = DWAAccBalanceInput.text.toString()
+                if (text.contains(".") && text.substring(text.indexOf(".") + 1).length > 2) {
+                    DWAAccBalanceInput.setText(text.substring(0, text.length - 1))
+                    DWAAccBalanceInput.setSelection(DWAAccBalanceInput.text.length)
+                }         // issue, number input not 2 decimal place (SOLVED)
+
 
                 if (DWAAccBalanceInput.text.toString().isEmpty()){
                     DWAAccBalanceInput.error="Please enter a value"
