@@ -26,7 +26,7 @@ interface PresenterInterface{
         fun logoutGoogleExecute(mainContext: Context)
         fun logoutGoogleStatus(mainContext: Context, logourStatus:Boolean, statusMessage:String)
 
-        // DashBoard Fragment
+        // DashBoard Fragment (used by ViewWalletAccount Fragment as well)
         fun checkWalletAccount(mainContext: Context, userID:String)
         fun checkWalletAccountResult(mainContext: Context, walletAccountList: ArrayList<WalletAccount>)
 
@@ -35,6 +35,13 @@ interface PresenterInterface{
 
         fun checkTransaction(mainContext: Context, accountID: String)
         fun checkTransactionResult(mainContext: Context, transactionList: ArrayList<Transaction>)
+
+        // CreateWalletAccount Fragment
+        fun createWalletAccount(mainContext:Context, walletAccountInput: WalletAccount)
+        fun createWalletAccountStatus(mainContext:Context, createStatus:String)
+
+        fun checkWalletAccountCount(mainContext: Context)
+        fun checkWalletAccountCountResult(mainContext: Context, walletAccountCount:Int)
 
 
     }

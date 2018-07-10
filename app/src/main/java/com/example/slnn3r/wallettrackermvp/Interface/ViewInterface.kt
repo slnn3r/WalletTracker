@@ -48,4 +48,21 @@ interface ViewInterface{
     }
 
 
+    interface WalletAccountView{
+
+        fun populateWalletAccountRecycleView(mainContext: Context, walletAccountList: ArrayList<WalletAccount>)
+        fun createButtonStatus(mainContext: Context, walletAccountCount:Int)
+
+    }
+
+    interface CreateWalletAccountView{
+
+        fun createWalletAccountSuccess(mainContext: Context)
+        fun createWalletAccountFail(mainContext: Context, errorMessage:String)
+
+
+
+    }
+
+
 }

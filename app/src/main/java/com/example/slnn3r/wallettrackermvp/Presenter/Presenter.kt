@@ -14,9 +14,17 @@ import com.example.slnn3r.wallettrackermvp.Model.ObjectClass.Transaction
 import com.example.slnn3r.wallettrackermvp.Model.ObjectClass.WalletAccount
 import com.example.slnn3r.wallettrackermvp.Model.RealmAccess
 import com.example.slnn3r.wallettrackermvp.View.Fragment.DashBoardFragment
+import android.app.Activity
+import android.util.Log
+import android.view.View
+import android.widget.TextView
+import androidx.navigation.Navigation.findNavController
+import androidx.navigation.findNavController
+import com.example.slnn3r.wallettrackermvp.R
 
 
 class Presenter: PresenterInterface.Presenter{
+
 
 
     private lateinit var mainView: ViewInterface.MainView
@@ -24,6 +32,9 @@ class Presenter: PresenterInterface.Presenter{
     private lateinit var menuView: ViewInterface.MenuView
 
     private lateinit var dashBoardView: ViewInterface.DashBoardView
+
+    private lateinit var walletAccountView: ViewInterface.WalletAccountView
+    private lateinit var createWalletAccountView: ViewInterface.CreateWalletAccountView
 
 
     private val firebaseModel: ModelInterface.FirebaseAccess = FirebaseAccess()
@@ -44,6 +55,14 @@ class Presenter: PresenterInterface.Presenter{
 
     constructor(dashBoardView: ViewInterface.DashBoardView){
         this.dashBoardView=dashBoardView
+    }
+
+    constructor(walletAccountView: ViewInterface.WalletAccountView){
+        this.walletAccountView=walletAccountView
+    }
+
+    constructor(createWalletAccountView: ViewInterface.CreateWalletAccountView){
+        this.createWalletAccountView=createWalletAccountView
     }
 
     // Main Activity
@@ -126,18 +145,30 @@ class Presenter: PresenterInterface.Presenter{
 
     // DashBoard Fragment
 
-    // In Progress
+    // use by both Dashboard and WalletAccount Fragment
     override fun checkWalletAccount(mainContext: Context, userID: String) {
         realmModel.checkWalletAccountRealm(mainContext,userID)
     }
 
+    // use by both Dashboard and WalletAccount Fragment
     override fun checkWalletAccountResult(mainContext: Context, walletAccountList: ArrayList<WalletAccount>) {
 
-        if(walletAccountList.size<1){
-            dashBoardView.firstTimeSetup(mainContext)
-        }else{
-            dashBoardView.populateWalletAccountSpinner(mainContext,walletAccountList)
+        var view = (mainContext as Activity).findViewById(R.id.navMenu) as View
+        var currentDestination = findNavController(view).currentDestination.id
+
+        if(currentDestination==R.id.dashBoardFragment){
+
+            if(walletAccountList.size<1){
+                dashBoardView.firstTimeSetup(mainContext)
+            }else{
+                dashBoardView.populateWalletAccountSpinner(mainContext,walletAccountList)
+            }
+
+        }else if(currentDestination==R.id.viewWalletAccountFragment){
+
+            walletAccountView.populateWalletAccountRecycleView(mainContext,walletAccountList)
         }
+
 
     }
 
@@ -164,6 +195,30 @@ class Presenter: PresenterInterface.Presenter{
 
     }
 
+
+    override fun createWalletAccount(mainContext: Context, walletAccountInput: WalletAccount) {
+
+        realmModel.createWalletAccountRealm(mainContext, walletAccountInput)
+    }
+
+    override fun createWalletAccountStatus(mainContext: Context, createStatus:String) {
+
+        if(createStatus=="Success"){
+            createWalletAccountView.createWalletAccountSuccess(mainContext)
+        }
+
+    }
+
+    override fun checkWalletAccountCount(mainContext: Context) {
+
+        realmModel.checkWalletAccountCountRealm(mainContext)
+    }
+
+    override fun checkWalletAccountCountResult(mainContext: Context, walletAccountCount: Int) {
+
+        walletAccountView.createButtonStatus(mainContext, walletAccountCount)
+
+    }
 
 
 }

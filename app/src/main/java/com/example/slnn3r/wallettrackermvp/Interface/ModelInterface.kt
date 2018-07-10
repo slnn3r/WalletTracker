@@ -3,6 +3,7 @@ package com.example.slnn3r.wallettrackermvp.Interface
 import android.app.ProgressDialog
 import android.content.Context
 import android.content.Intent
+import com.example.slnn3r.wallettrackermvp.Model.ObjectClass.WalletAccount
 
 interface ModelInterface {
 
@@ -27,11 +28,18 @@ interface ModelInterface {
     interface RealmAccess{
 
         // DashBoard Fragment
-        fun checkWalletAccountRealm(mainContext: Context, userID: String)
+        fun checkWalletAccountRealm(mainContext: Context, userID: String) //(used by WalletAccount Fragment as well)
 
         fun firstTimeRealmSetup(mainContext: Context, userID:String)
 
         fun checkTransactionRealm(mainContext: Context, accountID: String)
+
+
+        // CreateWalletAccount Fragment
+        fun createWalletAccountRealm(mainContext:Context, walletAccountInput: WalletAccount)
+
+        fun checkWalletAccountCountRealm(mainContext: Context)
+
 
     }
 

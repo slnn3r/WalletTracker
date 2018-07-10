@@ -14,6 +14,6 @@ open class WalletAccountRealm(): RealmObject(){
     var WalletAccountName: String? = null
     var WalletAccountInitialBalance:Double = 0.0
     var UserID:String? = null
-
+    var WalletAccountStatus: String?= null
 
 }
