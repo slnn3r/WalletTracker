@@ -40,8 +40,17 @@ interface PresenterInterface{
         fun createWalletAccount(mainContext:Context, walletAccountInput: WalletAccount)
         fun createWalletAccountStatus(mainContext:Context, createStatus:String)
 
+        // ViewWalletAccount Fragment
         fun checkWalletAccountCount(mainContext: Context)
         fun checkWalletAccountCountResult(mainContext: Context, walletAccountCount:Int)
+
+
+        // DetailsWalletAccount Fragment
+        fun updateWalletAccount(mainContext: Context, walletAccountData:WalletAccount)
+        fun updateWalletAccountStatus(mainContext:Context, updateStatus:String)
+
+        fun deleteWalletAccount(mainContext: Context, walletAccountID:String)
+        fun deleteWalletAccountStatus(mainContext:Context, updateStatus:String)
 
 
     }

@@ -17,6 +17,7 @@ import com.example.slnn3r.wallettrackermvp.R
 import com.example.slnn3r.wallettrackermvp.View.Activity.MenuActivity
 import com.example.slnn3r.wallettrackermvp.View.Fragment.DashBoardFragment
 import com.example.slnn3r.wallettrackermvp.View.Fragment.WalletAccount.CreateWalletAccountFragment
+import com.example.slnn3r.wallettrackermvp.View.Fragment.WalletAccount.DetailsWalletAccountFragment
 import com.example.slnn3r.wallettrackermvp.View.Fragment.WalletAccount.ViewWalletAccountFragment
 import io.realm.Realm
 import io.realm.RealmConfiguration
@@ -189,6 +190,9 @@ class RealmAccess: ModelInterface.RealmAccess{
     }
 
 
+
+    // CreateWalletAccount Fragment
+
     override fun createWalletAccountRealm(mainContext: Context, walletAccountInput: WalletAccount) {
 
         ////
@@ -221,6 +225,8 @@ class RealmAccess: ModelInterface.RealmAccess{
     }
 
 
+    // ViewWalletAccount Fragment
+
     override fun checkWalletAccountCountRealm(mainContext: Context) {
 
         presenter= Presenter(ViewWalletAccountFragment())
@@ -251,6 +257,81 @@ class RealmAccess: ModelInterface.RealmAccess{
 
 
         presenter.checkWalletAccountCountResult(mainContext,getWalletAccount.size)
+
+    }
+
+
+
+    // DetailsWalletAccount Fragment
+    override fun updateWalletAccountRealm(mainContext: Context, walletAccountData: WalletAccount) {
+
+        presenter= Presenter(DetailsWalletAccountFragment())
+
+
+        Realm.init(mainContext)
+
+        val config = RealmConfiguration.Builder()
+                .name("walletaccount.realm")
+                .build()
+
+        val realm = Realm.getInstance(config)
+
+        realm.beginTransaction()
+
+        val getWalletAccount = realm.where(WalletAccountRealm::class.java).findAll() //naming wrong
+
+
+        getWalletAccount.forEach{
+            dataList->
+
+            if(dataList.WalletAccountID==walletAccountData.WalletAccountID) {
+
+                dataList.WalletAccountName = walletAccountData.WalletAccountName
+                dataList.WalletAccountInitialBalance = walletAccountData.WalletAccountInitialBalance
+
+            }
+
+
+        }
+
+        realm.commitTransaction()
+
+        presenter.updateWalletAccountStatus(mainContext,"Success")
+
+    }
+
+    override fun deleteWalletAccountRealm(mainContext: Context, walletAccountID: String) {
+
+        presenter= Presenter(DetailsWalletAccountFragment())
+
+
+        Realm.init(mainContext)
+
+        val config = RealmConfiguration.Builder()
+                .name("walletaccount.realm")
+                .build()
+
+        val realm = Realm.getInstance(config)
+
+        realm.beginTransaction()
+
+        val getWalletAccount = realm.where(WalletAccountRealm::class.java).findAll() //naming wrong
+
+
+        getWalletAccount.forEach{
+            dataList->
+
+            if(dataList.WalletAccountID==walletAccountID) {
+
+                dataList.deleteFromRealm()
+
+            }
+
+        }
+
+        realm.commitTransaction()
+
+        presenter.deleteWalletAccountStatus(mainContext,"Success")
 
     }
 

@@ -58,8 +58,6 @@ class DashBoardFragment : Fragment(),ViewInterface.DashBoardView {
         super.onViewCreated(view, savedInstanceState)
 
 
-
-
         DBIncomeFab.setOnClickListener(){
 
             // Testing Purpose

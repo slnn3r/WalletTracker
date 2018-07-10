@@ -61,7 +61,11 @@
         android:id="@+id/detailsWalletAccountFragment"
         android:name="com.example.slnn3r.wallettrackermvp.View.Fragment.WalletAccount.DetailsWalletAccountFragment"
         android:label="fragment_details_wallet_account"
-        tools:layout="@layout/fragment_details_wallet_account" />
+        tools:layout="@layout/fragment_details_wallet_account" >
+        <argument
+            android:name="walletAccountSelection"
+            app:type="string" />
+    </fragment>
     <fragment
         android:id="@+id/detailsTrxCategoryFragment"
         android:name="com.example.slnn3r.wallettrackermvp.View.Fragment.TrxCategory.DetailsTrxCategoryFragment"

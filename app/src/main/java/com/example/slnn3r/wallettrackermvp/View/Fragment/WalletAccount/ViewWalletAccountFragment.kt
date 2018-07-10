@@ -82,9 +82,11 @@ class ViewWalletAccountFragment : Fragment(), ViewInterface.WalletAccountView {
 
         val VWARecyclerView = (mainContext as Activity).findViewById(R.id.VWARecyclerView) as RecyclerView
 
-
         VWARecyclerView.layoutManager = LinearLayoutManager(context)
         VWARecyclerView.adapter = WalletAccountAdapter(walletAccountList)
+
+
+
     }
 
 

@@ -35,6 +35,7 @@ class Presenter: PresenterInterface.Presenter{
 
     private lateinit var walletAccountView: ViewInterface.WalletAccountView
     private lateinit var createWalletAccountView: ViewInterface.CreateWalletAccountView
+    private lateinit var detailsWalletAccountView: ViewInterface.DetailsWalletAccountView
 
 
     private val firebaseModel: ModelInterface.FirebaseAccess = FirebaseAccess()
@@ -64,6 +65,12 @@ class Presenter: PresenterInterface.Presenter{
     constructor(createWalletAccountView: ViewInterface.CreateWalletAccountView){
         this.createWalletAccountView=createWalletAccountView
     }
+
+    constructor(detailsWalletAccountView: ViewInterface.DetailsWalletAccountView){
+        this.detailsWalletAccountView=detailsWalletAccountView
+    }
+
+
 
     // Main Activity
     override fun checkLogin(mainContext: Context) {
@@ -196,6 +203,8 @@ class Presenter: PresenterInterface.Presenter{
     }
 
 
+    // CreateWalletAccount Fragment
+
     override fun createWalletAccount(mainContext: Context, walletAccountInput: WalletAccount) {
 
         realmModel.createWalletAccountRealm(mainContext, walletAccountInput)
@@ -209,6 +218,10 @@ class Presenter: PresenterInterface.Presenter{
 
     }
 
+
+
+    // ViewWalletAccount Fragment
+
     override fun checkWalletAccountCount(mainContext: Context) {
 
         realmModel.checkWalletAccountCountRealm(mainContext)
@@ -220,5 +233,31 @@ class Presenter: PresenterInterface.Presenter{
 
     }
 
+
+
+    // DetailsWalletAccount Fragment
+
+    override fun updateWalletAccount(mainContext: Context, walletAccountData: WalletAccount) {
+
+        realmModel.updateWalletAccountRealm(mainContext, walletAccountData)
+
+    }
+
+    override fun updateWalletAccountStatus(mainContext: Context, updateStatus: String) {
+
+        detailsWalletAccountView.updateWalletAccountSuccess(mainContext)
+
+
+    }
+
+    override fun deleteWalletAccount(mainContext: Context, walletAccountID: String) {
+
+        realmModel.deleteWalletAccountRealm(mainContext, walletAccountID)
+    }
+
+    override fun deleteWalletAccountStatus(mainContext: Context, updateStatus: String) {
+
+        detailsWalletAccountView.deleteWalletAccountSuccess(mainContext)
+    }
 
 }

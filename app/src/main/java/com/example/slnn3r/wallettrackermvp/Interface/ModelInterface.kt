@@ -38,7 +38,12 @@ interface ModelInterface {
         // CreateWalletAccount Fragment
         fun createWalletAccountRealm(mainContext:Context, walletAccountInput: WalletAccount)
 
+        // ViewWalletAccount Fragment
         fun checkWalletAccountCountRealm(mainContext: Context)
+
+        // DetailsWalletAccount Fragment
+        fun updateWalletAccountRealm(mainContext:Context, walletAccountData: WalletAccount)
+        fun deleteWalletAccountRealm(mainContext:Context, walletAccountDataID: String)
 
 
     }

@@ -61,6 +61,16 @@ interface ViewInterface{
         fun createWalletAccountFail(mainContext: Context, errorMessage:String)
 
 
+    }
+
+    interface DetailsWalletAccountView{
+
+        fun updateWalletAccountSuccess(mainContext: Context)
+        fun updateWalletAccountFail(mainContext: Context, errorMessage:String)
+
+        fun deleteWalletAccountSuccess(mainContext: Context)
+        fun deleteWalletAccountFail(mainContext: Context, errorMessage:String)
+
 
     }
 
