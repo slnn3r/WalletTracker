@@ -165,7 +165,7 @@ class DetailsWalletAccountFragment : Fragment(), ViewInterface.DetailsWalletAcco
 
     override fun updateWalletAccountFail(mainContext: Context, errorMessage: String) {
 
-
+        Toast.makeText(mainContext,"Update "+errorMessage,Toast.LENGTH_LONG).show()
 
     }
 
@@ -176,7 +176,7 @@ class DetailsWalletAccountFragment : Fragment(), ViewInterface.DetailsWalletAcco
     }
 
     override fun deleteWalletAccountFail(mainContext: Context, errorMessage: String) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        Toast.makeText(mainContext,"Delete "+errorMessage,Toast.LENGTH_LONG).show()
     }
 
 }

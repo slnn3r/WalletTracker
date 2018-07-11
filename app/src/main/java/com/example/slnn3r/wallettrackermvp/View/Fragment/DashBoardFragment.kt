@@ -37,7 +37,6 @@ import kotlin.collections.ArrayList
 class DashBoardFragment : Fragment(),ViewInterface.DashBoardView {
 
 
-
     private lateinit var presenter: PresenterInterface.Presenter
 
 
@@ -178,11 +177,18 @@ class DashBoardFragment : Fragment(),ViewInterface.DashBoardView {
     }
 
 
-    override fun firstTimeComplete(mainContext: Context, walletAccount: WalletAccount) {
+    override fun firstTimeSetupSuccess(mainContext: Context, walletAccount: WalletAccount) {
 
         presenter = Presenter(this)
         presenter.checkWalletAccount(mainContext, walletAccount.userUID )
     }
+
+    override fun firstTimeSetupFail(mainContext: Context, errorMessage: String) {
+
+        Toast.makeText(mainContext,errorMessage,Toast.LENGTH_LONG).show()
+
+    }
+
 
 
     override fun populateWalletAccountSpinner(mainContext: Context, walletAccountList: ArrayList<WalletAccount>) {
@@ -215,7 +221,6 @@ class DashBoardFragment : Fragment(),ViewInterface.DashBoardView {
             }
 
             override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
-                //Log.d("234jhgj12341jh2g3412312", walletAccountList[spinner.selectedItemPosition].WalletAccountID.toString())
 
                 presenter.checkTransaction(mainContext, walletAccountList[spinner.selectedItemPosition].WalletAccountID.toString())
             }
@@ -223,8 +228,14 @@ class DashBoardFragment : Fragment(),ViewInterface.DashBoardView {
 
 
 
+    }
+
+    override fun populateWalletAccountSpinnerFail(mainContext: Context, errorMessage: String) {
+
+        Toast.makeText(mainContext,errorMessage,Toast.LENGTH_LONG).show()
 
     }
+
 
 
     override fun populateTransactionRecycleView(mainContext: Context, transactionList: ArrayList<Transaction>) {
@@ -238,6 +249,11 @@ class DashBoardFragment : Fragment(),ViewInterface.DashBoardView {
 
     }
 
+    override fun populateTransactionRecycleViewFail(mainContext: Context, errorMessage: String) {
+
+        Toast.makeText(mainContext,errorMessage,Toast.LENGTH_LONG).show()
+
+    }
 
 
 

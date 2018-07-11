@@ -179,7 +179,10 @@ class CreateWalletAccountFragment : Fragment(), ViewInterface.CreateWalletAccoun
     }
 
     override fun createWalletAccountFail(mainContext: Context, errorMessage: String) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+
+        Toast.makeText(mainContext,"Create Wallet Account "+errorMessage,Toast.LENGTH_LONG).show()
+
+
     }
 
 

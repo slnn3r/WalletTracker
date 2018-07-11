@@ -39,11 +39,17 @@ interface ViewInterface{
     interface DashBoardView{
 
         fun populateWalletAccountSpinner(mainContext: Context, walletAccountList: ArrayList<WalletAccount>)
+        fun populateWalletAccountSpinnerFail(mainContext: Context, errorMessage: String)
+
 
         fun firstTimeSetup(mainContext: Context)
-        fun firstTimeComplete(mainContext: Context, walletAccount: WalletAccount)
+        fun firstTimeSetupSuccess(mainContext: Context, walletAccount: WalletAccount)
+        fun firstTimeSetupFail(mainContext: Context, errorMessage: String)
+
 
         fun populateTransactionRecycleView(mainContext: Context, transactionList: ArrayList<Transaction>)
+        fun populateTransactionRecycleViewFail(mainContext: Context, errorMessage: String)
+
 
     }
 
@@ -51,7 +57,12 @@ interface ViewInterface{
     interface WalletAccountView{
 
         fun populateWalletAccountRecycleView(mainContext: Context, walletAccountList: ArrayList<WalletAccount>)
+        fun populateWalletAccountRecycleViewFail(mainContext: Context, errorMessage: String)
+
         fun createButtonStatus(mainContext: Context, walletAccountCount:Int)
+        fun createButtonStatusFail(mainContext: Context, errorMessage: String)
+
+
 
     }
 

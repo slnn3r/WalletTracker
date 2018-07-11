@@ -3,7 +3,6 @@ package com.example.slnn3r.wallettrackermvp.Model
 import android.app.Activity
 import android.content.Context
 import android.view.View
-import android.widget.Toast
 import androidx.navigation.Navigation.findNavController
 import com.example.slnn3r.wallettrackermvp.Interface.ModelInterface
 import com.example.slnn3r.wallettrackermvp.Interface.PresenterInterface
@@ -14,7 +13,6 @@ import com.example.slnn3r.wallettrackermvp.Model.RealmClass.TransactionRealm
 import com.example.slnn3r.wallettrackermvp.Model.RealmClass.WalletAccountRealm
 import com.example.slnn3r.wallettrackermvp.Presenter.Presenter
 import com.example.slnn3r.wallettrackermvp.R
-import com.example.slnn3r.wallettrackermvp.View.Activity.MenuActivity
 import com.example.slnn3r.wallettrackermvp.View.Fragment.DashBoardFragment
 import com.example.slnn3r.wallettrackermvp.View.Fragment.WalletAccount.CreateWalletAccountFragment
 import com.example.slnn3r.wallettrackermvp.View.Fragment.WalletAccount.DetailsWalletAccountFragment
@@ -22,8 +20,6 @@ import com.example.slnn3r.wallettrackermvp.View.Fragment.WalletAccount.ViewWalle
 import io.realm.Realm
 import io.realm.RealmConfiguration
 import java.util.*
-import java.util.UUID.randomUUID
-
 
 
 class RealmAccess: ModelInterface.RealmAccess{
@@ -51,42 +47,66 @@ class RealmAccess: ModelInterface.RealmAccess{
         }
 
 
-
-        Realm.init(mainContext)
-
-        val config = RealmConfiguration.Builder()
-                .name("walletaccount.realm")
-                .build()
-
-        val realm = Realm.getInstance(config)
-
-        realm.beginTransaction()
-
-        val getWalletAccount = realm.where(WalletAccountRealm::class.java).findAll()
+        //
+        var realm: Realm? = null
 
         var WalletAccountData=ArrayList<WalletAccount>()
 
-        getWalletAccount.forEach{
-            dataList->
 
-                if(userID==dataList.UserID){
-                    WalletAccountData.add(
-                            WalletAccount(
-                                    dataList.WalletAccountID!!,
-                                    dataList.WalletAccountName!!,
-                                    dataList.WalletAccountInitialBalance!!,
-                                    dataList.UserID!!,
-                                    dataList.WalletAccountStatus!!
-                            )
-                    )
+        try {
+            Realm.init(mainContext)
+
+            val config = RealmConfiguration.Builder()
+                    .name("walletaccount.realm")
+                    .build()
+
+            realm = Realm.getInstance(config)
+
+
+            realm!!.executeTransaction {
+
+                val getWalletAccount = realm.where(WalletAccountRealm::class.java).findAll()
+
+
+                getWalletAccount.forEach{
+                    dataList->
+
+                    if(userID==dataList.UserID){
+                        WalletAccountData.add(
+                                WalletAccount(
+                                        dataList.WalletAccountID!!,
+                                        dataList.WalletAccountName!!,
+                                        dataList.WalletAccountInitialBalance!!,
+                                        dataList.UserID!!,
+                                        dataList.WalletAccountStatus!!
+                                )
+                        )
+                    }
+
+
                 }
 
 
+            }
+
+            realm?.close()
+
+            presenter.checkWalletAccountResult(mainContext,WalletAccountData, "Success")
+
+
+        }catch(e:Exception) {
+
+            realm?.close()
+
+            var WalletAccountData=ArrayList<WalletAccount>()
+            presenter.checkWalletAccountResult(mainContext,WalletAccountData,"Fail: "+e.toString())
+
+        }finally {
+            realm?.close()
         }
 
-        realm.commitTransaction()
+        //
 
-        presenter.checkWalletAccountResult(mainContext,WalletAccountData)
 
     }
 
@@ -96,29 +116,51 @@ class RealmAccess: ModelInterface.RealmAccess{
 
         val uniqueID = UUID.randomUUID().toString()
 
+        //
+        var realm: Realm? = null
+        try {
+            Realm.init(mainContext)
 
-        Realm.init(mainContext)
+            val config = RealmConfiguration.Builder()
+                    .name("walletaccount.realm")
+                    .build()
 
-        val config = RealmConfiguration.Builder()
-                .name("walletaccount.realm")
-                .build()
-
-        val realm = Realm.getInstance(config)
-
-
-        realm.beginTransaction()
-
-        val creating = realm.createObject(WalletAccountRealm::class.java, uniqueID)
-
-        creating.WalletAccountName= "Personal"
-        creating.WalletAccountInitialBalance=0.0
-        creating.UserID=userID
-        creating.WalletAccountStatus="Default"
-
-        realm.commitTransaction()
+            realm = Realm.getInstance(config)
 
 
-        presenter.firstTimeSetupStatus(mainContext,WalletAccount(uniqueID,"Personal",0.0,userID,"Default"))
+            realm!!.executeTransaction {
+
+                val creating = realm.createObject(WalletAccountRealm::class.java, uniqueID)
+
+                creating.WalletAccountName= "Personal"
+                creating.WalletAccountInitialBalance=0.0
+                creating.UserID=userID
+                creating.WalletAccountStatus="Default"
+
+
+
+            }
+
+
+            realm?.close()
+
+            presenter.firstTimeSetupStatus(mainContext,WalletAccount(uniqueID,"Personal",0.0,userID,"Default"), "Success")
+
+
+        }catch(e:Exception) {
+
+            realm?.close()
+
+            presenter.firstTimeSetupStatus(mainContext,WalletAccount("","",0.0,"",""), "Fail: "+e.toString())
+
+
+
+        }finally {
+            realm?.close()
+        }
+
+        //
+
 
     }
 
@@ -128,64 +170,90 @@ class RealmAccess: ModelInterface.RealmAccess{
 
         presenter= Presenter(DashBoardFragment())
 
-
-        Realm.init(mainContext)
-
-        val config = RealmConfiguration.Builder()
-                .name("transaction.realm")
-                .build()
-
-        val realm = Realm.getInstance(config)
-
-        realm.beginTransaction()
-
-        val getWalletAccount = realm.where(TransactionRealm::class.java).findAll() //naming wrong
+        //
+        var realm: Realm? = null
 
         var TransactionData=ArrayList<Transaction>()
 
-        var TransactionCategoryGSON= TransactionCategory("","","","","")
 
-        getWalletAccount.forEach{
-            dataList->
+        try {
+            Realm.init(mainContext)
 
-            if(dataList.WalletAccountID==accountID) {
+            val config = RealmConfiguration.Builder()
+                    .name("transaction.realm")
+                    .build()
+
+            realm = Realm.getInstance(config)
+
+
+            realm!!.executeTransaction {
+
+                val getTransaction = realm.where(TransactionRealm::class.java).findAll() //naming wrong
+
+
+                var TransactionCategoryGSON= TransactionCategory("","","","","")
+
+                getTransaction.forEach{
+                    dataList->
+
+                    if(dataList.WalletAccountID==accountID) {
 
 
 
-                TransactionData.add(
-                        Transaction(
-                                dataList.TransactionID!!,
-                                dataList.TransactionDate!!,
-                                dataList.TransactionTime!!,
-                                dataList.TransactionAmount!!,
-                                dataList.TransactionRemark!!,
-                                TransactionCategoryGSON,
-                                dataList.WalletAccountID!!
+                        TransactionData.add(
+                                Transaction(
+                                        dataList.TransactionID!!,
+                                        dataList.TransactionDate!!,
+                                        dataList.TransactionTime!!,
+                                        dataList.TransactionAmount!!,
+                                        dataList.TransactionRemark!!,
+                                        TransactionCategoryGSON,
+                                        dataList.WalletAccountID!!
+                                )
                         )
-                )
+
+                    }
+
+                }
+
+                if(TransactionData.size<1){
+                    TransactionData.add(
+                            Transaction(
+                                    "No Search Found",
+                                    "No Search Found",
+                                    "No Search Found",
+                                    0.0,
+                                    "No Search Found",
+                                    TransactionCategoryGSON,
+                                    "No Search Found"
+                            )
+                    )
+                }
 
             }
 
+            realm?.close()
 
+            presenter.checkTransactionResult(mainContext, TransactionData,"Success")
+
+
+        }catch(e:Exception) {
+
+            realm?.close()
+
+            var TransactionData=ArrayList<Transaction>()
+
+            presenter.checkTransactionResult(mainContext, TransactionData,"Fail: "+e.toString())
+
+
+
+        }finally {
+            realm?.close()
         }
 
-        realm.commitTransaction()
+        //
 
-        if(TransactionData.size<1){
-            TransactionData.add(
-                    Transaction(
-                            "No Search Found",
-                            "No Search Found",
-                            "No Search Found",
-                            0.0,
-                            "No Search Found",
-                            TransactionCategoryGSON,
-                            "No Search Found"
-                    )
-            )
-        }
 
-        presenter.checkTransactionResult(mainContext, TransactionData)
 
     }
 
@@ -196,31 +264,51 @@ class RealmAccess: ModelInterface.RealmAccess{
     override fun createWalletAccountRealm(mainContext: Context, walletAccountInput: WalletAccount) {
 
         ////
-
         presenter= Presenter(CreateWalletAccountFragment())
 
-
-        Realm.init(mainContext)
-
-        val config = RealmConfiguration.Builder()
-                .name("walletaccount.realm")
-                .build()
-
-        val realm = Realm.getInstance(config)
+        //
+        var realm: Realm? = null
 
 
-        realm.beginTransaction()
+        try {
+            Realm.init(mainContext)
 
-        val creating = realm.createObject(WalletAccountRealm::class.java, walletAccountInput.WalletAccountID)
+            val config = RealmConfiguration.Builder()
+                    .name("walletaccount.realm")
+                    .build()
 
-        creating.WalletAccountName= walletAccountInput.WalletAccountName
-        creating.WalletAccountInitialBalance= walletAccountInput.WalletAccountInitialBalance
-        creating.UserID= walletAccountInput.userUID
-        creating.WalletAccountStatus= walletAccountInput.WalletAccountStatus
+            realm = Realm.getInstance(config)
 
-        realm.commitTransaction()
 
-        presenter.createWalletAccountStatus(mainContext, "Success")
+            realm!!.executeTransaction {
+
+                val creating = realm.createObject(WalletAccountRealm::class.java, walletAccountInput.WalletAccountID)
+
+                creating.WalletAccountName= walletAccountInput.WalletAccountName
+                creating.WalletAccountInitialBalance= walletAccountInput.WalletAccountInitialBalance
+                creating.UserID= walletAccountInput.userUID
+                creating.WalletAccountStatus= walletAccountInput.WalletAccountStatus
+
+
+            }
+
+            realm?.close()
+            presenter.createWalletAccountStatus(mainContext, "Success")
+
+
+
+        }catch(e:Exception) {
+
+            realm?.close()
+            presenter.createWalletAccountStatus(mainContext, "Fail: "+e.toString())
+
+
+        }finally {
+            realm?.close()
+        }
+
+        //
+
 
     }
 
@@ -232,35 +320,57 @@ class RealmAccess: ModelInterface.RealmAccess{
         presenter= Presenter(ViewWalletAccountFragment())
 
 
-        Realm.init(mainContext)
-
-        val config = RealmConfiguration.Builder()
-                .name("walletaccount.realm")
-                .build()
-
-        val realm = Realm.getInstance(config)
-
-        realm.beginTransaction()
-
-        val getWalletAccount = realm.where(WalletAccountRealm::class.java).findAll()
-
-
-
-        realm.commitTransaction()
-
+        //
+        var realm: Realm? = null
         var count:Int=0
 
-        getWalletAccount.forEach{
-            data ->
+        try {
 
-            if(data.UserID==userID){
-                count+=1
+            Realm.init(mainContext)
+
+            val config = RealmConfiguration.Builder()
+                    .name("walletaccount.realm")
+                    .build()
+
+            realm = Realm.getInstance(config)
+
+
+
+            realm!!.executeTransaction {
+
+                val getWalletAccount = realm.where(WalletAccountRealm::class.java).findAll()
+
+
+                getWalletAccount.forEach{
+                    data ->
+
+                    if(data.UserID==userID){
+                        count+=1
+                    }
+
+                }
+
             }
 
+
+            realm?.close()
+            presenter.checkWalletAccountCountResult(mainContext,count,"Success")
+
+
+
+        }catch(e:Exception) {
+
+            realm?.close()
+            presenter.checkWalletAccountCountResult(mainContext,0,"Fail"+e.toString())
+
+
+        }finally {
+            realm?.close()
         }
 
+        //
 
-        presenter.checkWalletAccountCountResult(mainContext,count)
+
 
     }
 
@@ -271,36 +381,61 @@ class RealmAccess: ModelInterface.RealmAccess{
 
         presenter= Presenter(DetailsWalletAccountFragment())
 
-
-        Realm.init(mainContext)
-
-        val config = RealmConfiguration.Builder()
-                .name("walletaccount.realm")
-                .build()
-
-        val realm = Realm.getInstance(config)
-
-        realm.beginTransaction()
-
-        val getWalletAccount = realm.where(WalletAccountRealm::class.java).findAll() //naming wrong
+        //
+        var realm: Realm? = null
 
 
-        getWalletAccount.forEach{
-            dataList->
+        try {
 
-            if(dataList.WalletAccountID==walletAccountData.WalletAccountID) {
+            Realm.init(mainContext)
 
-                dataList.WalletAccountName = walletAccountData.WalletAccountName
-                dataList.WalletAccountInitialBalance = walletAccountData.WalletAccountInitialBalance
+            val config = RealmConfiguration.Builder()
+                    .name("walletaccount.realm")
+                    .build()
+
+            realm = Realm.getInstance(config)
+
+
+            realm!!.executeTransaction {
+
+
+                val getWalletAccount = realm.where(WalletAccountRealm::class.java).findAll() //naming wrong
+
+
+                getWalletAccount.forEach{
+                    dataList->
+
+                    if(dataList.WalletAccountID==walletAccountData.WalletAccountID) {
+
+                        dataList.WalletAccountName = walletAccountData.WalletAccountName
+                        dataList.WalletAccountInitialBalance = walletAccountData.WalletAccountInitialBalance
+
+                    }
+
+
+                }
 
             }
 
+            realm?.close()
+            presenter.updateWalletAccountStatus(mainContext,"Success")
 
+
+
+        }catch(e:Exception) {
+
+            realm?.close()
+            presenter.updateWalletAccountStatus(mainContext,"Fail: "+e.toString())
+
+
+
+        }finally {
+            realm?.close()
         }
 
-        realm.commitTransaction()
+        //
 
-        presenter.updateWalletAccountStatus(mainContext,"Success")
+        
 
     }
 
@@ -309,33 +444,63 @@ class RealmAccess: ModelInterface.RealmAccess{
         presenter= Presenter(DetailsWalletAccountFragment())
 
 
-        Realm.init(mainContext)
-
-        val config = RealmConfiguration.Builder()
-                .name("walletaccount.realm")
-                .build()
-
-        val realm = Realm.getInstance(config)
-
-        realm.beginTransaction()
-
-        val getWalletAccount = realm.where(WalletAccountRealm::class.java).findAll() //naming wrong
+        //
+        var realm: Realm? = null
 
 
-        getWalletAccount.forEach{
-            dataList->
+        try {
 
-            if(dataList.WalletAccountID==walletAccountID) {
+            Realm.init(mainContext)
 
-                dataList.deleteFromRealm()
+            val config = RealmConfiguration.Builder()
+                    .name("walletaccount.realm")
+                    .build()
+
+            val realm = Realm.getInstance(config)
+
+            realm!!.executeTransaction {
+
+                val getWalletAccount = realm.where(WalletAccountRealm::class.java).findAll() //naming wrong
+
+
+                getWalletAccount.forEach{
+                    dataList->
+
+                    if(dataList.WalletAccountID==walletAccountID) {
+
+                        dataList.deleteFromRealm()
+
+                    }
+
+                }
+
 
             }
 
+            realm?.close()
+            presenter.deleteWalletAccountStatus(mainContext,"Success")
+
+
+
+        }catch(e:Exception) {
+
+            realm?.close()
+            presenter.deleteWalletAccountStatus(mainContext,"Fail: "+e.toString())
+
+
+
+        }finally {
+            realm?.close()
         }
 
-        realm.commitTransaction()
+        //
+        
+        
 
-        presenter.deleteWalletAccountStatus(mainContext,"Success")
+
+        
+
+
 
     }
 

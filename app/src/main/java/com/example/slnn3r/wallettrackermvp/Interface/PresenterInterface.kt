@@ -28,13 +28,13 @@ interface PresenterInterface{
 
         // DashBoard Fragment (used by ViewWalletAccount Fragment as well)
         fun checkWalletAccount(mainContext: Context, userID:String)
-        fun checkWalletAccountResult(mainContext: Context, walletAccountList: ArrayList<WalletAccount>)
+        fun checkWalletAccountResult(mainContext: Context, walletAccountList: java.util.ArrayList<WalletAccount>, status:String)
 
         fun firstTimeDatabaseSetup(mainContext: Context, userID:String)
-        fun firstTimeSetupStatus(mainContext: Context, walletAccount: WalletAccount)
+        fun firstTimeSetupStatus(mainContext: Context, walletAccount: WalletAccount, status:String)
 
         fun checkTransaction(mainContext: Context, accountID: String)
-        fun checkTransactionResult(mainContext: Context, transactionList: ArrayList<Transaction>)
+        fun checkTransactionResult(mainContext: Context, transactionList: ArrayList<Transaction>, status: String)
 
         // CreateWalletAccount Fragment
         fun createWalletAccount(mainContext:Context, walletAccountInput: WalletAccount)
@@ -42,7 +42,7 @@ interface PresenterInterface{
 
         // ViewWalletAccount Fragment
         fun checkWalletAccountCount(mainContext: Context, userID: String)
-        fun checkWalletAccountCountResult(mainContext: Context, walletAccountCount:Int)
+        fun checkWalletAccountCountResult(mainContext: Context, walletAccountCount:Int,status: String)
 
 
         // DetailsWalletAccount Fragment
@@ -50,7 +50,7 @@ interface PresenterInterface{
         fun updateWalletAccountStatus(mainContext:Context, updateStatus:String)
 
         fun deleteWalletAccount(mainContext: Context, walletAccountID:String)
-        fun deleteWalletAccountStatus(mainContext:Context, updateStatus:String)
+        fun deleteWalletAccountStatus(mainContext:Context, deleteStatus:String)
 
 
     }

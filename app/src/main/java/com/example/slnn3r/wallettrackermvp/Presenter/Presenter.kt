@@ -158,23 +158,41 @@ class Presenter: PresenterInterface.Presenter{
     }
 
     // use by both Dashboard and WalletAccount Fragment
-    override fun checkWalletAccountResult(mainContext: Context, walletAccountList: ArrayList<WalletAccount>) {
+    override fun checkWalletAccountResult(mainContext: Context, walletAccountList: java.util.ArrayList<WalletAccount>, status: String) {
 
         var view = (mainContext as Activity).findViewById(R.id.navMenu) as View
         var currentDestination = findNavController(view).currentDestination.id
 
-        if(currentDestination==R.id.dashBoardFragment){
+        if(status=="Success"){
 
-            if(walletAccountList.size<1){
-                dashBoardView.firstTimeSetup(mainContext)
-            }else{
-                dashBoardView.populateWalletAccountSpinner(mainContext,walletAccountList)
+            if(currentDestination==R.id.dashBoardFragment){
+
+                if(walletAccountList.size<1){
+                    dashBoardView.firstTimeSetup(mainContext)
+                }else{
+                    dashBoardView.populateWalletAccountSpinner(mainContext,walletAccountList)
+                }
+
+            }else if(currentDestination==R.id.viewWalletAccountFragment){
+
+                walletAccountView.populateWalletAccountRecycleView(mainContext,walletAccountList)
             }
 
-        }else if(currentDestination==R.id.viewWalletAccountFragment){
+        }else{
 
-            walletAccountView.populateWalletAccountRecycleView(mainContext,walletAccountList)
+            if(currentDestination==R.id.dashBoardFragment){
+
+                dashBoardView.populateWalletAccountSpinnerFail(mainContext,status)
+
+            }else if(currentDestination==R.id.viewWalletAccountFragment){
+
+                walletAccountView.populateWalletAccountRecycleViewFail(mainContext,status)
+
+            }
+
         }
+
+
 
 
     }
@@ -185,9 +203,17 @@ class Presenter: PresenterInterface.Presenter{
 
     }
 
-    override fun firstTimeSetupStatus(mainContext: Context, walletAccount: WalletAccount) {
+    override fun firstTimeSetupStatus(mainContext: Context, walletAccount: WalletAccount, status: String) {
 
-        dashBoardView.firstTimeComplete(mainContext,walletAccount)
+        if(status=="Success"){
+            dashBoardView.firstTimeSetupSuccess(mainContext,walletAccount)
+        }else{
+            dashBoardView.firstTimeSetupFail(mainContext,status)
+        }
+
+
+
+
     }
 
 
@@ -195,9 +221,15 @@ class Presenter: PresenterInterface.Presenter{
         realmModel.checkTransactionRealm(mainContext,accountID)
     }
 
-    override fun checkTransactionResult(mainContext: Context, transactionList: ArrayList<Transaction>) {
+    override fun checkTransactionResult(mainContext: Context, transactionList: ArrayList<Transaction>, status: String) {
 
-        dashBoardView.populateTransactionRecycleView(mainContext, transactionList)
+        if(status=="Success"){
+            dashBoardView.populateTransactionRecycleView(mainContext, transactionList)
+
+        }else{
+            dashBoardView.populateTransactionRecycleViewFail(mainContext,status)
+        }
+
 
 
     }
@@ -214,6 +246,8 @@ class Presenter: PresenterInterface.Presenter{
 
         if(createStatus=="Success"){
             createWalletAccountView.createWalletAccountSuccess(mainContext)
+        }else{
+            createWalletAccountView.createWalletAccountFail(mainContext,createStatus)
         }
 
     }
@@ -227,9 +261,14 @@ class Presenter: PresenterInterface.Presenter{
         realmModel.checkWalletAccountCountRealm(mainContext, userID)
     }
 
-    override fun checkWalletAccountCountResult(mainContext: Context, walletAccountCount: Int) {
+    override fun checkWalletAccountCountResult(mainContext: Context, walletAccountCount: Int, status: String) {
 
-        walletAccountView.createButtonStatus(mainContext, walletAccountCount)
+        if(status=="Success"){
+            walletAccountView.createButtonStatus(mainContext, walletAccountCount)
+
+        }else{
+            walletAccountView.createButtonStatusFail(mainContext,status)
+        }
 
     }
 
@@ -245,7 +284,12 @@ class Presenter: PresenterInterface.Presenter{
 
     override fun updateWalletAccountStatus(mainContext: Context, updateStatus: String) {
 
-        detailsWalletAccountView.updateWalletAccountSuccess(mainContext)
+        if(updateStatus=="Success"){
+            detailsWalletAccountView.updateWalletAccountSuccess(mainContext)
+
+        }else{
+            detailsWalletAccountView.updateWalletAccountFail(mainContext,updateStatus)
+        }
 
 
     }
@@ -255,9 +299,15 @@ class Presenter: PresenterInterface.Presenter{
         realmModel.deleteWalletAccountRealm(mainContext, walletAccountID)
     }
 
-    override fun deleteWalletAccountStatus(mainContext: Context, updateStatus: String) {
+    override fun deleteWalletAccountStatus(mainContext: Context, deleteStatus: String) {
 
-        detailsWalletAccountView.deleteWalletAccountSuccess(mainContext)
+        if(deleteStatus=="Success"){
+            detailsWalletAccountView.deleteWalletAccountSuccess(mainContext)
+
+        }else{
+            detailsWalletAccountView.deleteWalletAccountFail(mainContext,deleteStatus)
+        }
+
     }
 
 }

@@ -12,6 +12,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.Toast
 import androidx.navigation.findNavController
 import com.example.slnn3r.wallettrackermvp.Adapter.WalletAccountAdapter
 import com.example.slnn3r.wallettrackermvp.Interface.PresenterInterface
@@ -72,7 +73,6 @@ class ViewWalletAccountFragment : Fragment(), ViewInterface.WalletAccountView {
 
         presenter = Presenter(this)
         presenter.checkWalletAccount(context!!, userID)
-
         presenter.checkWalletAccountCount(context!!, userID)
 
     }
@@ -85,7 +85,11 @@ class ViewWalletAccountFragment : Fragment(), ViewInterface.WalletAccountView {
         VWARecyclerView.layoutManager = LinearLayoutManager(context)
         VWARecyclerView.adapter = WalletAccountAdapter(walletAccountList)
 
+    }
 
+    override fun populateWalletAccountRecycleViewFail(mainContext: Context, errorMessage: String) {
+
+        Toast.makeText(mainContext,errorMessage,Toast.LENGTH_LONG).show()
 
     }
 
@@ -106,5 +110,15 @@ class ViewWalletAccountFragment : Fragment(), ViewInterface.WalletAccountView {
 
 
     }
+
+    override fun createButtonStatusFail(mainContext: Context, errorMessage: String) {
+        val createSubmitButton = (mainContext as Activity).findViewById(R.id.WVAGoToCWA) as Button
+
+        createSubmitButton.isEnabled = false
+
+        Toast.makeText(mainContext,errorMessage,Toast.LENGTH_LONG).show()
+
+    }
+
 
 }
