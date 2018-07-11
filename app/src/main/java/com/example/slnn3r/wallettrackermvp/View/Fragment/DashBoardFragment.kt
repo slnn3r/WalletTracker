@@ -43,7 +43,7 @@ class DashBoardFragment : Fragment(),ViewInterface.DashBoardView {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
 
-        (activity as? AppCompatActivity)?.supportActionBar?.title = "Dashboard"
+        (activity as? AppCompatActivity)?.supportActionBar?.title = getString(R.string.dashBoardFragmentTitle)
 
 
 
@@ -64,7 +64,7 @@ class DashBoardFragment : Fragment(),ViewInterface.DashBoardView {
 
 
             val bundle = Bundle()
-            bundle.putString("TrxTypeSelection", "Income")
+            bundle.putString(getString(R.string.trxTypePassArgKey), getString(R.string.income))
             navController.navigate(R.id.action_dashBoardFragment_to_addNewTrx, bundle)
 
             (activity as MenuActivity).setupNavigationMode()
@@ -79,7 +79,7 @@ class DashBoardFragment : Fragment(),ViewInterface.DashBoardView {
             val navController = view.findNavController()
 
             val bundle = Bundle()
-            bundle.putString("TrxTypeSelection", "Expense")
+            bundle.putString(getString(R.string.trxTypePassArgKey), getString(R.string.expense))
             navController.navigate(R.id.action_dashBoardFragment_to_addNewTrx,bundle)
 
             (activity as MenuActivity).setupNavigationMode()
@@ -136,11 +136,11 @@ class DashBoardFragment : Fragment(),ViewInterface.DashBoardView {
 
         ////
         ////
-        val editor = context!!.getSharedPreferences("UserProfile", AppCompatActivity.MODE_PRIVATE)
+        val editor = context!!.getSharedPreferences(getString(R.string.userProfileKey), AppCompatActivity.MODE_PRIVATE)
 
         // user GSON convert to object
         val gson = Gson()
-        val json = editor.getString("UserProfile", "")
+        val json = editor.getString(getString(R.string.userProfileKey), "")
 
         val userProfile = gson.fromJson<UserProfile>(json, UserProfile::class.java)
 
@@ -159,11 +159,11 @@ class DashBoardFragment : Fragment(),ViewInterface.DashBoardView {
 
         ////
         ////
-        val editor = mainContext!!.getSharedPreferences("UserProfile", AppCompatActivity.MODE_PRIVATE)
+        val editor = mainContext.getSharedPreferences(mainContext.getString(R.string.userProfileKey), AppCompatActivity.MODE_PRIVATE)
 
         // user GSON convert to object
         val gson = Gson()
-        val json = editor.getString("UserProfile", "")
+        val json = editor.getString(mainContext.getString(R.string.userProfileKey), "")
 
         val userProfile = gson.fromJson<UserProfile>(json, UserProfile::class.java)
 
@@ -222,7 +222,7 @@ class DashBoardFragment : Fragment(),ViewInterface.DashBoardView {
 
             override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
 
-                presenter.checkTransaction(mainContext, walletAccountList[spinner.selectedItemPosition].WalletAccountID.toString())
+                presenter.checkTransaction(mainContext, walletAccountList[spinner.selectedItemPosition].WalletAccountID)
             }
         }
 

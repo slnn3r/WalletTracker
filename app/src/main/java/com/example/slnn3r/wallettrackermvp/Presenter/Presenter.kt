@@ -98,14 +98,14 @@ class Presenter: PresenterInterface.Presenter{
         if(resultCode!=0){
             firebaseModel.loginGoogleFirebaseExecute(mainContext, requestCode,resultCode,data,loginView.displayLoginLoading(mainContext!!))
         }else{
-            var errorMessage= "Login Cancelled"
+            var errorMessage= mainContext!!.getString(R.string.loginCancel)
 
-            val cm = mainContext?.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+            val cm = mainContext.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
             val activeNetwork: NetworkInfo? = cm.activeNetworkInfo
             val isConnected: Boolean = activeNetwork?.isConnectedOrConnecting == true
 
             if(!isConnected){
-                errorMessage="Login Cancelled - No Internet Connection"
+                errorMessage=mainContext.getString(R.string.loginCancelNoInternet)
             }
 
             loginView.loginFail(mainContext, errorMessage)
@@ -160,10 +160,10 @@ class Presenter: PresenterInterface.Presenter{
     // use by both Dashboard and WalletAccount Fragment
     override fun checkWalletAccountResult(mainContext: Context, walletAccountList: java.util.ArrayList<WalletAccount>, status: String) {
 
-        var view = (mainContext as Activity).findViewById(R.id.navMenu) as View
-        var currentDestination = findNavController(view).currentDestination.id
+        val view = (mainContext as Activity).findViewById(R.id.navMenu) as View
+        val currentDestination = findNavController(view).currentDestination.id
 
-        if(status=="Success"){
+        if(status==mainContext.getString(R.string.statusSuccess)){
 
             if(currentDestination==R.id.dashBoardFragment){
 
@@ -205,7 +205,7 @@ class Presenter: PresenterInterface.Presenter{
 
     override fun firstTimeSetupStatus(mainContext: Context, walletAccount: WalletAccount, status: String) {
 
-        if(status=="Success"){
+        if(status==mainContext.getString(R.string.statusSuccess)){
             dashBoardView.firstTimeSetupSuccess(mainContext,walletAccount)
         }else{
             dashBoardView.firstTimeSetupFail(mainContext,status)
@@ -223,7 +223,7 @@ class Presenter: PresenterInterface.Presenter{
 
     override fun checkTransactionResult(mainContext: Context, transactionList: ArrayList<Transaction>, status: String) {
 
-        if(status=="Success"){
+        if(status==mainContext.getString(R.string.statusSuccess)){
             dashBoardView.populateTransactionRecycleView(mainContext, transactionList)
 
         }else{
@@ -244,7 +244,7 @@ class Presenter: PresenterInterface.Presenter{
 
     override fun createWalletAccountStatus(mainContext: Context, createStatus:String) {
 
-        if(createStatus=="Success"){
+        if(createStatus==mainContext.getString(R.string.statusSuccess)){
             createWalletAccountView.createWalletAccountSuccess(mainContext)
         }else{
             createWalletAccountView.createWalletAccountFail(mainContext,createStatus)
@@ -263,7 +263,7 @@ class Presenter: PresenterInterface.Presenter{
 
     override fun checkWalletAccountCountResult(mainContext: Context, walletAccountCount: Int, status: String) {
 
-        if(status=="Success"){
+        if(status==mainContext.getString(R.string.statusSuccess)){
             walletAccountView.createButtonStatus(mainContext, walletAccountCount)
 
         }else{
@@ -284,7 +284,7 @@ class Presenter: PresenterInterface.Presenter{
 
     override fun updateWalletAccountStatus(mainContext: Context, updateStatus: String) {
 
-        if(updateStatus=="Success"){
+        if(updateStatus==mainContext.getString(R.string.statusSuccess)){
             detailsWalletAccountView.updateWalletAccountSuccess(mainContext)
 
         }else{
@@ -301,7 +301,7 @@ class Presenter: PresenterInterface.Presenter{
 
     override fun deleteWalletAccountStatus(mainContext: Context, deleteStatus: String) {
 
-        if(deleteStatus=="Success"){
+        if(deleteStatus==mainContext.getString(R.string.statusSuccess)){
             detailsWalletAccountView.deleteWalletAccountSuccess(mainContext)
 
         }else{

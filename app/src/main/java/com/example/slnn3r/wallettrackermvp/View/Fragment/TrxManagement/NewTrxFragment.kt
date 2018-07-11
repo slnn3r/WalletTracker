@@ -25,20 +25,22 @@ import java.sql.Time
 
 class NewTrxFragment : Fragment() {
 
-    val myCalendar = Calendar.getInstance()
-    val myFormat = "dd/MM/yy"
-    val simpleDateFormat = SimpleDateFormat(myFormat, Locale.US)
+    private val myCalendar = Calendar.getInstance()
+    private lateinit var simpleDateFormat:SimpleDateFormat
 
-    val mcurrentTime = Calendar.getInstance()
-    val hour = mcurrentTime.get(Calendar.HOUR_OF_DAY)
-    val minute = mcurrentTime.get(Calendar.MINUTE)
-    val simpleTimeFormat = SimpleDateFormat("h:mma")
+    private val mcurrentTime = Calendar.getInstance()
+    private val hour = mcurrentTime.get(Calendar.HOUR_OF_DAY)
+    private val minute = mcurrentTime.get(Calendar.MINUTE)
+    private lateinit var simpleTimeFormat:SimpleDateFormat
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
 
-        (activity as? AppCompatActivity)?.supportActionBar?.title = "Add New Transaction"
+        (activity as? AppCompatActivity)?.supportActionBar?.title = getString(R.string.newTrxFragment)
 
+
+        simpleDateFormat = SimpleDateFormat(getString(R.string.dateFormat), Locale.US)
+        simpleTimeFormat = SimpleDateFormat(context?.getString(R.string.timeFormat))
 
         return inflater.inflate(R.layout.fragment_new_trx, container, false)
     }
@@ -70,7 +72,7 @@ class NewTrxFragment : Fragment() {
         // Setup Spinner listener
         NewTrxTypeSpinner.setOnItemSelectedListener(object : OnItemSelectedListener {
             override fun onItemSelected(parentView: AdapterView<*>, selectedItemView: View, position: Int, id: Long) {
-                if(NewTrxTypeSpinner.selectedItem=="Expense"){
+                if(NewTrxTypeSpinner.selectedItem==getString(R.string.expense)){
 
                     NewTrxTypeImageView.setImageDrawable(getResources().getDrawable(R.drawable.expense_icon))
                     NewTrxTypeImageView.setBackground(getResources().getDrawable(R.drawable.fui_idp_button_background_email))
@@ -123,9 +125,6 @@ class NewTrxFragment : Fragment() {
             mTimePicker = TimePickerDialog(context, TimePickerDialog.OnTimeSetListener { timePicker, selectedHour, selectedMinute ->
 
 
-                    //NewTrxTimeInput.setText(selectedHour.toString() + ":" + selectedMinute)
-
-
                 val time = Time(selectedHour, selectedMinute, 0)
                 val s = simpleTimeFormat.format(time)
 
@@ -133,7 +132,6 @@ class NewTrxFragment : Fragment() {
 
 
                 }, hour, minute, false)//Yes 24 hour time
-                mTimePicker.setTitle("Select Time")
                 mTimePicker.show()
 
         }
@@ -148,7 +146,7 @@ class NewTrxFragment : Fragment() {
 
 
         // Receive Argumemt
-        val TrxTypeSelection = arguments?.getString("TrxTypeSelection")
+        val TrxTypeSelection = arguments?.getString(getString(R.string.trxTypePassArgKey))
 
         // Set Transaction Type based on Argument
         val spinnerPosition = dataAdapter.getPosition(TrxTypeSelection)

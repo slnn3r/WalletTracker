@@ -103,4 +103,100 @@
 
 
 
+
+
+    <!-- System Configuration String -->
+
+        <!-- Common Default Value -->
+        <string name="expense">Expense</string>
+        <string name="income">Income</string>
+        <string name="statusDefault">Default</string>
+        <string name="statusNotDefault">New</string>
+        <string name="statusSuccess">Success</string>
+        <string name="noResult">No Search Found</string>
+        <string name="statusFail">Failed: </string>
+
+        <string name="defaultAccountName">Personal</string>
+        <string name="defaultAccountBalance">0.0</string>
+
+
+
+        <!-- SharedPreference Key -->
+        <string name="userProfileKey">UserProfile</string>
+
+        <!-- Navigation Argument Pass Key -->
+        <string name="trxTypePassArgKey">TrxTypeSelection</string>
+        <string name="walletAccountPassArgKey">walletAccountSelection</string>
+
+        <!-- Validation RegEx -->
+        <string name="regExNoCharacterOnly">^[a-zA-Z\s]+</string>
+
+        <!-- Max Length for Input Field -->
+        <string name="maxAccNameInputField">15</string>
+
+        <!-- Format -->
+        <string name="timeFormat">h:mma</string>
+        <string name="dateFormat">dd/MM/yy</string>
+
+        <!-- GoogleAPI Key -->
+        <string name="GoogleSignInOptionKey">866059954529-u7ki0u0si1veh1ul9slartd6ejnq0js7.apps.googleusercontent.com</string>
+
+        <!-- Realm Database File -->
+        <string name="walletAccountRealm">walletaccount.realm</string>
+        <string name="transactionRealm">transaction.realm</string>
+
+
+
+    <!-- System Informative String -->
+
+        <!-- Loading Dialog -->
+        <string name="loadingTitle">Loading</string>
+        <string name="loadingMessage">Signing with your Google Account…</string>
+
+        <!-- Menu Double Tab Back to Exit Apps -->
+        <string name="exitAppConfirmation">Please click BACK again to exit</string>
+
+        <!-- Screen Title -->
+        <string name="dashBoardFragmentTitle">Dashboard</string>
+        <string name="createWalletAccountFragmentTitle">Create Wallet Account</string>
+        <string name="viewWalletAccountFragmentTitle">Wallet Account List</string>
+        <string name="detailsWalletAccountFragmentTitle">Wallet Account Details</string>
+        <string name="newTrxFragment">Add New Transaction</string>
+
+        <!-- TextWatcher Message -->
+        <string name="promptToEnter">Please Fill In This Field</string>
+        <string name="accNameInputErrorMaxLength">Max length 15 Character only</string>
+        <string name="accNameInoutErrorInvalid">Invalid Name</string>
+
+        <!-- Toast Message -->
+        <string name="createWalletAccountSuccess">Create Wallet Account Success</string>
+        <string name="createWalletAccountFail">Create Wallet Account </string>
+
+        <string name="updateWalletAccountSuccess">Update Wallet Account Success</string>
+        <string name="updateWalletAccountFail">Update Wallet Account </string>
+
+        <string name="deleteWalletAccountSuccess">Delete Wallet Account Success</string>
+        <string name="deleteWalletAccountFail">Delete Wallet Account </string>
+
+        <string name="loginCancel">Login Cancelled</string>
+        <string name="loginCancelNoInternet">Login Cancelled - No Internet Connection</string>
+
+        <string name="GAPCCError">Google API Client Connection Failure</string>
+        <string name="FAWGError">Firebase Auth With Google Failure</string>
+        <string name="SIWCError">Sign In With Credential Failure - No Internet Connection</string>
+        <string name="GSSError">Google SignInApi SignOut Failure</string>
+        <string name="GCSError">GoogleAPIClient Connection Suspended</string>
+
+        <string name="loginSuccess">Successfully Login</string>
+        <string name="logoutSuccess">Successfully Logout</string>
+
+        <!-- Button Message -->
+        <string name="accExceedQuota">Wallet Account Max</string>
+        <string name="unDeletableAccount">"Cannot Delete Default Account"</string>
+
+        <!-- Recycle View Message -->
+        <string name="noDataInDatabase">There is no data in the database</string>
+        <string name="tabToAddTrx">Tab the Floating Button to add Transaction</string>
+
+
 </resources>

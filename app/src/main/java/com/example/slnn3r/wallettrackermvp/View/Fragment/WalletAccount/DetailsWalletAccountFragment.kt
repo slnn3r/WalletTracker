@@ -31,8 +31,7 @@ class DetailsWalletAccountFragment : Fragment(), ViewInterface.DetailsWalletAcco
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
 
-        (activity as? AppCompatActivity)?.supportActionBar?.title = "Wallet Account Details"
-
+        (activity as? AppCompatActivity)?.supportActionBar?.title = getString(R.string.detailsWalletAccountFragmentTitle)
 
         return inflater.inflate(R.layout.fragment_details_wallet_account, container, false)
     }
@@ -43,7 +42,7 @@ class DetailsWalletAccountFragment : Fragment(), ViewInterface.DetailsWalletAcco
 
         ///////
         // Receive Argumemt
-        val WalletAccountSelection = arguments?.getString("walletAccountSelection")
+        val WalletAccountSelection = arguments?.getString(getString(R.string.walletAccountPassArgKey))
 
         // user GSON convert to object
         val gson = Gson()
@@ -51,12 +50,12 @@ class DetailsWalletAccountFragment : Fragment(), ViewInterface.DetailsWalletAcco
         val walletAccount = gson.fromJson<WalletAccount>(WalletAccountSelection, WalletAccount::class.java)
 
 
-        DWAAccNameInput.setText(walletAccount.WalletAccountName.toString())
+        DWAAccNameInput.setText(walletAccount.WalletAccountName)
         DWAAccBalanceInput.setText(walletAccount.WalletAccountInitialBalance.toString())
 
-        if(walletAccount.WalletAccountStatus=="Default"){
+        if(walletAccount.WalletAccountStatus==getString(R.string.statusDefault)){
             DWADeleteSubmit.isEnabled = false
-            DWADeleteSubmit.text = "Cannot Delete Default Account"
+            DWADeleteSubmit.text = getString(R.string.unDeletableAccount)
         }
 
         ///////
@@ -88,13 +87,13 @@ class DetailsWalletAccountFragment : Fragment(), ViewInterface.DetailsWalletAcco
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
 
 
-                val rex = "^[a-zA-Z\\s]+".toRegex()
+                val rex = getString(R.string.regExNoCharacterOnly).toRegex()
 
                 if (DWAAccNameInput.length()>15){
-                    DWAAccNameInput.error="Max length 15 Character only"
+                    DWAAccNameInput.error=getString(R.string.accNameInputErrorMaxLength)
                     DWAUpdateSubmit.isEnabled = false
                 }else if(!DWAAccNameInput.text.toString().matches(rex)){
-                    DWAAccNameInput.error="Invalid Name"
+                    DWAAccNameInput.error=getString(R.string.accNameInoutErrorInvalid)
                     DWAUpdateSubmit.isEnabled = false
 
                 }else{
@@ -130,7 +129,7 @@ class DetailsWalletAccountFragment : Fragment(), ViewInterface.DetailsWalletAcco
 
 
                 if (DWAAccBalanceInput.text.toString().isEmpty()){
-                    DWAAccBalanceInput.error="Please enter a value"
+                    DWAAccBalanceInput.error=getString(R.string.promptToEnter)
                     DWAUpdateSubmit.isEnabled = false
                 }else{
                     DWAAccBalanceInput.error=null
@@ -158,25 +157,25 @@ class DetailsWalletAccountFragment : Fragment(), ViewInterface.DetailsWalletAcco
 
     override fun updateWalletAccountSuccess(mainContext: Context) {
 
-        Toast.makeText(mainContext,"Update Complete",Toast.LENGTH_LONG).show()
+        Toast.makeText(mainContext,mainContext.getString(R.string.updateWalletAccountSuccess),Toast.LENGTH_LONG).show()
         (mainContext as Activity).onBackPressed()
 
     }
 
     override fun updateWalletAccountFail(mainContext: Context, errorMessage: String) {
 
-        Toast.makeText(mainContext,"Update "+errorMessage,Toast.LENGTH_LONG).show()
+        Toast.makeText(mainContext,mainContext.getString(R.string.updateWalletAccountFail)+errorMessage,Toast.LENGTH_LONG).show()
 
     }
 
     override fun deleteWalletAccountSuccess(mainContext: Context) {
 
-        Toast.makeText(mainContext,"Delete Complete",Toast.LENGTH_LONG).show()
+        Toast.makeText(mainContext,mainContext.getString(R.string.deleteWalletAccountSuccess),Toast.LENGTH_LONG).show()
         (mainContext as Activity).onBackPressed()
     }
 
     override fun deleteWalletAccountFail(mainContext: Context, errorMessage: String) {
-        Toast.makeText(mainContext,"Delete "+errorMessage,Toast.LENGTH_LONG).show()
+        Toast.makeText(mainContext,mainContext.getString(R.string.deleteWalletAccountFail)+errorMessage,Toast.LENGTH_LONG).show()
     }
 
 }

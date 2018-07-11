@@ -27,6 +27,7 @@ import com.google.android.gms.common.api.ResultCallback
 import com.google.android.gms.common.api.Status
 import android.content.Context.MODE_PRIVATE
 import com.example.slnn3r.wallettrackermvp.Model.ObjectClass.UserProfile
+import com.example.slnn3r.wallettrackermvp.R
 import com.google.gson.Gson
 
 
@@ -38,7 +39,6 @@ class FirebaseAccess: ModelInterface.FirebaseAccess{
     private val REQUEST_CODE_SIGN_IN= 1
     private var activity:Activity? = null
     private var mGoogleApiClient: GoogleApiClient? = null
-    private val key="866059954529-u7ki0u0si1veh1ul9slartd6ejnq0js7.apps.googleusercontent.com"
 
     private val loginLoading: ProgressDialog? = null
 
@@ -71,10 +71,10 @@ class FirebaseAccess: ModelInterface.FirebaseAccess{
 
         mAuth = FirebaseAuth.getInstance()
 
-        val errorMessage = "Google API Client Connection Failure"
+        val errorMessage = mainContext.getString(R.string.GAPCCError)
 
         val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-                .requestIdToken(key)
+                .requestIdToken(mainContext.getString(R.string.GoogleSignInOptionKey))
                 .requestEmail()
                 .build()
 
@@ -98,7 +98,7 @@ class FirebaseAccess: ModelInterface.FirebaseAccess{
 
     override fun loginGoogleFirebaseExecute(mainContext: Context?, requestCode: Int, resultCode: Int, data: Intent, loginLoading:ProgressDialog){
 
-        val errorMessage = "Firebase Auth With Google Failure"
+        val errorMessage = mainContext!!.getString(R.string.FAWGError)
 
         if (requestCode == REQUEST_CODE_SIGN_IN) {
             val result = Auth.GoogleSignInApi.getSignInResultFromIntent(data)
@@ -117,10 +117,8 @@ class FirebaseAccess: ModelInterface.FirebaseAccess{
 
     private fun firebaseAuthWithGoogle(acct: GoogleSignInAccount, mainContext: Context?,loginLoading:ProgressDialog){
 
-        val successLoginMessage = "Successfully Login"
-        val errorMessage = "Sign In With Credential Failure - No Internet Connection"
-
-
+        val successLoginMessage = mainContext!!.getString(R.string.loginSuccess)
+        val errorMessage = mainContext.getString(R.string.SIWCError)
 
 
         val credential = GoogleAuthProvider.getCredential(acct.idToken, null)
@@ -132,14 +130,14 @@ class FirebaseAccess: ModelInterface.FirebaseAccess{
 
 
                         // Store to SharedPreference
-                        val editor = mainContext!!.getSharedPreferences("UserProfile", MODE_PRIVATE)!!.edit()
+                        val editor = mainContext.getSharedPreferences(mainContext.getString(R.string.userProfileKey), MODE_PRIVATE)!!.edit()
 
                         // User GSON convert object to JSON String to store to shared Preference
                         val gson = Gson()
                         val userProfile = UserProfile(user!!.uid, user.displayName.toString(), user.email.toString(), user.photoUrl.toString())
                         val json = gson.toJson(userProfile)
 
-                        editor.putString("UserProfile", json)
+                        editor.putString(mainContext.getString(R.string.userProfileKey), json)
                         editor.apply()
                         editor.commit()
                         // Store to SharedPreference
@@ -167,12 +165,12 @@ class FirebaseAccess: ModelInterface.FirebaseAccess{
         activity = mainContext as Activity
         val fragment = activity as FragmentActivity
 
-        val errorMessage = "Google API Client Connection Failure"
+        val errorMessage = mainContext.getString(R.string.GAPCCError)
 
         mAuth = FirebaseAuth.getInstance()
 
         val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-                .requestIdToken(key)
+                .requestIdToken(mainContext.getString(R.string.GoogleSignInOptionKey))
                 .requestEmail()
                 .build()
 
@@ -184,20 +182,20 @@ class FirebaseAccess: ModelInterface.FirebaseAccess{
                 .addApi(Auth.GOOGLE_SIGN_IN_API, gso)
                 .build()
 
-        logOutGoogleFireBaseExecute(mainContext);
+        logOutGoogleFireBaseExecute(mainContext)
     }
 
 
-    fun logOutGoogleFireBaseExecute(mainContext: Context) {
+    private fun logOutGoogleFireBaseExecute(mainContext: Context) {
 
-        var successLoginMessage = "Successfully Logout"
-        var errorMessage = "Google SignInApi SignOut Failure"
+        val successLoginMessage = mainContext.getString(R.string.logoutSuccess)
+        var errorMessage = mainContext.getString(R.string.GSSError)
 
         mGoogleApiClient?.connect()
         mGoogleApiClient?.registerConnectionCallbacks(object : GoogleApiClient.ConnectionCallbacks {
 
             override fun onConnectionSuspended(p0: Int) {
-                errorMessage="GoogleAPIClient Connection Suspended"
+                errorMessage=mainContext.getString(R.string.GCSError)
                 presenter.logoutGoogleStatus(mainContext, false,errorMessage)
                 mGoogleApiClient?.stopAutoManage(mainContext as FragmentActivity)
                 mGoogleApiClient?.disconnect()
@@ -209,7 +207,7 @@ class FirebaseAccess: ModelInterface.FirebaseAccess{
                 if (mGoogleApiClient!!.isConnected()) {
                     Auth.GoogleSignInApi.signOut(mGoogleApiClient).setResultCallback(object : ResultCallback<Status> {
                         override fun onResult(status: Status) {
-                            if (status.isSuccess()) {
+                            if (status.isSuccess) {
 
                                 presenter.logoutGoogleStatus(mainContext, true,successLoginMessage)
 
@@ -230,8 +228,6 @@ class FirebaseAccess: ModelInterface.FirebaseAccess{
 
         })
     }
-
-
 
 
     // DashBoard Fragment

@@ -37,21 +37,21 @@ class DashBoardTrxAdapter(val homeFeed: ArrayList<Transaction>): RecyclerView.Ad
 
         val video = homeFeed.get(position)
 
-        if(video.TransactionDate.equals("No Search Found")){
+        if(video.TransactionDate.equals(holder.view.context.getString(R.string.noResult))){
 
 
             Picasso.get().load(R.drawable.not_found).into(holder.view.DBTrxImageView)
             holder.view.DBAccNameTextView.text = video.TransactionDate
-            holder.view.DBBalTextView.text = "There is no data in the database"
-            holder.view.DBTrxCategoryTextView.text = "Tab the Floating Button to add Transaction"
+            holder.view.DBBalTextView.text = holder.view.context.getString(R.string.noDataInDatabase)
+            holder.view.DBTrxCategoryTextView.text = holder.view.context.getString(R.string.tabToAddTrx)
 
-        }else{1
+        }else{
 
             holder.view.DBAccNameTextView.text = video.TransactionDate + " (" +video.TransactionTime+")"
             holder.view.DBBalTextView.text = video.TransactionCategory.TransactionCategoryName
             holder.view.DBTrxCategoryTextView.text = "$ " + video.TransactionAmount
 
-            if(video.TransactionCategory.TransactionCategoryType.equals("Expense")){
+            if(video.TransactionCategory.TransactionCategoryType.equals(holder.view.context.getString(R.string.expense))){
                 Picasso.get().load(R.drawable.expense_icon).into(holder.view.DBTrxImageView)
             }else{
                 Picasso.get().load(R.drawable.income_icon).into(holder.view.DBTrxImageView)
@@ -74,10 +74,11 @@ class DashBoardViewHolder(val view: View): RecyclerView.ViewHolder(view){
         view.setOnClickListener{
 
             val context = view.context
+            val noResult = view.context.getString(R.string.noResult)
 
-            if(view.DBAccNameTextView.text.equals("No Search Found")){
+            if(view.DBAccNameTextView.text.equals(noResult)){
 
-                Toast.makeText(context, "No Search Found", Toast.LENGTH_SHORT).show()
+                Toast.makeText(context, noResult, Toast.LENGTH_SHORT).show()
 
             }else{
 

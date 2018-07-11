@@ -32,8 +32,6 @@ import androidx.navigation.findNavController
 
 
 
-
-
 class MenuActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener,  ViewInterface.MenuView {
 
 
@@ -133,7 +131,7 @@ class MenuActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                 }
 
                 this.doubleBackToExitPressedOnce = true
-                Toast.makeText(this, "Please click BACK again to exit", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, getString(R.string.exitAppConfirmation), Toast.LENGTH_SHORT).show()
 
                 Handler().postDelayed(Runnable { doubleBackToExitPressedOnce = false }, 2000)
             }else{
@@ -182,9 +180,9 @@ class MenuActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     override fun logoutSuccess(mainContext: Context, successLogoutMessage: String) {
 
         // remove SharedPreference data
-        val editor = mainContext.getSharedPreferences("UserProfile", MODE_PRIVATE).edit()
-        editor.remove("UserProfile").commit()
-        editor.remove("UserProfile").apply()
+        val editor = mainContext.getSharedPreferences(mainContext.getString(R.string.userProfileKey), MODE_PRIVATE).edit()
+        editor.remove(mainContext.getString(R.string.userProfileKey)).commit()
+        editor.remove(mainContext.getString(R.string.userProfileKey)).apply()
 
         val myIntent = Intent(mainContext, LoginActivity::class.java)
         mainContext.startActivity(myIntent)
@@ -201,11 +199,11 @@ class MenuActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     fun displayUserInfo() {
 
         // Get SharedPreference data
-        val editor = getSharedPreferences("UserProfile", MODE_PRIVATE)
+        val editor = getSharedPreferences(getString(R.string.userProfileKey), MODE_PRIVATE)
 
         // user GSON convert to object
         val gson = Gson()
-        val json = editor.getString("UserProfile", "")
+        val json = editor.getString(getString(R.string.userProfileKey), "")
 
         val userProfile = gson.fromJson<UserProfile>(json, UserProfile::class.java)
 

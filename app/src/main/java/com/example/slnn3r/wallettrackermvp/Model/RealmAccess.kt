@@ -33,8 +33,8 @@ class RealmAccess: ModelInterface.RealmAccess{
     override fun checkWalletAccountRealm(mainContext: Context, userID: String) {
 
 
-        var view = (mainContext as Activity).findViewById(R.id.navMenu) as View
-        var currentDestination = findNavController(view).currentDestination.id
+        val view = (mainContext as Activity).findViewById(R.id.navMenu) as View
+        val currentDestination = findNavController(view).currentDestination.id
 
         if(currentDestination==R.id.dashBoardFragment){
 
@@ -50,14 +50,14 @@ class RealmAccess: ModelInterface.RealmAccess{
         //
         var realm: Realm? = null
 
-        var WalletAccountData=ArrayList<WalletAccount>()
+        val WalletAccountData=ArrayList<WalletAccount>()
 
 
         try {
             Realm.init(mainContext)
 
             val config = RealmConfiguration.Builder()
-                    .name("walletaccount.realm")
+                    .name(mainContext.getString(R.string.walletAccountRealm))
                     .build()
 
             realm = Realm.getInstance(config)
@@ -76,7 +76,7 @@ class RealmAccess: ModelInterface.RealmAccess{
                                 WalletAccount(
                                         dataList.WalletAccountID!!,
                                         dataList.WalletAccountName!!,
-                                        dataList.WalletAccountInitialBalance!!,
+                                        dataList.WalletAccountInitialBalance,
                                         dataList.UserID!!,
                                         dataList.WalletAccountStatus!!
                                 )
@@ -89,17 +89,17 @@ class RealmAccess: ModelInterface.RealmAccess{
 
             }
 
-            realm?.close()
+            realm.close()
 
-            presenter.checkWalletAccountResult(mainContext,WalletAccountData, "Success")
+            presenter.checkWalletAccountResult(mainContext,WalletAccountData, mainContext.getString(R.string.statusSuccess))
 
 
         }catch(e:Exception) {
 
             realm?.close()
 
-            var WalletAccountData=ArrayList<WalletAccount>()
-            presenter.checkWalletAccountResult(mainContext,WalletAccountData,"Fail: "+e.toString())
+            val WalletAccountData=ArrayList<WalletAccount>()
+            presenter.checkWalletAccountResult(mainContext,WalletAccountData,mainContext.getString(R.string.statusFail)+e.toString())
 
         }finally {
             realm?.close()
@@ -116,13 +116,18 @@ class RealmAccess: ModelInterface.RealmAccess{
 
         val uniqueID = UUID.randomUUID().toString()
 
+        val defaultAccountName= mainContext.getString(R.string.defaultAccountName)
+        val defaultAccountBalance= mainContext.getString(R.string.defaultAccountBalance).toDouble()
+        val defaultAccountStatus= mainContext.getString(R.string.statusDefault)
+
+
         //
         var realm: Realm? = null
         try {
             Realm.init(mainContext)
 
             val config = RealmConfiguration.Builder()
-                    .name("walletaccount.realm")
+                    .name(mainContext.getString(R.string.walletAccountRealm))
                     .build()
 
             realm = Realm.getInstance(config)
@@ -132,26 +137,24 @@ class RealmAccess: ModelInterface.RealmAccess{
 
                 val creating = realm.createObject(WalletAccountRealm::class.java, uniqueID)
 
-                creating.WalletAccountName= "Personal"
-                creating.WalletAccountInitialBalance=0.0
+                creating.WalletAccountName= defaultAccountName
+                creating.WalletAccountInitialBalance= defaultAccountBalance
                 creating.UserID=userID
-                creating.WalletAccountStatus="Default"
-
-
+                creating.WalletAccountStatus=defaultAccountStatus
 
             }
 
 
-            realm?.close()
+            realm.close()
 
-            presenter.firstTimeSetupStatus(mainContext,WalletAccount(uniqueID,"Personal",0.0,userID,"Default"), "Success")
+            presenter.firstTimeSetupStatus(mainContext,WalletAccount(uniqueID,defaultAccountName,defaultAccountBalance,userID,defaultAccountStatus), mainContext.getString(R.string.statusSuccess))
 
 
         }catch(e:Exception) {
 
             realm?.close()
 
-            presenter.firstTimeSetupStatus(mainContext,WalletAccount("","",0.0,"",""), "Fail: "+e.toString())
+            presenter.firstTimeSetupStatus(mainContext,WalletAccount("","",0.0,"",""), mainContext.getString(R.string.statusFail)+e.toString())
 
 
 
@@ -173,14 +176,14 @@ class RealmAccess: ModelInterface.RealmAccess{
         //
         var realm: Realm? = null
 
-        var TransactionData=ArrayList<Transaction>()
+        val TransactionData=ArrayList<Transaction>()
 
 
         try {
             Realm.init(mainContext)
 
             val config = RealmConfiguration.Builder()
-                    .name("transaction.realm")
+                    .name(mainContext.getString(R.string.transactionRealm))
                     .build()
 
             realm = Realm.getInstance(config)
@@ -191,7 +194,7 @@ class RealmAccess: ModelInterface.RealmAccess{
                 val getTransaction = realm.where(TransactionRealm::class.java).findAll() //naming wrong
 
 
-                var TransactionCategoryGSON= TransactionCategory("","","","","")
+                val TransactionCategoryGSON= TransactionCategory("","","","","")
 
                 getTransaction.forEach{
                     dataList->
@@ -205,7 +208,7 @@ class RealmAccess: ModelInterface.RealmAccess{
                                         dataList.TransactionID!!,
                                         dataList.TransactionDate!!,
                                         dataList.TransactionTime!!,
-                                        dataList.TransactionAmount!!,
+                                        dataList.TransactionAmount,
                                         dataList.TransactionRemark!!,
                                         TransactionCategoryGSON,
                                         dataList.WalletAccountID!!
@@ -216,34 +219,36 @@ class RealmAccess: ModelInterface.RealmAccess{
 
                 }
 
+                val noResult = mainContext.getString(R.string.noResult)
+
                 if(TransactionData.size<1){
                     TransactionData.add(
                             Transaction(
-                                    "No Search Found",
-                                    "No Search Found",
-                                    "No Search Found",
+                                    noResult,
+                                    noResult,
+                                    noResult,
                                     0.0,
-                                    "No Search Found",
+                                    noResult,
                                     TransactionCategoryGSON,
-                                    "No Search Found"
+                                    noResult
                             )
                     )
                 }
 
             }
 
-            realm?.close()
+            realm.close()
 
-            presenter.checkTransactionResult(mainContext, TransactionData,"Success")
+            presenter.checkTransactionResult(mainContext, TransactionData,mainContext.getString(R.string.statusSuccess))
 
 
         }catch(e:Exception) {
 
             realm?.close()
 
-            var TransactionData=ArrayList<Transaction>()
+            val TransactionData =ArrayList<Transaction>()
 
-            presenter.checkTransactionResult(mainContext, TransactionData,"Fail: "+e.toString())
+            presenter.checkTransactionResult(mainContext, TransactionData ,mainContext.getString(R.string.statusFail)+e.toString())
 
 
 
@@ -274,7 +279,7 @@ class RealmAccess: ModelInterface.RealmAccess{
             Realm.init(mainContext)
 
             val config = RealmConfiguration.Builder()
-                    .name("walletaccount.realm")
+                    .name(mainContext.getString(R.string.walletAccountRealm))
                     .build()
 
             realm = Realm.getInstance(config)
@@ -292,15 +297,15 @@ class RealmAccess: ModelInterface.RealmAccess{
 
             }
 
-            realm?.close()
-            presenter.createWalletAccountStatus(mainContext, "Success")
+            realm.close()
+            presenter.createWalletAccountStatus(mainContext, mainContext.getString(R.string.statusSuccess))
 
 
 
         }catch(e:Exception) {
 
             realm?.close()
-            presenter.createWalletAccountStatus(mainContext, "Fail: "+e.toString())
+            presenter.createWalletAccountStatus(mainContext, mainContext.getString(R.string.statusFail)+e.toString())
 
 
         }finally {
@@ -322,14 +327,14 @@ class RealmAccess: ModelInterface.RealmAccess{
 
         //
         var realm: Realm? = null
-        var count:Int=0
+        var count=0
 
         try {
 
             Realm.init(mainContext)
 
             val config = RealmConfiguration.Builder()
-                    .name("walletaccount.realm")
+                    .name(mainContext.getString(R.string.walletAccountRealm))
                     .build()
 
             realm = Realm.getInstance(config)
@@ -353,15 +358,15 @@ class RealmAccess: ModelInterface.RealmAccess{
             }
 
 
-            realm?.close()
-            presenter.checkWalletAccountCountResult(mainContext,count,"Success")
+            realm.close()
+            presenter.checkWalletAccountCountResult(mainContext,count,mainContext.getString(R.string.statusSuccess))
 
 
 
         }catch(e:Exception) {
 
             realm?.close()
-            presenter.checkWalletAccountCountResult(mainContext,0,"Fail"+e.toString())
+            presenter.checkWalletAccountCountResult(mainContext,0,mainContext.getString(R.string.statusFail)+e.toString())
 
 
         }finally {
@@ -390,7 +395,7 @@ class RealmAccess: ModelInterface.RealmAccess{
             Realm.init(mainContext)
 
             val config = RealmConfiguration.Builder()
-                    .name("walletaccount.realm")
+                    .name(mainContext.getString(R.string.walletAccountRealm))
                     .build()
 
             realm = Realm.getInstance(config)
@@ -417,15 +422,15 @@ class RealmAccess: ModelInterface.RealmAccess{
 
             }
 
-            realm?.close()
-            presenter.updateWalletAccountStatus(mainContext,"Success")
+            realm.close()
+            presenter.updateWalletAccountStatus(mainContext,mainContext.getString(R.string.statusSuccess))
 
 
 
         }catch(e:Exception) {
 
             realm?.close()
-            presenter.updateWalletAccountStatus(mainContext,"Fail: "+e.toString())
+            presenter.updateWalletAccountStatus(mainContext,mainContext.getString(R.string.statusFail)+e.toString())
 
 
 
@@ -453,10 +458,10 @@ class RealmAccess: ModelInterface.RealmAccess{
             Realm.init(mainContext)
 
             val config = RealmConfiguration.Builder()
-                    .name("walletaccount.realm")
+                    .name(mainContext.getString(R.string.walletAccountRealm))
                     .build()
 
-            val realm = Realm.getInstance(config)
+            realm = Realm.getInstance(config)
 
             realm!!.executeTransaction {
 
@@ -477,15 +482,15 @@ class RealmAccess: ModelInterface.RealmAccess{
 
             }
 
-            realm?.close()
-            presenter.deleteWalletAccountStatus(mainContext,"Success")
+            realm.close()
+            presenter.deleteWalletAccountStatus(mainContext,mainContext.getString(R.string.statusSuccess))
 
 
 
         }catch(e:Exception) {
 
             realm?.close()
-            presenter.deleteWalletAccountStatus(mainContext,"Fail: "+e.toString())
+            presenter.deleteWalletAccountStatus(mainContext,mainContext.getString(R.string.statusFail)+e.toString())
 
 
 

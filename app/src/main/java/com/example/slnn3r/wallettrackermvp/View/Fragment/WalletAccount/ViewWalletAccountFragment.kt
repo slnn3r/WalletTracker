@@ -37,7 +37,7 @@ class ViewWalletAccountFragment : Fragment(), ViewInterface.WalletAccountView {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
 
-        (activity as? AppCompatActivity)?.supportActionBar?.title = "Wallet Account List"
+        (activity as? AppCompatActivity)?.supportActionBar?.title = getString(R.string.viewWalletAccountFragmentTitle)
 
 
         return inflater.inflate(R.layout.fragment_view_wallet_account, container, false)
@@ -58,11 +58,11 @@ class ViewWalletAccountFragment : Fragment(), ViewInterface.WalletAccountView {
 
         ////
         ////
-        val editor = context!!.getSharedPreferences("UserProfile", AppCompatActivity.MODE_PRIVATE)
+        val editor = context!!.getSharedPreferences(getString(R.string.userProfileKey), AppCompatActivity.MODE_PRIVATE)
 
         // user GSON convert to object
         val gson = Gson()
-        val json = editor.getString("UserProfile", "")
+        val json = editor.getString(getString(R.string.userProfileKey), "")
 
         val userProfile = gson.fromJson<UserProfile>(json, UserProfile::class.java)
 
@@ -104,7 +104,7 @@ class ViewWalletAccountFragment : Fragment(), ViewInterface.WalletAccountView {
 
         }else{
             createSubmitButton.isEnabled = false
-            createSubmitButton.text = "Wallet Account Max"
+            createSubmitButton.text = mainContext.getString(R.string.accExceedQuota)
 
         }
 

@@ -36,7 +36,7 @@ class WalletAccountAdapter(val homeFeed: ArrayList<WalletAccount>): RecyclerView
 
         holder.view.VWAAccNameTextView.text = video.WalletAccountName
 
-        holder?.passData = video
+        holder.passData = video
 
     }
 
