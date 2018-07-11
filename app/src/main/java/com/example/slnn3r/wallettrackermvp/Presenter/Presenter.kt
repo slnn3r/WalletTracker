@@ -333,7 +333,14 @@ class Presenter: PresenterInterface.Presenter{
     }
 
     override fun checkTransactionCategoryResult(mainContext: Context, transactionCategoryList: ArrayList<TransactionCategory>, status: String) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+
+        if(status==mainContext.getString(R.string.statusSuccess)){
+            trxCategoryView.populateTrxCategoryRecycleView(mainContext, transactionCategoryList)
+
+        }else{
+            trxCategoryView.populateTrxCategoryRecycleViewFail(mainContext,status)
+        }
+
     }
 
 }

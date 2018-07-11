@@ -16,6 +16,7 @@ import com.example.slnn3r.wallettrackermvp.Presenter.Presenter
 import com.example.slnn3r.wallettrackermvp.R
 import com.example.slnn3r.wallettrackermvp.Utility.DefaultDataCategoryListItem
 import com.example.slnn3r.wallettrackermvp.View.Fragment.DashBoardFragment
+import com.example.slnn3r.wallettrackermvp.View.Fragment.TrxCategory.ViewTrxCategoryFragment
 import com.example.slnn3r.wallettrackermvp.View.Fragment.WalletAccount.CreateWalletAccountFragment
 import com.example.slnn3r.wallettrackermvp.View.Fragment.WalletAccount.DetailsWalletAccountFragment
 import com.example.slnn3r.wallettrackermvp.View.Fragment.WalletAccount.ViewWalletAccountFragment
@@ -535,6 +536,86 @@ class RealmAccess: ModelInterface.RealmAccess{
     // ViewTrxCategory Fragment
     override fun checkTransactionCategoryRealm(mainContext: Context, userID: String) {
 
+        presenter= Presenter(ViewTrxCategoryFragment())
+
+        //
+        var realm: Realm? = null
+
+        val TransactionCategoryData=ArrayList<TransactionCategory>()
+
+        try {
+            Realm.init(mainContext)
+
+            val config = RealmConfiguration.Builder()
+                    .name(mainContext.getString(R.string.transactionCategoryRealm))
+                    .build()
+
+            realm = Realm.getInstance(config)
+
+
+            realm!!.executeTransaction {
+
+                val getTransactionCategory = realm.where(TransactionCategoryRealm::class.java).findAll() //naming wrong
+
+
+                val TransactionCategoryGSON= TransactionCategory("","","","","")
+
+                getTransactionCategory.forEach{
+                    dataList->
+
+                    if(dataList.userUID==userID) {
+
+                        TransactionCategoryData.add(
+                                TransactionCategory(
+                                        dataList.TransactionCategoryID!!,
+                                        dataList.TransactionCategoryName!!,
+                                        dataList.TransactionCategoryType!!,
+                                        dataList.TransactionCategoryStatus!!,
+                                        userID
+
+                                )
+                        )
+
+                    }
+
+                }
+
+                val noResult = mainContext.getString(R.string.noResult)
+
+                if(TransactionCategoryData.size<1){
+                    TransactionCategoryData.add(
+                            TransactionCategory(
+                                    noResult,
+                                    noResult,
+                                    noResult,
+                                    noResult,
+                                    noResult
+                            )
+                    )
+                }
+
+            }
+
+            realm.close()
+
+            presenter.checkTransactionCategoryResult(mainContext, TransactionCategoryData,mainContext.getString(R.string.statusSuccess))
+
+
+        }catch(e:Exception) {
+
+            realm?.close()
+
+            val TransactionCategoryData=ArrayList<TransactionCategory>()
+
+            presenter.checkTransactionCategoryResult(mainContext, TransactionCategoryData ,mainContext.getString(R.string.statusFail)+e.toString())
+
+
+
+        }finally {
+            realm?.close()
+        }
+
+        //
 
 
     }

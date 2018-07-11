@@ -90,6 +90,7 @@ interface ViewInterface{
     interface TrxCategoryView{
 
         fun populateTrxCategoryRecycleView(mainContext: Context, trxCategoryList: ArrayList<TransactionCategory>)
+        fun populateTrxCategoryRecycleViewFail(mainContext: Context, errorMessage: String)
 
 
     }

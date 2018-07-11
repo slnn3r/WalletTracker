@@ -1,15 +1,18 @@
 package com.example.slnn3r.wallettrackermvp.View.Fragment.TrxCategory
 
 
+import android.app.Activity
 import android.content.Context
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
+import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
+import android.widget.Toast
 import androidx.navigation.findNavController
 import com.example.slnn3r.wallettrackermvp.Adapter.TrxCategoryAdapter
 import com.example.slnn3r.wallettrackermvp.Interface.PresenterInterface
@@ -26,6 +29,7 @@ import kotlinx.android.synthetic.main.fragment_view_trx_category.*
 
 
 class ViewTrxCategoryFragment : Fragment(), ViewInterface.TrxCategoryView {
+
 
     private lateinit var presenter: PresenterInterface.Presenter
 
@@ -64,13 +68,19 @@ class ViewTrxCategoryFragment : Fragment(), ViewInterface.TrxCategoryView {
 
     override fun populateTrxCategoryRecycleView(mainContext: Context, trxCategoryList: ArrayList<TransactionCategory>) {
 
-        //DUMMY
-        VTCRecyclerView.layoutManager = LinearLayoutManager(context)
+        val VTCRecyclerView = (mainContext as Activity).findViewById(R.id.VTCRecyclerView) as RecyclerView
 
-        VTCRecyclerView.adapter = TrxCategoryAdapter(DefaultDataCategoryListItem().getListItem())
+        VTCRecyclerView.layoutManager = LinearLayoutManager(mainContext)
+
+        VTCRecyclerView.adapter = TrxCategoryAdapter(trxCategoryList)
 
     }
 
+
+    override fun populateTrxCategoryRecycleViewFail(mainContext: Context, errorMessage: String) {
+
+        Toast.makeText(mainContext,errorMessage,Toast.LENGTH_LONG).show()
+    }
 
 
 }
