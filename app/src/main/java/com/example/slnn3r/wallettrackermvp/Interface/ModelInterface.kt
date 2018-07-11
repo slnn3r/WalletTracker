@@ -3,6 +3,7 @@ package com.example.slnn3r.wallettrackermvp.Interface
 import android.app.ProgressDialog
 import android.content.Context
 import android.content.Intent
+import com.example.slnn3r.wallettrackermvp.Model.ObjectClass.UserProfile
 import com.example.slnn3r.wallettrackermvp.Model.ObjectClass.WalletAccount
 
 interface ModelInterface {
@@ -45,6 +46,16 @@ interface ModelInterface {
         fun updateWalletAccountRealm(mainContext:Context, walletAccountData: WalletAccount)
         fun deleteWalletAccountRealm(mainContext:Context, walletAccountDataID: String)
 
+
+        // ViewTrxCategory Fragment
+        fun checkTransactionCategoryRealm(mainContext: Context, userID: String)
+
+
+    }
+
+    interface SharedPreference{
+
+        fun getUserData(mainContext: Context): UserProfile
 
     }
 

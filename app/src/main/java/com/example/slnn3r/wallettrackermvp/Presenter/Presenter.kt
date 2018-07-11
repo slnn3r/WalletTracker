@@ -20,6 +20,9 @@ import android.view.View
 import android.widget.TextView
 import androidx.navigation.Navigation.findNavController
 import androidx.navigation.findNavController
+import com.example.slnn3r.wallettrackermvp.Model.ObjectClass.TransactionCategory
+import com.example.slnn3r.wallettrackermvp.Model.ObjectClass.UserProfile
+import com.example.slnn3r.wallettrackermvp.Model.SharedPreferenceAccess
 import com.example.slnn3r.wallettrackermvp.R
 
 
@@ -37,9 +40,12 @@ class Presenter: PresenterInterface.Presenter{
     private lateinit var createWalletAccountView: ViewInterface.CreateWalletAccountView
     private lateinit var detailsWalletAccountView: ViewInterface.DetailsWalletAccountView
 
+    private lateinit var trxCategoryView: ViewInterface.TrxCategoryView
+
 
     private val firebaseModel: ModelInterface.FirebaseAccess = FirebaseAccess()
     private val realmModel: ModelInterface.RealmAccess = RealmAccess()
+    private val sharedPreferenceModel: ModelInterface.SharedPreference = SharedPreferenceAccess()
 
 
     constructor(mainView: ViewInterface.MainView){
@@ -70,6 +76,15 @@ class Presenter: PresenterInterface.Presenter{
         this.detailsWalletAccountView=detailsWalletAccountView
     }
 
+    constructor(trxCategoryView: ViewInterface.TrxCategoryView){
+        this.trxCategoryView=trxCategoryView
+    }
+
+
+    // SharedPreference Retreive
+    override fun getUserData(mainContext: Context): UserProfile {
+        return sharedPreferenceModel.getUserData(mainContext)
+    }
 
 
     // Main Activity
@@ -308,6 +323,17 @@ class Presenter: PresenterInterface.Presenter{
             detailsWalletAccountView.deleteWalletAccountFail(mainContext,deleteStatus)
         }
 
+    }
+
+
+
+    // ViewTrxCategory Fragment
+    override fun checkTransactionCategory(mainContext: Context, userID: String) {
+        realmModel.checkTransactionCategoryRealm(mainContext,userID)
+    }
+
+    override fun checkTransactionCategoryResult(mainContext: Context, transactionCategoryList: ArrayList<TransactionCategory>, status: String) {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
 }

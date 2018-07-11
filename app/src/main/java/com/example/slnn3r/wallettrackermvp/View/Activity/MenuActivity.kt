@@ -179,11 +179,6 @@ class MenuActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
     override fun logoutSuccess(mainContext: Context, successLogoutMessage: String) {
 
-        // remove SharedPreference data
-        val editor = mainContext.getSharedPreferences(mainContext.getString(R.string.userProfileKey), MODE_PRIVATE).edit()
-        editor.remove(mainContext.getString(R.string.userProfileKey)).commit()
-        editor.remove(mainContext.getString(R.string.userProfileKey)).apply()
-
         val myIntent = Intent(mainContext, LoginActivity::class.java)
         mainContext.startActivity(myIntent)
         Toast.makeText(mainContext, successLogoutMessage, Toast.LENGTH_LONG).show()
@@ -199,13 +194,8 @@ class MenuActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     fun displayUserInfo() {
 
         // Get SharedPreference data
-        val editor = getSharedPreferences(getString(R.string.userProfileKey), MODE_PRIVATE)
-
-        // user GSON convert to object
-        val gson = Gson()
-        val json = editor.getString(getString(R.string.userProfileKey), "")
-
-        val userProfile = gson.fromJson<UserProfile>(json, UserProfile::class.java)
+        presenter = Presenter(this)
+        val userProfile = presenter.getUserData(this)
 
 
         val navigationView = findViewById<View>(R.id.nav_view) as NavigationView

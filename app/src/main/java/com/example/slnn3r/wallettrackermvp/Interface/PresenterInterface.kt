@@ -5,11 +5,16 @@ import android.content.Context
 import android.content.Intent
 import android.support.v4.app.FragmentActivity
 import com.example.slnn3r.wallettrackermvp.Model.ObjectClass.Transaction
+import com.example.slnn3r.wallettrackermvp.Model.ObjectClass.TransactionCategory
+import com.example.slnn3r.wallettrackermvp.Model.ObjectClass.UserProfile
 import com.example.slnn3r.wallettrackermvp.Model.ObjectClass.WalletAccount
 
 interface PresenterInterface{
 
     interface Presenter {
+
+        // SharedPreference
+        fun getUserData(mainContext: Context): UserProfile
 
         // Main Activity
         fun checkLogin(mainContext:Context)
@@ -26,9 +31,9 @@ interface PresenterInterface{
         fun logoutGoogleExecute(mainContext: Context)
         fun logoutGoogleStatus(mainContext: Context, logourStatus:Boolean, statusMessage:String)
 
-        // DashBoard Fragment (used by ViewWalletAccount Fragment as well)
-        fun checkWalletAccount(mainContext: Context, userID:String)
-        fun checkWalletAccountResult(mainContext: Context, walletAccountList: java.util.ArrayList<WalletAccount>, status:String)
+        // DashBoard Fragment
+        fun checkWalletAccount(mainContext: Context, userID:String) // (used by ViewWalletAccount Fragment as well)
+        fun checkWalletAccountResult(mainContext: Context, walletAccountList: ArrayList<WalletAccount>, status:String) // (used by ViewWalletAccount Fragment as well)
 
         fun firstTimeDatabaseSetup(mainContext: Context, userID:String)
         fun firstTimeSetupStatus(mainContext: Context, walletAccount: WalletAccount, status:String)
@@ -51,6 +56,11 @@ interface PresenterInterface{
 
         fun deleteWalletAccount(mainContext: Context, walletAccountID:String)
         fun deleteWalletAccountStatus(mainContext:Context, deleteStatus:String)
+
+
+        // ViewTrxCategory Fragment
+        fun checkTransactionCategory(mainContext: Context, userID: String)
+        fun checkTransactionCategoryResult(mainContext: Context, transactionCategoryList: ArrayList<TransactionCategory>, status: String)
 
 
     }

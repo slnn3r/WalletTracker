@@ -59,9 +59,7 @@ class DashBoardFragment : Fragment(),ViewInterface.DashBoardView {
 
         DBIncomeFab.setOnClickListener(){
 
-            // Testing Purpose
             val navController = view.findNavController()
-
 
             val bundle = Bundle()
             bundle.putString(getString(R.string.trxTypePassArgKey), getString(R.string.income))
@@ -75,7 +73,6 @@ class DashBoardFragment : Fragment(),ViewInterface.DashBoardView {
 
         DBExpenseFab.setOnClickListener(){
 
-            // Testing Purpose
             val navController = view.findNavController()
 
             val bundle = Bundle()
@@ -83,8 +80,6 @@ class DashBoardFragment : Fragment(),ViewInterface.DashBoardView {
             navController.navigate(R.id.action_dashBoardFragment_to_addNewTrx,bundle)
 
             (activity as MenuActivity).setupNavigationMode()
-
-
 
 
         }
@@ -134,21 +129,14 @@ class DashBoardFragment : Fragment(),ViewInterface.DashBoardView {
         ////
 
 
-        ////
-        ////
-        val editor = context!!.getSharedPreferences(getString(R.string.userProfileKey), AppCompatActivity.MODE_PRIVATE)
 
-        // user GSON convert to object
-        val gson = Gson()
-        val json = editor.getString(getString(R.string.userProfileKey), "")
+        // Get SharedPreference data
+        presenter = Presenter(this)
 
-        val userProfile = gson.fromJson<UserProfile>(json, UserProfile::class.java)
+        val userProfile = presenter.getUserData(context!!)
 
         val userID = userProfile.UserUID
-        ////
-        ////
 
-        presenter = Presenter(this)
         presenter.checkWalletAccount(context!!, userID )
 
     }
@@ -157,21 +145,11 @@ class DashBoardFragment : Fragment(),ViewInterface.DashBoardView {
     //// In Progress
     override fun firstTimeSetup(mainContext: Context) {
 
-        ////
-        ////
-        val editor = mainContext.getSharedPreferences(mainContext.getString(R.string.userProfileKey), AppCompatActivity.MODE_PRIVATE)
-
-        // user GSON convert to object
-        val gson = Gson()
-        val json = editor.getString(mainContext.getString(R.string.userProfileKey), "")
-
-        val userProfile = gson.fromJson<UserProfile>(json, UserProfile::class.java)
-
-        val userID = userProfile.UserUID
-        ////
-        ////
-
+        // Get SharedPreference data
         presenter = Presenter(this)
+        val userProfile = presenter.getUserData(mainContext)
+        val userID = userProfile.UserUID
+
         presenter.firstTimeDatabaseSetup(mainContext, userID)
 
     }

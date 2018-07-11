@@ -144,7 +144,14 @@
         <!-- Realm Database File -->
         <string name="walletAccountRealm">walletaccount.realm</string>
         <string name="transactionRealm">transaction.realm</string>
+        <string name="transactionCategoryRealm">transactionCategory.realm</string>
 
+        <!-- Default Trx Category Spinner  -->
+        <string-array name="defaultTrxCategorySpinner">
+            <item>All Type</item>
+            <item>Expense</item>
+            <item>Income</item>
+        </string-array>
 
 
     <!-- System Informative String -->
@@ -161,7 +168,8 @@
         <string name="createWalletAccountFragmentTitle">Create Wallet Account</string>
         <string name="viewWalletAccountFragmentTitle">Wallet Account List</string>
         <string name="detailsWalletAccountFragmentTitle">Wallet Account Details</string>
-        <string name="newTrxFragment">Add New Transaction</string>
+        <string name="newTrxFragmentTitle">Add New Transaction</string>
+        <string name="viewTrxCategoryFragmentTitle">Transaction Category List</string>
 
         <!-- TextWatcher Message -->
         <string name="promptToEnter">Please Fill In This Field</string>

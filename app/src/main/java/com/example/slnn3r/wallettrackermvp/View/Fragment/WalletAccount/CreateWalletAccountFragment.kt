@@ -57,19 +57,10 @@ class CreateWalletAccountFragment : Fragment(), ViewInterface.CreateWalletAccoun
 
             val uniqueID = UUID.randomUUID().toString()
 
-            ////
-            ////
-            val editor = context!!.getSharedPreferences(getString(R.string.userProfileKey), AppCompatActivity.MODE_PRIVATE)
-
-            // user GSON convert to object
-            val gson = Gson()
-            val json = editor.getString(getString(R.string.userProfileKey), "")
-
-            val userProfile = gson.fromJson<UserProfile>(json, UserProfile::class.java)
-
+            // Get SharedPreference data
+            presenter = Presenter(this)
+            val userProfile = presenter.getUserData(context!!)
             val userID = userProfile.UserUID
-            ////
-            ////
 
 
             val walletAccountInput= WalletAccount(

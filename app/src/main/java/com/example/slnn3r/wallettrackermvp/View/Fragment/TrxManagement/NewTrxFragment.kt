@@ -36,7 +36,7 @@ class NewTrxFragment : Fragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
 
-        (activity as? AppCompatActivity)?.supportActionBar?.title = getString(R.string.newTrxFragment)
+        (activity as? AppCompatActivity)?.supportActionBar?.title = getString(R.string.newTrxFragmentTitle)
 
 
         simpleDateFormat = SimpleDateFormat(getString(R.string.dateFormat), Locale.US)

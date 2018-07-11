@@ -5,6 +5,7 @@ import android.content.Context
 import android.content.Intent
 import android.support.v4.app.FragmentActivity
 import com.example.slnn3r.wallettrackermvp.Model.ObjectClass.Transaction
+import com.example.slnn3r.wallettrackermvp.Model.ObjectClass.TransactionCategory
 import com.example.slnn3r.wallettrackermvp.Model.ObjectClass.WalletAccount
 
 interface ViewInterface{
@@ -85,5 +86,12 @@ interface ViewInterface{
 
     }
 
+
+    interface TrxCategoryView{
+
+        fun populateTrxCategoryRecycleView(mainContext: Context, trxCategoryList: ArrayList<TransactionCategory>)
+
+
+    }
 
 }

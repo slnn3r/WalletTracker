@@ -209,6 +209,12 @@ class FirebaseAccess: ModelInterface.FirebaseAccess{
                         override fun onResult(status: Status) {
                             if (status.isSuccess) {
 
+
+                                // remove SharedPreference data
+                                val editor = mainContext.getSharedPreferences(mainContext.getString(R.string.userProfileKey), MODE_PRIVATE).edit()
+                                editor.remove(mainContext.getString(R.string.userProfileKey)).commit()
+                                editor.remove(mainContext.getString(R.string.userProfileKey)).apply()
+
                                 presenter.logoutGoogleStatus(mainContext, true,successLoginMessage)
 
                                 mGoogleApiClient?.stopAutoManage(mainContext as FragmentActivity)

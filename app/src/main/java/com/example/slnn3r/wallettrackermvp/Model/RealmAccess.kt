@@ -9,10 +9,12 @@ import com.example.slnn3r.wallettrackermvp.Interface.PresenterInterface
 import com.example.slnn3r.wallettrackermvp.Model.ObjectClass.Transaction
 import com.example.slnn3r.wallettrackermvp.Model.ObjectClass.TransactionCategory
 import com.example.slnn3r.wallettrackermvp.Model.ObjectClass.WalletAccount
+import com.example.slnn3r.wallettrackermvp.Model.RealmClass.TransactionCategoryRealm
 import com.example.slnn3r.wallettrackermvp.Model.RealmClass.TransactionRealm
 import com.example.slnn3r.wallettrackermvp.Model.RealmClass.WalletAccountRealm
 import com.example.slnn3r.wallettrackermvp.Presenter.Presenter
 import com.example.slnn3r.wallettrackermvp.R
+import com.example.slnn3r.wallettrackermvp.Utility.DefaultDataCategoryListItem
 import com.example.slnn3r.wallettrackermvp.View.Fragment.DashBoardFragment
 import com.example.slnn3r.wallettrackermvp.View.Fragment.WalletAccount.CreateWalletAccountFragment
 import com.example.slnn3r.wallettrackermvp.View.Fragment.WalletAccount.DetailsWalletAccountFragment
@@ -23,7 +25,6 @@ import java.util.*
 
 
 class RealmAccess: ModelInterface.RealmAccess{
-
 
 
     private lateinit var presenter: PresenterInterface.Presenter
@@ -110,7 +111,7 @@ class RealmAccess: ModelInterface.RealmAccess{
 
     }
 
-    override fun firstTimeRealmSetup(mainContext: Context, userID: String) {
+    override fun firstTimeRealmSetup(mainContext: Context, userID: String) {  // Default data Setup, WalletAccount + TransactionCategory
 
         presenter= Presenter(DashBoardFragment())
 
@@ -135,7 +136,7 @@ class RealmAccess: ModelInterface.RealmAccess{
 
             realm!!.executeTransaction {
 
-                val creating = realm.createObject(WalletAccountRealm::class.java, uniqueID)
+                val creating = realm!!.createObject(WalletAccountRealm::class.java, uniqueID)
 
                 creating.WalletAccountName= defaultAccountName
                 creating.WalletAccountInitialBalance= defaultAccountBalance
@@ -146,6 +147,35 @@ class RealmAccess: ModelInterface.RealmAccess{
 
 
             realm.close()
+
+
+
+            ////
+            val config2 = RealmConfiguration.Builder()
+                    .name(mainContext.getString(R.string.transactionCategoryRealm))
+                    .build()
+
+            realm = Realm.getInstance(config2)
+
+
+            realm!!.executeTransaction {
+
+                for(item in DefaultDataCategoryListItem().getListItem()){
+
+                    val creating = realm.createObject(TransactionCategoryRealm::class.java, UUID.randomUUID().toString())
+
+                    creating.TransactionCategoryName= item.TransactionCategoryName
+                    creating.TransactionCategoryType= item.TransactionCategoryType
+                    creating.TransactionCategoryStatus= item.TransactionCategoryStatus
+                    creating.userUID= userID
+
+                }
+
+            }
+
+            ////
+            realm.close()
+
 
             presenter.firstTimeSetupStatus(mainContext,WalletAccount(uniqueID,defaultAccountName,defaultAccountBalance,userID,defaultAccountStatus), mainContext.getString(R.string.statusSuccess))
 
@@ -499,14 +529,15 @@ class RealmAccess: ModelInterface.RealmAccess{
         }
 
         //
-        
-        
+    }
 
 
-        
+    // ViewTrxCategory Fragment
+    override fun checkTransactionCategoryRealm(mainContext: Context, userID: String) {
 
 
 
     }
+
 
 }
