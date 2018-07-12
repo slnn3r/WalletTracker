@@ -50,7 +50,7 @@ class WalletAccountViewHolder(val view: View, var passData: WalletAccount?= null
             if(passData!=null){
 
                 val gson = Gson()
-                val walletAccountData = WalletAccount(passData!!.WalletAccountID,passData!!.WalletAccountName,passData!!.WalletAccountInitialBalance,passData!!.userUID,passData!!.WalletAccountStatus)
+                val walletAccountData = WalletAccount(passData!!.WalletAccountID,passData!!.WalletAccountName,passData!!.WalletAccountInitialBalance,passData!!.UserUID,passData!!.WalletAccountStatus)
                 val json = gson.toJson(walletAccountData)
 
 

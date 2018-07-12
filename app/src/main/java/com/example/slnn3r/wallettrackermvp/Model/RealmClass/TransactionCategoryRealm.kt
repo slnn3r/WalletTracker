@@ -14,7 +14,7 @@ open class TransactionCategoryRealm(): RealmObject(){
     var TransactionCategoryName:String? =null
     var TransactionCategoryType:String? = null
     var TransactionCategoryStatus:String? = null
-    var userUID: String?=null
+    var UserUID: String?=null
 
 
 }

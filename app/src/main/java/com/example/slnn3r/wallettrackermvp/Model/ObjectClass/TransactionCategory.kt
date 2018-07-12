@@ -4,4 +4,4 @@ class TransactionCategory(val TransactionCategoryID:String,
                           val TransactionCategoryName: String,
                           val TransactionCategoryType:String ,
                           val TransactionCategoryStatus:String,
-                          val userUID:String)
+                          val UserUID:String)

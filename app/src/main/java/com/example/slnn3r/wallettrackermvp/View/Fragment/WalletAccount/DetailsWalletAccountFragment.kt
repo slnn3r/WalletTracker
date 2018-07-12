@@ -64,7 +64,7 @@ class DetailsWalletAccountFragment : Fragment(), ViewInterface.DetailsWalletAcco
 
         DWAUpdateSubmit.setOnClickListener(){
 
-            val walletAccountInput = WalletAccount(walletAccount.WalletAccountID,DWAAccNameInput.text.toString(),DWAAccBalanceInput.text.toString().toDouble(),walletAccount.userUID,walletAccount.WalletAccountStatus)
+            val walletAccountInput = WalletAccount(walletAccount.WalletAccountID,DWAAccNameInput.text.toString(),DWAAccBalanceInput.text.toString().toDouble(),walletAccount.UserUID,walletAccount.WalletAccountStatus)
 
             presenter.updateWalletAccount(context!!, walletAccountInput)
         }

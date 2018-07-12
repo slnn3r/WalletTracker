@@ -158,7 +158,7 @@ class DashBoardFragment : Fragment(),ViewInterface.DashBoardView {
     override fun firstTimeSetupSuccess(mainContext: Context, walletAccount: WalletAccount) {
 
         presenter = Presenter(this)
-        presenter.checkWalletAccount(mainContext, walletAccount.userUID )
+        presenter.checkWalletAccount(mainContext, walletAccount.UserUID )
     }
 
     override fun firstTimeSetupFail(mainContext: Context, errorMessage: String) {
