@@ -7,7 +7,7 @@ import android.os.Bundle
 import com.example.slnn3r.wallettrackermvp.Interface.ViewInterface
 import com.example.slnn3r.wallettrackermvp.Interface.PresenterInterface
 
-import com.example.slnn3r.wallettrackermvp.Presenter.Presenter;
+import com.example.slnn3r.wallettrackermvp.Presenter.Presenter
 
 
 import com.example.slnn3r.wallettrackermvp.R

@@ -11,14 +11,12 @@ import android.widget.ArrayAdapter
 
 import com.example.slnn3r.wallettrackermvp.R
 import com.example.slnn3r.wallettrackermvp.Utility.DummyDataCategorySpinner
-import com.example.slnn3r.wallettrackermvp.Utility.SelectionTrxTypeSpinnerItem
 import kotlinx.android.synthetic.main.fragment_new_trx.*
 import android.widget.AdapterView
 import android.widget.AdapterView.OnItemSelectedListener
 import android.app.DatePickerDialog
 import java.text.SimpleDateFormat
 import java.util.*
-import android.widget.TimePicker
 import android.app.TimePickerDialog
 import java.sql.Time
 
@@ -145,10 +143,10 @@ class NewTrxFragment : Fragment() {
 
 
         // Receive Argumemt
-        val TrxTypeSelection = arguments?.getString(getString(R.string.trxTypePassArgKey))
+        val trxTypeSelection = arguments?.getString(getString(R.string.trxTypePassArgKey))
 
         // Set Transaction Type based on Argument
-        val spinnerPosition = dataAdapter.getPosition(TrxTypeSelection)
+        val spinnerPosition = dataAdapter.getPosition(trxTypeSelection)
         NewTrxTypeSpinner.setSelection(spinnerPosition)
 
 

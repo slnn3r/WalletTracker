@@ -2,26 +2,21 @@ package com.example.slnn3r.wallettrackermvp.View.Fragment
 
 
 import android.content.Context
-import android.content.Context.MODE_PRIVATE
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
-import android.util.Log
 import android.view.*
 import androidx.navigation.findNavController
 import com.example.slnn3r.wallettrackermvp.Adapter.DashBoardTrxAdapter
 
 import com.example.slnn3r.wallettrackermvp.R
 import com.example.slnn3r.wallettrackermvp.View.Activity.MenuActivity
-import com.google.gson.Gson
 import kotlinx.android.synthetic.main.fragment_dash_board.*
 import com.example.slnn3r.wallettrackermvp.Interface.PresenterInterface
 import com.example.slnn3r.wallettrackermvp.Interface.ViewInterface
-import com.example.slnn3r.wallettrackermvp.Model.ObjectClass.UserProfile
 import com.example.slnn3r.wallettrackermvp.Model.ObjectClass.WalletAccount
 import com.example.slnn3r.wallettrackermvp.Presenter.Presenter
-import com.example.slnn3r.wallettrackermvp.Utility.DummyDataTrxListItem
 import com.jjoe64.graphview.GraphView
 import com.jjoe64.graphview.helper.DateAsXAxisLabelFormatter
 import com.jjoe64.graphview.series.DataPoint
@@ -59,15 +54,15 @@ class DashBoardFragment : Fragment(),ViewInterface.DashBoardView {
 
 
         // To Hide KeyBoard
-        val inputManager = view!!
-                .getContext()
+        val inputManager = view
+                .context
                 .getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
 
-        val binder = view!!.getWindowToken()
+        val binder = view.windowToken
         inputManager.hideSoftInputFromWindow(binder,
                 InputMethodManager.HIDE_NOT_ALWAYS)
 
-        DBIncomeFab.setOnClickListener(){
+        DBIncomeFab.setOnClickListener{
 
             val navController = view.findNavController()
 
@@ -81,7 +76,7 @@ class DashBoardFragment : Fragment(),ViewInterface.DashBoardView {
         }
 
 
-        DBExpenseFab.setOnClickListener(){
+        DBExpenseFab.setOnClickListener{
 
             val navController = view.findNavController()
 
@@ -228,11 +223,11 @@ class DashBoardFragment : Fragment(),ViewInterface.DashBoardView {
 
     override fun populateTransactionRecycleView(mainContext: Context, transactionList: ArrayList<Transaction>) {
 
-        val DBTrxRecyclerView = (mainContext as Activity).findViewById(R.id.DBTrxRecyclerView) as RecyclerView
+        val dBTrxRecyclerView = (mainContext as Activity).findViewById(R.id.DBTrxRecyclerView) as RecyclerView
 
 
-        DBTrxRecyclerView.layoutManager = LinearLayoutManager(mainContext)
-        DBTrxRecyclerView.adapter = DashBoardTrxAdapter(transactionList)
+        dBTrxRecyclerView.layoutManager = LinearLayoutManager(mainContext)
+        dBTrxRecyclerView.adapter = DashBoardTrxAdapter(transactionList)
 
 
     }

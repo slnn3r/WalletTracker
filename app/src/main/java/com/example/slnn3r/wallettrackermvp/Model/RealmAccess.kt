@@ -19,7 +19,6 @@ import com.example.slnn3r.wallettrackermvp.View.Fragment.DashBoardFragment
 import com.example.slnn3r.wallettrackermvp.View.Fragment.TrxCategory.CreateTrxCategoryFragment
 import com.example.slnn3r.wallettrackermvp.View.Fragment.TrxCategory.DetailsTrxCategoryFragment
 import com.example.slnn3r.wallettrackermvp.View.Fragment.TrxCategory.ViewTrxCategoryFragment
-import com.example.slnn3r.wallettrackermvp.View.Fragment.TrxManagement.DetailsTrxFragment
 import com.example.slnn3r.wallettrackermvp.View.Fragment.WalletAccount.CreateWalletAccountFragment
 import com.example.slnn3r.wallettrackermvp.View.Fragment.WalletAccount.DetailsWalletAccountFragment
 import com.example.slnn3r.wallettrackermvp.View.Fragment.WalletAccount.ViewWalletAccountFragment
@@ -41,7 +40,7 @@ class RealmAccess: ModelInterface.RealmAccess{
         //
         var realm: Realm? = null
 
-        var WalletAccountData=ArrayList<WalletAccount>()
+        val walletAccountData=ArrayList<WalletAccount>()
 
 
         try {
@@ -61,13 +60,13 @@ class RealmAccess: ModelInterface.RealmAccess{
                 getWalletAccount.forEach{
                     dataList->
 
-                    WalletAccountData.add(
+                    walletAccountData.add(
                             WalletAccount(
-                                    dataList.WalletAccountID!!,
-                                    dataList.WalletAccountName!!,
-                                    dataList.WalletAccountInitialBalance,
-                                    dataList.UserUID!!,
-                                    dataList.WalletAccountStatus!!
+                                    dataList.walletAccountID!!,
+                                    dataList.walletAccountName!!,
+                                    dataList.walletAccountInitialBalance,
+                                    dataList.userUID!!,
+                                    dataList.walletAccountStatus!!
                             )
                     )
                 }
@@ -76,15 +75,14 @@ class RealmAccess: ModelInterface.RealmAccess{
 
             realm.close()
 
-           return WalletAccountData
+           return walletAccountData
 
 
         }catch(e:Exception) {
 
             realm?.close()
 
-            val WalletAccountData=ArrayList<WalletAccount>()
-            return WalletAccountData
+            return ArrayList<WalletAccount>()
 
         }finally {
             realm?.close()
@@ -98,7 +96,7 @@ class RealmAccess: ModelInterface.RealmAccess{
         //
         var realm: Realm? = null
 
-        val TransactionCategoryData=ArrayList<TransactionCategory>()
+        val transactionCategoryData=ArrayList<TransactionCategory>()
 
         try {
             Realm.init(mainContext)
@@ -118,12 +116,12 @@ class RealmAccess: ModelInterface.RealmAccess{
                 getTransactionCategory!!.forEach{
                     dataList->
 
-                    TransactionCategoryData.add(
+                    transactionCategoryData.add(
                             TransactionCategory(
-                                    dataList.TransactionCategoryID!!,
-                                    dataList.TransactionCategoryName!!,
-                                    dataList.TransactionCategoryType!!,
-                                    dataList.TransactionCategoryStatus!!,
+                                    dataList.transactionCategoryID!!,
+                                    dataList.transactionCategoryName!!,
+                                    dataList.transactionCategoryType!!,
+                                    dataList.transactionCategoryStatus!!,
                                     userID
 
                             )
@@ -136,15 +134,13 @@ class RealmAccess: ModelInterface.RealmAccess{
 
             realm.close()
 
-            return TransactionCategoryData
+            return transactionCategoryData
 
         }catch(e:Exception) {
 
             realm?.close()
 
-            val TransactionCategoryData=ArrayList<TransactionCategory>()
-
-            return TransactionCategoryData
+            return ArrayList<TransactionCategory>()
 
 
 
@@ -179,7 +175,7 @@ class RealmAccess: ModelInterface.RealmAccess{
         //
         var realm: Realm? = null
 
-        var WalletAccountData=ArrayList<WalletAccount>()
+        val walletAccountData=ArrayList<WalletAccount>()
 
 
         try {
@@ -199,13 +195,13 @@ class RealmAccess: ModelInterface.RealmAccess{
                 getWalletAccount.forEach{
                     dataList->
 
-                        WalletAccountData.add(
+                    walletAccountData.add(
                                 WalletAccount(
-                                        dataList.WalletAccountID!!,
-                                        dataList.WalletAccountName!!,
-                                        dataList.WalletAccountInitialBalance,
-                                        dataList.UserUID!!,
-                                        dataList.WalletAccountStatus!!
+                                        dataList.walletAccountID!!,
+                                        dataList.walletAccountName!!,
+                                        dataList.walletAccountInitialBalance,
+                                        dataList.userUID!!,
+                                        dataList.walletAccountStatus!!
                                 )
                         )
                 }
@@ -214,15 +210,15 @@ class RealmAccess: ModelInterface.RealmAccess{
 
             realm.close()
 
-            presenter.checkWalletAccountResult(mainContext,WalletAccountData, mainContext.getString(R.string.statusSuccess))
+            presenter.checkWalletAccountResult(mainContext,walletAccountData, mainContext.getString(R.string.statusSuccess))
 
 
         }catch(e:Exception) {
 
             realm?.close()
 
-            val WalletAccountData=ArrayList<WalletAccount>()
-            presenter.checkWalletAccountResult(mainContext,WalletAccountData,mainContext.getString(R.string.statusFail)+e.toString())
+            val walletAccountData=ArrayList<WalletAccount>()
+            presenter.checkWalletAccountResult(mainContext,walletAccountData,mainContext.getString(R.string.statusFail)+e.toString())
 
         }finally {
             realm?.close()
@@ -260,10 +256,10 @@ class RealmAccess: ModelInterface.RealmAccess{
 
                 val creating = realm!!.createObject(WalletAccountRealm::class.java, uniqueID)
 
-                creating.WalletAccountName= defaultAccountName
-                creating.WalletAccountInitialBalance= defaultAccountBalance
-                creating.UserUID=userID
-                creating.WalletAccountStatus=defaultAccountStatus
+                creating.walletAccountName= defaultAccountName
+                creating.walletAccountInitialBalance= defaultAccountBalance
+                creating.userUID=userID
+                creating.walletAccountStatus=defaultAccountStatus
 
             }
 
@@ -286,10 +282,10 @@ class RealmAccess: ModelInterface.RealmAccess{
 
                     val creating = realm.createObject(TransactionCategoryRealm::class.java, UUID.randomUUID().toString())
 
-                    creating.TransactionCategoryName= item.TransactionCategoryName
-                    creating.TransactionCategoryType= item.TransactionCategoryType
-                    creating.TransactionCategoryStatus= item.TransactionCategoryStatus
-                    creating.UserUID= userID
+                    creating.transactionCategoryName= item.TransactionCategoryName
+                    creating.transactionCategoryType= item.TransactionCategoryType
+                    creating.transactionCategoryStatus= item.TransactionCategoryStatus
+                    creating.userUID= userID
 
                 }
 
@@ -328,7 +324,7 @@ class RealmAccess: ModelInterface.RealmAccess{
         //
         var realm: Realm? = null
 
-        val TransactionData=ArrayList<Transaction>()
+        val transactionData=ArrayList<Transaction>()
 
 
         try {
@@ -345,35 +341,35 @@ class RealmAccess: ModelInterface.RealmAccess{
 
                 val getTransaction = realm.where(TransactionRealm::class.java).equalTo(mainContext.getString(R.string.WalletAccountID),accountID).findAll()
 
-                val TransactionCategoryGSON= TransactionCategory("","","","","")
+                val transactionCategoryGSON= TransactionCategory("","","","","")
 
                 getTransaction.forEach{
                     dataList->
 
-                        TransactionData.add(
+                    transactionData.add(
                                 Transaction(
-                                        dataList.TransactionID!!,
-                                        dataList.TransactionDate!!,
-                                        dataList.TransactionTime!!,
-                                        dataList.TransactionAmount,
-                                        dataList.TransactionRemark!!,
-                                        TransactionCategoryGSON,
-                                        dataList.WalletAccountID!!
+                                        dataList.transactionID!!,
+                                        dataList.transactionDate!!,
+                                        dataList.transactionTime!!,
+                                        dataList.transactionAmount,
+                                        dataList.transactionRemark!!,
+                                        transactionCategoryGSON,
+                                        dataList.walletAccountID!!
                                 )
                         )
                 }
 
                 val noResult = mainContext.getString(R.string.noResult) //ONLY USED FOR DASHBOARD GET TRANSACTION LIST
 
-                if(TransactionData.size<1){
-                    TransactionData.add(
+                if(transactionData.size<1){
+                    transactionData.add(
                             Transaction(
                                     noResult,
                                     noResult,
                                     noResult,
                                     0.0,
                                     noResult,
-                                    TransactionCategoryGSON,
+                                    transactionCategoryGSON,
                                     noResult
                             )
                     )
@@ -383,16 +379,16 @@ class RealmAccess: ModelInterface.RealmAccess{
 
             realm.close()
 
-            presenter.checkTransactionResult(mainContext, TransactionData,mainContext.getString(R.string.statusSuccess))
+            presenter.checkTransactionResult(mainContext, transactionData,mainContext.getString(R.string.statusSuccess))
 
 
         }catch(e:Exception) {
 
             realm?.close()
 
-            val TransactionData =ArrayList<Transaction>()
+            val transactionData =ArrayList<Transaction>()
 
-            presenter.checkTransactionResult(mainContext, TransactionData ,mainContext.getString(R.string.statusFail)+e.toString())
+            presenter.checkTransactionResult(mainContext, transactionData ,mainContext.getString(R.string.statusFail)+e.toString())
 
 
 
@@ -433,10 +429,10 @@ class RealmAccess: ModelInterface.RealmAccess{
 
                 val creating = realm.createObject(WalletAccountRealm::class.java, walletAccountInput.WalletAccountID)
 
-                creating.WalletAccountName= walletAccountInput.WalletAccountName
-                creating.WalletAccountInitialBalance= walletAccountInput.WalletAccountInitialBalance
-                creating.UserUID= walletAccountInput.UserUID
-                creating.WalletAccountStatus= walletAccountInput.WalletAccountStatus
+                creating.walletAccountName= walletAccountInput.WalletAccountName
+                creating.walletAccountInitialBalance= walletAccountInput.WalletAccountInitialBalance
+                creating.userUID= walletAccountInput.UserUID
+                creating.walletAccountStatus= walletAccountInput.WalletAccountStatus
 
 
             }
@@ -549,8 +545,8 @@ class RealmAccess: ModelInterface.RealmAccess{
                 getWalletAccount.forEach{
                     dataList->
 
-                        dataList.WalletAccountName = walletAccountData.WalletAccountName
-                        dataList.WalletAccountInitialBalance = walletAccountData.WalletAccountInitialBalance
+                        dataList.walletAccountName = walletAccountData.WalletAccountName
+                        dataList.walletAccountInitialBalance = walletAccountData.WalletAccountInitialBalance
 
                 }
             }
@@ -634,13 +630,13 @@ class RealmAccess: ModelInterface.RealmAccess{
 
         presenter= Presenter(ViewTrxCategoryFragment())
 
-        val UserID = mainContext.getString(R.string.UserUID)
-        val TransactionCategoryType = mainContext.getString(R.string.TransactionCategoryType)
+        val userIDRef = mainContext.getString(R.string.UserUID)
+        val transactionCategoryTypeRef = mainContext.getString(R.string.TransactionCategoryType)
 
         //
         var realm: Realm? = null
 
-        val TransactionCategoryData=ArrayList<TransactionCategory>()
+        val transactionCategoryData=ArrayList<TransactionCategory>()
 
         try {
             Realm.init(mainContext)
@@ -660,14 +656,14 @@ class RealmAccess: ModelInterface.RealmAccess{
                 val incomeType = mainContext.getString(R.string.income)
                 val expenseType = mainContext.getString(R.string.expense)
 
-                if(filterSelection.equals(incomeType)){
-                    getTransactionCategory= realm.where(TransactionCategoryRealm::class.java).equalTo(UserID,userID).equalTo(TransactionCategoryType,incomeType).findAll()
+                if(filterSelection == incomeType){
+                    getTransactionCategory= realm.where(TransactionCategoryRealm::class.java).equalTo(userIDRef,userID).equalTo(transactionCategoryTypeRef,incomeType).findAll()
 
-                }else if(filterSelection.equals(expenseType)){
-                    getTransactionCategory= realm.where(TransactionCategoryRealm::class.java).equalTo(UserID,userID).equalTo(TransactionCategoryType,expenseType).findAll()
+                }else if(filterSelection == expenseType){
+                    getTransactionCategory= realm.where(TransactionCategoryRealm::class.java).equalTo(userIDRef,userID).equalTo(transactionCategoryTypeRef,expenseType).findAll()
 
                 }else{
-                    getTransactionCategory= realm.where(TransactionCategoryRealm::class.java).equalTo(UserID,userID).findAll()
+                    getTransactionCategory= realm.where(TransactionCategoryRealm::class.java).equalTo(userIDRef,userID).findAll()
 
                 }
 
@@ -676,12 +672,12 @@ class RealmAccess: ModelInterface.RealmAccess{
                 getTransactionCategory.forEach{
                     dataList->
 
-                        TransactionCategoryData.add(
+                    transactionCategoryData.add(
                                 TransactionCategory(
-                                        dataList.TransactionCategoryID!!,
-                                        dataList.TransactionCategoryName!!,
-                                        dataList.TransactionCategoryType!!,
-                                        dataList.TransactionCategoryStatus!!,
+                                        dataList.transactionCategoryID!!,
+                                        dataList.transactionCategoryName!!,
+                                        dataList.transactionCategoryType!!,
+                                        dataList.transactionCategoryStatus!!,
                                         userID
 
                                 )
@@ -694,16 +690,16 @@ class RealmAccess: ModelInterface.RealmAccess{
 
             realm.close()
 
-            presenter.checkTransactionCategoryResult(mainContext, TransactionCategoryData,mainContext.getString(R.string.statusSuccess))
+            presenter.checkTransactionCategoryResult(mainContext, transactionCategoryData,mainContext.getString(R.string.statusSuccess))
 
 
         }catch(e:Exception) {
 
             realm?.close()
 
-            val TransactionCategoryData=ArrayList<TransactionCategory>()
+            val transactionCategoryData=ArrayList<TransactionCategory>()
 
-            presenter.checkTransactionCategoryResult(mainContext, TransactionCategoryData ,mainContext.getString(R.string.statusFail)+e.toString())
+            presenter.checkTransactionCategoryResult(mainContext, transactionCategoryData ,mainContext.getString(R.string.statusFail)+e.toString())
 
 
 
@@ -741,10 +737,10 @@ class RealmAccess: ModelInterface.RealmAccess{
 
                 val creating = realm.createObject(TransactionCategoryRealm::class.java, trxCategoryInput.TransactionCategoryID)
 
-                creating.TransactionCategoryName= trxCategoryInput.TransactionCategoryName
-                creating.TransactionCategoryType= trxCategoryInput.TransactionCategoryType
-                creating.TransactionCategoryStatus= trxCategoryInput.TransactionCategoryStatus
-                creating.UserUID= trxCategoryInput.UserUID
+                creating.transactionCategoryName= trxCategoryInput.TransactionCategoryName
+                creating.transactionCategoryType= trxCategoryInput.TransactionCategoryType
+                creating.transactionCategoryStatus= trxCategoryInput.TransactionCategoryStatus
+                creating.userUID= trxCategoryInput.UserUID
 
 
             }
@@ -797,8 +793,8 @@ class RealmAccess: ModelInterface.RealmAccess{
                 getTrxCategory.forEach{
                     dataList->
 
-                    dataList.TransactionCategoryName = trxCategoryInput.TransactionCategoryName
-                    dataList.TransactionCategoryType = trxCategoryInput.TransactionCategoryType
+                    dataList.transactionCategoryName = trxCategoryInput.TransactionCategoryName
+                    dataList.transactionCategoryType = trxCategoryInput.TransactionCategoryType
 
                 }
             }

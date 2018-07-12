@@ -160,11 +160,11 @@
         </string-array>
 
         <!-- Realm Data Variabla Name -->
-        <string name="UserUID">UserUID</string>
-        <string name="WalletAccountID">WalletAccountID</string>
-        <string name="TransactionCategoryID">TransactionCategoryID</string>
-        <string name="TransactionID">TransactionID</string>
-        <string name="TransactionCategoryType">TransactionCategoryType</string>
+        <string name="UserUID">userUID</string>
+        <string name="WalletAccountID">walletAccountID</string>
+        <string name="TransactionCategoryID">transactionCategoryID</string>
+        <string name="TransactionID">transactionID</string>
+        <string name="TransactionCategoryType">transactionCategoryType</string>
 
     <!-- System Informative String -->
 

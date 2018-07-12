@@ -14,7 +14,6 @@ import android.widget.ArrayAdapter
 
 import com.example.slnn3r.wallettrackermvp.R
 import com.example.slnn3r.wallettrackermvp.Utility.DummyDataCategorySpinner
-import com.example.slnn3r.wallettrackermvp.Utility.SelectionTrxTypeSpinnerItem
 import kotlinx.android.synthetic.main.fragment_details_trx.*
 import java.sql.Time
 import java.text.SimpleDateFormat
@@ -23,14 +22,14 @@ import java.util.*
 
 class DetailsTrxFragment : Fragment() {
 
-    val myCalendar = Calendar.getInstance()
-    val myFormat = "dd/MM/yy"
-    val simpleDateFormat = SimpleDateFormat(myFormat, Locale.US)
+    private val myCalendar = Calendar.getInstance()
+    private val myFormat = "dd/MM/yy"
+    private val simpleDateFormat = SimpleDateFormat(myFormat, Locale.US)
 
-    val mcurrentTime = Calendar.getInstance()
-    val hour = mcurrentTime.get(Calendar.HOUR_OF_DAY)
-    val minute = mcurrentTime.get(Calendar.MINUTE)
-    val simpleTimeFormat = SimpleDateFormat("h:mma")
+    private val mcurrentTime = Calendar.getInstance()
+    private val hour = mcurrentTime.get(Calendar.HOUR_OF_DAY)
+    private val minute = mcurrentTime.get(Calendar.MINUTE)
+    private val simpleTimeFormat = SimpleDateFormat("h:mma")
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
@@ -57,7 +56,7 @@ class DetailsTrxFragment : Fragment() {
         /////
 
         // Setup Spinner listener
-        DetailsTrxTypeSpinner.setOnItemSelectedListener(object : AdapterView.OnItemSelectedListener {
+        DetailsTrxTypeSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(parentView: AdapterView<*>, selectedItemView: View, position: Int, id: Long) {
                 if(DetailsTrxTypeSpinner.selectedItem=="Expense"){
 
@@ -76,7 +75,7 @@ class DetailsTrxFragment : Fragment() {
                 // your code here
             }
 
-        })
+        }
 
 
         // Setup Date Picker
@@ -85,10 +84,10 @@ class DetailsTrxFragment : Fragment() {
             myCalendar.set(Calendar.YEAR, year)
             myCalendar.set(Calendar.MONTH, monthOfYear)
             myCalendar.set(Calendar.DAY_OF_MONTH, dayOfMonth)
-            DetailsTrxDateInput.setText(simpleDateFormat.format(myCalendar.getTime()))
+            DetailsTrxDateInput.setText(simpleDateFormat.format(myCalendar.time))
         }
 
-        DetailsTrxDateInput.setOnClickListener() {
+        DetailsTrxDateInput.setOnClickListener {
 
             DatePickerDialog(context, date, myCalendar
                     .get(Calendar.YEAR), myCalendar.get(Calendar.MONTH),

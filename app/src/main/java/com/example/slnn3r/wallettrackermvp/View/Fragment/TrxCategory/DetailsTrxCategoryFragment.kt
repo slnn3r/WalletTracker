@@ -21,7 +21,6 @@ import com.example.slnn3r.wallettrackermvp.Model.ObjectClass.TransactionCategory
 import com.example.slnn3r.wallettrackermvp.Presenter.Presenter
 
 import com.example.slnn3r.wallettrackermvp.R
-import com.example.slnn3r.wallettrackermvp.Utility.SelectionTrxTypeSpinnerItem
 import com.google.gson.Gson
 import kotlinx.android.synthetic.main.fragment_details_trx_category.*
 
@@ -54,12 +53,12 @@ class DetailsTrxCategoryFragment : Fragment(), ViewInterface.DetailsTrxCategoryV
 
         ///////
         // Receive Argumemt
-        val TrxCategorySelection = arguments?.getString(getString(R.string.trxCategoryPassArgKey))
+        val trxCategorySelection = arguments?.getString(getString(R.string.trxCategoryPassArgKey))
 
         // user GSON convert to object
         val gson = Gson()
 
-        val trxCategory = gson.fromJson<TransactionCategory>(TrxCategorySelection, TransactionCategory::class.java)
+        val trxCategory = gson.fromJson<TransactionCategory>(trxCategorySelection, TransactionCategory::class.java)
 
 
         DTCCategoryNameInput.setText(trxCategory.TransactionCategoryName)
@@ -79,17 +78,17 @@ class DetailsTrxCategoryFragment : Fragment(), ViewInterface.DetailsTrxCategoryV
         presenter = Presenter(this)
 
         // for database validation (no same name input)
-        var userID = presenter.getUserData(context!!)
+        val userID = presenter.getUserData(context!!)
         val categoryNameList = presenter.getCategoryData(context!!,userID.UserUID)
 
-        DTCUpdateSubmit.setOnClickListener(){
+        DTCUpdateSubmit.setOnClickListener{
 
             val trxCategoryInput = TransactionCategory(trxCategory.TransactionCategoryID, DTCCategoryNameInput.text.toString(), DTCTrxTypeSpinner.selectedItem.toString(), trxCategory.TransactionCategoryStatus, trxCategory.UserUID)
             presenter.updateTransactionCategory(context!!, trxCategoryInput)
         }
 
 
-        DTCDeleteSubmit.setOnClickListener(){
+        DTCDeleteSubmit.setOnClickListener{
             presenter.deleteTransactionCategory(context!!, trxCategory.TransactionCategoryID)
         }
 

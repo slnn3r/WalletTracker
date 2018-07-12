@@ -9,11 +9,11 @@ import io.realm.annotations.RealmClass
 open class WalletAccountRealm(): RealmObject(){
 
     @PrimaryKey
-    var WalletAccountID:String? = null
+    var walletAccountID:String? = null
 
-    var WalletAccountName: String? = null
-    var WalletAccountInitialBalance:Double = 0.0
-    var UserUID:String? = null
-    var WalletAccountStatus: String?= null
+    var walletAccountName: String? = null
+    var walletAccountInitialBalance:Double = 0.0
+    var userUID:String? = null
+    var walletAccountStatus: String?= null
 
 }

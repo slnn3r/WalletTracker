@@ -1,9 +1,7 @@
 package com.example.slnn3r.wallettrackermvp.Adapter
 
 
-import android.content.Context
 import android.support.v7.widget.RecyclerView
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -16,7 +14,7 @@ import com.example.slnn3r.wallettrackermvp.Model.ObjectClass.Transaction
 import com.squareup.picasso.Picasso
 
 
-class DashBoardTrxAdapter(val homeFeed: ArrayList<Transaction>): RecyclerView.Adapter<DashBoardViewHolder>(){
+class DashBoardTrxAdapter(private val homeFeed: ArrayList<Transaction>): RecyclerView.Adapter<DashBoardViewHolder>(){
 
 
     // numberOfItems
@@ -35,9 +33,9 @@ class DashBoardTrxAdapter(val homeFeed: ArrayList<Transaction>): RecyclerView.Ad
 
     override fun onBindViewHolder(holder: DashBoardViewHolder, position: Int) {
 
-        val video = homeFeed.get(position)
+        val video = homeFeed[position]
 
-        if(video.TransactionDate.equals(holder.view.context.getString(R.string.noResult))){
+        if(video.TransactionDate == holder.view.context.getString(R.string.noResult)){
 
 
             Picasso.get().load(R.drawable.not_found).into(holder.view.DBTrxImageView)
@@ -51,7 +49,7 @@ class DashBoardTrxAdapter(val homeFeed: ArrayList<Transaction>): RecyclerView.Ad
             holder.view.DBBalTextView.text = video.TransactionCategory.TransactionCategoryName
             holder.view.DBTrxCategoryTextView.text = "$ " + video.TransactionAmount
 
-            if(video.TransactionCategory.TransactionCategoryType.equals(holder.view.context.getString(R.string.expense))){
+            if(video.TransactionCategory.TransactionCategoryType == holder.view.context.getString(R.string.expense)){
                 Picasso.get().load(R.drawable.expense_icon).into(holder.view.DBTrxImageView)
             }else{
                 Picasso.get().load(R.drawable.income_icon).into(holder.view.DBTrxImageView)
@@ -76,7 +74,7 @@ class DashBoardViewHolder(val view: View): RecyclerView.ViewHolder(view){
             val context = view.context
             val noResult = view.context.getString(R.string.noResult)
 
-            if(view.DBAccNameTextView.text.equals(noResult)){
+            if(view.DBAccNameTextView.text == noResult){
 
                 Toast.makeText(context, noResult, Toast.LENGTH_SHORT).show()
 

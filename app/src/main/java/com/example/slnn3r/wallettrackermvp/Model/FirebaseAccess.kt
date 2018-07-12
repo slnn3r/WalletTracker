@@ -23,8 +23,7 @@ import com.google.firebase.auth.GoogleAuthProvider
 
 import android.os.Bundle
 
-import com.google.android.gms.common.api.ResultCallback
-import com.google.android.gms.common.api.Status
+
 import android.content.Context.MODE_PRIVATE
 import com.example.slnn3r.wallettrackermvp.Model.ObjectClass.UserProfile
 import com.example.slnn3r.wallettrackermvp.R
@@ -204,30 +203,28 @@ class FirebaseAccess: ModelInterface.FirebaseAccess{
             override fun onConnected(bundle: Bundle?) {
 
                 FirebaseAuth.getInstance().signOut()
-                if (mGoogleApiClient!!.isConnected()) {
-                    Auth.GoogleSignInApi.signOut(mGoogleApiClient).setResultCallback(object : ResultCallback<Status> {
-                        override fun onResult(status: Status) {
-                            if (status.isSuccess) {
+                if (mGoogleApiClient!!.isConnected) {
+                    Auth.GoogleSignInApi.signOut(mGoogleApiClient).setResultCallback { status ->
+                        if (status.isSuccess) {
 
 
-                                // remove SharedPreference data
-                                val editor = mainContext.getSharedPreferences(mainContext.getString(R.string.userProfileKey), MODE_PRIVATE).edit()
-                                editor.remove(mainContext.getString(R.string.userProfileKey)).commit()
-                                editor.remove(mainContext.getString(R.string.userProfileKey)).apply()
+                            // remove SharedPreference data
+                            val editor = mainContext.getSharedPreferences(mainContext.getString(R.string.userProfileKey), MODE_PRIVATE).edit()
+                            editor.remove(mainContext.getString(R.string.userProfileKey)).commit()
+                            editor.remove(mainContext.getString(R.string.userProfileKey)).apply()
 
-                                presenter.logoutGoogleStatus(mainContext, true,successLoginMessage)
+                            presenter.logoutGoogleStatus(mainContext, true,successLoginMessage)
 
-                                mGoogleApiClient?.stopAutoManage(mainContext as FragmentActivity)
-                                mGoogleApiClient?.disconnect()
+                            mGoogleApiClient?.stopAutoManage(mainContext as FragmentActivity)
+                            mGoogleApiClient?.disconnect()
 
-                            }else{
-                                presenter.logoutGoogleStatus(mainContext, false,errorMessage)
+                        }else{
+                            presenter.logoutGoogleStatus(mainContext, false,errorMessage)
 
-                                mGoogleApiClient?.stopAutoManage(mainContext as FragmentActivity)
-                                mGoogleApiClient?.disconnect()
-                            }
+                            mGoogleApiClient?.stopAutoManage(mainContext as FragmentActivity)
+                            mGoogleApiClient?.disconnect()
                         }
-                    })
+                    }
                 }
             }
 

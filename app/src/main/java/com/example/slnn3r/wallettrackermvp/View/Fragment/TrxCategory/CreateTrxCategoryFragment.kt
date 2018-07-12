@@ -13,17 +13,13 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.AdapterView
-import android.widget.ArrayAdapter
 import android.widget.Toast
-import androidx.navigation.findNavController
 import com.example.slnn3r.wallettrackermvp.Interface.PresenterInterface
 import com.example.slnn3r.wallettrackermvp.Interface.ViewInterface
 import com.example.slnn3r.wallettrackermvp.Model.ObjectClass.TransactionCategory
 import com.example.slnn3r.wallettrackermvp.Presenter.Presenter
 
 import com.example.slnn3r.wallettrackermvp.R
-import com.example.slnn3r.wallettrackermvp.Utility.SelectionTrxTypeSpinnerItem
-import com.example.slnn3r.wallettrackermvp.View.Activity.MenuActivity
 import kotlinx.android.synthetic.main.fragment_create_trx_category.*
 import java.util.*
 
@@ -48,7 +44,7 @@ class CreateTrxCategoryFragment : Fragment(), ViewInterface.CreateTrxCategoryVie
         presenter = Presenter(this)
 
         // for database validation (no same name input)
-        var userID = presenter.getUserData(context!!)
+        val userID = presenter.getUserData(context!!)
         val categoryNameList = presenter.getCategoryData(context!!,userID.UserUID)
 
 
@@ -75,7 +71,7 @@ class CreateTrxCategoryFragment : Fragment(), ViewInterface.CreateTrxCategoryVie
         }
 
 
-        CTCCreateSubmit.setOnClickListener(){
+        CTCCreateSubmit.setOnClickListener{
 
             val uniqueID = UUID.randomUUID().toString()
 

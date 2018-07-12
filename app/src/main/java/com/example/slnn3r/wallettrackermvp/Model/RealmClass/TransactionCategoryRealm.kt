@@ -10,11 +10,11 @@ open class TransactionCategoryRealm(): RealmObject(){
 
 
     @PrimaryKey
-    var TransactionCategoryID:String? = null
-    var TransactionCategoryName:String? =null
-    var TransactionCategoryType:String? = null
-    var TransactionCategoryStatus:String? = null
-    var UserUID: String?=null
+    var transactionCategoryID:String? = null
+    var transactionCategoryName:String? =null
+    var transactionCategoryType:String? = null
+    var transactionCategoryStatus:String? = null
+    var userUID: String?=null
 
 
 }

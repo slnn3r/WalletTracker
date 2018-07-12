@@ -13,20 +13,15 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
 import android.widget.AdapterView
-import android.widget.ArrayAdapter
 import android.widget.Toast
 import androidx.navigation.findNavController
 import com.example.slnn3r.wallettrackermvp.Adapter.TrxCategoryAdapter
 import com.example.slnn3r.wallettrackermvp.Interface.PresenterInterface
 import com.example.slnn3r.wallettrackermvp.Interface.ViewInterface
 import com.example.slnn3r.wallettrackermvp.Model.ObjectClass.TransactionCategory
-import com.example.slnn3r.wallettrackermvp.Model.ObjectClass.UserProfile
 import com.example.slnn3r.wallettrackermvp.Presenter.Presenter
 
 import com.example.slnn3r.wallettrackermvp.R
-import com.example.slnn3r.wallettrackermvp.Utility.DefaultDataCategoryListItem
-import com.example.slnn3r.wallettrackermvp.Utility.FilterTrxTypeSpinnerItem
-import com.google.gson.Gson
 import kotlinx.android.synthetic.main.fragment_view_trx_category.*
 
 
@@ -50,11 +45,11 @@ class ViewTrxCategoryFragment : Fragment(), ViewInterface.TrxCategoryView {
         super.onViewCreated(view, savedInstanceState)
 
         // To Hide KeyBoard
-        val inputManager = view!!
-                .getContext()
+        val inputManager = view
+                .context
                 .getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
 
-        val binder = view!!.getWindowToken()
+        val binder = view.windowToken
         inputManager.hideSoftInputFromWindow(binder,
                 InputMethodManager.HIDE_NOT_ALWAYS)
 
@@ -95,11 +90,11 @@ class ViewTrxCategoryFragment : Fragment(), ViewInterface.TrxCategoryView {
 
     override fun populateTrxCategoryRecycleView(mainContext: Context, trxCategoryList: ArrayList<TransactionCategory>) {
 
-        val VTCRecyclerView = (mainContext as Activity).findViewById(R.id.VTCRecyclerView) as RecyclerView
+        val vTCRecyclerView = (mainContext as Activity).findViewById(R.id.VTCRecyclerView) as RecyclerView
 
-        VTCRecyclerView.layoutManager = LinearLayoutManager(mainContext)
+        vTCRecyclerView.layoutManager = LinearLayoutManager(mainContext)
 
-        VTCRecyclerView.adapter = TrxCategoryAdapter(trxCategoryList)
+        vTCRecyclerView.adapter = TrxCategoryAdapter(trxCategoryList)
 
     }
 

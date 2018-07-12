@@ -12,21 +12,15 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
-import android.widget.EditText
 import android.widget.Toast
-import androidx.navigation.findNavController
-import androidx.navigation.fragment.findNavController
+
 import com.example.slnn3r.wallettrackermvp.Interface.PresenterInterface
 import com.example.slnn3r.wallettrackermvp.Interface.ViewInterface
-import com.example.slnn3r.wallettrackermvp.Model.ObjectClass.UserProfile
 import com.example.slnn3r.wallettrackermvp.Model.ObjectClass.WalletAccount
 import com.example.slnn3r.wallettrackermvp.Presenter.Presenter
 
 import com.example.slnn3r.wallettrackermvp.R
-import com.google.gson.Gson
 import kotlinx.android.synthetic.main.fragment_create_wallet_account.*
-import java.text.NumberFormat
 import java.util.*
 
 
@@ -51,10 +45,10 @@ class CreateWalletAccountFragment : Fragment(), ViewInterface.CreateWalletAccoun
         presenter = Presenter(this)
 
         // for database validation (no same name input)
-        var userID = presenter.getUserData(context!!)
+        val userID = presenter.getUserData(context!!)
         val accountNameList = presenter.getAccountData(context!!,userID.UserUID)
 
-        CWACreateSubmit.setOnClickListener(){
+        CWACreateSubmit.setOnClickListener{
 
 
             val uniqueID = UUID.randomUUID().toString()

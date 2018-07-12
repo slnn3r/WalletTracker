@@ -12,7 +12,7 @@ import com.google.gson.Gson
 import kotlinx.android.synthetic.main.fragment_view_trx_category.view.*
 import kotlinx.android.synthetic.main.wallet_account_list_row.view.*
 
-class TrxCategoryAdapter(val homeFeed: ArrayList<TransactionCategory>): RecyclerView.Adapter<TrxCategoryViewHolder>(){
+class TrxCategoryAdapter(private val homeFeed: ArrayList<TransactionCategory>): RecyclerView.Adapter<TrxCategoryViewHolder>(){
 
 
     // numberOfItems
@@ -32,7 +32,7 @@ class TrxCategoryAdapter(val homeFeed: ArrayList<TransactionCategory>): Recycler
     override fun onBindViewHolder(holder: TrxCategoryViewHolder, position: Int) {
 
         val spinner = holder.view.VTCTrxTypeSpinner
-        val video = homeFeed.get(position)
+        val video = homeFeed[position]
 
         holder.view.VWAAccNameTextView.text = video.TransactionCategoryName
 

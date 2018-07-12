@@ -13,13 +13,9 @@ import android.net.NetworkInfo
 import com.example.slnn3r.wallettrackermvp.Model.ObjectClass.Transaction
 import com.example.slnn3r.wallettrackermvp.Model.ObjectClass.WalletAccount
 import com.example.slnn3r.wallettrackermvp.Model.RealmAccess
-import com.example.slnn3r.wallettrackermvp.View.Fragment.DashBoardFragment
 import android.app.Activity
-import android.util.Log
 import android.view.View
-import android.widget.TextView
 import androidx.navigation.Navigation.findNavController
-import androidx.navigation.findNavController
 import com.example.slnn3r.wallettrackermvp.Model.ObjectClass.TransactionCategory
 import com.example.slnn3r.wallettrackermvp.Model.ObjectClass.UserProfile
 import com.example.slnn3r.wallettrackermvp.Model.SharedPreferenceAccess

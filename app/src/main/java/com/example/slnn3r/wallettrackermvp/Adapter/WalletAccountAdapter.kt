@@ -2,7 +2,6 @@ package com.example.slnn3r.wallettrackermvp.Adapter
 
 import android.os.Bundle
 import android.support.v7.widget.RecyclerView
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -10,11 +9,10 @@ import androidx.navigation.findNavController
 import com.example.slnn3r.wallettrackermvp.Model.ObjectClass.WalletAccount
 import com.example.slnn3r.wallettrackermvp.R
 import com.google.gson.Gson
-import kotlinx.android.synthetic.main.fragment_view_wallet_account.view.*
 import kotlinx.android.synthetic.main.wallet_account_list_row.view.*
 
 
-class WalletAccountAdapter(val homeFeed: ArrayList<WalletAccount>): RecyclerView.Adapter<WalletAccountViewHolder>(){
+class WalletAccountAdapter(private val homeFeed: ArrayList<WalletAccount>): RecyclerView.Adapter<WalletAccountViewHolder>(){
 
 
     // numberOfItems
@@ -32,7 +30,7 @@ class WalletAccountAdapter(val homeFeed: ArrayList<WalletAccount>): RecyclerView
 
     override fun onBindViewHolder(holder: WalletAccountViewHolder, position: Int) {
 
-        val video = homeFeed.get(position)
+        val video = homeFeed[position]
 
         holder.view.VWAAccNameTextView.text = video.WalletAccountName
 

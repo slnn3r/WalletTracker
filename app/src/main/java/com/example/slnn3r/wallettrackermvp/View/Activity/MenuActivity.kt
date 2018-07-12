@@ -20,11 +20,9 @@ import com.example.slnn3r.wallettrackermvp.R
 
 import kotlinx.android.synthetic.main.activity_menu.*
 import kotlinx.android.synthetic.main.app_bar_menu.*
-import com.google.gson.Gson
 import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
-import com.example.slnn3r.wallettrackermvp.Model.ObjectClass.UserProfile
 import com.squareup.picasso.Picasso
 
 import androidx.navigation.Navigation

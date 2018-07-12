@@ -20,9 +20,7 @@ class SharedPreferenceAccess: ModelInterface.SharedPreference{
         val gson = Gson()
         val json = editor.getString(mainContext.getString(R.string.userProfileKey), "")
 
-        val userProfile = gson.fromJson<UserProfile>(json, UserProfile::class.java)
-
-        return userProfile
+        return gson.fromJson<UserProfile>(json, UserProfile::class.java)
 
     }
 

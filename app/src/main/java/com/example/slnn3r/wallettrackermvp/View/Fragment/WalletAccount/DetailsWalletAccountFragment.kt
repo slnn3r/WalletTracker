@@ -42,12 +42,12 @@ class DetailsWalletAccountFragment : Fragment(), ViewInterface.DetailsWalletAcco
 
         ///////
         // Receive Argumemt
-        val WalletAccountSelection = arguments?.getString(getString(R.string.walletAccountPassArgKey))
+        val walletAccountSelection = arguments?.getString(getString(R.string.walletAccountPassArgKey))
 
         // user GSON convert to object
         val gson = Gson()
 
-        val walletAccount = gson.fromJson<WalletAccount>(WalletAccountSelection, WalletAccount::class.java)
+        val walletAccount = gson.fromJson<WalletAccount>(walletAccountSelection, WalletAccount::class.java)
 
         DWAAccNameInput.setText(walletAccount.WalletAccountName)
         DWAAccBalanceInput.setText(walletAccount.WalletAccountInitialBalance.toString())
@@ -62,17 +62,17 @@ class DetailsWalletAccountFragment : Fragment(), ViewInterface.DetailsWalletAcco
         presenter = Presenter(this)
 
         // for database validation (no same name input)
-        var userID = presenter.getUserData(context!!)
+        val userID = presenter.getUserData(context!!)
         val accountNameList = presenter.getAccountData(context!!,userID.UserUID)
 
-        DWAUpdateSubmit.setOnClickListener(){
+        DWAUpdateSubmit.setOnClickListener{
 
             val walletAccountInput = WalletAccount(walletAccount.WalletAccountID,DWAAccNameInput.text.toString(),DWAAccBalanceInput.text.toString().toDouble(),walletAccount.UserUID,walletAccount.WalletAccountStatus)
 
             presenter.updateWalletAccount(context!!, walletAccountInput)
         }
 
-        DWADeleteSubmit.setOnClickListener(){
+        DWADeleteSubmit.setOnClickListener{
 
             presenter.deleteWalletAccount(context!!, walletAccount.WalletAccountID)
 

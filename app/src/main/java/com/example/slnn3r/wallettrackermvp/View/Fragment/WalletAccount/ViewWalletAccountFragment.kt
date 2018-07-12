@@ -18,16 +18,13 @@ import androidx.navigation.findNavController
 import com.example.slnn3r.wallettrackermvp.Adapter.WalletAccountAdapter
 import com.example.slnn3r.wallettrackermvp.Interface.PresenterInterface
 import com.example.slnn3r.wallettrackermvp.Interface.ViewInterface
-import com.example.slnn3r.wallettrackermvp.Model.ObjectClass.UserProfile
 import com.example.slnn3r.wallettrackermvp.Model.ObjectClass.WalletAccount
 import com.example.slnn3r.wallettrackermvp.Presenter.Presenter
 
 import com.example.slnn3r.wallettrackermvp.R
-import com.example.slnn3r.wallettrackermvp.Utility.DummyDataAccListItem
-import com.google.gson.Gson
+
 import kotlinx.android.synthetic.main.fragment_view_wallet_account.*
-import android.view.inputmethod.InputMethodManager.HIDE_NOT_ALWAYS
-import android.os.IBinder
+
 import android.view.inputmethod.InputMethodManager
 
 
@@ -49,17 +46,17 @@ class ViewWalletAccountFragment : Fragment(), ViewInterface.WalletAccountView {
         super.onViewCreated(view, savedInstanceState)
 
         // To Hide KeyBoard
-        val inputManager = view!!
-                .getContext()
+        val inputManager = view
+                .context
                 .getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
 
-        val binder = view!!.getWindowToken()
+        val binder = view.windowToken
         inputManager.hideSoftInputFromWindow(binder,
                 InputMethodManager.HIDE_NOT_ALWAYS)
 
 
 
-        WVAGoToCWA.setOnClickListener(){
+        WVAGoToCWA.setOnClickListener{
 
             val navController = view.findNavController()
             navController.navigate(R.id.action_viewWalletAccountFragment_to_createWalletAccountFragment)
@@ -82,10 +79,10 @@ class ViewWalletAccountFragment : Fragment(), ViewInterface.WalletAccountView {
 
     override fun populateWalletAccountRecycleView(mainContext: Context, walletAccountList: ArrayList<WalletAccount>) {
 
-        val VWARecyclerView = (mainContext as Activity).findViewById(R.id.VWARecyclerView) as RecyclerView
+        val vWARecyclerView = (mainContext as Activity).findViewById(R.id.VWARecyclerView) as RecyclerView
 
-        VWARecyclerView.layoutManager = LinearLayoutManager(context)
-        VWARecyclerView.adapter = WalletAccountAdapter(walletAccountList)
+        vWARecyclerView.layoutManager = LinearLayoutManager(context)
+        vWARecyclerView.adapter = WalletAccountAdapter(walletAccountList)
 
     }
 

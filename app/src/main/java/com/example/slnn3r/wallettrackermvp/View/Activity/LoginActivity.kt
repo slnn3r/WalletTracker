@@ -25,7 +25,7 @@ class LoginActivity : AppCompatActivity(), ViewInterface.LoginView {
 
         presenter = Presenter(this)
 
-        SignInButton.setOnClickListener(){
+        SignInButton.setOnClickListener{
 
             presenter.loginGoogleRequest(this)
         }
@@ -60,8 +60,8 @@ class LoginActivity : AppCompatActivity(), ViewInterface.LoginView {
 
     // if not need rx then call them during onActivityResult and Login Success/fail
     override fun displayLoginLoading(mainContext:Context):ProgressDialog {
-        val loginLoading: ProgressDialog = ProgressDialog.show(mainContext, getString(R.string.loadingTitle), getString(R.string.loadingMessage))
-        return loginLoading
+
+        return ProgressDialog.show(mainContext, getString(R.string.loadingTitle), getString(R.string.loadingMessage))
     }
 
     override fun dismissLoginLoading(loginLoading:ProgressDialog) {
