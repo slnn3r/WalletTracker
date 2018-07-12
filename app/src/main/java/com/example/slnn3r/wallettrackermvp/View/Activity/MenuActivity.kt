@@ -96,6 +96,7 @@ class MenuActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
     override fun onSupportNavigateUp() = findNavController(R.id.navMenu).navigateUp()
 
+
     fun setupNavigationMode() {
         isNavigated = true
         drawer_layout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED)

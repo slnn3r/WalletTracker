@@ -11,6 +11,7 @@ import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.WindowManager
 import android.widget.Button
 import android.widget.Toast
 import androidx.navigation.findNavController
@@ -25,7 +26,9 @@ import com.example.slnn3r.wallettrackermvp.R
 import com.example.slnn3r.wallettrackermvp.Utility.DummyDataAccListItem
 import com.google.gson.Gson
 import kotlinx.android.synthetic.main.fragment_view_wallet_account.*
-
+import android.view.inputmethod.InputMethodManager.HIDE_NOT_ALWAYS
+import android.os.IBinder
+import android.view.inputmethod.InputMethodManager
 
 
 class ViewWalletAccountFragment : Fragment(), ViewInterface.WalletAccountView {
@@ -39,12 +42,21 @@ class ViewWalletAccountFragment : Fragment(), ViewInterface.WalletAccountView {
 
         (activity as? AppCompatActivity)?.supportActionBar?.title = getString(R.string.viewWalletAccountFragmentTitle)
 
-
         return inflater.inflate(R.layout.fragment_view_wallet_account, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        // To Hide KeyBoard
+        val inputManager = view!!
+                .getContext()
+                .getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+
+        val binder = view!!.getWindowToken()
+        inputManager.hideSoftInputFromWindow(binder,
+                InputMethodManager.HIDE_NOT_ALWAYS)
+
 
 
         WVAGoToCWA.setOnClickListener(){

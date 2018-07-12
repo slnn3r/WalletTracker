@@ -11,6 +11,7 @@ import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.inputmethod.InputMethodManager
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.Toast
@@ -47,6 +48,15 @@ class ViewTrxCategoryFragment : Fragment(), ViewInterface.TrxCategoryView {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        // To Hide KeyBoard
+        val inputManager = view!!
+                .getContext()
+                .getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+
+        val binder = view!!.getWindowToken()
+        inputManager.hideSoftInputFromWindow(binder,
+                InputMethodManager.HIDE_NOT_ALWAYS)
 
         presenter = Presenter(this)
 

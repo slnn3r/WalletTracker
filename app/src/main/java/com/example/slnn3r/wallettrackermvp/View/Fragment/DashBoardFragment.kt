@@ -29,6 +29,7 @@ import com.jjoe64.graphview.series.LineGraphSeries
 import java.util.*
 import android.app.Activity
 import android.support.v7.widget.RecyclerView
+import android.view.inputmethod.InputMethodManager
 import android.widget.*
 import com.example.slnn3r.wallettrackermvp.Model.ObjectClass.Transaction
 import kotlin.collections.ArrayList
@@ -56,6 +57,15 @@ class DashBoardFragment : Fragment(),ViewInterface.DashBoardView {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+
+        // To Hide KeyBoard
+        val inputManager = view!!
+                .getContext()
+                .getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+
+        val binder = view!!.getWindowToken()
+        inputManager.hideSoftInputFromWindow(binder,
+                InputMethodManager.HIDE_NOT_ALWAYS)
 
         DBIncomeFab.setOnClickListener(){
 
