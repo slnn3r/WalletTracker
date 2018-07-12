@@ -105,12 +105,20 @@ class CreateWalletAccountFragment : Fragment(), ViewInterface.CreateWalletAccoun
 
                 }else if(accountNameList.size>0) {
 
+                    var detectMatched=0
+
                     accountNameList.forEach{
                         data->
                             if(data.WalletAccountName.equals(CWAAccNameInput.text.toString(),ignoreCase = true)){
-                                CWAAccNameInput.error= getString(R.string.accNameUsedError)
-                                CWACreateSubmit.isEnabled = false
+                                detectMatched+=1
                             }
+                    }
+
+                    if(detectMatched>0){
+                        CWAAccNameInput.error= getString(R.string.accNameUsedError)
+                        CWACreateSubmit.isEnabled = false
+                    }else{
+                        CWAAccNameInput.error=null
                     }
 
                 }else if(accountNameList.size==0){ //when retrieve nothing database error

@@ -102,12 +102,20 @@ class DetailsWalletAccountFragment : Fragment(), ViewInterface.DetailsWalletAcco
 
                 }else if(accountNameList.size>0) {
 
+                    var detectMatched=0
+
                     accountNameList.forEach{
                         data->
                         if(data.WalletAccountName.equals(DWAAccNameInput.text.toString(),ignoreCase = true) && data.WalletAccountID!=walletAccount.WalletAccountID){
-                            DWAAccNameInput.error= getString(R.string.accNameUsedError)
-                            DWAUpdateSubmit.isEnabled = false
+                            detectMatched+=1
                         }
+                    }
+
+                    if(detectMatched>0){
+                        DWAAccNameInput.error= getString(R.string.accNameUsedError)
+                        DWAUpdateSubmit.isEnabled = false
+                    }else{
+                        DWAAccNameInput.error=null
                     }
 
                 }else if(accountNameList.size==0){ //when retrieve nothing database error

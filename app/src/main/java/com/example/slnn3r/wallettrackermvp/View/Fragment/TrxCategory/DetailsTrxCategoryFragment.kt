@@ -140,12 +140,21 @@ class DetailsTrxCategoryFragment : Fragment(), ViewInterface.DetailsTrxCategoryV
 
                 }else if(categoryNameList.size>0) {
 
+                    var detectMatched=0
+
                     categoryNameList.forEach{
                         data->
                         if(data.TransactionCategoryName.equals(DTCCategoryNameInput.text.toString(),ignoreCase = true) && data.TransactionCategoryID!=trxCategory.TransactionCategoryID){
-                            DTCCategoryNameInput.error= getString(R.string.categoryNameUsedError)
-                            DTCUpdateSubmit.isEnabled = false
+                            detectMatched+=1
                         }
+
+                    }
+
+                    if(detectMatched>0){
+                        DTCCategoryNameInput.error= getString(R.string.categoryNameUsedError)
+                        DTCUpdateSubmit.isEnabled = false
+                    }else{
+                        DTCCategoryNameInput.error=null
                     }
 
                 }else if(categoryNameList.size==0){ //when retrieve nothing database error

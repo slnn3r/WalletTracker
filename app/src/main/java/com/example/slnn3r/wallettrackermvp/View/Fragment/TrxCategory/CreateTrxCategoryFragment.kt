@@ -122,12 +122,20 @@ class CreateTrxCategoryFragment : Fragment(), ViewInterface.CreateTrxCategoryVie
 
                 }else if(categoryNameList.size>0) {
 
+                    var detectMatched=0
+
                     categoryNameList.forEach{
                         data->
                         if(data.TransactionCategoryName.equals(CTCCategoryNameInput.text.toString(),ignoreCase = true)){
-                            CTCCategoryNameInput.error= getString(R.string.categoryNameUsedError)
-                            CTCCreateSubmit.isEnabled = false
+                            detectMatched+=1
                         }
+                    }
+
+                    if(detectMatched>0){
+                        CTCCategoryNameInput.error= getString(R.string.categoryNameUsedError)
+                        CTCCreateSubmit.isEnabled = false
+                    }else{
+                        CTCCategoryNameInput.error=null
                     }
 
                 }else if(categoryNameList.size==0){ //when retrieve nothing database error

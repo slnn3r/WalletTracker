@@ -187,14 +187,14 @@
 
         <!-- TextWatcher Message -->
         <string name="promptToEnter">Please Fill In This Field</string>
+
         <string name="accNameInputErrorMaxLength">Max length 15 Character only</string>
-        <string name="accNameInputErrorInvalid">Invalid Name</string>
+        <string name="accNameInputErrorInvalid">Invalid Name - Character Only, At Least 4 Characters</string>
         <string name="accNameUsedError">Account Name Already Used</string>
         <string name="accNameRetreiveError">Database Validation Failed</string>
 
-
         <string name="categoryNameInputErrorMaxLength">Max length 15 Character only</string>
-        <string name="categoryNameInputErrorInvalid">Invalid Name</string>
+        <string name="categoryNameInputErrorInvalid">Invalid Name - Character Only, At Least 4 Characters</string>
         <string name="categoryNameUsedError">Category Name Already Used</string>
         <string name="categoryNameRetreiveError">Database Validation Failed</string>
 
