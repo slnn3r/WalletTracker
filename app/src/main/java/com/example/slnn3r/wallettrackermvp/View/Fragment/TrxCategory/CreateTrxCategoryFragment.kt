@@ -45,6 +45,12 @@ class CreateTrxCategoryFragment : Fragment(), ViewInterface.CreateTrxCategoryVie
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        presenter = Presenter(this)
+
+        // for database validation (no same name input)
+        var userID = presenter.getUserData(context!!)
+        val categoryNameList = presenter.getCategoryData(context!!,userID.UserUID)
+
 
         // Setup Spinner listener
         CTCTrxTypeSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
@@ -74,7 +80,6 @@ class CreateTrxCategoryFragment : Fragment(), ViewInterface.CreateTrxCategoryVie
             val uniqueID = UUID.randomUUID().toString()
 
             // Get SharedPreference data
-            presenter = Presenter(this)
             val userProfile = presenter.getUserData(context!!)
             val userID = userProfile.UserUID
 
@@ -109,10 +114,25 @@ class CreateTrxCategoryFragment : Fragment(), ViewInterface.CreateTrxCategoryVie
                 val rex = getString(R.string.regExNoCharacterOnly).toRegex()
 
                 if (CTCCategoryNameInput.length()>getString(R.string.maxAccNameInputField).toInt()){
-                    CTCCategoryNameInput.error= getString(R.string.accNameInputErrorMaxLength)
+                    CTCCategoryNameInput.error= getString(R.string.categoryNameInputErrorMaxLength)
                     CTCCreateSubmit.isEnabled = false
                 }else if(!CTCCategoryNameInput.text.toString().matches(rex)){
-                    CTCCategoryNameInput.error= getString(R.string.accNameInoutErrorInvalid)
+                    CTCCategoryNameInput.error= getString(R.string.categoryNameInputErrorInvalid)
+                    CTCCreateSubmit.isEnabled = false
+
+                }else if(categoryNameList.size>0) {
+
+                    categoryNameList.forEach{
+                        data->
+                        if(data.TransactionCategoryName.equals(CTCCategoryNameInput.text.toString(),ignoreCase = true)){
+                            CTCCategoryNameInput.error= getString(R.string.categoryNameUsedError)
+                            CTCCreateSubmit.isEnabled = false
+                        }
+                    }
+
+                }else if(categoryNameList.size==0){ //when retrieve nothing database error
+
+                    CTCCategoryNameInput.error= getString(R.string.categoryNameRetreiveError)
                     CTCCreateSubmit.isEnabled = false
 
                 }else{

@@ -50,9 +50,11 @@ class CreateWalletAccountFragment : Fragment(), ViewInterface.CreateWalletAccoun
 
         presenter = Presenter(this)
 
+        // for database validation (no same name input)
+        var userID = presenter.getUserData(context!!)
+        val accountNameList = presenter.getAccountData(context!!,userID.UserUID)
 
         CWACreateSubmit.setOnClickListener(){
-
 
 
             val uniqueID = UUID.randomUUID().toString()
@@ -91,13 +93,29 @@ class CreateWalletAccountFragment : Fragment(), ViewInterface.CreateWalletAccoun
 
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
 
+
                 val rex = getString(R.string.regExNoCharacterOnly).toRegex()
 
                 if (CWAAccNameInput.length()>getString(R.string.maxAccNameInputField).toInt()){
                     CWAAccNameInput.error= getString(R.string.accNameInputErrorMaxLength)
                     CWACreateSubmit.isEnabled = false
                 }else if(!CWAAccNameInput.text.toString().matches(rex)){
-                    CWAAccNameInput.error= getString(R.string.accNameInoutErrorInvalid)
+                    CWAAccNameInput.error= getString(R.string.accNameInputErrorInvalid)
+                    CWACreateSubmit.isEnabled = false
+
+                }else if(accountNameList.size>0) {
+
+                    accountNameList.forEach{
+                        data->
+                            if(data.WalletAccountName.equals(CWAAccNameInput.text.toString(),ignoreCase = true)){
+                                CWAAccNameInput.error= getString(R.string.accNameUsedError)
+                                CWACreateSubmit.isEnabled = false
+                            }
+                    }
+
+                }else if(accountNameList.size==0){ //when retrieve nothing database error
+
+                    CWAAccNameInput.error= getString(R.string.accNameRetreiveError)
                     CWACreateSubmit.isEnabled = false
 
                 }else{

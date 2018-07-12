@@ -29,7 +29,6 @@ import com.example.slnn3r.wallettrackermvp.R
 class Presenter: PresenterInterface.Presenter{
 
 
-
     private lateinit var mainView: ViewInterface.MainView
     private lateinit var loginView: ViewInterface.LoginView
     private lateinit var menuView: ViewInterface.MenuView
@@ -94,6 +93,16 @@ class Presenter: PresenterInterface.Presenter{
     override fun getUserData(mainContext: Context): UserProfile {
         return sharedPreferenceModel.getUserData(mainContext)
     }
+
+    // Get Data Only
+    override fun getAccountData(mainContext: Context, userID: String): ArrayList<WalletAccount> {
+        return realmModel.getAccountDataRealm(mainContext,userID)
+    }
+
+    override fun getCategoryData(mainContext: Context, userID: String): ArrayList<TransactionCategory> {
+        return realmModel.getCategoryDataRealm(mainContext,userID)
+    }
+
 
 
     // Main Activity

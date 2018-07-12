@@ -78,6 +78,10 @@ class DetailsTrxCategoryFragment : Fragment(), ViewInterface.DetailsTrxCategoryV
         ///////
         presenter = Presenter(this)
 
+        // for database validation (no same name input)
+        var userID = presenter.getUserData(context!!)
+        val categoryNameList = presenter.getCategoryData(context!!,userID.UserUID)
+
         DTCUpdateSubmit.setOnClickListener(){
 
             val trxCategoryInput = TransactionCategory(trxCategory.TransactionCategoryID, DTCCategoryNameInput.text.toString(), DTCTrxTypeSpinner.selectedItem.toString(), trxCategory.TransactionCategoryStatus, trxCategory.UserUID)
@@ -128,10 +132,25 @@ class DetailsTrxCategoryFragment : Fragment(), ViewInterface.DetailsTrxCategoryV
                 val rex = getString(R.string.regExNoCharacterOnly).toRegex()
 
                 if (DTCCategoryNameInput.length()>getString(R.string.maxAccNameInputField).toInt()){
-                    DTCCategoryNameInput.error= getString(R.string.accNameInputErrorMaxLength)
+                    DTCCategoryNameInput.error= getString(R.string.categoryNameInputErrorMaxLength)
                     DTCUpdateSubmit.isEnabled = false
                 }else if(!DTCCategoryNameInput.text.toString().matches(rex)){
-                    DTCCategoryNameInput.error= getString(R.string.accNameInoutErrorInvalid)
+                    DTCCategoryNameInput.error= getString(R.string.categoryNameInputErrorInvalid)
+                    DTCUpdateSubmit.isEnabled = false
+
+                }else if(categoryNameList.size>0) {
+
+                    categoryNameList.forEach{
+                        data->
+                        if(data.TransactionCategoryName.equals(DTCCategoryNameInput.text.toString(),ignoreCase = true) && data.TransactionCategoryID!=trxCategory.TransactionCategoryID){
+                            DTCCategoryNameInput.error= getString(R.string.categoryNameUsedError)
+                            DTCUpdateSubmit.isEnabled = false
+                        }
+                    }
+
+                }else if(categoryNameList.size==0){ //when retrieve nothing database error
+
+                    DTCCategoryNameInput.error= getString(R.string.categoryNameRetreiveError)
                     DTCUpdateSubmit.isEnabled = false
 
                 }else{

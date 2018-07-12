@@ -130,7 +130,7 @@
         <string name="trxCategoryPassArgKey">trxCategorySelection</string>
 
         <!-- Validation RegEx -->
-        <string name="regExNoCharacterOnly">^[a-zA-Z\s]+</string>
+        <string name="regExNoCharacterOnly">^[a-zA-Z]{4,}(?: [a-zA-Z]+){0,2}$</string>
 
         <!-- Max Length for Input Field -->
         <string name="maxAccNameInputField">15</string>
@@ -188,7 +188,16 @@
         <!-- TextWatcher Message -->
         <string name="promptToEnter">Please Fill In This Field</string>
         <string name="accNameInputErrorMaxLength">Max length 15 Character only</string>
-        <string name="accNameInoutErrorInvalid">Invalid Name</string>
+        <string name="accNameInputErrorInvalid">Invalid Name</string>
+        <string name="accNameUsedError">Account Name Already Used</string>
+        <string name="accNameRetreiveError">Database Validation Failed</string>
+
+
+        <string name="categoryNameInputErrorMaxLength">Max length 15 Character only</string>
+        <string name="categoryNameInputErrorInvalid">Invalid Name</string>
+        <string name="categoryNameUsedError">Category Name Already Used</string>
+        <string name="categoryNameRetreiveError">Database Validation Failed</string>
+
 
         <!-- Toast Message -->
         <string name="createWalletAccountSuccess">Create Wallet Account Success</string>

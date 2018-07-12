@@ -29,6 +29,11 @@ interface ModelInterface {
 
     interface RealmAccess{
 
+        // GetDataOnly
+        fun getAccountDataRealm(mainContext: Context, userID: String): ArrayList<WalletAccount>
+        fun getCategoryDataRealm(mainContext: Context, userID: String): ArrayList<TransactionCategory>
+
+
         // DashBoard Fragment
         fun checkWalletAccountRealm(mainContext: Context, userID: String) //(used by WalletAccount Fragment as well)
 

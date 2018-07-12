@@ -16,6 +16,10 @@ interface PresenterInterface{
         // SharedPreference
         fun getUserData(mainContext: Context): UserProfile
 
+        // GetDataOnly
+        fun getAccountData(mainContext: Context, userID: String): ArrayList<WalletAccount>
+        fun getCategoryData(mainContext: Context, userID: String): ArrayList<TransactionCategory>
+
         // Main Activity
         fun checkLogin(mainContext:Context)
         fun checkLoginResult(mainContext:Context, loginResult: Boolean)

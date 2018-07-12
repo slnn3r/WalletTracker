@@ -27,11 +27,135 @@ import io.realm.Realm
 import io.realm.RealmConfiguration
 import io.realm.RealmResults
 import java.util.*
+import kotlin.collections.ArrayList
 
 
 class RealmAccess: ModelInterface.RealmAccess{
 
     private lateinit var presenter: PresenterInterface.Presenter
+
+
+    // Get Data Only
+    override fun getAccountDataRealm(mainContext: Context, userID: String): ArrayList<WalletAccount> {
+
+        //
+        var realm: Realm? = null
+
+        var WalletAccountData=ArrayList<WalletAccount>()
+
+
+        try {
+            Realm.init(mainContext)
+
+            val config = RealmConfiguration.Builder()
+                    .name(mainContext.getString(R.string.walletAccountRealm))
+                    .build()
+
+            realm = Realm.getInstance(config)
+
+
+            realm!!.executeTransaction {
+
+                val getWalletAccount = realm.where(WalletAccountRealm::class.java).equalTo(mainContext.getString(R.string.UserUID),userID).findAll()
+
+                getWalletAccount.forEach{
+                    dataList->
+
+                    WalletAccountData.add(
+                            WalletAccount(
+                                    dataList.WalletAccountID!!,
+                                    dataList.WalletAccountName!!,
+                                    dataList.WalletAccountInitialBalance,
+                                    dataList.UserUID!!,
+                                    dataList.WalletAccountStatus!!
+                            )
+                    )
+                }
+
+            }
+
+            realm.close()
+
+           return WalletAccountData
+
+
+        }catch(e:Exception) {
+
+            realm?.close()
+
+            val WalletAccountData=ArrayList<WalletAccount>()
+            return WalletAccountData
+
+        }finally {
+            realm?.close()
+        }
+
+
+    }
+
+    override fun getCategoryDataRealm(mainContext: Context, userID: String): ArrayList<TransactionCategory> {
+
+        //
+        var realm: Realm? = null
+
+        val TransactionCategoryData=ArrayList<TransactionCategory>()
+
+        try {
+            Realm.init(mainContext)
+
+            val config = RealmConfiguration.Builder()
+                    .name(mainContext.getString(R.string.transactionCategoryRealm))
+                    .build()
+
+            realm = Realm.getInstance(config)
+
+
+            realm!!.executeTransaction {
+
+
+                val getTransactionCategory: RealmResults<TransactionCategoryRealm>? = realm.where(TransactionCategoryRealm::class.java).equalTo(mainContext.getString(R.string.UserUID),userID).findAll()
+
+                getTransactionCategory!!.forEach{
+                    dataList->
+
+                    TransactionCategoryData.add(
+                            TransactionCategory(
+                                    dataList.TransactionCategoryID!!,
+                                    dataList.TransactionCategoryName!!,
+                                    dataList.TransactionCategoryType!!,
+                                    dataList.TransactionCategoryStatus!!,
+                                    userID
+
+                            )
+                    )
+                }
+
+
+
+            }
+
+            realm.close()
+
+            return TransactionCategoryData
+
+        }catch(e:Exception) {
+
+            realm?.close()
+
+            val TransactionCategoryData=ArrayList<TransactionCategory>()
+
+            return TransactionCategoryData
+
+
+
+        }finally {
+            realm?.close()
+        }
+
+        //
+
+    }
+
 
 
     // DashBoard Fragment
@@ -239,7 +363,7 @@ class RealmAccess: ModelInterface.RealmAccess{
                         )
                 }
 
-                val noResult = mainContext.getString(R.string.noResult)
+                val noResult = mainContext.getString(R.string.noResult) //ONLY USED FOR DASHBOARD GET TRANSACTION LIST
 
                 if(TransactionData.size<1){
                     TransactionData.add(
@@ -564,19 +688,7 @@ class RealmAccess: ModelInterface.RealmAccess{
                         )
                 }
 
-                val noResult = mainContext.getString(R.string.noResult)
 
-                if(TransactionCategoryData.size<1){
-                    TransactionCategoryData.add(
-                            TransactionCategory(
-                                    noResult,
-                                    noResult,
-                                    noResult,
-                                    noResult,
-                                    noResult
-                            )
-                    )
-                }
 
             }
 

@@ -49,7 +49,6 @@ class DetailsWalletAccountFragment : Fragment(), ViewInterface.DetailsWalletAcco
 
         val walletAccount = gson.fromJson<WalletAccount>(WalletAccountSelection, WalletAccount::class.java)
 
-
         DWAAccNameInput.setText(walletAccount.WalletAccountName)
         DWAAccBalanceInput.setText(walletAccount.WalletAccountInitialBalance.toString())
 
@@ -61,6 +60,10 @@ class DetailsWalletAccountFragment : Fragment(), ViewInterface.DetailsWalletAcco
         ///////
 
         presenter = Presenter(this)
+
+        // for database validation (no same name input)
+        var userID = presenter.getUserData(context!!)
+        val accountNameList = presenter.getAccountData(context!!,userID.UserUID)
 
         DWAUpdateSubmit.setOnClickListener(){
 
@@ -87,13 +90,29 @@ class DetailsWalletAccountFragment : Fragment(), ViewInterface.DetailsWalletAcco
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
 
 
+
                 val rex = getString(R.string.regExNoCharacterOnly).toRegex()
 
                 if (DWAAccNameInput.length()>15){
                     DWAAccNameInput.error=getString(R.string.accNameInputErrorMaxLength)
                     DWAUpdateSubmit.isEnabled = false
                 }else if(!DWAAccNameInput.text.toString().matches(rex)){
-                    DWAAccNameInput.error=getString(R.string.accNameInoutErrorInvalid)
+                    DWAAccNameInput.error=getString(R.string.accNameInputErrorInvalid)
+                    DWAUpdateSubmit.isEnabled = false
+
+                }else if(accountNameList.size>0) {
+
+                    accountNameList.forEach{
+                        data->
+                        if(data.WalletAccountName.equals(DWAAccNameInput.text.toString(),ignoreCase = true) && data.WalletAccountID!=walletAccount.WalletAccountID){
+                            DWAAccNameInput.error= getString(R.string.accNameUsedError)
+                            DWAUpdateSubmit.isEnabled = false
+                        }
+                    }
+
+                }else if(accountNameList.size==0){ //when retrieve nothing database error
+
+                    DWAAccNameInput.error= getString(R.string.accNameRetreiveError)
                     DWAUpdateSubmit.isEnabled = false
 
                 }else{
