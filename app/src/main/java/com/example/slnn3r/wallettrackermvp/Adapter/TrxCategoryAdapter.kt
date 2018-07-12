@@ -1,5 +1,6 @@
 package com.example.slnn3r.wallettrackermvp.Adapter
 
+import android.os.Bundle
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
@@ -7,6 +8,8 @@ import android.view.ViewGroup
 import androidx.navigation.findNavController
 import com.example.slnn3r.wallettrackermvp.Model.ObjectClass.TransactionCategory
 import com.example.slnn3r.wallettrackermvp.R
+import com.google.gson.Gson
+import kotlinx.android.synthetic.main.fragment_view_trx_category.view.*
 import kotlinx.android.synthetic.main.wallet_account_list_row.view.*
 
 class TrxCategoryAdapter(val homeFeed: ArrayList<TransactionCategory>): RecyclerView.Adapter<TrxCategoryViewHolder>(){
@@ -28,22 +31,39 @@ class TrxCategoryAdapter(val homeFeed: ArrayList<TransactionCategory>): Recycler
 
     override fun onBindViewHolder(holder: TrxCategoryViewHolder, position: Int) {
 
+        val spinner = holder.view.VTCTrxTypeSpinner
         val video = homeFeed.get(position)
 
         holder.view.VWAAccNameTextView.text = video.TransactionCategoryName
+
+        holder.passData = video
 
 
     }
 
 }
 
-class TrxCategoryViewHolder(val view: View): RecyclerView.ViewHolder(view){
+class TrxCategoryViewHolder(val view: View, var passData: TransactionCategory?= null): RecyclerView.ViewHolder(view){
 
     init{
         view.setOnClickListener{
 
-            val navController = view.findNavController()
-            navController.navigate(R.id.action_viewTrxCategoryFragment_to_detailsTrxCategoryFragment)
+            if(passData!=null){
+
+                val gson = Gson()
+                val walletAccountData = TransactionCategory(passData!!.TransactionCategoryID,passData!!.TransactionCategoryName,passData!!.TransactionCategoryType, passData!!.TransactionCategoryStatus, passData!!.UserUID)
+                val json = gson.toJson(walletAccountData)
+
+
+                val navController = view.findNavController()
+
+                val bundle = Bundle()
+                bundle.putString("trxCategorySelection", json)
+                navController.navigate(R.id.action_viewTrxCategoryFragment_to_detailsTrxCategoryFragment, bundle)
+
+
+            }
+
 
 
         }

@@ -41,7 +41,8 @@ class Presenter: PresenterInterface.Presenter{
     private lateinit var detailsWalletAccountView: ViewInterface.DetailsWalletAccountView
 
     private lateinit var trxCategoryView: ViewInterface.TrxCategoryView
-
+    private lateinit var createTrxCategoryView: ViewInterface.CreateTrxCategoryView
+    private lateinit var detailsTrxCategoryView: ViewInterface.DetailsTrxCategoryView
 
     private val firebaseModel: ModelInterface.FirebaseAccess = FirebaseAccess()
     private val realmModel: ModelInterface.RealmAccess = RealmAccess()
@@ -78,6 +79,14 @@ class Presenter: PresenterInterface.Presenter{
 
     constructor(trxCategoryView: ViewInterface.TrxCategoryView){
         this.trxCategoryView=trxCategoryView
+    }
+
+    constructor(createTrxCategoryView: ViewInterface.CreateTrxCategoryView){
+        this.createTrxCategoryView=createTrxCategoryView
+    }
+
+    constructor(detailsTrxCategoryView: ViewInterface.DetailsTrxCategoryView){
+        this.detailsTrxCategoryView=detailsTrxCategoryView
     }
 
 
@@ -328,8 +337,8 @@ class Presenter: PresenterInterface.Presenter{
 
 
     // ViewTrxCategory Fragment
-    override fun checkTransactionCategory(mainContext: Context, userID: String) {
-        realmModel.checkTransactionCategoryRealm(mainContext,userID)
+    override fun checkTransactionCategory(mainContext: Context, userID: String, filterSelection: String) {
+        realmModel.checkTransactionCategoryRealm(mainContext,userID,filterSelection)
     }
 
     override fun checkTransactionCategoryResult(mainContext: Context, transactionCategoryList: ArrayList<TransactionCategory>, status: String) {
@@ -341,6 +350,57 @@ class Presenter: PresenterInterface.Presenter{
             trxCategoryView.populateTrxCategoryRecycleViewFail(mainContext,status)
         }
 
+    }
+
+
+    // CreateTrxCategory Fragment
+    override fun createTransactionCategory(mainContext: Context, trxCategoryInput: TransactionCategory) {
+        realmModel.createTransactionCategoryRealm(mainContext,trxCategoryInput)
+    }
+
+    override fun createTransactionCategoryStatus(mainContext: Context, createStatus: String) {
+
+        if(createStatus==mainContext.getString(R.string.statusSuccess)){
+            createTrxCategoryView.createTrxCategorySuccess(mainContext)
+
+        }else{
+            createTrxCategoryView.createTrxCategoryFail(mainContext,createStatus)
+        }
+
+    }
+
+    // DetailsTrxCategory Fragment
+    override fun updateTransactionCategory(mainContext: Context, trxCategoryInput: TransactionCategory) {
+
+        realmModel.updateTransactionCategoryRealm(mainContext, trxCategoryInput)
+
+    }
+
+    override fun updateTransactionCategoryStatus(mainContext: Context, updateStatus: String) {
+
+        if(updateStatus==mainContext.getString(R.string.statusSuccess)){
+            detailsTrxCategoryView.updateTrxCategorySuccess(mainContext)
+
+        }else{
+            detailsTrxCategoryView.updateTrxCategoryFail(mainContext,updateStatus)
+        }
+
+    }
+
+    override fun deleteTransactionCategory(mainContext: Context, trxCategoryID: String) {
+
+       realmModel.deleteTransactionCategoryRealm(mainContext,trxCategoryID)
+
+    }
+
+    override fun deleteTransactionCategoryStatus(mainContext: Context, deleteStatus: String) {
+
+        if(deleteStatus==mainContext.getString(R.string.statusSuccess)){
+            detailsTrxCategoryView.deleteTrxCategorySuccess(mainContext)
+
+        }else{
+            detailsTrxCategoryView.deleteTrxCategoryFail(mainContext,deleteStatus)
+        }
     }
 
 }

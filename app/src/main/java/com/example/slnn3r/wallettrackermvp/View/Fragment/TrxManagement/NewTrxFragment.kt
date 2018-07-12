@@ -51,8 +51,7 @@ class NewTrxFragment : Fragment() {
         ///// Populate Spinner Item
 
         // Creating adapter for Type spinner
-        val dataAdapter = ArrayAdapter(context, android.R.layout.simple_spinner_item, SelectionTrxTypeSpinnerItem().getSpinnerItem())
-
+        val dataAdapter = ArrayAdapter(context, android.R.layout.simple_spinner_item, resources.getStringArray(R.array.defaultTrxTypeSpinner))
         // Drop down layout style - list view with radio button
         dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
 
@@ -70,18 +69,18 @@ class NewTrxFragment : Fragment() {
 
 
         // Setup Spinner listener
-        NewTrxTypeSpinner.setOnItemSelectedListener(object : OnItemSelectedListener {
+        NewTrxTypeSpinner.onItemSelectedListener = object : OnItemSelectedListener {
             override fun onItemSelected(parentView: AdapterView<*>, selectedItemView: View, position: Int, id: Long) {
                 if(NewTrxTypeSpinner.selectedItem==getString(R.string.expense)){
 
-                    NewTrxTypeImageView.setImageDrawable(getResources().getDrawable(R.drawable.expense_icon))
-                    NewTrxTypeImageView.setBackground(getResources().getDrawable(R.drawable.fui_idp_button_background_email))
-                    NewTrxSubmit.background= getResources().getDrawable(R.drawable.fui_idp_button_background_email)
+                    NewTrxTypeImageView.setImageDrawable(resources.getDrawable(R.drawable.expense_icon))
+                    NewTrxTypeImageView.background = resources.getDrawable(R.drawable.fui_idp_button_background_email)
+                    NewTrxSubmit.background= resources.getDrawable(R.drawable.fui_idp_button_background_email)
 
                 }else{
-                    NewTrxTypeImageView.setImageDrawable(getResources().getDrawable(R.drawable.income_icon))
-                    NewTrxTypeImageView.setBackground(getResources().getDrawable(R.drawable.fui_idp_button_background_phone))
-                    NewTrxSubmit.background= getResources().getDrawable(R.drawable.fui_idp_button_background_phone)
+                    NewTrxTypeImageView.setImageDrawable(resources.getDrawable(R.drawable.income_icon))
+                    NewTrxTypeImageView.background = resources.getDrawable(R.drawable.fui_idp_button_background_phone)
+                    NewTrxSubmit.background= resources.getDrawable(R.drawable.fui_idp_button_background_phone)
 
 
                 }
@@ -92,7 +91,7 @@ class NewTrxFragment : Fragment() {
                 // your code here
             }
 
-        })
+        }
 
 
 
@@ -101,10 +100,10 @@ class NewTrxFragment : Fragment() {
             myCalendar.set(Calendar.YEAR, year)
             myCalendar.set(Calendar.MONTH, monthOfYear)
             myCalendar.set(Calendar.DAY_OF_MONTH, dayOfMonth)
-            NewTrxDateInput.setText(simpleDateFormat.format(myCalendar.getTime()))
+            NewTrxDateInput.setText(simpleDateFormat.format(myCalendar.time))
         }
 
-        NewTrxDateInput.setOnClickListener() {
+        NewTrxDateInput.setOnClickListener {
 
                 DatePickerDialog(context, date, myCalendar
                         .get(Calendar.YEAR), myCalendar.get(Calendar.MONTH),
@@ -113,7 +112,7 @@ class NewTrxFragment : Fragment() {
         }
 
         // Initial Date
-        NewTrxDateInput.setText(simpleDateFormat.format(myCalendar.getTime()))
+        NewTrxDateInput.setText(simpleDateFormat.format(myCalendar.time))
 
 
 

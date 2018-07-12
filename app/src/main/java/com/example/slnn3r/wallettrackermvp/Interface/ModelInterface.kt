@@ -3,6 +3,7 @@ package com.example.slnn3r.wallettrackermvp.Interface
 import android.app.ProgressDialog
 import android.content.Context
 import android.content.Intent
+import com.example.slnn3r.wallettrackermvp.Model.ObjectClass.TransactionCategory
 import com.example.slnn3r.wallettrackermvp.Model.ObjectClass.UserProfile
 import com.example.slnn3r.wallettrackermvp.Model.ObjectClass.WalletAccount
 
@@ -36,19 +37,26 @@ interface ModelInterface {
         fun checkTransactionRealm(mainContext: Context, accountID: String)
 
 
-        // CreateWalletAccount Fragment
-        fun createWalletAccountRealm(mainContext:Context, walletAccountInput: WalletAccount)
-
         // ViewWalletAccount Fragment
         fun checkWalletAccountCountRealm(mainContext: Context, userID:String)
 
-        // DetailsWalletAccount Fragment
+        // CreateWalletAccount Fragment
+        fun createWalletAccountRealm(mainContext:Context, walletAccountInput: WalletAccount)
+
+         // DetailsWalletAccount Fragment
         fun updateWalletAccountRealm(mainContext:Context, walletAccountData: WalletAccount)
         fun deleteWalletAccountRealm(mainContext:Context, walletAccountDataID: String)
 
 
         // ViewTrxCategory Fragment
-        fun checkTransactionCategoryRealm(mainContext: Context, userID: String)
+        fun checkTransactionCategoryRealm(mainContext: Context, userID: String, filterSelection: String)
+
+        // CreateTrxCategory Fragment
+        fun createTransactionCategoryRealm(mainContext: Context, trxCategoryInput: TransactionCategory)
+
+        // DetailsTrxCategory Fragment
+        fun updateTransactionCategoryRealm(mainContext: Context, trxCategoryInput: TransactionCategory)
+        fun deleteTransactionCategoryRealm(mainContext:Context, walletAccountDataID: String)
 
 
     }

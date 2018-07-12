@@ -92,7 +92,26 @@ interface ViewInterface{
         fun populateTrxCategoryRecycleView(mainContext: Context, trxCategoryList: ArrayList<TransactionCategory>)
         fun populateTrxCategoryRecycleViewFail(mainContext: Context, errorMessage: String)
 
+    }
+
+
+    interface CreateTrxCategoryView{
+
+        fun createTrxCategorySuccess(mainContext: Context)
+        fun createTrxCategoryFail(mainContext: Context, errorMessage:String)
 
     }
+
+    interface DetailsTrxCategoryView{
+
+        fun updateTrxCategorySuccess(mainContext: Context)
+        fun updateTrxCategoryFail(mainContext: Context, errorMessage:String)
+
+        fun deleteTrxCategorySuccess(mainContext: Context)
+        fun deleteTrxCategoryFail(mainContext: Context, errorMessage:String)
+
+    }
+
+
 
 }

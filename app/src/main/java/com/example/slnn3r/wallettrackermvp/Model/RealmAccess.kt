@@ -16,17 +16,20 @@ import com.example.slnn3r.wallettrackermvp.Presenter.Presenter
 import com.example.slnn3r.wallettrackermvp.R
 import com.example.slnn3r.wallettrackermvp.Utility.DefaultDataCategoryListItem
 import com.example.slnn3r.wallettrackermvp.View.Fragment.DashBoardFragment
+import com.example.slnn3r.wallettrackermvp.View.Fragment.TrxCategory.CreateTrxCategoryFragment
+import com.example.slnn3r.wallettrackermvp.View.Fragment.TrxCategory.DetailsTrxCategoryFragment
 import com.example.slnn3r.wallettrackermvp.View.Fragment.TrxCategory.ViewTrxCategoryFragment
+import com.example.slnn3r.wallettrackermvp.View.Fragment.TrxManagement.DetailsTrxFragment
 import com.example.slnn3r.wallettrackermvp.View.Fragment.WalletAccount.CreateWalletAccountFragment
 import com.example.slnn3r.wallettrackermvp.View.Fragment.WalletAccount.DetailsWalletAccountFragment
 import com.example.slnn3r.wallettrackermvp.View.Fragment.WalletAccount.ViewWalletAccountFragment
 import io.realm.Realm
 import io.realm.RealmConfiguration
+import io.realm.RealmResults
 import java.util.*
 
 
 class RealmAccess: ModelInterface.RealmAccess{
-
 
     private lateinit var presenter: PresenterInterface.Presenter
 
@@ -67,7 +70,7 @@ class RealmAccess: ModelInterface.RealmAccess{
 
             realm!!.executeTransaction {
 
-                val getWalletAccount = realm.where(WalletAccountRealm::class.java).equalTo("UserUID",userID).findAll()
+                val getWalletAccount = realm.where(WalletAccountRealm::class.java).equalTo(mainContext.getString(R.string.UserUID),userID).findAll()
 
                 getWalletAccount.forEach{
                     dataList->
@@ -216,7 +219,7 @@ class RealmAccess: ModelInterface.RealmAccess{
 
             realm!!.executeTransaction {
 
-                val getTransaction = realm.where(TransactionRealm::class.java).equalTo("WalletAccountID",accountID).findAll() //naming wrong
+                val getTransaction = realm.where(TransactionRealm::class.java).equalTo(mainContext.getString(R.string.WalletAccountID),accountID).findAll()
 
                 val TransactionCategoryGSON= TransactionCategory("","","","","")
 
@@ -360,7 +363,7 @@ class RealmAccess: ModelInterface.RealmAccess{
 
             realm!!.executeTransaction {
 
-                val getWalletAccount = realm.where(WalletAccountRealm::class.java).equalTo("UserUID",userID).findAll()
+                val getWalletAccount = realm.where(WalletAccountRealm::class.java).equalTo(mainContext.getString(R.string.UserUID),userID).findAll()
 
                 getWalletAccount.forEach{
                     data ->
@@ -417,7 +420,7 @@ class RealmAccess: ModelInterface.RealmAccess{
             realm!!.executeTransaction {
 
 
-                val getWalletAccount = realm.where(WalletAccountRealm::class.java).equalTo("WalletAccountID",walletAccountData.WalletAccountID).findAll()
+                val getWalletAccount = realm.where(WalletAccountRealm::class.java).equalTo(mainContext.getString(R.string.WalletAccountID),walletAccountData.WalletAccountID).findAll()
 
                 getWalletAccount.forEach{
                     dataList->
@@ -471,7 +474,7 @@ class RealmAccess: ModelInterface.RealmAccess{
 
             realm!!.executeTransaction {
 
-                val getWalletAccount = realm.where(WalletAccountRealm::class.java).equalTo("WalletAccountID",walletAccountID).findAll() //naming wrong
+                val getWalletAccount = realm.where(WalletAccountRealm::class.java).equalTo(mainContext.getString(R.string.WalletAccountID),walletAccountID).findAll()
 
 
                 getWalletAccount.forEach{
@@ -503,9 +506,12 @@ class RealmAccess: ModelInterface.RealmAccess{
 
 
     // ViewTrxCategory Fragment
-    override fun checkTransactionCategoryRealm(mainContext: Context, userID: String) {
+    override fun checkTransactionCategoryRealm(mainContext: Context, userID: String, filterSelection: String) {
 
         presenter= Presenter(ViewTrxCategoryFragment())
+
+        val UserID = mainContext.getString(R.string.UserUID)
+        val TransactionCategoryType = mainContext.getString(R.string.TransactionCategoryType)
 
         //
         var realm: Realm? = null
@@ -524,10 +530,24 @@ class RealmAccess: ModelInterface.RealmAccess{
 
             realm!!.executeTransaction {
 
-                val getTransactionCategory = realm.where(TransactionCategoryRealm::class.java).equalTo("UserUID",userID).findAll() //naming wrong
+
+                var getTransactionCategory: RealmResults<TransactionCategoryRealm>? = null
+
+                val incomeType = mainContext.getString(R.string.income)
+                val expenseType = mainContext.getString(R.string.expense)
+
+                if(filterSelection.equals(incomeType)){
+                    getTransactionCategory= realm.where(TransactionCategoryRealm::class.java).equalTo(UserID,userID).equalTo(TransactionCategoryType,incomeType).findAll()
+
+                }else if(filterSelection.equals(expenseType)){
+                    getTransactionCategory= realm.where(TransactionCategoryRealm::class.java).equalTo(UserID,userID).equalTo(TransactionCategoryType,expenseType).findAll()
+
+                }else{
+                    getTransactionCategory= realm.where(TransactionCategoryRealm::class.java).equalTo(UserID,userID).findAll()
+
+                }
 
 
-                val TransactionCategoryGSON= TransactionCategory("","","","","")
 
                 getTransactionCategory.forEach{
                     dataList->
@@ -582,6 +602,164 @@ class RealmAccess: ModelInterface.RealmAccess{
         //
 
 
+    }
+
+
+    // CreateTrxCategory Fragment
+    override fun createTransactionCategoryRealm(mainContext: Context, trxCategoryInput: TransactionCategory) {
+
+        ////
+        presenter= Presenter(CreateTrxCategoryFragment())
+
+        //
+        var realm: Realm? = null
+
+
+        try {
+            Realm.init(mainContext)
+
+            val config = RealmConfiguration.Builder()
+                    .name(mainContext.getString(R.string.transactionCategoryRealm))
+                    .build()
+
+            realm = Realm.getInstance(config)
+
+
+            realm!!.executeTransaction {
+
+                val creating = realm.createObject(TransactionCategoryRealm::class.java, trxCategoryInput.TransactionCategoryID)
+
+                creating.TransactionCategoryName= trxCategoryInput.TransactionCategoryName
+                creating.TransactionCategoryType= trxCategoryInput.TransactionCategoryType
+                creating.TransactionCategoryStatus= trxCategoryInput.TransactionCategoryStatus
+                creating.UserUID= trxCategoryInput.UserUID
+
+
+            }
+
+            realm.close()
+            presenter.createTransactionCategoryStatus(mainContext, mainContext.getString(R.string.statusSuccess))
+
+
+
+        }catch(e:Exception) {
+
+            realm?.close()
+            presenter.createTransactionCategoryStatus(mainContext, mainContext.getString(R.string.statusFail)+e.toString())
+
+
+        }finally {
+            realm?.close()
+        }
+
+        //
+
+    }
+
+
+    // DetailsTrxCategory Fragment
+    override fun updateTransactionCategoryRealm(mainContext: Context, trxCategoryInput: TransactionCategory) {
+
+        presenter= Presenter(DetailsTrxCategoryFragment())
+
+        //
+        var realm: Realm? = null
+
+
+        try {
+
+            Realm.init(mainContext)
+
+            val config = RealmConfiguration.Builder()
+                    .name(mainContext.getString(R.string.transactionCategoryRealm))
+                    .build()
+
+            realm = Realm.getInstance(config)
+
+
+            realm!!.executeTransaction {
+
+
+                val getTrxCategory = realm.where(TransactionCategoryRealm::class.java).equalTo(mainContext.getString(R.string.TransactionCategoryID), trxCategoryInput.TransactionCategoryID).findAll()
+
+                getTrxCategory.forEach{
+                    dataList->
+
+                    dataList.TransactionCategoryName = trxCategoryInput.TransactionCategoryName
+                    dataList.TransactionCategoryType = trxCategoryInput.TransactionCategoryType
+
+                }
+            }
+
+            realm.close()
+            presenter.updateTransactionCategoryStatus(mainContext,mainContext.getString(R.string.statusSuccess))
+
+
+
+        }catch(e:Exception) {
+
+            realm?.close()
+            presenter.updateTransactionCategoryStatus(mainContext,mainContext.getString(R.string.statusFail)+e.toString())
+
+
+
+        }finally {
+            realm?.close()
+        }
+
+        //
+
+
+    }
+
+    override fun deleteTransactionCategoryRealm(mainContext: Context, transactionCategoryID: String) {
+
+        presenter= Presenter(DetailsTrxCategoryFragment())
+
+        //
+        var realm: Realm? = null
+
+
+        try {
+
+            Realm.init(mainContext)
+
+            val config = RealmConfiguration.Builder()
+                    .name(mainContext.getString(R.string.transactionCategoryRealm))
+                    .build()
+
+            realm = Realm.getInstance(config)
+
+            realm!!.executeTransaction {
+
+                val getWalletAccount = realm.where(TransactionCategoryRealm::class.java).equalTo(mainContext.getString(R.string.TransactionCategoryID),transactionCategoryID).findAll()
+
+
+                getWalletAccount.forEach{
+                    dataList->
+
+                    dataList.deleteFromRealm()
+                }
+
+            }
+
+            realm.close()
+            presenter.deleteTransactionCategoryStatus(mainContext,mainContext.getString(R.string.statusSuccess))
+
+
+
+        }catch(e:Exception) {
+
+            realm?.close()
+            presenter.deleteTransactionCategoryStatus(mainContext,mainContext.getString(R.string.statusFail)+e.toString())
+
+
+
+        }finally {
+            realm?.close()
+        }
+
+        //
     }
 
 

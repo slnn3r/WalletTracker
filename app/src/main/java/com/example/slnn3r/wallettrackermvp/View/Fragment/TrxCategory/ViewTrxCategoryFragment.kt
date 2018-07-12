@@ -11,6 +11,7 @@ import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.Toast
 import androidx.navigation.findNavController
@@ -49,7 +50,8 @@ class ViewTrxCategoryFragment : Fragment(), ViewInterface.TrxCategoryView {
 
         presenter = Presenter(this)
 
-        VTCGoToCTC.setOnClickListener(){
+        VTCGoToCTC.setOnClickListener {
+
             val navController = view.findNavController()
             navController.navigate(R.id.action_viewTrxCategoryFragment_to_createTrxCategoryFragment)
 
@@ -61,7 +63,22 @@ class ViewTrxCategoryFragment : Fragment(), ViewInterface.TrxCategoryView {
         val userProfile = presenter.getUserData(context!!)
         val userID = userProfile.UserUID
 
-        presenter.checkTransactionCategory(context!!, userID)
+
+        VTCTrxTypeSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(parentView: AdapterView<*>, selectedItemView: View?, position: Int, id: Long) {
+
+                if (position >= 0) {
+                    presenter.checkTransactionCategory(context!!, userID,VTCTrxTypeSpinner.selectedItem.toString())
+                }
+
+            }
+
+            override fun onNothingSelected(parentView: AdapterView<*>) {
+                // your code here
+            }
+
+        }
+
 
     }
 

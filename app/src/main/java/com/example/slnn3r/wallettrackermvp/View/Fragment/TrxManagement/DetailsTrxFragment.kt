@@ -44,15 +44,7 @@ class DetailsTrxFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-///// Populate Spinner Item
-
-        // Creating adapter for Type spinner
-        val dataAdapter = ArrayAdapter(context, android.R.layout.simple_spinner_item, SelectionTrxTypeSpinnerItem().getSpinnerItem())
-
-        // Drop down layout style - list view with radio button
-        dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-
-        DetailsTrxTypeSpinner.adapter = dataAdapter
+        ///// Populate Spinner Item
 
         // Creating adapter for Category spinner
         val data2Adapter = ArrayAdapter(context, android.R.layout.simple_spinner_item, DummyDataCategorySpinner().getSpinnerItem())

@@ -41,14 +41,14 @@ interface PresenterInterface{
         fun checkTransaction(mainContext: Context, accountID: String)
         fun checkTransactionResult(mainContext: Context, transactionList: ArrayList<Transaction>, status: String)
 
-        // CreateWalletAccount Fragment
-        fun createWalletAccount(mainContext:Context, walletAccountInput: WalletAccount)
-        fun createWalletAccountStatus(mainContext:Context, createStatus:String)
 
         // ViewWalletAccount Fragment
         fun checkWalletAccountCount(mainContext: Context, userID: String)
         fun checkWalletAccountCountResult(mainContext: Context, walletAccountCount:Int,status: String)
 
+        // CreateWalletAccount Fragment
+        fun createWalletAccount(mainContext:Context, walletAccountInput: WalletAccount)
+        fun createWalletAccountStatus(mainContext:Context, createStatus:String)
 
         // DetailsWalletAccount Fragment
         fun updateWalletAccount(mainContext: Context, walletAccountData:WalletAccount)
@@ -59,8 +59,19 @@ interface PresenterInterface{
 
 
         // ViewTrxCategory Fragment
-        fun checkTransactionCategory(mainContext: Context, userID: String)
+        fun checkTransactionCategory(mainContext: Context, userID: String, filterSelection: String)
         fun checkTransactionCategoryResult(mainContext: Context, transactionCategoryList: ArrayList<TransactionCategory>, status: String)
+
+        // CreateTrxCategory Fragment
+        fun createTransactionCategory(mainContext: Context, trxCategoryInput: TransactionCategory)
+        fun createTransactionCategoryStatus(mainContext: Context, createStatus: String)
+
+        // DetailsTrxCategory Fragment
+        fun updateTransactionCategory(mainContext: Context, trxCategoryInput: TransactionCategory)
+        fun updateTransactionCategoryStatus(mainContext: Context, updateStatus: String)
+
+        fun deleteTransactionCategory(mainContext: Context, trxCategoryID:String)
+        fun deleteTransactionCategoryStatus(mainContext: Context, deleteStatus: String)
 
 
     }

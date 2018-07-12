@@ -70,7 +70,11 @@
         android:id="@+id/detailsTrxCategoryFragment"
         android:name="com.example.slnn3r.wallettrackermvp.View.Fragment.TrxCategory.DetailsTrxCategoryFragment"
         android:label="fragment_details_trx_category"
-        tools:layout="@layout/fragment_details_trx_category" />
+        tools:layout="@layout/fragment_details_trx_category" >
+        <argument
+            android:name="trxCategorySelection"
+            app:type="string" />
+    </fragment>
     <fragment
         android:id="@+id/addNewTrx"
         android:name="com.example.slnn3r.wallettrackermvp.View.Fragment.TrxManagement.NewTrxFragment"

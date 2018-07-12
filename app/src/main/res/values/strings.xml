@@ -127,6 +127,7 @@
         <!-- Navigation Argument Pass Key -->
         <string name="trxTypePassArgKey">TrxTypeSelection</string>
         <string name="walletAccountPassArgKey">walletAccountSelection</string>
+        <string name="trxCategoryPassArgKey">trxCategorySelection</string>
 
         <!-- Validation RegEx -->
         <string name="regExNoCharacterOnly">^[a-zA-Z\s]+</string>
@@ -146,13 +147,24 @@
         <string name="transactionRealm">transaction.realm</string>
         <string name="transactionCategoryRealm">transactionCategory.realm</string>
 
-        <!-- Default Trx Category Spinner  -->
+        <!-- Default Spinner Item -->
         <string-array name="defaultTrxCategorySpinner">
             <item>All Type</item>
             <item>Expense</item>
             <item>Income</item>
         </string-array>
 
+        <string-array name="defaultTrxTypeSpinner">
+            <item>Expense</item>
+            <item>Income</item>
+        </string-array>
+
+        <!-- Realm Data Variabla Name -->
+        <string name="UserUID">UserUID</string>
+        <string name="WalletAccountID">WalletAccountID</string>
+        <string name="TransactionCategoryID">TransactionCategoryID</string>
+        <string name="TransactionID">TransactionID</string>
+        <string name="TransactionCategoryType">TransactionCategoryType</string>
 
     <!-- System Informative String -->
 
@@ -170,6 +182,8 @@
         <string name="detailsWalletAccountFragmentTitle">Wallet Account Details</string>
         <string name="newTrxFragmentTitle">Add New Transaction</string>
         <string name="viewTrxCategoryFragmentTitle">Transaction Category List</string>
+        <string name="createTrxCategoryFragmentTitle">Create Transaction Category</string>
+        <string name="detailsTrxCategoryFragmentTitle">Transaction Category Details</string>
 
         <!-- TextWatcher Message -->
         <string name="promptToEnter">Please Fill In This Field</string>
@@ -186,6 +200,17 @@
         <string name="deleteWalletAccountSuccess">Delete Wallet Account Success</string>
         <string name="deleteWalletAccountFail">Delete Wallet Account </string>
 
+        <string name="createTrxCategorySuccess">Create Transaction Category Success</string>
+        <string name="createTrxCategoryFail">Create Transaction Category </string>
+
+        <string name="updateTrxCategorySuccess">Update Transaction Category Success</string>
+        <string name="updateTrxCategoryFail">Update Transaction Category </string>
+
+        <string name="deleteTrxCategorySuccess">Delete Transaction Category Success</string>
+        <string name="deleteTrxCategoryFail">Delete Transaction Category </string>
+
+
+
         <string name="loginCancel">Login Cancelled</string>
         <string name="loginCancelNoInternet">Login Cancelled - No Internet Connection</string>
 
@@ -200,7 +225,8 @@
 
         <!-- Button Message -->
         <string name="accExceedQuota">Wallet Account Max</string>
-        <string name="unDeletableAccount">"Cannot Delete Default Account"</string>
+        <string name="unDeletableAccount">Cannot Delete Default Account</string>
+        <string name="unDeletableCategory">Cannot Delete Default Category</string>
 
         <!-- Recycle View Message -->
         <string name="noDataInDatabase">There is no data in the database</string>

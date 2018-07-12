@@ -54,7 +54,6 @@ class WalletAccountViewHolder(val view: View, var passData: WalletAccount?= null
                 val json = gson.toJson(walletAccountData)
 
 
-                // Testing Purpose
                 val navController = view.findNavController()
 
                 val bundle = Bundle()
