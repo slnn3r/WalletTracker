@@ -53,6 +53,15 @@ class DashBoardFragment : Fragment(),ViewInterface.DashBoardView {
         super.onViewCreated(view, savedInstanceState)
 
 
+        presenter = Presenter(this)
+
+        // Get SharedPreference data
+        val userProfile = presenter.getUserData(context!!)
+        val userID = userProfile.UserUID
+
+        val walletAccountData = presenter.getAccountData(context!!, userID)
+
+
         // To Hide KeyBoard
         val inputManager = view
                 .context
@@ -68,6 +77,8 @@ class DashBoardFragment : Fragment(),ViewInterface.DashBoardView {
 
             val bundle = Bundle()
             bundle.putString(getString(R.string.trxTypePassArgKey), getString(R.string.income))
+            bundle.putString(getString(R.string.walletAccountPassArgKey), walletAccountData[DBAccountSpinner.selectedItemPosition].WalletAccountName)
+
             navController.navigate(R.id.action_dashBoardFragment_to_addNewTrx, bundle)
 
             (activity as MenuActivity).setupNavigationMode()
@@ -82,6 +93,9 @@ class DashBoardFragment : Fragment(),ViewInterface.DashBoardView {
 
             val bundle = Bundle()
             bundle.putString(getString(R.string.trxTypePassArgKey), getString(R.string.expense))
+            bundle.putString(getString(R.string.walletAccountPassArgKey), walletAccountData[DBAccountSpinner.selectedItemPosition].WalletAccountName)
+
+
             navController.navigate(R.id.action_dashBoardFragment_to_addNewTrx,bundle)
 
             (activity as MenuActivity).setupNavigationMode()
@@ -135,12 +149,7 @@ class DashBoardFragment : Fragment(),ViewInterface.DashBoardView {
 
 
 
-        // Get SharedPreference data
-        presenter = Presenter(this)
 
-        val userProfile = presenter.getUserData(context!!)
-
-        val userID = userProfile.UserUID
 
         presenter.checkWalletAccount(context!!, userID )
 

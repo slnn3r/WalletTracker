@@ -64,6 +64,7 @@ class NewTrxFragment : Fragment(), ViewInterface.NewTrxView {
 
         ///// Populate Spinner Item
 
+
         // Creating adapter for Type spinner
         val dataAdapter = ArrayAdapter(context, android.R.layout.simple_spinner_item, resources.getStringArray(R.array.defaultTrxTypeSpinner))
         // Drop down layout style - list view with radio button
@@ -71,7 +72,21 @@ class NewTrxFragment : Fragment(), ViewInterface.NewTrxView {
 
         NewTrxTypeSpinner.adapter = dataAdapter
 
-        
+
+        // Receive Argumemt
+        val trxTypeSelection = arguments?.getString(getString(R.string.trxTypePassArgKey))
+        val accountSelection = arguments?.getString(getString(R.string.walletAccountPassArgKey))
+
+        Toast.makeText(context,accountSelection,Toast.LENGTH_LONG).show() //testing
+
+        // Set Transaction Type based on Argument
+        val spinnerPosition = dataAdapter.getPosition(trxTypeSelection)
+        NewTrxTypeSpinner.setSelection(spinnerPosition)
+
+
+        // TODO!!! populate spinner + select based on the passed argument
+
+
 
         // Setup Spinner listener
         NewTrxTypeSpinner.onItemSelectedListener = object : OnItemSelectedListener {
@@ -152,12 +167,6 @@ class NewTrxFragment : Fragment(), ViewInterface.NewTrxView {
 
 
 
-        // Receive Argumemt
-        val trxTypeSelection = arguments?.getString(getString(R.string.trxTypePassArgKey))
-
-        // Set Transaction Type based on Argument
-        val spinnerPosition = dataAdapter.getPosition(trxTypeSelection)
-        NewTrxTypeSpinner.setSelection(spinnerPosition)
 
 
     }

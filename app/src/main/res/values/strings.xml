@@ -150,7 +150,9 @@
 
         <!-- Navigation Argument Pass Key -->
         <string name="trxTypePassArgKey">TrxTypeSelection</string>
+
         <string name="walletAccountPassArgKey">walletAccountSelection</string>
+
         <string name="trxCategoryPassArgKey">trxCategorySelection</string>
 
         <!-- Validation RegEx -->

@@ -333,6 +333,7 @@ class Presenter: PresenterInterface.Presenter{
             }else if(currentDestination==R.id.viewWalletAccountFragment){
 
                 walletAccountView.populateWalletAccountRecycleView(mainContext,walletAccountList)
+
             }
 
         }else{

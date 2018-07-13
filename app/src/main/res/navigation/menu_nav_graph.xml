@@ -83,6 +83,9 @@
         <argument
             android:name="TrxTypeSelection"
             app:type="string" />
+        <argument
+            android:name="walletAccountSelection"
+            app:type="string" />
     </fragment>
     <fragment
         android:id="@+id/detailsTrxFragment"

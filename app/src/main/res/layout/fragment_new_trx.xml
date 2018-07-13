@@ -12,11 +12,11 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
-        android:layout_marginTop="32dp"
+        android:layout_marginTop="24dp"
         android:text="@string/NewTrxTypeLabel"
         app:layout_constraintEnd_toStartOf="@+id/NewTrxTypeImageView"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/NewTrxReminderLabel" />
+        app:layout_constraintTop_toBottomOf="@+id/textView" />
 
     <Spinner
         android:id="@+id/NewTrxCategorySpinner"
@@ -128,7 +128,7 @@
         android:layout_width="40dp"
         android:layout_height="40dp"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="24dp"
+        android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginBottom="8dp"
         android:background="@drawable/fui_idp_button_background_email"
@@ -136,13 +136,13 @@
         app:layout_constraintBottom_toTopOf="@+id/NewTrxCategorySpinner"
         app:layout_constraintEnd_toStartOf="@+id/NewTrxTypeSpinner"
         app:layout_constraintStart_toEndOf="@+id/NewTrxTypeLabel"
-        app:layout_constraintTop_toBottomOf="@+id/NewTrxReminderLabel" />
+        app:layout_constraintTop_toBottomOf="@+id/spinner" />
 
     <Spinner
         android:id="@+id/NewTrxTypeSpinner"
         android:layout_width="0dp"
         android:layout_height="24dp"
-        android:layout_marginTop="15dp"
+        android:layout_marginTop="8dp"
         android:layout_marginEnd="32dp"
         android:layout_marginBottom="8dp"
         android:background="@drawable/spinner_background"
@@ -151,7 +151,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.509"
         app:layout_constraintStart_toEndOf="@+id/NewTrxTypeImageView"
-        app:layout_constraintTop_toBottomOf="@+id/NewTrxReminderLabel"
+        app:layout_constraintTop_toBottomOf="@+id/textView"
         app:layout_constraintVertical_bias="0.463" />
 
     <android.support.design.widget.TextInputLayout
@@ -200,5 +200,32 @@
             android:textAlignment="center" />
 
     </android.support.design.widget.TextInputLayout>
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="40dp"
+        android:layout_marginTop="24dp"
+        android:text="Selected Account : "
+        app:layout_constraintEnd_toStartOf="@+id/spinner"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/NewTrxReminderLabel" />
+
+    <Spinner
+        android:id="@+id/spinner"
+        android:layout_width="0dp"
+        android:layout_height="24dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="21dp"
+        android:layout_marginEnd="40dp"
+        android:layout_marginBottom="6dp"
+        android:background="@drawable/spinner_background"
+
+
+        app:layout_constraintBottom_toTopOf="@+id/NewTrxTypeImageView"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/textView"
+        app:layout_constraintTop_toBottomOf="@+id/NewTrxReminderLabel" />
 
 </android.support.constraint.ConstraintLayout>
