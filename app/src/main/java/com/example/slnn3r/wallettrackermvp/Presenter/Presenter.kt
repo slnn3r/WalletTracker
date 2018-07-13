@@ -39,6 +39,8 @@ class Presenter: PresenterInterface.Presenter{
     private lateinit var createTrxCategoryView: ViewInterface.CreateTrxCategoryView
     private lateinit var detailsTrxCategoryView: ViewInterface.DetailsTrxCategoryView
 
+    private lateinit var newTrxView: ViewInterface.NewTrxView
+
     private val firebaseModel: ModelInterface.FirebaseAccess = FirebaseAccess()
     private val realmModel: ModelInterface.RealmAccess = RealmAccess()
     private val sharedPreferenceModel: ModelInterface.SharedPreference = SharedPreferenceAccess()
@@ -82,6 +84,10 @@ class Presenter: PresenterInterface.Presenter{
 
     constructor(detailsTrxCategoryView: ViewInterface.DetailsTrxCategoryView){
         this.detailsTrxCategoryView=detailsTrxCategoryView
+    }
+
+    constructor(newTrxView: ViewInterface.NewTrxView){
+        this.newTrxView=newTrxView
     }
 
 
@@ -471,11 +477,28 @@ class Presenter: PresenterInterface.Presenter{
 
     override fun checkTransactionCategoryResult(mainContext: Context, transactionCategoryList: ArrayList<TransactionCategory>, status: String) {
 
+        val view = (mainContext as Activity).findViewById(R.id.navMenu) as View
+        val currentDestination = findNavController(view).currentDestination.id
+
         if(status==mainContext.getString(R.string.statusSuccess)){
-            trxCategoryView.populateTrxCategoryRecycleView(mainContext, transactionCategoryList)
+
+            if(currentDestination==R.id.viewTrxCategoryFragment){
+                trxCategoryView.populateTrxCategoryRecycleView(mainContext, transactionCategoryList)
+
+            }else if(currentDestination==R.id.newTrxFragment){
+                newTrxView.populateNewTrxCategorySpinner(mainContext, transactionCategoryList)
+            }
+
 
         }else{
-            trxCategoryView.populateTrxCategoryRecycleViewFail(mainContext,status)
+
+            if(currentDestination==R.id.viewTrxCategoryFragment){
+                trxCategoryView.populateTrxCategoryRecycleViewFail(mainContext,status)
+
+            }else if(currentDestination==R.id.newTrxFragment){
+                newTrxView.populateNewTrxCategorySpinnerFail(mainContext,status)
+
+            }
         }
 
     }

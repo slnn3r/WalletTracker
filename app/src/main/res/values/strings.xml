@@ -119,6 +119,8 @@
         <string name="defaultAccountName">Personal</string>
         <string name="defaultAccountBalance">0.0</string>
 
+        <string name="maxAccount">5</string>
+
         <!-- Alert Dialog String -->
         <string name="dialogPositive">Confirm</string>
         <string name="dialogNegative">Cancel</string>

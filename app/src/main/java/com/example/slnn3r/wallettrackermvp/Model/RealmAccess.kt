@@ -19,6 +19,7 @@ import com.example.slnn3r.wallettrackermvp.View.Fragment.DashBoardFragment
 import com.example.slnn3r.wallettrackermvp.View.Fragment.TrxCategory.CreateTrxCategoryFragment
 import com.example.slnn3r.wallettrackermvp.View.Fragment.TrxCategory.DetailsTrxCategoryFragment
 import com.example.slnn3r.wallettrackermvp.View.Fragment.TrxCategory.ViewTrxCategoryFragment
+import com.example.slnn3r.wallettrackermvp.View.Fragment.TrxManagement.NewTrxFragment
 import com.example.slnn3r.wallettrackermvp.View.Fragment.WalletAccount.CreateWalletAccountFragment
 import com.example.slnn3r.wallettrackermvp.View.Fragment.WalletAccount.DetailsWalletAccountFragment
 import com.example.slnn3r.wallettrackermvp.View.Fragment.WalletAccount.ViewWalletAccountFragment
@@ -628,7 +629,15 @@ class RealmAccess: ModelInterface.RealmAccess{
     // ViewTrxCategory Fragment
     override fun checkTransactionCategoryRealm(mainContext: Context, userID: String, filterSelection: String) {
 
-        presenter= Presenter(ViewTrxCategoryFragment())
+        val view = (mainContext as Activity).findViewById(R.id.navMenu) as View
+        val currentDestination = findNavController(view).currentDestination.id
+
+        if(currentDestination==R.id.viewTrxCategoryFragment){
+            presenter= Presenter(ViewTrxCategoryFragment())
+        }else if(currentDestination==R.id.newTrxFragment){
+            presenter= Presenter(NewTrxFragment())
+        }
+
 
         val userIDRef = mainContext.getString(R.string.UserUID)
         val transactionCategoryTypeRef = mainContext.getString(R.string.TransactionCategoryType)

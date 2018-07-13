@@ -98,7 +98,7 @@ class ViewWalletAccountFragment : Fragment(), ViewInterface.WalletAccountView {
         val createSubmitButton = (mainContext as Activity).findViewById(R.id.WVAGoToCWA) as Button
 
 
-        if(walletAccountCount<5){
+        if(walletAccountCount<mainContext.getString(R.string.maxAccount).toInt()){
             createSubmitButton.isEnabled = true
 
         }else{

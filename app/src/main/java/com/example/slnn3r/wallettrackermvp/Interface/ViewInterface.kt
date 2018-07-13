@@ -112,6 +112,12 @@ interface ViewInterface{
 
     }
 
+    interface NewTrxView{
+
+        fun populateNewTrxCategorySpinner(mainContext: Context, trxCategoryList: ArrayList<TransactionCategory>)
+        fun populateNewTrxCategorySpinnerFail(mainContext: Context, errorMessage: String)
+
+    }
 
 
 }

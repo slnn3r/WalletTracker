@@ -1,6 +1,7 @@
 package com.example.slnn3r.wallettrackermvp.View.Fragment.TrxManagement
 
 
+import android.app.Activity
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v7.app.AppCompatActivity
@@ -18,10 +19,19 @@ import android.app.DatePickerDialog
 import java.text.SimpleDateFormat
 import java.util.*
 import android.app.TimePickerDialog
+import android.content.Context
+import android.widget.Spinner
+import android.widget.Toast
+import com.example.slnn3r.wallettrackermvp.Interface.PresenterInterface
+import com.example.slnn3r.wallettrackermvp.Interface.ViewInterface
+import com.example.slnn3r.wallettrackermvp.Model.ObjectClass.TransactionCategory
+import com.example.slnn3r.wallettrackermvp.Presenter.Presenter
 import java.sql.Time
+import kotlin.collections.ArrayList
 
 
-class NewTrxFragment : Fragment() {
+class NewTrxFragment : Fragment(), ViewInterface.NewTrxView {
+
 
     private val myCalendar = Calendar.getInstance()
     private lateinit var simpleDateFormat:SimpleDateFormat
@@ -30,6 +40,9 @@ class NewTrxFragment : Fragment() {
     private val hour = mcurrentTime.get(Calendar.HOUR_OF_DAY)
     private val minute = mcurrentTime.get(Calendar.MINUTE)
     private lateinit var simpleTimeFormat:SimpleDateFormat
+
+    private lateinit var presenter: PresenterInterface.Presenter
+
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
@@ -46,6 +59,9 @@ class NewTrxFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        presenter = Presenter(NewTrxFragment())
+        val userProfile = presenter.getUserData(context!!)
+
         ///// Populate Spinner Item
 
         // Creating adapter for Type spinner
@@ -55,16 +71,7 @@ class NewTrxFragment : Fragment() {
 
         NewTrxTypeSpinner.adapter = dataAdapter
 
-        // Creating adapter for Category spinner
-        val data2Adapter = ArrayAdapter(context, android.R.layout.simple_spinner_item, DummyDataCategorySpinner().getSpinnerItem())
-
-        // Drop down layout style - list view with radio button
-        data2Adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-
-        NewTrxCategorySpinner.adapter = data2Adapter
-
-        /////
-
+        
 
         // Setup Spinner listener
         NewTrxTypeSpinner.onItemSelectedListener = object : OnItemSelectedListener {
@@ -75,11 +82,14 @@ class NewTrxFragment : Fragment() {
                     NewTrxTypeImageView.background = resources.getDrawable(R.drawable.fui_idp_button_background_email)
                     NewTrxSubmit.background= resources.getDrawable(R.drawable.fui_idp_button_background_email)
 
+                    presenter.checkTransactionCategory(context!!, userProfile.UserUID, NewTrxTypeSpinner.selectedItem.toString())
+
                 }else{
                     NewTrxTypeImageView.setImageDrawable(resources.getDrawable(R.drawable.income_icon))
                     NewTrxTypeImageView.background = resources.getDrawable(R.drawable.fui_idp_button_background_phone)
                     NewTrxSubmit.background= resources.getDrawable(R.drawable.fui_idp_button_background_phone)
 
+                    presenter.checkTransactionCategory(context!!, userProfile.UserUID, NewTrxTypeSpinner.selectedItem.toString())
 
                 }
 
@@ -152,5 +162,32 @@ class NewTrxFragment : Fragment() {
 
     }
 
+
+
+    override fun populateNewTrxCategorySpinner(mainContext: Context, trxCategoryList: ArrayList<TransactionCategory>) {
+
+        val spinnerItem = ArrayList<String>()
+
+        trxCategoryList.forEach {
+            data ->
+                spinnerItem.add(data.TransactionCategoryName)
+        }
+
+        val data2Adapter = ArrayAdapter(mainContext, android.R.layout.simple_spinner_item, spinnerItem)
+        val newTrxCategorySpinner = (mainContext as Activity).findViewById(R.id.NewTrxCategorySpinner) as Spinner
+
+
+        // Drop down layout style - list view with radio button
+        data2Adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+
+        newTrxCategorySpinner.adapter = data2Adapter
+
+    }
+
+    override fun populateNewTrxCategorySpinnerFail(mainContext: Context, errorMessage: String) {
+
+        Toast.makeText(mainContext,errorMessage, Toast.LENGTH_LONG).show()
+
+    }
 
 }

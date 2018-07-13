@@ -18,7 +18,7 @@
             app:destination="@id/viewTrxCategoryFragment" />
         <action
             android:id="@+id/action_dashBoardFragment_to_addNewTrx"
-            app:destination="@id/addNewTrx" />
+            app:destination="@id/newTrxFragment" />
         <action
             android:id="@+id/action_dashBoardFragment_to_detailsTrxFragment"
             app:destination="@id/detailsTrxFragment" />
@@ -76,7 +76,7 @@
             app:type="string" />
     </fragment>
     <fragment
-        android:id="@+id/addNewTrx"
+        android:id="@+id/newTrxFragment"
         android:name="com.example.slnn3r.wallettrackermvp.View.Fragment.TrxManagement.NewTrxFragment"
         android:label="fragment_add_new_trx"
         tools:layout="@layout/fragment_new_trx" >
