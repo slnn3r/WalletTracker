@@ -93,42 +93,15 @@ class CreateWalletAccountFragment : Fragment(), ViewInterface.CreateWalletAccoun
 
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
 
-                // Call Presenter, Presenter Return Boolean + Error Message
-                val rex = getString(R.string.regExNoCharacterOnly).toRegex()
 
-                if (CWAAccNameInput.length()>getString(R.string.maxAccNameInputField).toInt()){
-                    CWAAccNameInput.error= getString(R.string.accNameInputErrorMaxLength)
+                val validationResult = presenter.walletAccountNameValidation(context!!,CWAAccNameInput.text.toString(),accountNameList,null)
+
+                if(validationResult!=null){
                     CWACreateSubmit.isEnabled = false
-                }else if(!CWAAccNameInput.text.toString().matches(rex)){
-                    CWAAccNameInput.error= getString(R.string.accNameInputErrorInvalid)
-                    CWACreateSubmit.isEnabled = false
-
-                }else if(accountNameList.size>0) {
-
-                    var detectMatched=0
-
-                    accountNameList.forEach{
-                        data->
-                            if(data.WalletAccountName.equals(CWAAccNameInput.text.toString(),ignoreCase = true)){
-                                detectMatched+=1
-                            }
-                    }
-
-                    if(detectMatched>0){
-                        CWAAccNameInput.error= getString(R.string.accNameUsedError)
-                        CWACreateSubmit.isEnabled = false
-                    }else{
-                        CWAAccNameInput.error=null
-                    }
-
-                }else if(accountNameList.size==0){ //when retrieve nothing database error
-
-                    CWAAccNameInput.error= getString(R.string.accNameRetreiveError)
-                    CWACreateSubmit.isEnabled = false
-
-                }else{
-                    CWAAccNameInput.error=null
                 }
+
+                CWAAccNameInput.error=validationResult
+
 
             }
 
@@ -150,20 +123,21 @@ class CreateWalletAccountFragment : Fragment(), ViewInterface.CreateWalletAccoun
 
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
 
+                // Force 2 Decimal Input only (SOLVED)
                 val text = CWAAccBalanceInput.text.toString()
                 if (text.contains(".") && text.substring(text.indexOf(".") + 1).length > 2) {
                     CWAAccBalanceInput.setText(text.substring(0, text.length - 1))
                     CWAAccBalanceInput.setSelection(CWAAccBalanceInput.text.length)
-                }         // issue, number input not 2 decimal place (SOLVED)
-
-
-                if (CWAAccBalanceInput.text.toString().isEmpty()){
-                    CWAAccBalanceInput.error=getString(R.string.promptToEnter)
-                    CWACreateSubmit.isEnabled = false
-                }else{
-                    CWAAccBalanceInput.error=null
-
                 }
+
+                val validationResult = presenter.walletAccountBalanceValidation(context!!,text)
+
+                if(validationResult!=null){
+                    CWACreateSubmit.isEnabled = false
+                }
+
+                CWAAccBalanceInput.error=validationResult
+
 
             }
 

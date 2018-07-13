@@ -145,42 +145,13 @@ class DetailsTrxCategoryFragment : Fragment(), ViewInterface.DetailsTrxCategoryV
 
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
 
-                val rex = getString(R.string.regExNoCharacterOnly).toRegex()
+                val validationResult = presenter.transactionCategoryNameValidation(context!!,DTCCategoryNameInput.text.toString(),categoryNameList,trxCategory.TransactionCategoryID)
 
-                if (DTCCategoryNameInput.length()>getString(R.string.maxAccNameInputField).toInt()){
-                    DTCCategoryNameInput.error= getString(R.string.categoryNameInputErrorMaxLength)
+                if(validationResult!=null){
                     DTCUpdateSubmit.isEnabled = false
-                }else if(!DTCCategoryNameInput.text.toString().matches(rex)){
-                    DTCCategoryNameInput.error= getString(R.string.categoryNameInputErrorInvalid)
-                    DTCUpdateSubmit.isEnabled = false
-
-                }else if(categoryNameList.size>0) {
-
-                    var detectMatched=0
-
-                    categoryNameList.forEach{
-                        data->
-                        if(data.TransactionCategoryName.equals(DTCCategoryNameInput.text.toString(),ignoreCase = true) && data.TransactionCategoryID!=trxCategory.TransactionCategoryID){
-                            detectMatched+=1
-                        }
-
-                    }
-
-                    if(detectMatched>0){
-                        DTCCategoryNameInput.error= getString(R.string.categoryNameUsedError)
-                        DTCUpdateSubmit.isEnabled = false
-                    }else{
-                        DTCCategoryNameInput.error=null
-                    }
-
-                }else if(categoryNameList.size==0){ //when retrieve nothing database error
-
-                    DTCCategoryNameInput.error= getString(R.string.categoryNameRetreiveError)
-                    DTCUpdateSubmit.isEnabled = false
-
-                }else{
-                    DTCCategoryNameInput.error=null
                 }
+
+                DTCCategoryNameInput.error=validationResult
 
             }
 

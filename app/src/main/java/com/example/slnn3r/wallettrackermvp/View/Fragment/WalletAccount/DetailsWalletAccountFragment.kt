@@ -103,43 +103,14 @@ class DetailsWalletAccountFragment : Fragment(), ViewInterface.DetailsWalletAcco
 
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
 
+                val validationResult = presenter.walletAccountNameValidation(context!!,DWAAccNameInput.text.toString(),accountNameList,walletAccount.WalletAccountID)
 
-
-                val rex = getString(R.string.regExNoCharacterOnly).toRegex()
-
-                if (DWAAccNameInput.length()>15){
-                    DWAAccNameInput.error=getString(R.string.accNameInputErrorMaxLength)
+                if(validationResult!=null){
                     DWAUpdateSubmit.isEnabled = false
-                }else if(!DWAAccNameInput.text.toString().matches(rex)){
-                    DWAAccNameInput.error=getString(R.string.accNameInputErrorInvalid)
-                    DWAUpdateSubmit.isEnabled = false
-
-                }else if(accountNameList.size>0) {
-
-                    var detectMatched=0
-
-                    accountNameList.forEach{
-                        data->
-                        if(data.WalletAccountName.equals(DWAAccNameInput.text.toString(),ignoreCase = true) && data.WalletAccountID!=walletAccount.WalletAccountID){
-                            detectMatched+=1
-                        }
-                    }
-
-                    if(detectMatched>0){
-                        DWAAccNameInput.error= getString(R.string.accNameUsedError)
-                        DWAUpdateSubmit.isEnabled = false
-                    }else{
-                        DWAAccNameInput.error=null
-                    }
-
-                }else if(accountNameList.size==0){ //when retrieve nothing database error
-
-                    DWAAccNameInput.error= getString(R.string.accNameRetreiveError)
-                    DWAUpdateSubmit.isEnabled = false
-
-                }else{
-                    DWAAccNameInput.error=null
                 }
+
+                DWAAccNameInput.error=validationResult
+
 
             }
 
@@ -169,13 +140,13 @@ class DetailsWalletAccountFragment : Fragment(), ViewInterface.DetailsWalletAcco
                 }         // issue, number input not 2 decimal place (SOLVED)
 
 
-                if (DWAAccBalanceInput.text.toString().isEmpty()){
-                    DWAAccBalanceInput.error=getString(R.string.promptToEnter)
-                    DWAUpdateSubmit.isEnabled = false
-                }else{
-                    DWAAccBalanceInput.error=null
+                val validationResult = presenter.walletAccountBalanceValidation(context!!,text)
 
+                if(validationResult!=null){
+                    DWAUpdateSubmit.isEnabled = false
                 }
+
+                DWAAccBalanceInput.error=validationResult
 
 
             }

@@ -114,41 +114,13 @@ class CreateTrxCategoryFragment : Fragment(), ViewInterface.CreateTrxCategoryVie
 
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
 
-                val rex = getString(R.string.regExNoCharacterOnly).toRegex()
+                val validationResult = presenter.transactionCategoryNameValidation(context!!,CTCCategoryNameInput.text.toString(),categoryNameList,null)
 
-                if (CTCCategoryNameInput.length()>getString(R.string.maxAccNameInputField).toInt()){
-                    CTCCategoryNameInput.error= getString(R.string.categoryNameInputErrorMaxLength)
+                if(validationResult!=null){
                     CTCCreateSubmit.isEnabled = false
-                }else if(!CTCCategoryNameInput.text.toString().matches(rex)){
-                    CTCCategoryNameInput.error= getString(R.string.categoryNameInputErrorInvalid)
-                    CTCCreateSubmit.isEnabled = false
-
-                }else if(categoryNameList.size>0) {
-
-                    var detectMatched=0
-
-                    categoryNameList.forEach{
-                        data->
-                        if(data.TransactionCategoryName.equals(CTCCategoryNameInput.text.toString(),ignoreCase = true)){
-                            detectMatched+=1
-                        }
-                    }
-
-                    if(detectMatched>0){
-                        CTCCategoryNameInput.error= getString(R.string.categoryNameUsedError)
-                        CTCCreateSubmit.isEnabled = false
-                    }else{
-                        CTCCategoryNameInput.error=null
-                    }
-
-                }else if(categoryNameList.size==0){ //when retrieve nothing database error
-
-                    CTCCategoryNameInput.error= getString(R.string.categoryNameRetreiveError)
-                    CTCCreateSubmit.isEnabled = false
-
-                }else{
-                    CTCCategoryNameInput.error=null
                 }
+
+                CTCCategoryNameInput.error=validationResult
 
             }
 

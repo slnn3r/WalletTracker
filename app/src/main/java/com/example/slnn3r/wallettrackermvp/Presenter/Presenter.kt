@@ -100,6 +100,127 @@ class Presenter: PresenterInterface.Presenter{
     }
 
 
+    // Wallet Account Input Validation
+    override fun walletAccountNameValidation(mainContext: Context, input: String, accountNameList: ArrayList<WalletAccount>, updateID:String?): String? {
+
+        var errorMessage:String?=null
+
+        val rex = mainContext.getString(R.string.regExNoCharacterOnly).toRegex()
+
+        if (input.length>mainContext.getString(R.string.maxAccNameInputField).toInt()){
+            errorMessage= mainContext.getString(R.string.accNameInputErrorMaxLength)
+
+        }else if(!input.matches(rex)){
+            errorMessage= mainContext.getString(R.string.accNameInputErrorInvalid)
+
+        }else if(accountNameList.size>0) {
+
+            var detectMatched=0
+
+            if(updateID==null){
+                accountNameList.forEach{
+                    data->
+                    if(data.WalletAccountName.equals(input,ignoreCase = true)){
+                        detectMatched+=1
+                    }
+                }
+            }else{
+                accountNameList.forEach{
+                    data->
+                    if(data.WalletAccountName.equals(input,ignoreCase = true)&&data.WalletAccountID!=updateID){
+                        detectMatched+=1
+                    }
+                }
+            }
+
+
+
+            if(detectMatched>0){
+                errorMessage= mainContext.getString(R.string.accNameUsedError)
+            }else{
+                errorMessage=null
+            }
+
+        }else if(accountNameList.size==0){ //when retrieve nothing database error
+
+            errorMessage= mainContext.getString(R.string.accNameRetreiveError)
+
+        }else{
+            errorMessage=null
+        }
+
+        return errorMessage
+    }
+
+
+    override fun walletAccountBalanceValidation(mainContext: Context, input: String): String? {
+
+        var errorMessage:String?=null
+
+
+        if (input.isEmpty()){
+            errorMessage=mainContext.getString(R.string.promptToEnter)
+        }else{
+            errorMessage=null
+        }
+
+        return errorMessage
+
+    }
+
+
+    // Transaction Category Input Validation
+    override fun transactionCategoryNameValidation(mainContext: Context, input: String, categoryNameList: ArrayList<TransactionCategory>, updateID: String?): String? {
+
+        var errorMessage:String?=null
+
+        val rex = mainContext.getString(R.string.regExNoCharacterOnly).toRegex()
+
+        if (input.length>mainContext.getString(R.string.maxAccNameInputField).toInt()){
+            errorMessage= mainContext.getString(R.string.categoryNameInputErrorMaxLength)
+        }else if(!input.matches(rex)){
+            errorMessage= mainContext.getString(R.string.categoryNameInputErrorInvalid)
+
+        }else if(categoryNameList.size>0) {
+
+            var detectMatched=0
+
+            if(updateID==null){
+                categoryNameList.forEach{
+                    data->
+                    if(data.TransactionCategoryName.equals(input,ignoreCase = true)){
+                        detectMatched+=1
+                    }
+                }
+            }else{
+                categoryNameList.forEach{
+                    data->
+                    if(data.TransactionCategoryName.equals(input,ignoreCase = true) && updateID!=data.TransactionCategoryID){
+                        detectMatched+=1
+                    }
+                }
+            }
+
+
+
+            if(detectMatched>0){
+                errorMessage= mainContext.getString(R.string.categoryNameUsedError)
+            }else{
+                errorMessage=null
+            }
+
+        }else if(categoryNameList.size==0){ //when retrieve nothing database error
+
+            errorMessage= mainContext.getString(R.string.categoryNameRetreiveError)
+
+        }else{
+            errorMessage=null
+        }
+
+        return errorMessage
+    }
+
+
 
     // Main Activity
     override fun checkLogin(mainContext: Context) {
@@ -263,6 +384,7 @@ class Presenter: PresenterInterface.Presenter{
 
 
     }
+
 
 
     // CreateWalletAccount Fragment

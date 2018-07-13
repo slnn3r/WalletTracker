@@ -20,6 +20,14 @@ interface PresenterInterface{
         fun getAccountData(mainContext: Context, userID: String): ArrayList<WalletAccount>
         fun getCategoryData(mainContext: Context, userID: String): ArrayList<TransactionCategory>
 
+        // Wallet Account Input Validation
+        fun walletAccountNameValidation(mainContext: Context, input: String, accountNameList: ArrayList<WalletAccount>, updateID:String?): String?
+        fun walletAccountBalanceValidation(mainContext: Context, input: String): String?
+
+        // Transaction Category Input Validation
+        fun transactionCategoryNameValidation(mainContext: Context, input: String, categoryNameList: ArrayList<TransactionCategory>, updateID:String?): String?
+
+
         // Main Activity
         fun checkLogin(mainContext:Context)
         fun checkLoginResult(mainContext:Context, loginResult: Boolean)
