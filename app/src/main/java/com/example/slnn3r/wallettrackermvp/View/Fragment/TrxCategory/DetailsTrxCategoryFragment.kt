@@ -3,6 +3,7 @@ package com.example.slnn3r.wallettrackermvp.View.Fragment.TrxCategory
 
 import android.app.Activity
 import android.content.Context
+import android.content.DialogInterface
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v7.app.AppCompatActivity
@@ -23,12 +24,14 @@ import com.example.slnn3r.wallettrackermvp.Presenter.Presenter
 import com.example.slnn3r.wallettrackermvp.R
 import com.google.gson.Gson
 import kotlinx.android.synthetic.main.fragment_details_trx_category.*
+import com.example.slnn3r.wallettrackermvp.Utility.AlertDialog
 
 
 class DetailsTrxCategoryFragment : Fragment(), ViewInterface.DetailsTrxCategoryView {
 
 
     private lateinit var presenter: PresenterInterface.Presenter
+    private val alertDialog:AlertDialog  = AlertDialog()
 
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
@@ -83,13 +86,27 @@ class DetailsTrxCategoryFragment : Fragment(), ViewInterface.DetailsTrxCategoryV
 
         DTCUpdateSubmit.setOnClickListener{
 
-            val trxCategoryInput = TransactionCategory(trxCategory.TransactionCategoryID, DTCCategoryNameInput.text.toString(), DTCTrxTypeSpinner.selectedItem.toString(), trxCategory.TransactionCategoryStatus, trxCategory.UserUID)
-            presenter.updateTransactionCategory(context!!, trxCategoryInput)
+            alertDialog.confirmationDialog(context!!,getString(R.string.dialogTitleUpdateCategory),getString(R.string.dialogMessageUpdateCategory),resources.getDrawable(android.R.drawable.ic_dialog_info),
+                    DialogInterface.OnClickListener { dialogBox, which ->
+
+                        val trxCategoryInput = TransactionCategory(trxCategory.TransactionCategoryID, DTCCategoryNameInput.text.toString(), DTCTrxTypeSpinner.selectedItem.toString(), trxCategory.TransactionCategoryStatus, trxCategory.UserUID)
+                        presenter.updateTransactionCategory(context!!, trxCategoryInput)
+
+                    }).show()
         }
 
 
         DTCDeleteSubmit.setOnClickListener{
-            presenter.deleteTransactionCategory(context!!, trxCategory.TransactionCategoryID)
+
+
+            alertDialog.confirmationDialog(context!!,getString(R.string.dialogTitleDeleteCategory),getString(R.string.dialogMessageDeleteCategory),resources.getDrawable(android.R.drawable.ic_dialog_alert),
+                    DialogInterface.OnClickListener { dialogBox, which ->
+
+                        presenter.deleteTransactionCategory(context!!, trxCategory.TransactionCategoryID)
+
+                    }).show()
+
+
         }
 
 

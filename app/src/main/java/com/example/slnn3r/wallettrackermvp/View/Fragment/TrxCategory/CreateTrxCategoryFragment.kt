@@ -3,6 +3,7 @@ package com.example.slnn3r.wallettrackermvp.View.Fragment.TrxCategory
 
 import android.app.Activity
 import android.content.Context
+import android.content.DialogInterface
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v7.app.AppCompatActivity
@@ -22,11 +23,13 @@ import com.example.slnn3r.wallettrackermvp.Presenter.Presenter
 import com.example.slnn3r.wallettrackermvp.R
 import kotlinx.android.synthetic.main.fragment_create_trx_category.*
 import java.util.*
+import com.example.slnn3r.wallettrackermvp.Utility.AlertDialog
 
 
 class CreateTrxCategoryFragment : Fragment(), ViewInterface.CreateTrxCategoryView {
 
     private lateinit var presenter: PresenterInterface.Presenter
+    private val alertDialog:AlertDialog= AlertDialog()
 
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
@@ -73,24 +76,28 @@ class CreateTrxCategoryFragment : Fragment(), ViewInterface.CreateTrxCategoryVie
 
         CTCCreateSubmit.setOnClickListener{
 
-            val uniqueID = UUID.randomUUID().toString()
+            alertDialog.confirmationDialog(context!!,getString(R.string.dialogTitleCreateCategory),getString(R.string.dialogMessageCreateCategory),resources.getDrawable(android.R.drawable.ic_dialog_info),
+                    DialogInterface.OnClickListener { dialogBox, which ->
 
-            // Get SharedPreference data
-            val userProfile = presenter.getUserData(context!!)
-            val userID = userProfile.UserUID
+                        val uniqueID = UUID.randomUUID().toString()
 
-
-            val trxCategoryInput= TransactionCategory(
-                    uniqueID,
-                    CTCCategoryNameInput.text.toString(),
-                    CTCTrxTypeSpinner.selectedItem.toString(),
-                    getString(R.string.statusNotDefault),
-                    userID
-
-            )
+                        // Get SharedPreference data
+                        val userProfile = presenter.getUserData(context!!)
+                        val userID = userProfile.UserUID
 
 
-            presenter.createTransactionCategory(context!!, trxCategoryInput)
+                        val trxCategoryInput= TransactionCategory(
+                                uniqueID,
+                                CTCCategoryNameInput.text.toString(),
+                                CTCTrxTypeSpinner.selectedItem.toString(),
+                                getString(R.string.statusNotDefault),
+                                userID
+
+                        )
+
+                        presenter.createTransactionCategory(context!!, trxCategoryInput)
+
+                    }).show()
 
         }
 

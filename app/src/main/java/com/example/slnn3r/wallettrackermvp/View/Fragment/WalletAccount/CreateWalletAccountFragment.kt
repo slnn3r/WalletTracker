@@ -3,6 +3,7 @@ package com.example.slnn3r.wallettrackermvp.View.Fragment.WalletAccount
 
 import android.app.Activity
 import android.content.Context
+import android.content.DialogInterface
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v7.app.AppCompatActivity
@@ -22,14 +23,16 @@ import com.example.slnn3r.wallettrackermvp.Presenter.Presenter
 import com.example.slnn3r.wallettrackermvp.R
 import kotlinx.android.synthetic.main.fragment_create_wallet_account.*
 import java.util.*
+import com.example.slnn3r.wallettrackermvp.Utility.AlertDialog
+
+
 
 
 class CreateWalletAccountFragment : Fragment(), ViewInterface.CreateWalletAccountView {
 
 
-
     private lateinit var presenter: PresenterInterface.Presenter
-
+    private val alertDialog:AlertDialog= AlertDialog()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
@@ -50,25 +53,28 @@ class CreateWalletAccountFragment : Fragment(), ViewInterface.CreateWalletAccoun
 
         CWACreateSubmit.setOnClickListener{
 
+            alertDialog.confirmationDialog(context!!,getString(R.string.dialogTitleCreateAccount),getString(R.string.dialogMessageCreateAccount),resources.getDrawable(android.R.drawable.ic_dialog_info),
+                    DialogInterface.OnClickListener { dialogBox, which ->
 
-            val uniqueID = UUID.randomUUID().toString()
+                        val uniqueID = UUID.randomUUID().toString()
 
-            // Get SharedPreference data
-            presenter = Presenter(this)
-            val userProfile = presenter.getUserData(context!!)
-            val userID = userProfile.UserUID
-
-
-            val walletAccountInput= WalletAccount(
-                    uniqueID,
-                    CWAAccNameInput.text.toString(),
-                    CWAAccBalanceInput.text.toString().toDouble(),
-                    userID,
-                    getString(R.string.statusNotDefault)
-            )
+                        // Get SharedPreference data
+                        presenter = Presenter(this)
+                        val userProfile = presenter.getUserData(context!!)
+                        val userID = userProfile.UserUID
 
 
-            presenter.createWalletAccount(context!!, walletAccountInput)
+                        val walletAccountInput= WalletAccount(
+                                uniqueID,
+                                CWAAccNameInput.text.toString(),
+                                CWAAccBalanceInput.text.toString().toDouble(),
+                                userID,
+                                getString(R.string.statusNotDefault)
+                        )
+
+                        presenter.createWalletAccount(context!!, walletAccountInput)
+
+                    }).show()
 
 
         }
@@ -87,7 +93,7 @@ class CreateWalletAccountFragment : Fragment(), ViewInterface.CreateWalletAccoun
 
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
 
-
+                // Call Presenter, Presenter Return Boolean + Error Message
                 val rex = getString(R.string.regExNoCharacterOnly).toRegex()
 
                 if (CWAAccNameInput.length()>getString(R.string.maxAccNameInputField).toInt()){

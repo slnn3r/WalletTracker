@@ -119,9 +119,31 @@
         <string name="defaultAccountName">Personal</string>
         <string name="defaultAccountBalance">0.0</string>
 
+        <!-- Alert Dialog String -->
+        <string name="dialogPositive">Confirm</string>
+        <string name="dialogNegative">Cancel</string>
+
+        <string name="dialogTitleCreateAccount">Create Account Confirmation</string>
+        <string name="dialogMessageCreateAccount">Are you sure to Create the Account?</string>
+
+        <string name="dialogTitleUpdateAccount">Update Account Confirmation</string>
+        <string name="dialogMessageUpdateAccount">Are you sure to Update the Account?</string>
+
+        <string name="dialogTitleDeleteAccount">Delete Account Confirmation</string>
+        <string name="dialogMessageDeleteAccount">Are you sure to Delete the Account?</string>
 
 
-        <!-- SharedPreference Key -->
+        <string name="dialogTitleCreateCategory">Create Category Confirmation</string>
+        <string name="dialogMessageCreateCategory">Are you sure to Create the Category?</string>
+
+        <string name="dialogTitleUpdateCategory">Update Category Confirmation</string>
+        <string name="dialogMessageUpdateCategory">Are you sure to Update the Category?</string>
+
+        <string name="dialogTitleDeleteCategory">Delete Account Confirmation</string>
+        <string name="dialogMessageDeleteCategory">Are you sure to Delete the Category?</string>
+
+
+    <!-- SharedPreference Key -->
         <string name="userProfileKey">UserProfile</string>
 
         <!-- Navigation Argument Pass Key -->

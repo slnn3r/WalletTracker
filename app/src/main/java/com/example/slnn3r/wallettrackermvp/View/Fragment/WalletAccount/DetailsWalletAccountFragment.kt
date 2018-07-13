@@ -3,6 +3,7 @@ package com.example.slnn3r.wallettrackermvp.View.Fragment.WalletAccount
 
 import android.app.Activity
 import android.content.Context
+import android.content.DialogInterface
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v7.app.AppCompatActivity
@@ -21,12 +22,14 @@ import com.example.slnn3r.wallettrackermvp.Presenter.Presenter
 import com.example.slnn3r.wallettrackermvp.R
 import com.google.gson.Gson
 import kotlinx.android.synthetic.main.fragment_details_wallet_account.*
+import com.example.slnn3r.wallettrackermvp.Utility.AlertDialog
+
 
 class DetailsWalletAccountFragment : Fragment(), ViewInterface.DetailsWalletAccountView {
 
 
     private lateinit var presenter: PresenterInterface.Presenter
-
+    private val alertDialog:AlertDialog= AlertDialog()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
@@ -67,14 +70,25 @@ class DetailsWalletAccountFragment : Fragment(), ViewInterface.DetailsWalletAcco
 
         DWAUpdateSubmit.setOnClickListener{
 
-            val walletAccountInput = WalletAccount(walletAccount.WalletAccountID,DWAAccNameInput.text.toString(),DWAAccBalanceInput.text.toString().toDouble(),walletAccount.UserUID,walletAccount.WalletAccountStatus)
+            alertDialog.confirmationDialog(context!!,getString(R.string.dialogTitleUpdateAccount),getString(R.string.dialogMessageUpdateAccount),resources.getDrawable(android.R.drawable.ic_dialog_info),
+                    DialogInterface.OnClickListener { dialogBox, which ->
 
-            presenter.updateWalletAccount(context!!, walletAccountInput)
+                        val walletAccountInput = WalletAccount(walletAccount.WalletAccountID,DWAAccNameInput.text.toString(),DWAAccBalanceInput.text.toString().toDouble(),walletAccount.UserUID,walletAccount.WalletAccountStatus)
+
+                        presenter.updateWalletAccount(context!!, walletAccountInput)
+
+                    }).show()
+
         }
 
         DWADeleteSubmit.setOnClickListener{
 
-            presenter.deleteWalletAccount(context!!, walletAccount.WalletAccountID)
+            alertDialog.confirmationDialog(context!!,getString(R.string.dialogTitleDeleteAccount),getString(R.string.dialogMessageDeleteAccount),resources.getDrawable(android.R.drawable.ic_dialog_alert),
+                    DialogInterface.OnClickListener { dialogBox, which ->
+
+                        presenter.deleteWalletAccount(context!!, walletAccount.WalletAccountID)
+
+                    }).show()
 
         }
 
