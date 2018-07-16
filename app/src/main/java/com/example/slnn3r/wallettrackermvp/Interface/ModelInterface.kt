@@ -15,7 +15,6 @@ interface ModelInterface {
         fun checkLoginFirebase(): String?
 
         // Login Activity
-        fun loginGoogleFirebaseExecute(mainContext: Context?, requestCode: Int, resultCode: Int, data: Intent, loginLoading: ProgressDialog)
 
         // Menu Activity
         fun logOutGoogleFirebase(mainContext: Context)
@@ -69,6 +68,10 @@ interface ModelInterface {
     interface SharedPreference{
 
         fun getUserData(mainContext: Context): UserProfile
+
+        fun saveUserData(mainContext: Context, userData:String)
+
+        fun removeUserData(mainContext: Context)
 
     }
 

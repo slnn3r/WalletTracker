@@ -8,18 +8,6 @@
             <LayoutPositions>
               <option name="myPositions">
                 <map>
-                  <entry key="addNewTrx">
-                    <value>
-                      <LayoutPositions>
-                        <option name="myPosition">
-                          <Point>
-                            <option name="x" value="-650" />
-                            <option name="y" value="429" />
-                          </Point>
-                        </option>
-                      </LayoutPositions>
-                    </value>
-                  </entry>
                   <entry key="createTrxCategoryFragment">
                     <value>
                       <LayoutPositions>
@@ -49,8 +37,8 @@
                       <LayoutPositions>
                         <option name="myPosition">
                           <Point>
-                            <option name="x" value="-945" />
-                            <option name="y" value="-161" />
+                            <option name="x" value="-882" />
+                            <option name="y" value="-15" />
                           </Point>
                         </option>
                         <option name="myPositions">
@@ -111,6 +99,18 @@
                           <Point>
                             <option name="x" value="238" />
                             <option name="y" value="185" />
+                          </Point>
+                        </option>
+                      </LayoutPositions>
+                    </value>
+                  </entry>
+                  <entry key="newTrxFragment">
+                    <value>
+                      <LayoutPositions>
+                        <option name="myPosition">
+                          <Point>
+                            <option name="x" value="-667" />
+                            <option name="y" value="505" />
                           </Point>
                         </option>
                       </LayoutPositions>

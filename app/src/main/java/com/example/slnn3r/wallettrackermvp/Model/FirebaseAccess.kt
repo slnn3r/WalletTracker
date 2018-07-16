@@ -39,8 +39,6 @@ class FirebaseAccess: ModelInterface.FirebaseAccess{
     private var activity:Activity? = null
     private var mGoogleApiClient: GoogleApiClient? = null
 
-    private val loginLoading: ProgressDialog? = null
-
 
     // Main Activity
     override fun checkLoginFirebase():String? {
@@ -60,67 +58,7 @@ class FirebaseAccess: ModelInterface.FirebaseAccess{
 
     // Login Activity
 
-    override fun loginGoogleFirebaseExecute(mainContext: Context?, requestCode: Int, resultCode: Int, data: Intent, loginLoading:ProgressDialog){
 
-        val errorMessage = mainContext!!.getString(R.string.FAWGError)
-
-        if (requestCode == REQUEST_CODE_SIGN_IN) {
-            val result = Auth.GoogleSignInApi.getSignInResultFromIntent(data)
-            if (result.isSuccess) {
-                // successful -> authenticate with Firebase
-                val account = result.signInAccount
-                firebaseAuthWithGoogle(account!!, mainContext, loginLoading)
-            } else {
-                // failed -> update UI
-                presenter.loginGoogleStatus(mainContext,false, errorMessage,loginLoading)
-            }
-        }
-
-    }
-
-
-    private fun firebaseAuthWithGoogle(acct: GoogleSignInAccount, mainContext: Context?,loginLoading:ProgressDialog){
-
-        val successLoginMessage = mainContext!!.getString(R.string.loginSuccess)
-        val errorMessage = mainContext.getString(R.string.SIWCError)
-
-        presenter = Presenter(LoginActivity())
-
-        mAuth = FirebaseAuth.getInstance()
-
-        val credential = GoogleAuthProvider.getCredential(acct.idToken, null)
-        mAuth!!.signInWithCredential(credential)
-                .addOnCompleteListener( mainContext as Activity) { task ->    // RXJAVA ISSUE: Before Firebase Response to here, RXJava will thought the function have complete and call onNext
-                    if (task.isSuccessful) {                    // So without wait for Firebase loading, the ProgressDialog will be dismiss immediately at the onNext
-                        // Sign in success
-                        val user = mAuth!!.currentUser
-
-
-                        // Store to SharedPreference
-                        val editor = mainContext.getSharedPreferences(mainContext.getString(R.string.userProfileKey), MODE_PRIVATE)!!.edit()
-
-                        // User GSON convert object to JSON String to store to shared Preference
-                        val gson = Gson()
-                        val userProfile = UserProfile(user!!.uid, user.displayName.toString(), user.email.toString(), user.photoUrl.toString())
-                        val json = gson.toJson(userProfile)
-
-                        editor.putString(mainContext.getString(R.string.userProfileKey), json)
-                        editor.apply()
-                        editor.commit()
-                        // Store to SharedPreference
-
-
-                        presenter.loginGoogleStatus(mainContext,true,successLoginMessage,loginLoading)
-
-
-                    } else {
-                        // Sign in fails
-                        presenter.loginGoogleStatus(mainContext,false, errorMessage,loginLoading)
-
-                    }
-                }
-
-    }
 
 
 
@@ -142,10 +80,13 @@ class FirebaseAccess: ModelInterface.FirebaseAccess{
                 .build()
 
         mGoogleApiClient = GoogleApiClient.Builder(mainContext)
-                .enableAutoManage(fragment, GoogleApiClient.OnConnectionFailedListener{
+                .enableAutoManage(fragment) {
+
+
+
                     presenter= Presenter(MenuActivity())
                     presenter.logoutGoogleStatus(mainContext,false, errorMessage)
-                })
+                }
                 .addApi(Auth.GOOGLE_SIGN_IN_API, gso)
                 .build()
 

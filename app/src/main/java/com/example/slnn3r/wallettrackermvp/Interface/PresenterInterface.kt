@@ -33,7 +33,6 @@ interface PresenterInterface{
 
         // Login activity
         fun loginGoogleExecute(mainContext: Context?, requestCode: Int, resultCode: Int, data: Intent)
-        fun loginGoogleStatus(mainContext: Context?, loginStatus: Boolean, statusMessage:String, loginLoading:ProgressDialog?)
 
         // Menu Activity
         fun logoutGoogleExecute(mainContext: Context)

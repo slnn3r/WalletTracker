@@ -60,7 +60,7 @@ class LoginActivity : AppCompatActivity(), ViewInterface.LoginView {
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent) {
-            presenter.loginGoogleExecute(this,requestCode,resultCode,data)
+        presenter.loginGoogleExecute(this,requestCode,resultCode,data)
     }
 
 
@@ -79,7 +79,6 @@ class LoginActivity : AppCompatActivity(), ViewInterface.LoginView {
     }
 
 
-    // if not need rx then call them during onActivityResult and Login Success/fail
     override fun displayLoginLoading(mainContext:Context):ProgressDialog {
 
         return ProgressDialog.show(mainContext, getString(R.string.loadingTitle), getString(R.string.loadingMessage))

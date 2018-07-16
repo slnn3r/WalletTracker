@@ -14,12 +14,21 @@ import com.example.slnn3r.wallettrackermvp.Model.ObjectClass.Transaction
 import com.example.slnn3r.wallettrackermvp.Model.ObjectClass.WalletAccount
 import com.example.slnn3r.wallettrackermvp.Model.RealmAccess
 import android.app.Activity
+import android.content.Context.MODE_PRIVATE
+import android.os.Bundle
 import android.view.View
 import androidx.navigation.Navigation.findNavController
 import com.example.slnn3r.wallettrackermvp.Model.ObjectClass.TransactionCategory
 import com.example.slnn3r.wallettrackermvp.Model.ObjectClass.UserProfile
 import com.example.slnn3r.wallettrackermvp.Model.SharedPreferenceAccess
 import com.example.slnn3r.wallettrackermvp.R
+import com.google.android.gms.auth.api.Auth
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions
+import com.google.android.gms.common.api.GoogleApiClient
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.GoogleAuthProvider
+import com.google.gson.Gson
 import io.reactivex.Observable
 import io.reactivex.ObservableSource
 import io.reactivex.Observer
@@ -51,6 +60,8 @@ class Presenter: PresenterInterface.Presenter{
     private val firebaseModel: ModelInterface.FirebaseAccess = FirebaseAccess()
     private val realmModel: ModelInterface.RealmAccess = RealmAccess()
     private val sharedPreferenceModel: ModelInterface.SharedPreference = SharedPreferenceAccess()
+
+    private var mGoogleApiClient: GoogleApiClient? = null
 
 
     constructor(mainView: ViewInterface.MainView){
@@ -116,7 +127,7 @@ class Presenter: PresenterInterface.Presenter{
     // Wallet Account Input Validation
     override fun walletAccountNameValidation(mainContext: Context, input: String, accountNameList: ArrayList<WalletAccount>, updateID:String?): String? {
 
-        var errorMessage:String?=null
+        var errorMessage:String?
 
         val rex = mainContext.getString(R.string.regExNoCharacterOnly).toRegex()
 
@@ -168,7 +179,7 @@ class Presenter: PresenterInterface.Presenter{
 
     override fun walletAccountBalanceValidation(mainContext: Context, input: String): String? {
 
-        var errorMessage:String?=null
+        var errorMessage: String?
 
 
         if (input.isEmpty()){
@@ -185,7 +196,7 @@ class Presenter: PresenterInterface.Presenter{
     // Transaction Category Input Validation
     override fun transactionCategoryNameValidation(mainContext: Context, input: String, categoryNameList: ArrayList<TransactionCategory>, updateID: String?): String? {
 
-        var errorMessage:String?=null
+        var errorMessage:String?
 
         val rex = mainContext.getString(R.string.regExNoCharacterOnly).toRegex()
 
@@ -275,7 +286,20 @@ class Presenter: PresenterInterface.Presenter{
     override fun loginGoogleExecute(mainContext: Context?, requestCode: Int, resultCode: Int, data: Intent){
 
         if(resultCode!=0){
-            firebaseModel.loginGoogleFirebaseExecute(mainContext, requestCode,resultCode,data,loginView.displayLoginLoading(mainContext!!))
+
+            if (requestCode == mainContext!!.getString(R.string.REQUEST_CODE_SIGN_IN).toInt()) {
+                val result = Auth.GoogleSignInApi.getSignInResultFromIntent(data)
+                if (result.isSuccess) {
+                    // successful -> authenticate with Firebase
+                    val account = result.signInAccount
+                    firebaseAuthWithGoogle(account!!, mainContext, loginView.displayLoginLoading(mainContext))
+                } else {
+                    // failed -> update UI
+                    loginView.loginFail(mainContext,mainContext.getString(R.string.FAWGError))
+                }
+            }
+
+
         }else{
             var errorMessage= mainContext!!.getString(R.string.loginCancel)
 
@@ -293,25 +317,125 @@ class Presenter: PresenterInterface.Presenter{
 
     }
 
-    override fun loginGoogleStatus(mainContext: Context?, loginStatus: Boolean, statusMessage: String, loginloading: ProgressDialog?) {
+    private fun firebaseAuthWithGoogle(acct: GoogleSignInAccount, mainContext: Context?, loginLoading:ProgressDialog){
 
-        if(loginStatus){
-            loginView.dismissLoginLoading(loginloading!!)
-            loginView.loginSuccess(mainContext, statusMessage)
+        val successLoginMessage = mainContext!!.getString(R.string.loginSuccess)
+        val errorMessage = mainContext.getString(R.string.SIWCError)
 
-        }else{
-            loginView.dismissLoginLoading(loginloading!!)
-            loginView.loginFail(mainContext, statusMessage)
+        val mAuth = FirebaseAuth.getInstance()
 
-        }
+        val credential = GoogleAuthProvider.getCredential(acct.idToken, null)
+        mAuth!!.signInWithCredential(credential)
+                .addOnCompleteListener( mainContext as Activity) { task ->    // RXJAVA ISSUE: Before Firebase Response to here, RXJava will thought the function have complete and call onNext
+                    if (task.isSuccessful) {                    // So without wait for Firebase loading, the ProgressDialog will be dismiss immediately at the onNext
+                        // Sign in success
+                        val user = mAuth.currentUser
+
+
+                        // User GSON convert object to JSON String to store to shared Preference
+                        val gson = Gson()
+                        val userProfile = UserProfile(user!!.uid, user.displayName.toString(), user.email.toString(), user.photoUrl.toString())
+                        val json = gson.toJson(userProfile)
+
+                        // Store to SharedPreference
+                        sharedPreferenceModel.saveUserData(mainContext, json)
+
+
+                        loginView.dismissLoginLoading(loginLoading)
+                        loginView.loginSuccess(mainContext,successLoginMessage)
+
+
+                    } else {
+                        // Sign in fails
+                        loginView.dismissLoginLoading(loginLoading)
+                        loginView.loginFail(mainContext, errorMessage)
+
+                    }
+                }
 
     }
+
+
 
 
     // Menu Activity
     override fun logoutGoogleExecute(mainContext: Context) {
-        firebaseModel.logOutGoogleFirebase(mainContext)
+
+        val activity = mainContext as Activity
+        val fragment = activity as FragmentActivity
+
+        val errorMessage = mainContext.getString(R.string.GAPCCError)
+
+
+        val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                .requestIdToken(mainContext.getString(R.string.GoogleSignInOptionKey))
+                .requestEmail()
+                .build()
+
+        mGoogleApiClient = GoogleApiClient.Builder(mainContext)
+                .enableAutoManage(fragment) {
+
+                    menuView.logoutFail(mainContext,errorMessage)
+
+                }
+                .addApi(Auth.GOOGLE_SIGN_IN_API, gso)
+                .build()
+
+        logOutGoogleFireBaseExecute(mainContext)
+
     }
+
+    private fun logOutGoogleFireBaseExecute(mainContext: Context) {
+
+        val successLoginMessage = mainContext.getString(R.string.logoutSuccess)
+        var errorMessage = mainContext.getString(R.string.GSSError)
+
+        mGoogleApiClient?.connect()
+        mGoogleApiClient?.registerConnectionCallbacks(object : GoogleApiClient.ConnectionCallbacks {
+
+            override fun onConnectionSuspended(p0: Int) {
+                errorMessage=mainContext.getString(R.string.GCSError)
+
+                menuView.logoutFail(mainContext,errorMessage)
+
+
+                mGoogleApiClient?.stopAutoManage(mainContext as FragmentActivity)
+                mGoogleApiClient?.disconnect()
+            }
+
+            override fun onConnected(bundle: Bundle?) {
+
+                FirebaseAuth.getInstance().signOut()
+                if (mGoogleApiClient!!.isConnected) {
+                    Auth.GoogleSignInApi.signOut(mGoogleApiClient).setResultCallback { status ->
+                        if (status.isSuccess) {
+
+
+                            // remove SharedPreference data
+                            sharedPreferenceModel.removeUserData(mainContext)
+
+                            menuView.logoutSuccess(mainContext,successLoginMessage)
+
+
+                            mGoogleApiClient?.stopAutoManage(mainContext as FragmentActivity)
+                            mGoogleApiClient?.disconnect()
+
+                        }else{
+
+                            menuView.logoutFail(mainContext,errorMessage)
+
+                            mGoogleApiClient?.stopAutoManage(mainContext as FragmentActivity)
+                            mGoogleApiClient?.disconnect()
+                        }
+                    }
+                }
+            }
+
+
+        })
+    }
+
+
 
     override fun logoutGoogleStatus(mainContext: Context, logoutStatus: Boolean, statusMessage: String) {
 
