@@ -20,6 +20,13 @@ import com.example.slnn3r.wallettrackermvp.Model.ObjectClass.TransactionCategory
 import com.example.slnn3r.wallettrackermvp.Model.ObjectClass.UserProfile
 import com.example.slnn3r.wallettrackermvp.Model.SharedPreferenceAccess
 import com.example.slnn3r.wallettrackermvp.R
+import io.reactivex.Observable
+import io.reactivex.ObservableSource
+import io.reactivex.Observer
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.disposables.Disposable
+import io.reactivex.schedulers.Schedulers
+import java.util.concurrent.Callable
 
 
 class Presenter: PresenterInterface.Presenter{
@@ -229,20 +236,39 @@ class Presenter: PresenterInterface.Presenter{
 
 
     // Main Activity
-    override fun checkLogin(mainContext: Context) {
-        firebaseModel.checkLoginFirebase(mainContext)
+    override fun checkLogin() {
+
+        checkLoginObservable()
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(object : Observer<String> {
+
+            override fun onSubscribe(d: Disposable) {
+            }
+
+            override fun onNext(loginResult: String) {
+
+                if(!loginResult.isEmpty()){
+                    mainView.navigateToMenuScreen(loginResult)
+                }else{
+                    mainView.navigateToLoginScreen()
+                }
+            }
+
+            override fun onError(e: Throwable) {
+                mainView.checkLoginFail(e.toString())
+            }
+
+            override fun onComplete() {
+            }
+        })
     }
 
-    override fun checkLoginResult(mainContext: Context, loginResult: Boolean) {
-
-        if(loginResult){
-            mainView.navigateToMenuScreen(mainContext)
-        }else{
-            mainView.navigateToLoginScreen(mainContext)
-        }
-
-
+    private fun checkLoginObservable(): Observable<String>
+    {
+        return Observable.defer { Observable.just(firebaseModel.checkLoginFirebase())}
     }
+
 
 
     // Login activity

@@ -226,6 +226,9 @@
 
 
         <!-- Toast Message -->
+        <string name="mainActivityWelcomeMessage">Welcome Back, %s</string>
+        <string name="mainActivityCheckLoginFail">Check Login Failed: %s</string>
+
         <string name="createWalletAccountSuccess">Create Wallet Account Success</string>
         <string name="createWalletAccountFail">Create Wallet Account </string>
 

@@ -29,8 +29,7 @@ interface PresenterInterface{
 
 
         // Main Activity
-        fun checkLogin(mainContext:Context)
-        fun checkLoginResult(mainContext:Context, loginResult: Boolean)
+        fun checkLogin()
 
         // Login activity
         fun loginGoogleRequest(mainContext:Context)

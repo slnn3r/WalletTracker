@@ -43,19 +43,16 @@ class FirebaseAccess: ModelInterface.FirebaseAccess{
 
 
     // Main Activity
-    override fun checkLoginFirebase(mainContext: Context) {
+    override fun checkLoginFirebase():String? {
 
-        presenter= Presenter(MainActivity())
         mAuth = FirebaseAuth.getInstance()
-
         val currentUser = mAuth!!.currentUser
 
-        if(currentUser!=null){
+        return if(currentUser!=null){
+            currentUser.displayName
 
-            presenter.checkLoginResult(mainContext, loginResult = true)
         }else{
-
-            presenter.checkLoginResult(mainContext, loginResult = false )
+            ""
         }
 
     }

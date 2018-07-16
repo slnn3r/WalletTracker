@@ -12,8 +12,9 @@ interface ViewInterface{
 
     interface MainView{
 
-        fun navigateToLoginScreen(mainContext: Context)
-        fun navigateToMenuScreen(mainContext:Context)
+        fun navigateToLoginScreen()
+        fun navigateToMenuScreen(userName: String?)
+        fun checkLoginFail(errorMessage: String)
 
     }
 

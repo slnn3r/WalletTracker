@@ -12,7 +12,7 @@ interface ModelInterface {
     interface FirebaseAccess{
 
         // Main Activity
-        fun checkLoginFirebase(mainContext: Context)
+        fun checkLoginFirebase(): String?
 
         // Login Activity
         fun loginGoogleFirebaseRequest(mainContext:Context)
