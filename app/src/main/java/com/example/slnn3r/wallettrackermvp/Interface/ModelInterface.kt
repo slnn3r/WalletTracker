@@ -15,7 +15,6 @@ interface ModelInterface {
         fun checkLoginFirebase(): String?
 
         // Login Activity
-        fun loginGoogleFirebaseRequest(mainContext:Context)
         fun loginGoogleFirebaseExecute(mainContext: Context?, requestCode: Int, resultCode: Int, data: Intent, loginLoading: ProgressDialog)
 
         // Menu Activity

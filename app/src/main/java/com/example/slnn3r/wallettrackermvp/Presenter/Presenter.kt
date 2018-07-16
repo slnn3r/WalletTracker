@@ -272,10 +272,6 @@ class Presenter: PresenterInterface.Presenter{
 
 
     // Login activity
-    override fun loginGoogleRequest(mainContext: Context) {
-        firebaseModel.loginGoogleFirebaseRequest(mainContext)
-    }
-
     override fun loginGoogleExecute(mainContext: Context?, requestCode: Int, resultCode: Int, data: Intent){
 
         if(resultCode!=0){
@@ -303,17 +299,12 @@ class Presenter: PresenterInterface.Presenter{
             loginView.dismissLoginLoading(loginloading!!)
             loginView.loginSuccess(mainContext, statusMessage)
 
-
         }else{
             loginView.dismissLoginLoading(loginloading!!)
             loginView.loginFail(mainContext, statusMessage)
 
         }
 
-    }
-
-    override fun displayLoginFragment(mainContext: Context, fragment:FragmentActivity,intent: Intent, REQUEST_CODE_SIGN_IN: Int) {
-        loginView.displayLoginAccount(mainContext, fragment,intent,REQUEST_CODE_SIGN_IN)
     }
 
 

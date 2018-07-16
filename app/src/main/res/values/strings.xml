@@ -165,8 +165,10 @@
         <string name="timeFormat">h:mma</string>
         <string name="dateFormat">dd/MM/yy</string>
 
-        <!-- GoogleAPI Key -->
+        <!-- Google Login -->
         <string name="GoogleSignInOptionKey">866059954529-u7ki0u0si1veh1ul9slartd6ejnq0js7.apps.googleusercontent.com</string>
+        <string name="REQUEST_CODE_SIGN_IN">1</string>
+
 
         <!-- Realm Database File -->
         <string name="walletAccountRealm">walletaccount.realm</string>
@@ -185,7 +187,7 @@
             <item>Income</item>
         </string-array>
 
-        <!-- Realm Data Variabla Name -->
+        <!-- Realm Data Variable Name -->
         <string name="UserUID">userUID</string>
         <string name="WalletAccountID">walletAccountID</string>
         <string name="TransactionCategoryID">transactionCategoryID</string>

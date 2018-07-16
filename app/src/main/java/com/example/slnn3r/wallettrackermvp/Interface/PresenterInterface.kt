@@ -32,10 +32,7 @@ interface PresenterInterface{
         fun checkLogin()
 
         // Login activity
-        fun loginGoogleRequest(mainContext:Context)
         fun loginGoogleExecute(mainContext: Context?, requestCode: Int, resultCode: Int, data: Intent)
-
-        fun displayLoginFragment(mainContext:Context, fragment: FragmentActivity ,intent: Intent, REQUEST_CODE_SIGN_IN:Int)
         fun loginGoogleStatus(mainContext: Context?, loginStatus: Boolean, statusMessage:String, loginLoading:ProgressDialog?)
 
         // Menu Activity

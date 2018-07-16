@@ -12,12 +12,17 @@ import com.example.slnn3r.wallettrackermvp.R
 import com.example.slnn3r.wallettrackermvp.Interface.ViewInterface
 import com.example.slnn3r.wallettrackermvp.Interface.PresenterInterface
 import com.example.slnn3r.wallettrackermvp.Presenter.Presenter
+import com.google.android.gms.auth.api.Auth
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions
+import com.google.android.gms.common.api.GoogleApiClient
 import kotlinx.android.synthetic.main.activity_login.*
 
 
 class LoginActivity : AppCompatActivity(), ViewInterface.LoginView {
 
     private lateinit var presenter: PresenterInterface.Presenter
+    private lateinit var mGoogleApiClient: GoogleApiClient
+    private val REQUEST_CODE_SIGN_IN= 1
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -27,12 +32,37 @@ class LoginActivity : AppCompatActivity(), ViewInterface.LoginView {
 
         SignInButton.setOnClickListener{
 
-            presenter.loginGoogleRequest(this)
+            displayLoginAccount()
         }
-
-
-
     }
+
+    private fun displayLoginAccount(){
+
+        val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                .requestIdToken(getString(R.string.GoogleSignInOptionKey))
+                .requestEmail()
+                .build()
+
+        mGoogleApiClient = GoogleApiClient.Builder(this)
+                .enableAutoManage(this) {
+
+                    Toast.makeText(this,getString(R.string.GAPCCError),Toast.LENGTH_LONG).show()
+                }
+                .addApi(Auth.GOOGLE_SIGN_IN_API, gso)
+                .build()
+
+        val intent = Auth.GoogleSignInApi.getSignInIntent(mGoogleApiClient)
+
+        mGoogleApiClient.stopAutoManage(this)
+        mGoogleApiClient.disconnect()
+
+        this.startActivityForResult(intent, REQUEST_CODE_SIGN_IN)
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent) {
+            presenter.loginGoogleExecute(this,requestCode,resultCode,data)
+    }
+
 
     override fun loginSuccess(mainContext: Context?, successLoginMessage: String) {
 
@@ -48,15 +78,6 @@ class LoginActivity : AppCompatActivity(), ViewInterface.LoginView {
         Toast.makeText(mainContext, errorMessage,Toast.LENGTH_LONG).show()
     }
 
-    override fun displayLoginAccount(mainContext: Context, fragment: FragmentActivity, intent: Intent, REQUEST_CODE_SIGN_IN: Int) {
-
-        fragment.startActivityForResult(intent, REQUEST_CODE_SIGN_IN)
-    }
-
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent) {
-        presenter.loginGoogleExecute(this,requestCode,resultCode,data)
-    }
-
 
     // if not need rx then call them during onActivityResult and Login Success/fail
     override fun displayLoginLoading(mainContext:Context):ProgressDialog {
@@ -65,6 +86,7 @@ class LoginActivity : AppCompatActivity(), ViewInterface.LoginView {
     }
 
     override fun dismissLoginLoading(loginLoading:ProgressDialog) {
+
         loginLoading.dismiss()
     }
 

@@ -59,38 +59,6 @@ class FirebaseAccess: ModelInterface.FirebaseAccess{
 
 
     // Login Activity
-    override fun loginGoogleFirebaseRequest(mainContext: Context) {
-
-        activity = mainContext as Activity
-
-        val fragment = activity as FragmentActivity
-
-        mAuth = FirebaseAuth.getInstance()
-
-        val errorMessage = mainContext.getString(R.string.GAPCCError)
-
-        val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-                .requestIdToken(mainContext.getString(R.string.GoogleSignInOptionKey))
-                .requestEmail()
-                .build()
-
-        mGoogleApiClient = GoogleApiClient.Builder(mainContext)
-                .enableAutoManage(fragment, GoogleApiClient.OnConnectionFailedListener{
-                    presenter= Presenter(LoginActivity())
-                    presenter.loginGoogleStatus(mainContext,false, errorMessage, loginLoading)
-                })
-                .addApi(Auth.GOOGLE_SIGN_IN_API, gso)
-                .build()
-
-        val intent = Auth.GoogleSignInApi.getSignInIntent(mGoogleApiClient)
-
-        mGoogleApiClient?.stopAutoManage(fragment)
-        mGoogleApiClient?.disconnect()
-
-        presenter= Presenter(LoginActivity())
-        presenter.displayLoginFragment(mainContext, fragment, intent, REQUEST_CODE_SIGN_IN)
-
-    }
 
     override fun loginGoogleFirebaseExecute(mainContext: Context?, requestCode: Int, resultCode: Int, data: Intent, loginLoading:ProgressDialog){
 
@@ -116,10 +84,13 @@ class FirebaseAccess: ModelInterface.FirebaseAccess{
         val successLoginMessage = mainContext!!.getString(R.string.loginSuccess)
         val errorMessage = mainContext.getString(R.string.SIWCError)
 
+        presenter = Presenter(LoginActivity())
+
+        mAuth = FirebaseAuth.getInstance()
 
         val credential = GoogleAuthProvider.getCredential(acct.idToken, null)
         mAuth!!.signInWithCredential(credential)
-                .addOnCompleteListener(activity!!) { task ->    // RXJAVA ISSUE: Before Firebase Response to here, RXJava will thought the function have complete and call onNext
+                .addOnCompleteListener( mainContext as Activity) { task ->    // RXJAVA ISSUE: Before Firebase Response to here, RXJava will thought the function have complete and call onNext
                     if (task.isSuccessful) {                    // So without wait for Firebase loading, the ProgressDialog will be dismiss immediately at the onNext
                         // Sign in success
                         val user = mAuth!!.currentUser

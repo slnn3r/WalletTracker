@@ -23,8 +23,6 @@ interface ViewInterface{
         fun loginSuccess(mainContext: Context?, successLoginMessage:String)
         fun loginFail(mainContext: Context?, errorMessage:String)
 
-        fun displayLoginAccount(mainContext:Context, fragment:FragmentActivity ,intent: Intent, REQUEST_CODE_SIGN_IN:Int)
-
         fun displayLoginLoading(mainContext:Context): ProgressDialog
         fun dismissLoginLoading(loginLoading:ProgressDialog)
 
