@@ -275,8 +275,7 @@ class Presenter: PresenterInterface.Presenter{
         })
     }
 
-    private fun checkLoginObservable(): Observable<String>
-    {
+    private fun checkLoginObservable(): Observable<String>{
         return Observable.defer { Observable.just(firebaseModel.checkLoginFirebase())}
     }
 
@@ -508,8 +507,7 @@ class Presenter: PresenterInterface.Presenter{
                 })
     }
 
-    private fun checkWalletAccountObservable(mainContext: Context, userID: String): Observable<ArrayList<WalletAccount>>
-    {
+    private fun checkWalletAccountObservable(mainContext: Context, userID: String): Observable<ArrayList<WalletAccount>>{
         return Observable.defer { Observable.just(realmModel.checkWalletAccountRealm(mainContext,userID)) }
     }
 
@@ -546,8 +544,7 @@ class Presenter: PresenterInterface.Presenter{
                 })
     }
 
-    private fun firstTimeDatabaseSetupObservable(mainContext: Context, userID: String): Observable<WalletAccount>
-    {
+    private fun firstTimeDatabaseSetupObservable(mainContext: Context, userID: String): Observable<WalletAccount>{
         return Observable.defer { Observable.just(realmModel.firstTimeRealmSetup(mainContext,userID)) }
     }
 
@@ -584,29 +581,10 @@ class Presenter: PresenterInterface.Presenter{
 
     }
 
-    private fun checkTransactionObservable(mainContext: Context, accountID: String): Observable<ArrayList<Transaction>>
-    {
+    private fun checkTransactionObservable(mainContext: Context, accountID: String): Observable<ArrayList<Transaction>>{
         return Observable.defer { Observable.just(realmModel.checkTransactionRealm(mainContext,accountID)) }
     }
 
-
-
-    // CreateWalletAccount Fragment
-
-    override fun createWalletAccount(mainContext: Context, walletAccountInput: WalletAccount) {
-
-        realmModel.createWalletAccountRealm(mainContext, walletAccountInput)
-    }
-
-    override fun createWalletAccountStatus(mainContext: Context, createStatus:String) {
-
-        if(createStatus==mainContext.getString(R.string.statusSuccess)){
-            createWalletAccountView.createWalletAccountSuccess(mainContext)
-        }else{
-            createWalletAccountView.createWalletAccountFail(mainContext,createStatus)
-        }
-
-    }
 
 
 
@@ -614,19 +592,71 @@ class Presenter: PresenterInterface.Presenter{
 
     override fun checkWalletAccountCount(mainContext: Context, userID: String) {
 
-        realmModel.checkWalletAccountCountRealm(mainContext, userID)
+        checkWalletAccountCountObservable(mainContext, userID)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(object : Observer<Int>
+                {
+                    override fun onSubscribe(d: Disposable)
+                    {
+                    }
+
+                    override fun onNext(value: Int)
+                    {
+                        walletAccountView.createButtonStatus(mainContext, value)
+                    }
+
+                    override fun onError(e: Throwable)
+                    {
+                        walletAccountView.createButtonStatusFail(mainContext,e.toString())
+                    }
+
+                    override fun onComplete()
+                    {
+                    }
+                })
     }
 
-    override fun checkWalletAccountCountResult(mainContext: Context, walletAccountCount: Int, status: String) {
+    private fun checkWalletAccountCountObservable(mainContext: Context, userID: String): Observable<Int>{
+        return Observable.defer { Observable.just(realmModel.checkWalletAccountCountRealm(mainContext, userID)) }
+    }
 
-        if(status==mainContext.getString(R.string.statusSuccess)){
-            walletAccountView.createButtonStatus(mainContext, walletAccountCount)
 
-        }else{
-            walletAccountView.createButtonStatusFail(mainContext,status)
-        }
+    // CreateWalletAccount Fragment
+
+    override fun createWalletAccount(mainContext: Context, walletAccountInput: WalletAccount) {
+
+        createWalletAccountObservable(mainContext, walletAccountInput)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(object : Observer<Unit>
+                {
+                    override fun onSubscribe(d: Disposable)
+                    {
+                    }
+
+                    override fun onNext(value: Unit)
+                    {
+                        createWalletAccountView.createWalletAccountSuccess(mainContext)
+                    }
+
+                    override fun onError(e: Throwable)
+                    {
+                        createWalletAccountView.createWalletAccountFail(mainContext,e.toString())
+
+                    }
+
+                    override fun onComplete()
+                    {
+                    }
+                })
 
     }
+
+    private fun createWalletAccountObservable(mainContext: Context, walletAccountInput: WalletAccount): Observable<Unit>{
+        return Observable.defer { Observable.just(realmModel.createWalletAccountRealm(mainContext, walletAccountInput)) }
+    }
+
 
 
 
@@ -634,37 +664,74 @@ class Presenter: PresenterInterface.Presenter{
 
     override fun updateWalletAccount(mainContext: Context, walletAccountData: WalletAccount) {
 
-        realmModel.updateWalletAccountRealm(mainContext, walletAccountData)
+        updateWalletAccountObservable(mainContext,walletAccountData)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(object : Observer<Unit>
+                {
+                    override fun onSubscribe(d: Disposable)
+                    {
+                    }
+
+                    override fun onNext(value: Unit)
+                    {
+                        detailsWalletAccountView.updateWalletAccountSuccess(mainContext)
+
+                    }
+
+                    override fun onError(e: Throwable)
+                    {
+                        detailsWalletAccountView.updateWalletAccountFail(mainContext,e.toString())
+
+                    }
+
+                    override fun onComplete()
+                    {
+                    }
+                })
 
     }
 
-    override fun updateWalletAccountStatus(mainContext: Context, updateStatus: String) {
-
-        if(updateStatus==mainContext.getString(R.string.statusSuccess)){
-            detailsWalletAccountView.updateWalletAccountSuccess(mainContext)
-
-        }else{
-            detailsWalletAccountView.updateWalletAccountFail(mainContext,updateStatus)
-        }
-
-
+    private fun updateWalletAccountObservable(mainContext: Context, walletAccountData: WalletAccount): Observable<Unit>{
+        return Observable.defer { Observable.just(realmModel.updateWalletAccountRealm(mainContext, walletAccountData)) }
     }
+
 
     override fun deleteWalletAccount(mainContext: Context, walletAccountID: String) {
 
-        realmModel.deleteWalletAccountRealm(mainContext, walletAccountID)
+        deleteWalletAccountObservable(mainContext, walletAccountID)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(object : Observer<Unit>
+                {
+                    override fun onSubscribe(d: Disposable)
+                    {
+                    }
+
+                    override fun onNext(value: Unit)
+                    {
+                        detailsWalletAccountView.deleteWalletAccountSuccess(mainContext)
+
+                    }
+
+                    override fun onError(e: Throwable)
+                    {
+                        detailsWalletAccountView.deleteWalletAccountFail(mainContext,e.toString())
+
+                    }
+
+                    override fun onComplete()
+                    {
+                    }
+                })
+
+
     }
 
-    override fun deleteWalletAccountStatus(mainContext: Context, deleteStatus: String) {
-
-        if(deleteStatus==mainContext.getString(R.string.statusSuccess)){
-            detailsWalletAccountView.deleteWalletAccountSuccess(mainContext)
-
-        }else{
-            detailsWalletAccountView.deleteWalletAccountFail(mainContext,deleteStatus)
-        }
-
+    private fun deleteWalletAccountObservable(mainContext: Context, walletAccountID: String): Observable<Unit>{
+        return Observable.defer { Observable.just(realmModel.deleteWalletAccountRealm(mainContext, walletAccountID)) }
     }
+
 
 
 

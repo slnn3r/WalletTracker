@@ -350,7 +350,6 @@ class RealmAccess: ModelInterface.RealmAccess{
         var realm: Realm? = null
 
 
-        try {
             Realm.init(mainContext)
 
             val config = RealmConfiguration.Builder()
@@ -373,29 +372,15 @@ class RealmAccess: ModelInterface.RealmAccess{
             }
 
             realm.close()
-            presenter.createWalletAccountStatus(mainContext, mainContext.getString(R.string.statusSuccess))
-
-
-
-        }catch(e:Exception) {
-
-            realm?.close()
-            presenter.createWalletAccountStatus(mainContext, mainContext.getString(R.string.statusFail)+e.toString())
-
-
-        }finally {
-            realm?.close()
-        }
 
         //
-
 
     }
 
 
     // ViewWalletAccount Fragment
 
-    override fun checkWalletAccountCountRealm(mainContext: Context, userID: String) {
+    override fun checkWalletAccountCountRealm(mainContext: Context, userID: String) : Int {
 
         presenter= Presenter(ViewWalletAccountFragment())
 
@@ -403,8 +388,6 @@ class RealmAccess: ModelInterface.RealmAccess{
         //
         var realm: Realm? = null
         var count=0
-
-        try {
 
             Realm.init(mainContext)
 
@@ -430,23 +413,8 @@ class RealmAccess: ModelInterface.RealmAccess{
             }
 
             realm.close()
-            presenter.checkWalletAccountCountResult(mainContext,count,mainContext.getString(R.string.statusSuccess))
 
-
-
-        }catch(e:Exception) {
-
-            realm?.close()
-            presenter.checkWalletAccountCountResult(mainContext,0,mainContext.getString(R.string.statusFail)+e.toString())
-
-
-        }finally {
-            realm?.close()
-        }
-
-        //
-
-
+            return count
 
     }
 
@@ -460,8 +428,6 @@ class RealmAccess: ModelInterface.RealmAccess{
         //
         var realm: Realm? = null
 
-
-        try {
 
             Realm.init(mainContext)
 
@@ -487,24 +453,6 @@ class RealmAccess: ModelInterface.RealmAccess{
             }
 
             realm.close()
-            presenter.updateWalletAccountStatus(mainContext,mainContext.getString(R.string.statusSuccess))
-
-
-
-        }catch(e:Exception) {
-
-            realm?.close()
-            presenter.updateWalletAccountStatus(mainContext,mainContext.getString(R.string.statusFail)+e.toString())
-
-
-
-        }finally {
-            realm?.close()
-        }
-
-        //
-
-        
 
     }
 
@@ -515,9 +463,6 @@ class RealmAccess: ModelInterface.RealmAccess{
 
         //
         var realm: Realm? = null
-
-
-        try {
 
             Realm.init(mainContext)
 
@@ -541,20 +486,6 @@ class RealmAccess: ModelInterface.RealmAccess{
             }
 
             realm.close()
-            presenter.deleteWalletAccountStatus(mainContext,mainContext.getString(R.string.statusSuccess))
-
-
-
-        }catch(e:Exception) {
-
-            realm?.close()
-            presenter.deleteWalletAccountStatus(mainContext,mainContext.getString(R.string.statusFail)+e.toString())
-
-
-
-        }finally {
-            realm?.close()
-        }
 
         //
     }

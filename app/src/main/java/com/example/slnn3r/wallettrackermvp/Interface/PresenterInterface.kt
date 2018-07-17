@@ -40,26 +40,19 @@ interface PresenterInterface{
 
         // DashBoard Fragment
         fun checkWalletAccount(mainContext: Context, userID:String) // (used by ViewWalletAccount Fragment as well)
-
         fun firstTimeDatabaseSetup(mainContext: Context, userID:String)
-
         fun checkTransaction(mainContext: Context, accountID: String)
 
 
         // ViewWalletAccount Fragment
         fun checkWalletAccountCount(mainContext: Context, userID: String)
-        fun checkWalletAccountCountResult(mainContext: Context, walletAccountCount:Int,status: String)
 
         // CreateWalletAccount Fragment
         fun createWalletAccount(mainContext:Context, walletAccountInput: WalletAccount)
-        fun createWalletAccountStatus(mainContext:Context, createStatus:String)
 
         // DetailsWalletAccount Fragment
         fun updateWalletAccount(mainContext: Context, walletAccountData:WalletAccount)
-        fun updateWalletAccountStatus(mainContext:Context, updateStatus:String)
-
         fun deleteWalletAccount(mainContext: Context, walletAccountID:String)
-        fun deleteWalletAccountStatus(mainContext:Context, deleteStatus:String)
 
 
         // ViewTrxCategory Fragment
