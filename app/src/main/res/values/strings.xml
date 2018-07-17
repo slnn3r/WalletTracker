@@ -59,7 +59,7 @@
     <string name="DetailsAmountInput">Amount (Editable)</string>
     <string name="DetailsTrxRemarksInput">Remarks (Editable)</string>
     <string name="DetailsTrxDeleteSubmit">Delete Transaction</string>
-    <string name="DetailsTrxReminderLabel">Click on the Field to Edit</string>
+    <string name="DetailsTrxReminderLabel">Selected Account : </string>
     <string name="DetailsTrxDateInput">Date (Editable)</string>
     <string name="DetailsTrxUpdateSubmit">Edit Transaction Info</string>
     <string name="DetailsTrxTimeInput">Time (Editable)</string>
