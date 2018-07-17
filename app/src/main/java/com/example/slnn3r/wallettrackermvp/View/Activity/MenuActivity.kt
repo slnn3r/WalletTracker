@@ -132,7 +132,7 @@ class MenuActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                 this.doubleBackToExitPressedOnce = true
                 Toast.makeText(this, getString(R.string.exitAppConfirmation), Toast.LENGTH_SHORT).show()
 
-                Handler().postDelayed(Runnable { doubleBackToExitPressedOnce = false }, 2000)
+                Handler().postDelayed({ doubleBackToExitPressedOnce = false }, 2000)
             }else{
                 super.onBackPressed()
 

@@ -16,10 +16,10 @@ class AlertDialog{
                 .setIcon(icon)
                 .setMessage(message)
                 .setPositiveButton(mainContext.getString(R.string.dialogPositive), dialogOnClickListener)
-                .setNegativeButton(mainContext.getString(R.string.dialogNegative),
-                        DialogInterface.OnClickListener { dialogBox, which ->
-                            dialogBox.dismiss()
-                })
+                .setNegativeButton(mainContext.getString(R.string.dialogNegative)
+                ) { dialogBox, _ ->
+                    dialogBox.dismiss()
+                }
         return confirmationDialog.create()
     }
 

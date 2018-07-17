@@ -118,7 +118,6 @@ class FirebaseAccess: ModelInterface.FirebaseAccess{
 
                             // remove SharedPreference data
                             val editor = mainContext.getSharedPreferences(mainContext.getString(R.string.userProfileKey), MODE_PRIVATE).edit()
-                            editor.remove(mainContext.getString(R.string.userProfileKey)).commit()
                             editor.remove(mainContext.getString(R.string.userProfileKey)).apply()
 
                             presenter.logoutGoogleStatus(mainContext, true,successLoginMessage)

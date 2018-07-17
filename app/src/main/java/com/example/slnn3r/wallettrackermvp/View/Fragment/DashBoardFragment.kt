@@ -244,8 +244,7 @@ class DashBoardFragment : Fragment(),ViewInterface.DashBoardView {
     override fun populateTransactionRecycleView(mainContext: Context, transactionList: ArrayList<Transaction>) {
 
         val dBTrxRecyclerView = (mainContext as Activity).findViewById(R.id.DBTrxRecyclerView) as RecyclerView
-
-
+        
         dBTrxRecyclerView.layoutManager = LinearLayoutManager(mainContext)
         dBTrxRecyclerView.adapter = DashBoardTrxAdapter(transactionList)
 

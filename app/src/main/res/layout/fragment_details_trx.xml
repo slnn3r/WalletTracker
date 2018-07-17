@@ -16,7 +16,7 @@
         android:text="@string/DetailsTrxTypeLabel"
         app:layout_constraintEnd_toStartOf="@+id/DetailsTrxTypeImageView"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/DetailsReminderLabel" />
+        app:layout_constraintTop_toBottomOf="@+id/DetailsTrxSelectedAccLabel" />
 
     <Spinner
         android:id="@+id/DetailsTrxCategorySpinner"
@@ -56,10 +56,10 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/DetailsRemarksLayout">
+        app:layout_constraintTop_toBottomOf="@+id/DetailsTrxRemarksLayout">
 
         <EditText
-            android:id="@+id/DetailsAmountInput"
+            android:id="@+id/DetailsTrxAmountInput"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:hint="@string/DetailsAmountInput"
@@ -72,7 +72,7 @@
 
 
     <android.support.design.widget.TextInputLayout
-        android:id="@+id/DetailsRemarksLayout"
+        android:id="@+id/DetailsTrxRemarksLayout"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
@@ -83,7 +83,7 @@
         app:layout_constraintTop_toBottomOf="@+id/DetailsTrxTimeLayout">
 
         <EditText
-            android:id="@+id/DetailsRemarksInput"
+            android:id="@+id/DetailsTrxRemarksInput"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:hint="@string/DetailsTrxRemarksInput"
@@ -108,14 +108,14 @@
         app:layout_constraintStart_toStartOf="parent" />
 
     <TextView
-        android:id="@+id/DetailsReminderLabel"
+        android:id="@+id/DetailsTrxSelectedAccLabel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
         android:layout_marginTop="24dp"
         android:text="@string/DetailsTrxReminderLabel"
         android:textAllCaps="false"
-        app:layout_constraintEnd_toStartOf="@+id/spinner"
+        app:layout_constraintEnd_toStartOf="@+id/DetailsTrxSelectedAccSpinner"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -132,7 +132,7 @@
         app:layout_constraintBottom_toTopOf="@+id/DetailsTrxCategorySpinner"
         app:layout_constraintEnd_toStartOf="@+id/DetailsTrxTypeSpinner"
         app:layout_constraintStart_toEndOf="@+id/DetailsTrxTypeLabel"
-        app:layout_constraintTop_toBottomOf="@+id/DetailsReminderLabel" />
+        app:layout_constraintTop_toBottomOf="@+id/DetailsTrxSelectedAccLabel" />
 
     <Spinner
         android:id="@+id/DetailsTrxTypeSpinner"
@@ -147,7 +147,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.509"
         app:layout_constraintStart_toEndOf="@+id/DetailsTrxTypeImageView"
-        app:layout_constraintTop_toBottomOf="@+id/DetailsReminderLabel"
+        app:layout_constraintTop_toBottomOf="@+id/DetailsTrxSelectedAccLabel"
         app:layout_constraintVertical_bias="0.463" />
 
     <android.support.design.widget.TextInputLayout
@@ -212,7 +212,7 @@
     </android.support.design.widget.TextInputLayout>
 
     <Spinner
-        android:id="@+id/spinner"
+        android:id="@+id/DetailsTrxSelectedAccSpinner"
         android:layout_width="0dp"
         android:layout_height="24dp"
         android:layout_marginStart="8dp"
@@ -221,7 +221,7 @@
         android:background="@drawable/spinner_background"
 
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/DetailsReminderLabel"
+        app:layout_constraintStart_toEndOf="@+id/DetailsTrxSelectedAccLabel"
         app:layout_constraintTop_toTopOf="parent" />
 
 

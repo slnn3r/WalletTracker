@@ -67,7 +67,7 @@ class RealmAccess: ModelInterface.RealmAccess{
 
             realm?.close()
 
-            return ArrayList<WalletAccount>()
+            return ArrayList()
 
         }finally {
             realm?.close()
@@ -125,7 +125,7 @@ class RealmAccess: ModelInterface.RealmAccess{
 
             realm?.close()
 
-            return ArrayList<TransactionCategory>()
+            return ArrayList()
 
 
 
