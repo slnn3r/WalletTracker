@@ -40,13 +40,10 @@ interface PresenterInterface{
 
         // DashBoard Fragment
         fun checkWalletAccount(mainContext: Context, userID:String) // (used by ViewWalletAccount Fragment as well)
-        fun checkWalletAccountResult(mainContext: Context, walletAccountList: ArrayList<WalletAccount>, status:String) // (used by ViewWalletAccount Fragment as well)
 
         fun firstTimeDatabaseSetup(mainContext: Context, userID:String)
-        fun firstTimeSetupStatus(mainContext: Context, walletAccount: WalletAccount, status:String)
 
         fun checkTransaction(mainContext: Context, accountID: String)
-        fun checkTransactionResult(mainContext: Context, transactionList: ArrayList<Transaction>, status: String)
 
 
         // ViewWalletAccount Fragment

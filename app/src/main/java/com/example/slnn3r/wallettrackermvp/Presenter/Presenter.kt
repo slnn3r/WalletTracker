@@ -452,85 +452,141 @@ class Presenter: PresenterInterface.Presenter{
 
     // use by both Dashboard and WalletAccount Fragment
     override fun checkWalletAccount(mainContext: Context, userID: String) {
-        realmModel.checkWalletAccountRealm(mainContext,userID)
-    }
-
-    // use by both Dashboard and WalletAccount Fragment
-    override fun checkWalletAccountResult(mainContext: Context, walletAccountList: java.util.ArrayList<WalletAccount>, status: String) {
 
         val view = (mainContext as Activity).findViewById(R.id.navMenu) as View
         val currentDestination = findNavController(view).currentDestination.id
 
-        if(status==mainContext.getString(R.string.statusSuccess)){
 
-            if(currentDestination==R.id.dashBoardFragment){
+        checkWalletAccountObservable(mainContext, userID)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(object : Observer<ArrayList<WalletAccount>>
+                {
+                    override fun onSubscribe(d: Disposable)
+                    {
 
-                if(walletAccountList.size<1){
-                    dashBoardView.firstTimeSetup(mainContext)
-                }else{
-                    dashBoardView.populateWalletAccountSpinner(mainContext,walletAccountList)
-                }
+                    }
 
-            }else if(currentDestination==R.id.viewWalletAccountFragment){
+                    override fun onNext(value: ArrayList<WalletAccount>)
+                    {
 
-                walletAccountView.populateWalletAccountRecycleView(mainContext,walletAccountList)
+                        if(currentDestination==R.id.dashBoardFragment){
 
-            }
+                            if(value.size<1){
+                                dashBoardView.firstTimeSetup(mainContext)
+                            }else{
+                                dashBoardView.populateWalletAccountSpinner(mainContext,value)
+                            }
 
-        }else{
+                        }else if(currentDestination==R.id.viewWalletAccountFragment){
 
-            if(currentDestination==R.id.dashBoardFragment){
+                            walletAccountView.populateWalletAccountRecycleView(mainContext,value)
 
-                dashBoardView.populateWalletAccountSpinnerFail(mainContext,status)
+                        }
 
-            }else if(currentDestination==R.id.viewWalletAccountFragment){
+                    }
 
-                walletAccountView.populateWalletAccountRecycleViewFail(mainContext,status)
+                    override fun onError(e: Throwable)
+                    {
 
-            }
+                        if(currentDestination==R.id.dashBoardFragment){
 
-        }
+                            dashBoardView.populateWalletAccountSpinnerFail(mainContext,e.toString())
 
+                        }else if(currentDestination==R.id.viewWalletAccountFragment){
 
+                            walletAccountView.populateWalletAccountRecycleViewFail(mainContext,e.toString())
 
+                        }
 
+                    }
+
+                    override fun onComplete()
+                    {
+
+                    }
+                })
     }
+
+    private fun checkWalletAccountObservable(mainContext: Context, userID: String): Observable<ArrayList<WalletAccount>>
+    {
+        return Observable.defer { Observable.just(realmModel.checkWalletAccountRealm(mainContext,userID)) }
+    }
+
+
 
     override fun firstTimeDatabaseSetup(mainContext: Context, userID: String) {
 
-        realmModel.firstTimeRealmSetup(mainContext,userID)
+        firstTimeDatabaseSetupObservable(mainContext,userID)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(object : Observer<WalletAccount>
+                {
+                    override fun onSubscribe(d: Disposable)
+                    {
+                        // Log.d(TAG, "onSubscribe: $d")
+                    }
 
+                    override fun onNext(value: WalletAccount)
+                    {
+                        dashBoardView.firstTimeSetupSuccess(mainContext,value)
+
+
+                    }
+
+                    override fun onError(e: Throwable)
+                    {
+                        dashBoardView.firstTimeSetupFail(mainContext,e.toString())
+
+                    }
+
+                    override fun onComplete()
+                    {
+                    }
+                })
     }
 
-    override fun firstTimeSetupStatus(mainContext: Context, walletAccount: WalletAccount, status: String) {
-
-        if(status==mainContext.getString(R.string.statusSuccess)){
-            dashBoardView.firstTimeSetupSuccess(mainContext,walletAccount)
-        }else{
-            dashBoardView.firstTimeSetupFail(mainContext,status)
-        }
-
-
-
-
+    private fun firstTimeDatabaseSetupObservable(mainContext: Context, userID: String): Observable<WalletAccount>
+    {
+        return Observable.defer { Observable.just(realmModel.firstTimeRealmSetup(mainContext,userID)) }
     }
+
 
 
     override fun checkTransaction(mainContext: Context, accountID: String) {
-        realmModel.checkTransactionRealm(mainContext,accountID)
+
+        checkTransactionObservable(mainContext, accountID)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(object : Observer<ArrayList<Transaction>>
+                {
+                    override fun onSubscribe(d: Disposable)
+                    {
+                    }
+
+                    override fun onNext(value: ArrayList<Transaction>)
+                    {
+                        dashBoardView.populateTransactionRecycleView(mainContext, value)
+
+
+                    }
+
+                    override fun onError(e: Throwable)
+                    {
+                        dashBoardView.populateTransactionRecycleViewFail(mainContext,e.toString())
+
+                    }
+
+                    override fun onComplete()
+                    {
+                    }
+                })
+
     }
 
-    override fun checkTransactionResult(mainContext: Context, transactionList: ArrayList<Transaction>, status: String) {
-
-        if(status==mainContext.getString(R.string.statusSuccess)){
-            dashBoardView.populateTransactionRecycleView(mainContext, transactionList)
-
-        }else{
-            dashBoardView.populateTransactionRecycleViewFail(mainContext,status)
-        }
-
-
-
+    private fun checkTransactionObservable(mainContext: Context, accountID: String): Observable<ArrayList<Transaction>>
+    {
+        return Observable.defer { Observable.just(realmModel.checkTransactionRealm(mainContext,accountID)) }
     }
 
 

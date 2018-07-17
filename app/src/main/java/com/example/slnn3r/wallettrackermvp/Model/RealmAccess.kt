@@ -156,30 +156,13 @@ class RealmAccess: ModelInterface.RealmAccess{
 
 
     // DashBoard Fragment
-    override fun checkWalletAccountRealm(mainContext: Context, userID: String) {
-
-
-        val view = (mainContext as Activity).findViewById(R.id.navMenu) as View
-        val currentDestination = findNavController(view).currentDestination.id
-
-        if(currentDestination==R.id.dashBoardFragment){
-
-            presenter= Presenter(DashBoardFragment())
-
-        }else if(currentDestination==R.id.viewWalletAccountFragment){
-
-            presenter= Presenter(ViewWalletAccountFragment())
-
-        }
-
+    override fun checkWalletAccountRealm(mainContext: Context, userID: String): ArrayList<WalletAccount> {
 
         //
         var realm: Realm? = null
 
         val walletAccountData=ArrayList<WalletAccount>()
 
-
-        try {
             Realm.init(mainContext)
 
             val config = RealmConfiguration.Builder()
@@ -211,26 +194,12 @@ class RealmAccess: ModelInterface.RealmAccess{
 
             realm.close()
 
-            presenter.checkWalletAccountResult(mainContext,walletAccountData, mainContext.getString(R.string.statusSuccess))
-
-
-        }catch(e:Exception) {
-
-            realm?.close()
-
-            val walletAccountData=ArrayList<WalletAccount>()
-            presenter.checkWalletAccountResult(mainContext,walletAccountData,mainContext.getString(R.string.statusFail)+e.toString())
-
-        }finally {
-            realm?.close()
-        }
-
         //
-
+        return walletAccountData
 
     }
 
-    override fun firstTimeRealmSetup(mainContext: Context, userID: String) {  // Default data Setup, WalletAccount + TransactionCategory
+    override fun firstTimeRealmSetup(mainContext: Context, userID: String): WalletAccount {  // Default data Setup, WalletAccount + TransactionCategory
 
         presenter= Presenter(DashBoardFragment())
 
@@ -243,7 +212,7 @@ class RealmAccess: ModelInterface.RealmAccess{
 
         //
         var realm: Realm? = null
-        try {
+
             Realm.init(mainContext)
 
             val config = RealmConfiguration.Builder()
@@ -296,28 +265,12 @@ class RealmAccess: ModelInterface.RealmAccess{
             realm.close()
 
 
-            presenter.firstTimeSetupStatus(mainContext,WalletAccount(uniqueID,defaultAccountName,defaultAccountBalance,userID,defaultAccountStatus), mainContext.getString(R.string.statusSuccess))
-
-
-        }catch(e:Exception) {
-
-            realm?.close()
-
-            presenter.firstTimeSetupStatus(mainContext,WalletAccount("","",0.0,"",""), mainContext.getString(R.string.statusFail)+e.toString())
-
-
-
-        }finally {
-            realm?.close()
-        }
-
+        return WalletAccount(uniqueID,defaultAccountName,defaultAccountBalance,userID,defaultAccountStatus)
         //
-
-
     }
 
 
-    override fun checkTransactionRealm(mainContext: Context, accountID: String) {
+    override fun checkTransactionRealm(mainContext: Context, accountID: String): ArrayList<Transaction>{
 
 
         presenter= Presenter(DashBoardFragment())
@@ -328,7 +281,6 @@ class RealmAccess: ModelInterface.RealmAccess{
         val transactionData=ArrayList<Transaction>()
 
 
-        try {
             Realm.init(mainContext)
 
             val config = RealmConfiguration.Builder()
@@ -380,25 +332,7 @@ class RealmAccess: ModelInterface.RealmAccess{
 
             realm.close()
 
-            presenter.checkTransactionResult(mainContext, transactionData,mainContext.getString(R.string.statusSuccess))
-
-
-        }catch(e:Exception) {
-
-            realm?.close()
-
-            val transactionData =ArrayList<Transaction>()
-
-            presenter.checkTransactionResult(mainContext, transactionData ,mainContext.getString(R.string.statusFail)+e.toString())
-
-
-
-        }finally {
-            realm?.close()
-        }
-
-        //
-
+        return transactionData
 
 
     }

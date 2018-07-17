@@ -41,8 +41,6 @@ class DashBoardFragment : Fragment(),ViewInterface.DashBoardView {
 
         (activity as? AppCompatActivity)?.supportActionBar?.title = getString(R.string.dashBoardFragmentTitle)
 
-
-
         return inflater.inflate(R.layout.fragment_dash_board, container, false)
     }
 

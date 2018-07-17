@@ -35,7 +35,6 @@ class FirebaseAccess: ModelInterface.FirebaseAccess{
     private lateinit var presenter: PresenterInterface.Presenter
 
     private var mAuth: FirebaseAuth? = null
-    private val REQUEST_CODE_SIGN_IN= 1
     private var activity:Activity? = null
     private var mGoogleApiClient: GoogleApiClient? = null
 
