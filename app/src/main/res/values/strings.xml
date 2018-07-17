@@ -51,6 +51,7 @@
     <string name="NewTrxReminderLabel">Please fill up the Empty Fields</string>
     <string name="NewTrxDateInput">Date</string>
     <string name="NewTrxTimeInput">Time</string>
+    <string name="NewTrxSelectedAccLabel">Selected Account : </string>
 
     <!-- fragment_details_trx -->
     <string name="DetailsTrxTypeLabel">Transaction Type : </string>
@@ -147,6 +148,7 @@
 
     <!-- SharedPreference Key -->
         <string name="userProfileKey">UserProfile</string>
+        <string name="selectedAccount">SelectedAccount</string>
 
         <!-- Navigation Argument Pass Key -->
         <string name="trxTypePassArgKey">TrxTypeSelection</string>

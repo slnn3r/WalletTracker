@@ -1,10 +1,7 @@
 package com.example.slnn3r.wallettrackermvp.Interface
 
-import android.app.ProgressDialog
 import android.content.Context
 import android.content.Intent
-import android.support.v4.app.FragmentActivity
-import com.example.slnn3r.wallettrackermvp.Model.ObjectClass.Transaction
 import com.example.slnn3r.wallettrackermvp.Model.ObjectClass.TransactionCategory
 import com.example.slnn3r.wallettrackermvp.Model.ObjectClass.UserProfile
 import com.example.slnn3r.wallettrackermvp.Model.ObjectClass.WalletAccount
@@ -15,10 +12,13 @@ interface PresenterInterface{
 
         // SharedPreference
         fun getUserData(mainContext: Context): UserProfile
+        fun setSelectedAccount(mainContext: Context, selection:String)
+        fun getSelectedAccount(mainContext: Context): String
 
         // GetDataOnly
         fun getAccountData(mainContext: Context, userID: String): ArrayList<WalletAccount>
         fun getCategoryData(mainContext: Context, userID: String): ArrayList<TransactionCategory>
+
 
         // Wallet Account Input Validation
         fun walletAccountNameValidation(mainContext: Context, input: String, accountNameList: ArrayList<WalletAccount>, updateID:String?): String?
@@ -36,7 +36,7 @@ interface PresenterInterface{
 
         // Menu Activity
         fun logoutGoogleExecute(mainContext: Context)
-        fun logoutGoogleStatus(mainContext: Context, logourStatus:Boolean, statusMessage:String)
+        fun logoutGoogleStatus(mainContext: Context, logoutStatus:Boolean, statusMessage:String)
 
         // DashBoard Fragment
         fun checkWalletAccount(mainContext: Context, userID:String) // (used by ViewWalletAccount Fragment as well)

@@ -114,6 +114,9 @@ interface ViewInterface{
         fun populateNewTrxCategorySpinner(mainContext: Context, trxCategoryList: ArrayList<TransactionCategory>)
         fun populateNewTrxCategorySpinnerFail(mainContext: Context, errorMessage: String)
 
+        fun populateSelectedAccountSpinner(mainContext: Context, walletAccountList: ArrayList<WalletAccount>)
+        fun populateSelectedAccountSpinnerFail(mainContext: Context, errorMessage: String)
+
     }
 
 

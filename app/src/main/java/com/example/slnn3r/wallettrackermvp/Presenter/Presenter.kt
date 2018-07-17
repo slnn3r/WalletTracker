@@ -111,6 +111,17 @@ class Presenter: PresenterInterface.Presenter{
         return sharedPreferenceModel.getUserData(mainContext)
     }
 
+    override fun setSelectedAccount(mainContext: Context, selection: String) {
+        sharedPreferenceModel.saveSelectedAccount(mainContext,selection)
+    }
+
+    override fun getSelectedAccount(mainContext: Context): String {
+        return sharedPreferenceModel.getSelectedAccountData(mainContext)
+    }
+
+
+
+
     // Get Data Only
     override fun getAccountData(mainContext: Context, userID: String): ArrayList<WalletAccount> {
         return realmModel.getAccountDataRealm(mainContext,userID)
@@ -124,7 +135,7 @@ class Presenter: PresenterInterface.Presenter{
     // Wallet Account Input Validation
     override fun walletAccountNameValidation(mainContext: Context, input: String, accountNameList: ArrayList<WalletAccount>, updateID:String?): String? {
 
-        var errorMessage:String?
+        val errorMessage:String?
 
         val rex = mainContext.getString(R.string.regExNoCharacterOnly).toRegex()
 
@@ -176,7 +187,7 @@ class Presenter: PresenterInterface.Presenter{
 
     override fun walletAccountBalanceValidation(mainContext: Context, input: String): String? {
 
-        var errorMessage: String?
+        val errorMessage: String?
 
 
         if (input.isEmpty()){
@@ -193,7 +204,7 @@ class Presenter: PresenterInterface.Presenter{
     // Transaction Category Input Validation
     override fun transactionCategoryNameValidation(mainContext: Context, input: String, categoryNameList: ArrayList<TransactionCategory>, updateID: String?): String? {
 
-        var errorMessage:String?
+        val errorMessage:String?
 
         val rex = mainContext.getString(R.string.regExNoCharacterOnly).toRegex()
 
@@ -478,7 +489,12 @@ class Presenter: PresenterInterface.Presenter{
 
                             walletAccountView.populateWalletAccountRecycleView(mainContext,value)
 
+                        }else if(currentDestination==R.id.newTrxFragment ){
+
+                            newTrxView.populateSelectedAccountSpinner(mainContext,value)
+
                         }
+
 
                     }
 
@@ -493,6 +509,9 @@ class Presenter: PresenterInterface.Presenter{
 
                             walletAccountView.populateWalletAccountRecycleViewFail(mainContext,e.toString())
 
+                        }else if(currentDestination==R.id.newTrxFragment){
+
+                            newTrxView.populateSelectedAccountSpinnerFail(mainContext,e.toString())
                         }
 
                     }

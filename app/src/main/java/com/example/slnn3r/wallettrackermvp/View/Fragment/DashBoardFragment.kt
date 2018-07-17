@@ -147,8 +147,6 @@ class DashBoardFragment : Fragment(),ViewInterface.DashBoardView {
 
 
 
-
-
         presenter.checkWalletAccount(context!!, userID )
 
     }
@@ -204,6 +202,20 @@ class DashBoardFragment : Fragment(),ViewInterface.DashBoardView {
         spinner.adapter = dataAdapter
 
 
+        // Get SharedPreference saved Selection and Set to Spinner Selection
+        var count= 0
+        val go = presenter.getSelectedAccount(mainContext)
+
+        walletAccountList.forEach {
+            data ->
+            if(go==data.WalletAccountName){
+                spinner.setSelection(count)
+            }
+            count+=1
+        }
+
+
+
         spinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener{
 
             override fun onNothingSelected(parent: AdapterView<*>?) {
@@ -212,6 +224,7 @@ class DashBoardFragment : Fragment(),ViewInterface.DashBoardView {
 
             override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
 
+                presenter.setSelectedAccount(mainContext, walletAccountList[spinner.selectedItemPosition].WalletAccountName) //Save Select Account in SharedPreference for future use
                 presenter.checkTransaction(mainContext, walletAccountList[spinner.selectedItemPosition].WalletAccountID)
             }
         }

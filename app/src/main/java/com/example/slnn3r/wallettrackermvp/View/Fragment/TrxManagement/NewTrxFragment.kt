@@ -20,11 +20,14 @@ import java.text.SimpleDateFormat
 import java.util.*
 import android.app.TimePickerDialog
 import android.content.Context
+import android.os.Handler
+import android.util.Log
 import android.widget.Spinner
 import android.widget.Toast
 import com.example.slnn3r.wallettrackermvp.Interface.PresenterInterface
 import com.example.slnn3r.wallettrackermvp.Interface.ViewInterface
 import com.example.slnn3r.wallettrackermvp.Model.ObjectClass.TransactionCategory
+import com.example.slnn3r.wallettrackermvp.Model.ObjectClass.WalletAccount
 import com.example.slnn3r.wallettrackermvp.Presenter.Presenter
 import java.sql.Time
 import kotlin.collections.ArrayList
@@ -62,7 +65,10 @@ class NewTrxFragment : Fragment(), ViewInterface.NewTrxView {
         presenter = Presenter(NewTrxFragment())
         val userProfile = presenter.getUserData(context!!)
 
-        ///// Populate Spinner Item
+        ///// Populate Account Spinner Item
+        presenter.checkWalletAccount(context!!, userProfile.UserUID )
+
+
 
 
         // Creating adapter for Type spinner
@@ -75,16 +81,12 @@ class NewTrxFragment : Fragment(), ViewInterface.NewTrxView {
 
         // Receive Argumemt
         val trxTypeSelection = arguments?.getString(getString(R.string.trxTypePassArgKey))
-        val accountSelection = arguments?.getString(getString(R.string.walletAccountPassArgKey))
 
-        Toast.makeText(context,accountSelection,Toast.LENGTH_LONG).show() //testing
 
         // Set Transaction Type based on Argument
         val spinnerPosition = dataAdapter.getPosition(trxTypeSelection)
         NewTrxTypeSpinner.setSelection(spinnerPosition)
 
-
-        // TODO!!! populate spinner + select based on the passed argument
 
 
 
@@ -166,6 +168,9 @@ class NewTrxFragment : Fragment(), ViewInterface.NewTrxView {
         NewTrxTimeInput.setText(s)
 
 
+        //// getWalletData
+        val walletAccountData = presenter.getAccountData(context!!, userProfile.UserUID)
+
 
 
 
@@ -191,6 +196,8 @@ class NewTrxFragment : Fragment(), ViewInterface.NewTrxView {
 
         newTrxCategorySpinner.adapter = data2Adapter
 
+
+
     }
 
     override fun populateNewTrxCategorySpinnerFail(mainContext: Context, errorMessage: String) {
@@ -198,5 +205,46 @@ class NewTrxFragment : Fragment(), ViewInterface.NewTrxView {
         Toast.makeText(mainContext,errorMessage, Toast.LENGTH_LONG).show()
 
     }
+
+    override fun populateSelectedAccountSpinner(mainContext: Context, walletAccountList: ArrayList<WalletAccount>) {
+
+        val categories = ArrayList<String>()
+
+        walletAccountList.forEach {
+            data->
+            categories.add(data.WalletAccountName)
+        }
+
+        // Creating adapter for spinner
+        val dataAdapter = ArrayAdapter(mainContext, android.R.layout.simple_spinner_item, categories)
+
+        // Drop down layout style - list view with radio button
+        dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+
+
+        val spinner = (mainContext as Activity).findViewById(R.id.NewTrxSelectedAccSpinner) as Spinner
+        spinner.adapter = dataAdapter
+
+        // Get SharedPreference saved Selection and Set to Spinner Selection
+        presenter = Presenter(NewTrxFragment())
+        val go = presenter.getSelectedAccount(mainContext)
+        var count= 0
+        categories.forEach {
+            data ->
+            if(go==data){
+                spinner.setSelection(count)
+            }
+            count+=1
+        }
+
+
+    }
+
+    override fun populateSelectedAccountSpinnerFail(mainContext: Context, errorMessage: String) {
+
+        Toast.makeText(mainContext,errorMessage, Toast.LENGTH_LONG).show()
+
+    }
+
 
 }

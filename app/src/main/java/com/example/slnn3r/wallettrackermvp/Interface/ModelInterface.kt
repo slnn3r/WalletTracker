@@ -1,8 +1,6 @@
 package com.example.slnn3r.wallettrackermvp.Interface
 
-import android.app.ProgressDialog
 import android.content.Context
-import android.content.Intent
 import com.example.slnn3r.wallettrackermvp.Model.ObjectClass.Transaction
 import com.example.slnn3r.wallettrackermvp.Model.ObjectClass.TransactionCategory
 import com.example.slnn3r.wallettrackermvp.Model.ObjectClass.UserProfile
@@ -69,6 +67,9 @@ interface ModelInterface {
         fun getUserData(mainContext: Context): UserProfile
         fun saveUserData(mainContext: Context, userData:String)
         fun removeUserData(mainContext: Context)
+
+        fun saveSelectedAccount(mainContext: Context, selection:String)
+        fun getSelectedAccountData(mainContext: Context): String
 
     }
 

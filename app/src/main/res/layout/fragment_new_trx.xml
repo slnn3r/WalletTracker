@@ -16,7 +16,7 @@
         android:text="@string/NewTrxTypeLabel"
         app:layout_constraintEnd_toStartOf="@+id/NewTrxTypeImageView"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView" />
+        app:layout_constraintTop_toBottomOf="@+id/NewTrxSelectedAccLabel" />
 
     <Spinner
         android:id="@+id/NewTrxCategorySpinner"
@@ -136,7 +136,7 @@
         app:layout_constraintBottom_toTopOf="@+id/NewTrxCategorySpinner"
         app:layout_constraintEnd_toStartOf="@+id/NewTrxTypeSpinner"
         app:layout_constraintStart_toEndOf="@+id/NewTrxTypeLabel"
-        app:layout_constraintTop_toBottomOf="@+id/spinner" />
+        app:layout_constraintTop_toBottomOf="@+id/NewTrxSelectedAccSpinner" />
 
     <Spinner
         android:id="@+id/NewTrxTypeSpinner"
@@ -151,7 +151,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.509"
         app:layout_constraintStart_toEndOf="@+id/NewTrxTypeImageView"
-        app:layout_constraintTop_toBottomOf="@+id/textView"
+        app:layout_constraintTop_toBottomOf="@+id/NewTrxSelectedAccLabel"
         app:layout_constraintVertical_bias="0.463" />
 
     <android.support.design.widget.TextInputLayout
@@ -202,18 +202,18 @@
     </android.support.design.widget.TextInputLayout>
 
     <TextView
-        android:id="@+id/textView"
+        android:id="@+id/NewTrxSelectedAccLabel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="40dp"
         android:layout_marginTop="24dp"
-        android:text="Selected Account : "
-        app:layout_constraintEnd_toStartOf="@+id/spinner"
+        android:text="@string/NewTrxSelectedAccLabel"
+        app:layout_constraintEnd_toStartOf="@+id/NewTrxSelectedAccSpinner"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/NewTrxReminderLabel" />
 
     <Spinner
-        android:id="@+id/spinner"
+        android:id="@+id/NewTrxSelectedAccSpinner"
         android:layout_width="0dp"
         android:layout_height="24dp"
         android:layout_marginStart="8dp"
@@ -225,7 +225,7 @@
 
         app:layout_constraintBottom_toTopOf="@+id/NewTrxTypeImageView"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/textView"
+        app:layout_constraintStart_toEndOf="@+id/NewTrxSelectedAccLabel"
         app:layout_constraintTop_toBottomOf="@+id/NewTrxReminderLabel" />
 
 </android.support.constraint.ConstraintLayout>
