@@ -35,9 +35,7 @@ interface ModelInterface {
 
         // DashBoard Fragment
         fun checkWalletAccountRealm(mainContext: Context, userID: String): ArrayList<WalletAccount> //(used by WalletAccount Fragment as well)
-
         fun firstTimeRealmSetup(mainContext: Context, userID:String): WalletAccount
-
         fun checkTransactionRealm(mainContext: Context, accountID: String): ArrayList<Transaction>
 
 
@@ -53,7 +51,7 @@ interface ModelInterface {
 
 
         // ViewTrxCategory Fragment
-        fun checkTransactionCategoryRealm(mainContext: Context, userID: String, filterSelection: String)
+        fun checkTransactionCategoryRealm(mainContext: Context, userID: String, filterSelection: String):ArrayList<TransactionCategory>
 
         // CreateTrxCategory Fragment
         fun createTransactionCategoryRealm(mainContext: Context, trxCategoryInput: TransactionCategory)
@@ -69,9 +67,7 @@ interface ModelInterface {
     interface SharedPreference{
 
         fun getUserData(mainContext: Context): UserProfile
-
         fun saveUserData(mainContext: Context, userData:String)
-
         fun removeUserData(mainContext: Context)
 
     }

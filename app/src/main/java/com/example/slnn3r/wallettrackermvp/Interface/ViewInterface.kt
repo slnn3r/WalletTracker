@@ -62,8 +62,6 @@ interface ViewInterface{
         fun createButtonStatus(mainContext: Context, walletAccountCount:Int)
         fun createButtonStatusFail(mainContext: Context, errorMessage: String)
 
-
-
     }
 
     interface CreateWalletAccountView{

@@ -57,22 +57,13 @@ interface PresenterInterface{
 
         // ViewTrxCategory Fragment
         fun checkTransactionCategory(mainContext: Context, userID: String, filterSelection: String) // Used by Both NewTrx+DetailsTrx Fragment
-        fun checkTransactionCategoryResult(mainContext: Context, transactionCategoryList: ArrayList<TransactionCategory>, status: String) // Used by Both NewTrx+DetailsTrx Fragment
 
         // CreateTrxCategory Fragment
         fun createTransactionCategory(mainContext: Context, trxCategoryInput: TransactionCategory)
-        fun createTransactionCategoryStatus(mainContext: Context, createStatus: String)
 
         // DetailsTrxCategory Fragment
         fun updateTransactionCategory(mainContext: Context, trxCategoryInput: TransactionCategory)
-        fun updateTransactionCategoryStatus(mainContext: Context, updateStatus: String)
-
         fun deleteTransactionCategory(mainContext: Context, trxCategoryID:String)
-        fun deleteTransactionCategoryStatus(mainContext: Context, deleteStatus: String)
-
-
-
-
 
 
     }

@@ -1,28 +1,15 @@
 package com.example.slnn3r.wallettrackermvp.Model
 
-import android.app.Activity
 import android.content.Context
-import android.view.View
-import androidx.navigation.Navigation.findNavController
 import com.example.slnn3r.wallettrackermvp.Interface.ModelInterface
-import com.example.slnn3r.wallettrackermvp.Interface.PresenterInterface
 import com.example.slnn3r.wallettrackermvp.Model.ObjectClass.Transaction
 import com.example.slnn3r.wallettrackermvp.Model.ObjectClass.TransactionCategory
 import com.example.slnn3r.wallettrackermvp.Model.ObjectClass.WalletAccount
 import com.example.slnn3r.wallettrackermvp.Model.RealmClass.TransactionCategoryRealm
 import com.example.slnn3r.wallettrackermvp.Model.RealmClass.TransactionRealm
 import com.example.slnn3r.wallettrackermvp.Model.RealmClass.WalletAccountRealm
-import com.example.slnn3r.wallettrackermvp.Presenter.Presenter
 import com.example.slnn3r.wallettrackermvp.R
 import com.example.slnn3r.wallettrackermvp.Utility.DefaultDataCategoryListItem
-import com.example.slnn3r.wallettrackermvp.View.Fragment.DashBoardFragment
-import com.example.slnn3r.wallettrackermvp.View.Fragment.TrxCategory.CreateTrxCategoryFragment
-import com.example.slnn3r.wallettrackermvp.View.Fragment.TrxCategory.DetailsTrxCategoryFragment
-import com.example.slnn3r.wallettrackermvp.View.Fragment.TrxCategory.ViewTrxCategoryFragment
-import com.example.slnn3r.wallettrackermvp.View.Fragment.TrxManagement.NewTrxFragment
-import com.example.slnn3r.wallettrackermvp.View.Fragment.WalletAccount.CreateWalletAccountFragment
-import com.example.slnn3r.wallettrackermvp.View.Fragment.WalletAccount.DetailsWalletAccountFragment
-import com.example.slnn3r.wallettrackermvp.View.Fragment.WalletAccount.ViewWalletAccountFragment
 import io.realm.Realm
 import io.realm.RealmConfiguration
 import io.realm.RealmResults
@@ -31,9 +18,6 @@ import kotlin.collections.ArrayList
 
 
 class RealmAccess: ModelInterface.RealmAccess{
-
-    private lateinit var presenter: PresenterInterface.Presenter
-
 
     // Get Data Only
     override fun getAccountDataRealm(mainContext: Context, userID: String): ArrayList<WalletAccount> {
@@ -201,8 +185,6 @@ class RealmAccess: ModelInterface.RealmAccess{
 
     override fun firstTimeRealmSetup(mainContext: Context, userID: String): WalletAccount {  // Default data Setup, WalletAccount + TransactionCategory
 
-        presenter= Presenter(DashBoardFragment())
-
         val uniqueID = UUID.randomUUID().toString()
 
         val defaultAccountName= mainContext.getString(R.string.defaultAccountName)
@@ -272,9 +254,6 @@ class RealmAccess: ModelInterface.RealmAccess{
 
     override fun checkTransactionRealm(mainContext: Context, accountID: String): ArrayList<Transaction>{
 
-
-        presenter= Presenter(DashBoardFragment())
-
         //
         var realm: Realm? = null
 
@@ -343,9 +322,6 @@ class RealmAccess: ModelInterface.RealmAccess{
 
     override fun createWalletAccountRealm(mainContext: Context, walletAccountInput: WalletAccount) {
 
-        ////
-        presenter= Presenter(CreateWalletAccountFragment())
-
         //
         var realm: Realm? = null
 
@@ -381,9 +357,6 @@ class RealmAccess: ModelInterface.RealmAccess{
     // ViewWalletAccount Fragment
 
     override fun checkWalletAccountCountRealm(mainContext: Context, userID: String) : Int {
-
-        presenter= Presenter(ViewWalletAccountFragment())
-
 
         //
         var realm: Realm? = null
@@ -423,8 +396,6 @@ class RealmAccess: ModelInterface.RealmAccess{
     // DetailsWalletAccount Fragment
     override fun updateWalletAccountRealm(mainContext: Context, walletAccountData: WalletAccount) {
 
-        presenter= Presenter(DetailsWalletAccountFragment())
-
         //
         var realm: Realm? = null
 
@@ -458,9 +429,6 @@ class RealmAccess: ModelInterface.RealmAccess{
 
     override fun deleteWalletAccountRealm(mainContext: Context, walletAccountID: String) {
 
-        presenter= Presenter(DetailsWalletAccountFragment())
-
-
         //
         var realm: Realm? = null
 
@@ -492,17 +460,7 @@ class RealmAccess: ModelInterface.RealmAccess{
 
 
     // ViewTrxCategory Fragment
-    override fun checkTransactionCategoryRealm(mainContext: Context, userID: String, filterSelection: String) {
-
-        val view = (mainContext as Activity).findViewById(R.id.navMenu) as View
-        val currentDestination = findNavController(view).currentDestination.id
-
-        if(currentDestination==R.id.viewTrxCategoryFragment){
-            presenter= Presenter(ViewTrxCategoryFragment())
-        }else if(currentDestination==R.id.newTrxFragment){
-            presenter= Presenter(NewTrxFragment())
-        }
-
+    override fun checkTransactionCategoryRealm(mainContext: Context, userID: String, filterSelection: String):ArrayList<TransactionCategory> {
 
         val userIDRef = mainContext.getString(R.string.UserUID)
         val transactionCategoryTypeRef = mainContext.getString(R.string.TransactionCategoryType)
@@ -512,7 +470,6 @@ class RealmAccess: ModelInterface.RealmAccess{
 
         val transactionCategoryData=ArrayList<TransactionCategory>()
 
-        try {
             Realm.init(mainContext)
 
             val config = RealmConfiguration.Builder()
@@ -557,32 +514,12 @@ class RealmAccess: ModelInterface.RealmAccess{
                                 )
                         )
                 }
-
-
-
             }
 
             realm.close()
 
-            presenter.checkTransactionCategoryResult(mainContext, transactionCategoryData,mainContext.getString(R.string.statusSuccess))
-
-
-        }catch(e:Exception) {
-
-            realm?.close()
-
-            val transactionCategoryData=ArrayList<TransactionCategory>()
-
-            presenter.checkTransactionCategoryResult(mainContext, transactionCategoryData ,mainContext.getString(R.string.statusFail)+e.toString())
-
-
-
-        }finally {
-            realm?.close()
-        }
-
         //
-
+        return transactionCategoryData
 
     }
 
@@ -590,14 +527,9 @@ class RealmAccess: ModelInterface.RealmAccess{
     // CreateTrxCategory Fragment
     override fun createTransactionCategoryRealm(mainContext: Context, trxCategoryInput: TransactionCategory) {
 
-        ////
-        presenter= Presenter(CreateTrxCategoryFragment())
-
         //
         var realm: Realm? = null
 
-
-        try {
             Realm.init(mainContext)
 
             val config = RealmConfiguration.Builder()
@@ -620,19 +552,6 @@ class RealmAccess: ModelInterface.RealmAccess{
             }
 
             realm.close()
-            presenter.createTransactionCategoryStatus(mainContext, mainContext.getString(R.string.statusSuccess))
-
-
-
-        }catch(e:Exception) {
-
-            realm?.close()
-            presenter.createTransactionCategoryStatus(mainContext, mainContext.getString(R.string.statusFail)+e.toString())
-
-
-        }finally {
-            realm?.close()
-        }
 
         //
 
@@ -642,13 +561,8 @@ class RealmAccess: ModelInterface.RealmAccess{
     // DetailsTrxCategory Fragment
     override fun updateTransactionCategoryRealm(mainContext: Context, trxCategoryInput: TransactionCategory) {
 
-        presenter= Presenter(DetailsTrxCategoryFragment())
-
         //
         var realm: Realm? = null
-
-
-        try {
 
             Realm.init(mainContext)
 
@@ -674,35 +588,13 @@ class RealmAccess: ModelInterface.RealmAccess{
             }
 
             realm.close()
-            presenter.updateTransactionCategoryStatus(mainContext,mainContext.getString(R.string.statusSuccess))
-
-
-
-        }catch(e:Exception) {
-
-            realm?.close()
-            presenter.updateTransactionCategoryStatus(mainContext,mainContext.getString(R.string.statusFail)+e.toString())
-
-
-
-        }finally {
-            realm?.close()
-        }
-
-        //
-
 
     }
 
     override fun deleteTransactionCategoryRealm(mainContext: Context, transactionCategoryID: String) {
 
-        presenter= Presenter(DetailsTrxCategoryFragment())
-
         //
         var realm: Realm? = null
-
-
-        try {
 
             Realm.init(mainContext)
 
@@ -726,20 +618,6 @@ class RealmAccess: ModelInterface.RealmAccess{
             }
 
             realm.close()
-            presenter.deleteTransactionCategoryStatus(mainContext,mainContext.getString(R.string.statusSuccess))
-
-
-
-        }catch(e:Exception) {
-
-            realm?.close()
-            presenter.deleteTransactionCategoryStatus(mainContext,mainContext.getString(R.string.statusFail)+e.toString())
-
-
-
-        }finally {
-            realm?.close()
-        }
 
         //
     }

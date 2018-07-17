@@ -14,7 +14,6 @@ import com.example.slnn3r.wallettrackermvp.Model.ObjectClass.Transaction
 import com.example.slnn3r.wallettrackermvp.Model.ObjectClass.WalletAccount
 import com.example.slnn3r.wallettrackermvp.Model.RealmAccess
 import android.app.Activity
-import android.content.Context.MODE_PRIVATE
 import android.os.Bundle
 import android.view.View
 import androidx.navigation.Navigation.findNavController
@@ -30,12 +29,10 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.GoogleAuthProvider
 import com.google.gson.Gson
 import io.reactivex.Observable
-import io.reactivex.ObservableSource
 import io.reactivex.Observer
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
-import java.util.concurrent.Callable
 
 
 class Presenter: PresenterInterface.Presenter{
@@ -737,86 +734,156 @@ class Presenter: PresenterInterface.Presenter{
 
     // ViewTrxCategory Fragment
     override fun checkTransactionCategory(mainContext: Context, userID: String, filterSelection: String) {
-        realmModel.checkTransactionCategoryRealm(mainContext,userID,filterSelection)
-    }
-
-    override fun checkTransactionCategoryResult(mainContext: Context, transactionCategoryList: ArrayList<TransactionCategory>, status: String) {
 
         val view = (mainContext as Activity).findViewById(R.id.navMenu) as View
         val currentDestination = findNavController(view).currentDestination.id
 
-        if(status==mainContext.getString(R.string.statusSuccess)){
+        checkTransactionCategoryObservable(mainContext, userID, filterSelection)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(object : Observer<ArrayList<TransactionCategory>>
+                {
+                    override fun onSubscribe(d: Disposable)
+                    {
+                    }
 
-            if(currentDestination==R.id.viewTrxCategoryFragment){
-                trxCategoryView.populateTrxCategoryRecycleView(mainContext, transactionCategoryList)
+                    override fun onNext(value: ArrayList<TransactionCategory>)
+                    {
+                        if(currentDestination==R.id.viewTrxCategoryFragment){
+                            trxCategoryView.populateTrxCategoryRecycleView(mainContext, value)
 
-            }else if(currentDestination==R.id.newTrxFragment){
-                newTrxView.populateNewTrxCategorySpinner(mainContext, transactionCategoryList)
-            }
+                        }else if(currentDestination==R.id.newTrxFragment){
+                            newTrxView.populateNewTrxCategorySpinner(mainContext, value)
+                        }
+                    }
 
+                    override fun onError(e: Throwable)
+                    {
+                        if(currentDestination==R.id.viewTrxCategoryFragment){
+                            trxCategoryView.populateTrxCategoryRecycleViewFail(mainContext,e.toString())
 
-        }else{
+                        }else if(currentDestination==R.id.newTrxFragment){
+                            newTrxView.populateNewTrxCategorySpinnerFail(mainContext,e.toString())
 
-            if(currentDestination==R.id.viewTrxCategoryFragment){
-                trxCategoryView.populateTrxCategoryRecycleViewFail(mainContext,status)
+                        }
+                    }
 
-            }else if(currentDestination==R.id.newTrxFragment){
-                newTrxView.populateNewTrxCategorySpinnerFail(mainContext,status)
+                    override fun onComplete()
+                    {
+                    }
+                })
 
-            }
-        }
+    }
 
+    private fun checkTransactionCategoryObservable(mainContext: Context, userID: String, filterSelection: String): Observable<ArrayList<TransactionCategory>>{
+        return Observable.defer { Observable.just(realmModel.checkTransactionCategoryRealm(mainContext,userID,filterSelection)) }
     }
 
 
     // CreateTrxCategory Fragment
     override fun createTransactionCategory(mainContext: Context, trxCategoryInput: TransactionCategory) {
-        realmModel.createTransactionCategoryRealm(mainContext,trxCategoryInput)
+
+        createTransactionCategoryObservable(mainContext,trxCategoryInput)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(object : Observer<Unit>
+                {
+                    override fun onSubscribe(d: Disposable)
+                    {
+                    }
+
+                    override fun onNext(value: Unit)
+                    {
+                        createTrxCategoryView.createTrxCategorySuccess(mainContext)
+                    }
+
+                    override fun onError(e: Throwable)
+                    {
+                        createTrxCategoryView.createTrxCategoryFail(mainContext,e.toString())
+
+                    }
+
+                    override fun onComplete()
+                    {
+                    }
+
+        })
     }
 
-    override fun createTransactionCategoryStatus(mainContext: Context, createStatus: String) {
 
-        if(createStatus==mainContext.getString(R.string.statusSuccess)){
-            createTrxCategoryView.createTrxCategorySuccess(mainContext)
-
-        }else{
-            createTrxCategoryView.createTrxCategoryFail(mainContext,createStatus)
-        }
-
+    private fun createTransactionCategoryObservable(mainContext: Context, trxCategoryInput: TransactionCategory): Observable<Unit>{
+        return Observable.defer { Observable.just(realmModel.createTransactionCategoryRealm(mainContext,trxCategoryInput)) }
     }
+
 
     // DetailsTrxCategory Fragment
     override fun updateTransactionCategory(mainContext: Context, trxCategoryInput: TransactionCategory) {
 
-        realmModel.updateTransactionCategoryRealm(mainContext, trxCategoryInput)
+        updateTransactionCategoryObservable(mainContext,trxCategoryInput)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(object : Observer<Unit>
+                {
+                    override fun onSubscribe(d: Disposable)
+                    {
+                    }
+
+                    override fun onNext(value: Unit)
+                    {
+                        detailsTrxCategoryView.updateTrxCategorySuccess(mainContext)
+                    }
+
+                    override fun onError(e: Throwable)
+                    {
+                        detailsTrxCategoryView.updateTrxCategoryFail(mainContext,e.toString())
+                    }
+
+                    override fun onComplete()
+                    {
+                    }
+
+                })
 
     }
 
-    override fun updateTransactionCategoryStatus(mainContext: Context, updateStatus: String) {
-
-        if(updateStatus==mainContext.getString(R.string.statusSuccess)){
-            detailsTrxCategoryView.updateTrxCategorySuccess(mainContext)
-
-        }else{
-            detailsTrxCategoryView.updateTrxCategoryFail(mainContext,updateStatus)
-        }
-
+    private fun updateTransactionCategoryObservable(mainContext: Context, trxCategoryInput: TransactionCategory): Observable<Unit>{
+        return Observable.defer { Observable.just(realmModel.updateTransactionCategoryRealm(mainContext, trxCategoryInput)) }
     }
+
 
     override fun deleteTransactionCategory(mainContext: Context, trxCategoryID: String) {
 
-       realmModel.deleteTransactionCategoryRealm(mainContext,trxCategoryID)
+        deleteTransactionCategoryObservable(mainContext, trxCategoryID)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(object : Observer<Unit>
+                {
+                    override fun onSubscribe(d: Disposable)
+                    {
+                    }
+
+                    override fun onNext(value: Unit)
+                    {
+                        detailsTrxCategoryView.deleteTrxCategorySuccess(mainContext)
+                    }
+
+                    override fun onError(e: Throwable)
+                    {
+                        detailsTrxCategoryView.deleteTrxCategoryFail(mainContext,e.toString())
+
+                    }
+
+                    override fun onComplete()
+                    {
+                    }
+
+                })
 
     }
 
-    override fun deleteTransactionCategoryStatus(mainContext: Context, deleteStatus: String) {
-
-        if(deleteStatus==mainContext.getString(R.string.statusSuccess)){
-            detailsTrxCategoryView.deleteTrxCategorySuccess(mainContext)
-
-        }else{
-            detailsTrxCategoryView.deleteTrxCategoryFail(mainContext,deleteStatus)
-        }
+    private fun deleteTransactionCategoryObservable(mainContext: Context, trxCategoryID: String): Observable<Unit>{
+        return Observable.defer { Observable.just(realmModel.deleteTransactionCategoryRealm(mainContext,trxCategoryID)) }
     }
+
 
 }
