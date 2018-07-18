@@ -16,10 +16,11 @@ open class TransactionRealm(): RealmObject(){
     var transactionDate:String? =null
     var transactionTime:String? = null
     var transactionAmount:Double = 0.0
+
     var transactionRemark: String?=null
 
     var transactionCategory: String?= null
 
-    var walletAccountID:String?=null
+    var walletAccount:String?=null
 
 }

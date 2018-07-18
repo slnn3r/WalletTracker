@@ -1,6 +1,7 @@
 package com.example.slnn3r.wallettrackermvp.Adapter
 
 
+import android.content.Context
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
@@ -33,6 +34,12 @@ class DashBoardTrxAdapter(private val homeFeed: ArrayList<Transaction>): Recycle
 
     override fun onBindViewHolder(holder: DashBoardViewHolder, position: Int) {
 
+        /*
+        onBindHolder called several times as recycler news needs a view unless new one. So each time you set visilibity in child views, other views states are also changes.
+        Whenever you scroll up and down, these views are getting re-drawed with wrong visibility options. SO USE setIsRecyclable(false)
+         */
+        holder.setIsRecyclable(false)
+
         val video = homeFeed[position]
 
         if(video.TransactionDate == holder.view.context.getString(R.string.noResult)){
@@ -50,10 +57,11 @@ class DashBoardTrxAdapter(private val homeFeed: ArrayList<Transaction>): Recycle
             holder.view.DBTrxCategoryTextView.text = "$ " + video.TransactionAmount
 
             if(video.TransactionCategory.TransactionCategoryType == holder.view.context.getString(R.string.expense)){
+                holder.view.DBTrxImageView.background = holder.view.DBTrxImageView.context.resources.getDrawable(R.drawable.fui_idp_button_background_email)
                 Picasso.get().load(R.drawable.expense_icon).into(holder.view.DBTrxImageView)
+
             }else{
                 Picasso.get().load(R.drawable.income_icon).into(holder.view.DBTrxImageView)
-
             }
 
         }

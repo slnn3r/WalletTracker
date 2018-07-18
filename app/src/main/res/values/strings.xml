@@ -195,6 +195,11 @@
         <string name="TransactionCategoryID">transactionCategoryID</string>
         <string name="TransactionID">transactionID</string>
         <string name="TransactionCategoryType">transactionCategoryType</string>
+        <string name="WalletAccountName">walletAccountName</string>
+        <string name="TransactionCategoryName">transactionCategoryName</string>
+        <string name="TransactionDate">transactionDate</string>
+        <string name="TransactionTime">transactionTime</string>
+
 
     <!-- System Informative String -->
 
@@ -251,6 +256,7 @@
         <string name="deleteTrxCategorySuccess">Delete Transaction Category Success</string>
         <string name="deleteTrxCategoryFail">Delete Transaction Category </string>
 
+        <string name="createNewTrx">New Transaction Added</string>
 
 
         <string name="loginCancel">Login Cancelled</string>

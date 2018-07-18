@@ -16,8 +16,6 @@ interface ModelInterface {
         // Login Activity
 
         // Menu Activity
-        fun logOutGoogleFirebase(mainContext: Context)
-
 
         // DashBoard Fragment
 
@@ -30,11 +28,17 @@ interface ModelInterface {
         fun getAccountDataRealm(mainContext: Context, userID: String): ArrayList<WalletAccount>
         fun getCategoryDataRealm(mainContext: Context, userID: String): ArrayList<TransactionCategory>
 
+        fun getAccountDataByNameRealm(mainContext: Context, userID: String, accountName: String): WalletAccount
+        fun getCategoryDataByNameRealm(mainContext: Context, userID: String, categoryName: String): TransactionCategory
 
         // DashBoard Fragment
         fun checkWalletAccountRealm(mainContext: Context, userID: String): ArrayList<WalletAccount> //(used by WalletAccount Fragment as well)
         fun firstTimeRealmSetup(mainContext: Context, userID:String): WalletAccount
-        fun checkTransactionRealm(mainContext: Context, accountID: String): ArrayList<Transaction>
+        fun checkTransactionRealm(mainContext: Context, accountID: String, userID:String): ArrayList<Transaction>
+
+        // NewTrx Fragment
+        fun createNewTrx(mainContext: Context, newTrxInput:Transaction)
+
 
 
         // ViewWalletAccount Fragment

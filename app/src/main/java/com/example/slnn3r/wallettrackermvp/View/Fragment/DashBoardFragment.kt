@@ -24,9 +24,11 @@ import com.jjoe64.graphview.series.LineGraphSeries
 import java.util.*
 import android.app.Activity
 import android.support.v7.widget.RecyclerView
+import android.util.Log
 import android.view.inputmethod.InputMethodManager
 import android.widget.*
 import com.example.slnn3r.wallettrackermvp.Model.ObjectClass.Transaction
+import com.example.slnn3r.wallettrackermvp.Model.ObjectClass.UserProfile
 import kotlin.collections.ArrayList
 
 
@@ -53,11 +55,14 @@ class DashBoardFragment : Fragment(),ViewInterface.DashBoardView {
 
         presenter = Presenter(this)
 
+
+
         // Get SharedPreference data
         val userProfile = presenter.getUserData(context!!)
         val userID = userProfile.UserUID
 
-        val walletAccountData = presenter.getAccountData(context!!, userID)
+        presenter.checkWalletAccount(context!!, userID )
+
 
 
         // To Hide KeyBoard
@@ -70,6 +75,7 @@ class DashBoardFragment : Fragment(),ViewInterface.DashBoardView {
                 InputMethodManager.HIDE_NOT_ALWAYS)
 
         DBIncomeFab.setOnClickListener{
+            val walletAccountData = presenter.getAccountData(context!!, userID)
 
             val navController = view.findNavController()
 
@@ -86,6 +92,7 @@ class DashBoardFragment : Fragment(),ViewInterface.DashBoardView {
 
 
         DBExpenseFab.setOnClickListener{
+            val walletAccountData = presenter.getAccountData(context!!, userID)
 
             val navController = view.findNavController()
 
@@ -147,7 +154,6 @@ class DashBoardFragment : Fragment(),ViewInterface.DashBoardView {
 
 
 
-        presenter.checkWalletAccount(context!!, userID )
 
     }
 
@@ -214,7 +220,7 @@ class DashBoardFragment : Fragment(),ViewInterface.DashBoardView {
             count+=1
         }
 
-
+        val UserProfile = presenter.getUserData(context!!)
 
         spinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener{
 
@@ -225,7 +231,7 @@ class DashBoardFragment : Fragment(),ViewInterface.DashBoardView {
             override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
 
                 presenter.setSelectedAccount(mainContext, walletAccountList[spinner.selectedItemPosition].WalletAccountName) //Save Select Account in SharedPreference for future use
-                presenter.checkTransaction(mainContext, walletAccountList[spinner.selectedItemPosition].WalletAccountID)
+                presenter.checkTransaction(mainContext, walletAccountList[spinner.selectedItemPosition].WalletAccountID, UserProfile.UserUID)
             }
         }
 

@@ -46,7 +46,7 @@
 
 
     <android.support.design.widget.TextInputLayout
-        android:id="@+id/NewAmountInputLayout"
+        android:id="@+id/NewTrxAmountInputLayout"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginStart="16dp"
@@ -55,10 +55,10 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/NewRemarksLayout">
+        app:layout_constraintTop_toBottomOf="@+id/NewTrxRemarksLayout">
 
         <EditText
-            android:id="@+id/NewAmountInput"
+            android:id="@+id/NewTrxAmountInput"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:hint="@string/NewAmountInput"
@@ -71,7 +71,7 @@
 
 
     <android.support.design.widget.TextInputLayout
-        android:id="@+id/NewRemarksLayout"
+        android:id="@+id/NewTrxRemarksLayout"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
@@ -82,7 +82,7 @@
         app:layout_constraintTop_toBottomOf="@+id/NewTrxTimeLayout">
 
         <EditText
-            android:id="@+id/NewRemarksInput"
+            android:id="@+id/NewTrxRemarksInput"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:hint="@string/NewRemarksInput"
@@ -106,7 +106,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/NewAmountInputLayout"
+        app:layout_constraintTop_toBottomOf="@+id/NewTrxAmountInputLayout"
         app:layout_constraintVertical_bias="1.0" />
 
     <TextView
@@ -131,12 +131,13 @@
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginBottom="8dp"
-        android:background="@drawable/fui_idp_button_background_email"
-        android:src="@drawable/expense_icon"
+        android:background="@drawable/fui_idp_button_background_twitter"
+        android:src="@drawable/not_found"
         app:layout_constraintBottom_toTopOf="@+id/NewTrxCategorySpinner"
         app:layout_constraintEnd_toStartOf="@+id/NewTrxTypeSpinner"
         app:layout_constraintStart_toEndOf="@+id/NewTrxTypeLabel"
-        app:layout_constraintTop_toBottomOf="@+id/NewTrxSelectedAccSpinner" />
+        app:layout_constraintTop_toBottomOf="@+id/NewTrxSelectedAccSpinner"
+        />
 
     <Spinner
         android:id="@+id/NewTrxTypeSpinner"

@@ -10,14 +10,17 @@ import com.example.slnn3r.wallettrackermvp.Model.RealmClass.TransactionRealm
 import com.example.slnn3r.wallettrackermvp.Model.RealmClass.WalletAccountRealm
 import com.example.slnn3r.wallettrackermvp.R
 import com.example.slnn3r.wallettrackermvp.Utility.DefaultDataCategoryListItem
+import com.google.gson.Gson
 import io.realm.Realm
 import io.realm.RealmConfiguration
 import io.realm.RealmResults
+import io.realm.Sort
 import java.util.*
 import kotlin.collections.ArrayList
 
 
 class RealmAccess: ModelInterface.RealmAccess{
+
 
     // Get Data Only
     override fun getAccountDataRealm(mainContext: Context, userID: String): ArrayList<WalletAccount> {
@@ -138,6 +141,126 @@ class RealmAccess: ModelInterface.RealmAccess{
     }
 
 
+    override fun getAccountDataByNameRealm(mainContext: Context, userID: String, accountName: String): WalletAccount {
+
+//
+        var realm: Realm? = null
+
+        var walletAccountData = WalletAccount("","",0.0,"","")
+
+
+        try {
+            Realm.init(mainContext)
+
+            val config = RealmConfiguration.Builder()
+                    .name(mainContext.getString(R.string.walletAccountRealm))
+                    .build()
+
+            realm = Realm.getInstance(config)
+
+
+            realm!!.executeTransaction {
+
+                val getWalletAccount = realm.where(WalletAccountRealm::class.java)
+                        .equalTo(mainContext.getString(R.string.UserUID),userID)
+                        .equalTo(mainContext.getString(R.string.WalletAccountName), accountName)
+                        .findAll()
+
+                getWalletAccount.forEach{
+                    dataList->
+
+                    walletAccountData= WalletAccount(
+                                    dataList.walletAccountID!!,
+                                    dataList.walletAccountName!!,
+                                    dataList.walletAccountInitialBalance,
+                                    dataList.userUID!!,
+                                    dataList.walletAccountStatus!!
+                            )
+                }
+
+            }
+
+            realm.close()
+
+            return walletAccountData
+
+
+        }catch(e:Exception) {
+
+            realm?.close()
+
+            return walletAccountData
+
+        }finally {
+            realm?.close()
+        }
+    }
+
+    override fun getCategoryDataByNameRealm(mainContext: Context, userID: String, categoryName: String): TransactionCategory {
+
+        var realm: Realm? = null
+
+        var transactionCategoryData= TransactionCategory("","","","","")
+
+        try {
+            Realm.init(mainContext)
+
+            val config = RealmConfiguration.Builder()
+                    .name(mainContext.getString(R.string.transactionCategoryRealm))
+                    .build()
+
+            realm = Realm.getInstance(config)
+
+
+            realm!!.executeTransaction {
+
+
+                val getTransactionCategory: RealmResults<TransactionCategoryRealm>? = realm.where(TransactionCategoryRealm::class.java)
+                        .equalTo(mainContext.getString(R.string.UserUID),userID)
+                        .equalTo(mainContext.getString(R.string.TransactionCategoryName),categoryName)
+                        .findAll()
+
+                getTransactionCategory!!.forEach{
+                    dataList->
+
+                    transactionCategoryData =  TransactionCategory(
+                                    dataList.transactionCategoryID!!,
+                                    dataList.transactionCategoryName!!,
+                                    dataList.transactionCategoryType!!,
+                                    dataList.transactionCategoryStatus!!,
+                                    userID
+
+                            )
+
+                }
+
+
+
+            }
+
+            realm.close()
+
+            return transactionCategoryData
+
+        }catch(e:Exception) {
+
+            realm?.close()
+
+            return transactionCategoryData
+
+
+
+        }finally {
+            realm?.close()
+        }
+    }
+
+
+
+
+
+
+
 
     // DashBoard Fragment
     override fun checkWalletAccountRealm(mainContext: Context, userID: String): ArrayList<WalletAccount> {
@@ -252,7 +375,7 @@ class RealmAccess: ModelInterface.RealmAccess{
     }
 
 
-    override fun checkTransactionRealm(mainContext: Context, accountID: String): ArrayList<Transaction>{
+    override fun checkTransactionRealm(mainContext: Context, accountID: String, userID: String): ArrayList<Transaction>{
 
         //
         var realm: Realm? = null
@@ -271,27 +394,53 @@ class RealmAccess: ModelInterface.RealmAccess{
 
             realm!!.executeTransaction {
 
-                val getTransaction = realm.where(TransactionRealm::class.java).equalTo(mainContext.getString(R.string.WalletAccountID),accountID).findAll()
+                val getTransaction = realm.where(TransactionRealm::class.java)
+                        .findAll()
+                        .sort(mainContext.getString(R.string.TransactionTime), Sort.DESCENDING)
+                        .sort(mainContext.getString(R.string.TransactionDate), Sort.DESCENDING)
 
-                val transactionCategoryGSON= TransactionCategory("","","","","")
+
+                var count=0
 
                 getTransaction.forEach{
                     dataList->
 
-                    transactionData.add(
+                    val gson = Gson()
+
+                    val walletAccount = dataList.walletAccount
+                    val transactionCategory = dataList.transactionCategory
+
+                    val walletAccountData = gson.fromJson<WalletAccount>(walletAccount, WalletAccount::class.java)
+                    val transactionCategoryData = gson.fromJson<TransactionCategory>(transactionCategory, TransactionCategory::class.java)
+
+
+
+                    if(walletAccountData.WalletAccountID==accountID && walletAccountData.UserUID==userID && count<10){
+
+                        transactionData.add(
                                 Transaction(
                                         dataList.transactionID!!,
                                         dataList.transactionDate!!,
                                         dataList.transactionTime!!,
                                         dataList.transactionAmount,
                                         dataList.transactionRemark!!,
-                                        transactionCategoryGSON,
-                                        dataList.walletAccountID!!
+
+                                        transactionCategoryData,
+                                        walletAccountData
                                 )
                         )
+                        count+=1
+
+                    }
+
+
                 }
 
                 val noResult = mainContext.getString(R.string.noResult) //ONLY USED FOR DASHBOARD GET TRANSACTION LIST
+
+                val transactionCategoryNull= TransactionCategory("","","","","")
+                val walletAccountNull= WalletAccount("","",0.0,"","")
+
 
                 if(transactionData.size<1){
                     transactionData.add(
@@ -301,8 +450,8 @@ class RealmAccess: ModelInterface.RealmAccess{
                                     noResult,
                                     0.0,
                                     noResult,
-                                    transactionCategoryGSON,
-                                    noResult
+                                    transactionCategoryNull,
+                                    walletAccountNull
                             )
                     )
                 }
@@ -620,6 +769,45 @@ class RealmAccess: ModelInterface.RealmAccess{
             realm.close()
 
         //
+    }
+
+
+    override fun createNewTrx(mainContext: Context, newTrxInput: Transaction) {
+
+        //
+        var realm: Realm? = null
+
+        Realm.init(mainContext)
+
+        val config = RealmConfiguration.Builder()
+                .name(mainContext.getString(R.string.transactionRealm))
+                .build()
+
+        realm = Realm.getInstance(config)
+
+        realm!!.executeTransaction {
+
+            val creating = realm.createObject(TransactionRealm::class.java, newTrxInput.TransactionID)
+
+
+            val gson = Gson()
+            val convertedCategory = gson.toJson(newTrxInput.TransactionCategory)
+            val convertedAccount = gson.toJson(newTrxInput.WalletAccount)
+
+
+            creating.transactionDate= newTrxInput.TransactionDate
+            creating.transactionTime= newTrxInput.TransactionTime
+            creating.transactionAmount= newTrxInput.TransactionAmount
+            creating.transactionRemark= newTrxInput.TransactionRemark
+            creating.transactionCategory= convertedCategory
+                    creating.walletAccount= convertedAccount
+
+        }
+
+        realm.close()
+
+        //
+
     }
 
 

@@ -11,7 +11,6 @@ import android.view.ViewGroup
 import android.widget.ArrayAdapter
 
 import com.example.slnn3r.wallettrackermvp.R
-import com.example.slnn3r.wallettrackermvp.Utility.DummyDataCategorySpinner
 import kotlinx.android.synthetic.main.fragment_new_trx.*
 import android.widget.AdapterView
 import android.widget.AdapterView.OnItemSelectedListener
@@ -20,15 +19,19 @@ import java.text.SimpleDateFormat
 import java.util.*
 import android.app.TimePickerDialog
 import android.content.Context
-import android.os.Handler
+import android.content.DialogInterface
+import android.text.Editable
+import android.text.TextWatcher
 import android.util.Log
 import android.widget.Spinner
 import android.widget.Toast
 import com.example.slnn3r.wallettrackermvp.Interface.PresenterInterface
 import com.example.slnn3r.wallettrackermvp.Interface.ViewInterface
+import com.example.slnn3r.wallettrackermvp.Model.ObjectClass.Transaction
 import com.example.slnn3r.wallettrackermvp.Model.ObjectClass.TransactionCategory
 import com.example.slnn3r.wallettrackermvp.Model.ObjectClass.WalletAccount
 import com.example.slnn3r.wallettrackermvp.Presenter.Presenter
+import com.example.slnn3r.wallettrackermvp.Utility.AlertDialog
 import java.sql.Time
 import kotlin.collections.ArrayList
 
@@ -45,6 +48,8 @@ class NewTrxFragment : Fragment(), ViewInterface.NewTrxView {
     private lateinit var simpleTimeFormat:SimpleDateFormat
 
     private lateinit var presenter: PresenterInterface.Presenter
+
+    private val alertDialog: AlertDialog = AlertDialog()
 
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
@@ -171,8 +176,68 @@ class NewTrxFragment : Fragment(), ViewInterface.NewTrxView {
         //// getWalletData
         val walletAccountData = presenter.getAccountData(context!!, userProfile.UserUID)
 
+        // Setup Button
+        NewTrxSubmit.setOnClickListener{
+
+                        // get the Transaction Category 1st, then get the wallet account id, only then start to build the NewTransaction Data
+
+                        var selectedTrxCategory = presenter.getCategoryDataByName(context!!, userProfile.UserUID, NewTrxCategorySpinner.selectedItem.toString())
+                        var selectedWalletAccount = presenter.getAccountDataByName(context!!, userProfile.UserUID, NewTrxSelectedAccSpinner.selectedItem.toString())
 
 
+                        val uniqueID = UUID.randomUUID().toString()
+                        var newTrxInput = Transaction(uniqueID,NewTrxDateInput.text.toString()
+                                ,NewTrxTimeInput.text.toString()
+                                ,NewTrxAmountInput.text.toString().toDouble()
+                                ,NewTrxRemarksInput.text.toString()
+                                ,selectedTrxCategory
+                                ,selectedWalletAccount
+                        )
+
+                        presenter.createNewTrx(context!!,newTrxInput)
+
+
+        }
+
+        // TextWatcher Validation
+        NewTrxAmountInput.error=getString(R.string.promptToEnter)
+
+        NewTrxAmountInput.addTextChangedListener(object: TextWatcher {
+                    override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+                        Log.d("","")
+
+                    }
+
+                    override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+
+                        // Force 2 Decimal Input only (SOLVED)
+                        val text = NewTrxAmountInput.text.toString()
+                        if (text.contains(".") && text.substring(text.indexOf(".") + 1).length > 2) {
+                            NewTrxAmountInput.setText(text.substring(0, text.length - 1))
+                            NewTrxAmountInput.setSelection(NewTrxAmountInput.text.length)
+                        }
+
+                        val validationResult = presenter.walletAccountBalanceValidation(context!!,text)
+
+                        if(validationResult!=null){
+                            NewTrxSubmit.isEnabled = false
+                        }
+
+                        NewTrxAmountInput.error=validationResult
+                    }
+
+                    override fun afterTextChanged(s: Editable?) {
+
+                        if(NewTrxAmountInput.error==null){
+                            NewTrxSubmit.isEnabled = true
+                        }
+
+                    }
+
+                })
+
+
+        NewTrxSubmit.isEnabled = false
 
     }
 
@@ -195,6 +260,7 @@ class NewTrxFragment : Fragment(), ViewInterface.NewTrxView {
         data2Adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
 
         newTrxCategorySpinner.adapter = data2Adapter
+
 
 
 
@@ -245,6 +311,20 @@ class NewTrxFragment : Fragment(), ViewInterface.NewTrxView {
         Toast.makeText(mainContext,errorMessage, Toast.LENGTH_LONG).show()
 
     }
+
+
+    override fun createNewTrxSuccess(mainContext: Context) {
+
+        Toast.makeText(mainContext,mainContext.getString(R.string.createNewTrx), Toast.LENGTH_SHORT).show()
+        (mainContext as Activity).onBackPressed()
+
+
+    }
+
+    override fun createNewTrxFail(mainContext: Context, errorMessage: String) {
+        Toast.makeText(mainContext,errorMessage, Toast.LENGTH_LONG).show()
+    }
+
 
 
 }

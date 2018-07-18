@@ -131,6 +131,16 @@ class Presenter: PresenterInterface.Presenter{
         return realmModel.getCategoryDataRealm(mainContext,userID)
     }
 
+    override fun getAccountDataByName(mainContext: Context, userID: String, accountName: String): WalletAccount {
+        return realmModel.getAccountDataByNameRealm(mainContext, userID, accountName)
+    }
+
+    override fun getCategoryDataByName(mainContext: Context, userID: String, categoryName: String): TransactionCategory {
+        return realmModel.getCategoryDataByNameRealm(mainContext, userID, categoryName)
+    }
+
+
+
 
     // Wallet Account Input Validation
     override fun walletAccountNameValidation(mainContext: Context, input: String, accountNameList: ArrayList<WalletAccount>, updateID:String?): String? {
@@ -566,9 +576,9 @@ class Presenter: PresenterInterface.Presenter{
 
 
 
-    override fun checkTransaction(mainContext: Context, accountID: String) {
+    override fun checkTransaction(mainContext: Context, accountID: String, userID: String) {
 
-        checkTransactionObservable(mainContext, accountID)
+        checkTransactionObservable(mainContext, accountID, userID)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(object : Observer<ArrayList<Transaction>>
@@ -597,8 +607,8 @@ class Presenter: PresenterInterface.Presenter{
 
     }
 
-    private fun checkTransactionObservable(mainContext: Context, accountID: String): Observable<ArrayList<Transaction>>{
-        return Observable.defer { Observable.just(realmModel.checkTransactionRealm(mainContext,accountID)) }
+    private fun checkTransactionObservable(mainContext: Context, accountID: String, userID: String): Observable<ArrayList<Transaction>>{
+        return Observable.defer { Observable.just(realmModel.checkTransactionRealm(mainContext,accountID,userID)) }
     }
 
 
@@ -904,5 +914,40 @@ class Presenter: PresenterInterface.Presenter{
         return Observable.defer { Observable.just(realmModel.deleteTransactionCategoryRealm(mainContext,trxCategoryID)) }
     }
 
+
+
+    // NewTrx Fragment
+    override fun createNewTrx(mainContext: Context, newTrxInput: Transaction) {
+
+        createNewTrxObservable(mainContext, newTrxInput)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(object : Observer<Unit>
+                {
+                    override fun onSubscribe(d: Disposable)
+                    {
+                    }
+
+                    override fun onNext(value: Unit)
+                    {
+                        newTrxView.createNewTrxSuccess(mainContext)
+                    }
+
+                    override fun onError(e: Throwable)
+                    {
+                        newTrxView.createNewTrxFail(mainContext, e.toString())
+                    }
+
+                    override fun onComplete()
+                    {
+                    }
+
+                })
+
+    }
+
+    private fun createNewTrxObservable(mainContext: Context, newTrxInput: Transaction): Observable<Unit>{
+        return Observable.defer { Observable.just(realmModel.createNewTrx(mainContext, newTrxInput)) }
+    }
 
 }

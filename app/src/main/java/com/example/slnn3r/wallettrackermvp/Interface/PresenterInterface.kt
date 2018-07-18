@@ -2,6 +2,7 @@ package com.example.slnn3r.wallettrackermvp.Interface
 
 import android.content.Context
 import android.content.Intent
+import com.example.slnn3r.wallettrackermvp.Model.ObjectClass.Transaction
 import com.example.slnn3r.wallettrackermvp.Model.ObjectClass.TransactionCategory
 import com.example.slnn3r.wallettrackermvp.Model.ObjectClass.UserProfile
 import com.example.slnn3r.wallettrackermvp.Model.ObjectClass.WalletAccount
@@ -18,6 +19,9 @@ interface PresenterInterface{
         // GetDataOnly
         fun getAccountData(mainContext: Context, userID: String): ArrayList<WalletAccount>
         fun getCategoryData(mainContext: Context, userID: String): ArrayList<TransactionCategory>
+
+        fun getAccountDataByName(mainContext: Context, userID:String, accountName:String): WalletAccount
+        fun getCategoryDataByName(mainContext: Context, userID:String, categoryName:String): TransactionCategory
 
 
         // Wallet Account Input Validation
@@ -41,7 +45,11 @@ interface PresenterInterface{
         // DashBoard Fragment
         fun checkWalletAccount(mainContext: Context, userID:String) // (used by ViewWalletAccount Fragment as well)
         fun firstTimeDatabaseSetup(mainContext: Context, userID:String)
-        fun checkTransaction(mainContext: Context, accountID: String)
+        fun checkTransaction(mainContext: Context, accountID: String, userID:String)
+
+
+        // NewTrx Fragment
+        fun createNewTrx(mainContext: Context, newTrxInput: Transaction)
 
 
         // ViewWalletAccount Fragment
