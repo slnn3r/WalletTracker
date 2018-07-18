@@ -122,5 +122,17 @@ interface ViewInterface{
 
     }
 
+    interface DetailsTrxView{
+
+        fun populateDetailTrxCategorySpinner(mainContext: Context, trxCategoryList: ArrayList<TransactionCategory>)
+        fun populateDetailTrxCategorySpinnerFail(mainContext: Context, errorMessage: String)
+
+        fun populateDetailTrxAccountSpinner(mainContext: Context, walletAccountList: ArrayList<WalletAccount>)
+        fun populateDetailTrxAccountSpinnerFail(mainContext: Context, errorMessage: String)
+
+
+
+    }
+
 
 }

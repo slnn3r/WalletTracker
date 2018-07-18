@@ -58,7 +58,7 @@ class TrxCategoryViewHolder(val view: View, var passData: TransactionCategory?= 
                 val navController = view.findNavController()
 
                 val bundle = Bundle()
-                bundle.putString("trxCategorySelection", json)
+                bundle.putString(view.context.getString(R.string.trxCategoryPassArgKey), json)
                 navController.navigate(R.id.action_viewTrxCategoryFragment_to_detailsTrxCategoryFragment, bundle)
 
 

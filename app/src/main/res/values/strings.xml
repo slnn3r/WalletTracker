@@ -154,8 +154,8 @@
         <string name="trxTypePassArgKey">TrxTypeSelection</string>
 
         <string name="walletAccountPassArgKey">walletAccountSelection</string>
-
         <string name="trxCategoryPassArgKey">trxCategorySelection</string>
+        <string name="transactionPassArgKey">transactionSelection</string>
 
         <!-- Validation RegEx -->
         <string name="regExNoCharacterOnly">^[a-zA-Z]{4,}(?: [a-zA-Z]+){0,2}$</string>
@@ -278,7 +278,7 @@
 
         <!-- Recycle View Message -->
         <string name="noDataInDatabase">There is no data in the database</string>
-        <string name="tabToAddTrx">Tab the Floating Button to add Transaction</string>
+        <string name="tabToAddTrx">Please Add New Transaction</string>
 
 
 </resources>

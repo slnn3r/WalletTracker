@@ -19,7 +19,6 @@ import java.text.SimpleDateFormat
 import java.util.*
 import android.app.TimePickerDialog
 import android.content.Context
-import android.content.DialogInterface
 import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
@@ -31,7 +30,6 @@ import com.example.slnn3r.wallettrackermvp.Model.ObjectClass.Transaction
 import com.example.slnn3r.wallettrackermvp.Model.ObjectClass.TransactionCategory
 import com.example.slnn3r.wallettrackermvp.Model.ObjectClass.WalletAccount
 import com.example.slnn3r.wallettrackermvp.Presenter.Presenter
-import com.example.slnn3r.wallettrackermvp.Utility.AlertDialog
 import java.sql.Time
 import kotlin.collections.ArrayList
 
@@ -49,7 +47,6 @@ class NewTrxFragment : Fragment(), ViewInterface.NewTrxView {
 
     private lateinit var presenter: PresenterInterface.Presenter
 
-    private val alertDialog: AlertDialog = AlertDialog()
 
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
@@ -67,7 +64,7 @@ class NewTrxFragment : Fragment(), ViewInterface.NewTrxView {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        presenter = Presenter(NewTrxFragment())
+        presenter = Presenter(this)
         val userProfile = presenter.getUserData(context!!)
 
         ///// Populate Account Spinner Item
@@ -252,14 +249,14 @@ class NewTrxFragment : Fragment(), ViewInterface.NewTrxView {
                 spinnerItem.add(data.TransactionCategoryName)
         }
 
-        val data2Adapter = ArrayAdapter(mainContext, android.R.layout.simple_spinner_item, spinnerItem)
+        val dataAdapter = ArrayAdapter(mainContext, android.R.layout.simple_spinner_item, spinnerItem)
         val newTrxCategorySpinner = (mainContext as Activity).findViewById(R.id.NewTrxCategorySpinner) as Spinner
 
 
         // Drop down layout style - list view with radio button
-        data2Adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
 
-        newTrxCategorySpinner.adapter = data2Adapter
+        newTrxCategorySpinner.adapter = dataAdapter
 
 
 
@@ -292,7 +289,6 @@ class NewTrxFragment : Fragment(), ViewInterface.NewTrxView {
         spinner.adapter = dataAdapter
 
         // Get SharedPreference saved Selection and Set to Spinner Selection
-        presenter = Presenter(NewTrxFragment())
         val go = presenter.getSelectedAccount(mainContext)
         var count= 0
         categories.forEach {

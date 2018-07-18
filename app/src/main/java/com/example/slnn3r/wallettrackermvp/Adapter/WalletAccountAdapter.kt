@@ -55,7 +55,7 @@ class WalletAccountViewHolder(val view: View, var passData: WalletAccount?= null
                 val navController = view.findNavController()
 
                 val bundle = Bundle()
-                bundle.putString("walletAccountSelection", json)
+                bundle.putString(view.context.getString(R.string.walletAccountPassArgKey), json)
                 navController.navigate(R.id.action_viewWalletAccountFragment_to_detailsWalletAccountFragment, bundle)
 
             }

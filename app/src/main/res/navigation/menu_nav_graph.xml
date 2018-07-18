@@ -88,5 +88,9 @@
         android:id="@+id/detailsTrxFragment"
         android:name="com.example.slnn3r.wallettrackermvp.View.Fragment.TrxManagement.DetailsTrxFragment"
         android:label="fragment_details_trx"
-        tools:layout="@layout/fragment_details_trx" />
+        tools:layout="@layout/fragment_details_trx" >
+        <argument
+            android:name="transactionSelection"
+            app:type="string" />
+    </fragment>
 </navigation>

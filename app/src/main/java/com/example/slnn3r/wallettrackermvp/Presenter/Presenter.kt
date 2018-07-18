@@ -53,6 +53,7 @@ class Presenter: PresenterInterface.Presenter{
     private lateinit var detailsTrxCategoryView: ViewInterface.DetailsTrxCategoryView
 
     private lateinit var newTrxView: ViewInterface.NewTrxView
+    private lateinit var detailsTrxView: ViewInterface.DetailsTrxView
 
     private val firebaseModel: ModelInterface.FirebaseAccess = FirebaseAccess()
     private val realmModel: ModelInterface.RealmAccess = RealmAccess()
@@ -103,6 +104,10 @@ class Presenter: PresenterInterface.Presenter{
 
     constructor(newTrxView: ViewInterface.NewTrxView){
         this.newTrxView=newTrxView
+    }
+
+    constructor(detailsTrxView: ViewInterface.DetailsTrxView){
+        this.detailsTrxView=detailsTrxView
     }
 
 
@@ -503,6 +508,8 @@ class Presenter: PresenterInterface.Presenter{
 
                             newTrxView.populateSelectedAccountSpinner(mainContext,value)
 
+                        }else if(currentDestination==R.id.detailsTrxFragment){
+                            detailsTrxView.populateDetailTrxAccountSpinner(mainContext,value)
                         }
 
 
@@ -522,6 +529,8 @@ class Presenter: PresenterInterface.Presenter{
                         }else if(currentDestination==R.id.newTrxFragment){
 
                             newTrxView.populateSelectedAccountSpinnerFail(mainContext,e.toString())
+                        }else if(currentDestination==R.id.detailsTrxFragment){
+                            detailsTrxView.populateDetailTrxAccountSpinnerFail(mainContext,e.toString())
                         }
 
                     }
@@ -783,6 +792,9 @@ class Presenter: PresenterInterface.Presenter{
 
                         }else if(currentDestination==R.id.newTrxFragment){
                             newTrxView.populateNewTrxCategorySpinner(mainContext, value)
+
+                        }else if(currentDestination==R.id.detailsTrxFragment){
+                            detailsTrxView.populateDetailTrxCategorySpinner(mainContext, value)
                         }
                     }
 
@@ -794,6 +806,8 @@ class Presenter: PresenterInterface.Presenter{
                         }else if(currentDestination==R.id.newTrxFragment){
                             newTrxView.populateNewTrxCategorySpinnerFail(mainContext,e.toString())
 
+                        }else if(currentDestination==R.id.detailsTrxFragment){
+                            detailsTrxView.populateDetailTrxAccountSpinnerFail(mainContext, e.toString())
                         }
                     }
 

@@ -2,6 +2,7 @@ package com.example.slnn3r.wallettrackermvp.Adapter
 
 
 import android.content.Context
+import android.os.Bundle
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
@@ -12,6 +13,7 @@ import com.example.slnn3r.wallettrackermvp.R
 import com.example.slnn3r.wallettrackermvp.View.Activity.MenuActivity
 import kotlinx.android.synthetic.main.transaction_list_row.view.*
 import com.example.slnn3r.wallettrackermvp.Model.ObjectClass.Transaction
+import com.google.gson.Gson
 import com.squareup.picasso.Picasso
 
 
@@ -67,14 +69,14 @@ class DashBoardTrxAdapter(private val homeFeed: ArrayList<Transaction>): Recycle
         }
 
 
-
+        holder.passData = video
     }
 
 }
 
 
 
-class DashBoardViewHolder(val view: View): RecyclerView.ViewHolder(view){
+class DashBoardViewHolder(val view: View, var passData: Transaction?= null): RecyclerView.ViewHolder(view){
 
     init{
         view.setOnClickListener{
@@ -88,8 +90,25 @@ class DashBoardViewHolder(val view: View): RecyclerView.ViewHolder(view){
 
             }else{
 
+                val gson = Gson()
+                val transactionData = Transaction(
+                        passData!!.TransactionID,
+                        passData!!.TransactionDate,
+                        passData!!.TransactionTime,
+                        passData!!.TransactionAmount,
+                        passData!!.TransactionRemark,
+                        passData!!.TransactionCategory,
+                        passData!!.WalletAccount
+                )
+
+                val json = gson.toJson(transactionData)
+
+
+                val bundle = Bundle()
+                bundle.putString(view.context.getString(R.string.transactionPassArgKey), json)
+
                 val navController = view.findNavController()
-                navController.navigate(R.id.action_dashBoardFragment_to_detailsTrxFragment)
+                navController.navigate(R.id.action_dashBoardFragment_to_detailsTrxFragment, bundle)
 
                 (context as MenuActivity).setupNavigationMode()
 
