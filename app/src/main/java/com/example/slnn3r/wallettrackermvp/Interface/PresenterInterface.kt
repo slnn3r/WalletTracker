@@ -51,6 +51,10 @@ interface PresenterInterface{
         // NewTrx Fragment
         fun createNewTrx(mainContext: Context, newTrxInput: Transaction)
 
+        // DetailsTrx Fragment
+        fun updateDetailsTrx(mainContext: Context, detailsTrxInput: Transaction)
+        fun deleteDetailsTrx(mainContext: Context, transactionID: String)
+
 
         // ViewWalletAccount Fragment
         fun checkWalletAccountCount(mainContext: Context, userID: String)
@@ -72,6 +76,8 @@ interface PresenterInterface{
         // DetailsTrxCategory Fragment
         fun updateTransactionCategory(mainContext: Context, trxCategoryInput: TransactionCategory)
         fun deleteTransactionCategory(mainContext: Context, trxCategoryID:String)
+
+
 
 
     }

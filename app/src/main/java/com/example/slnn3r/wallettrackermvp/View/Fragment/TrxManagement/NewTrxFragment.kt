@@ -152,7 +152,8 @@ class NewTrxFragment : Fragment(), ViewInterface.NewTrxView {
 
 
                 val time = Time(selectedHour, selectedMinute, 0)
-                val s = simpleTimeFormat.format(time)
+                var s = simpleTimeFormat.format(time)
+
 
                 NewTrxTimeInput.setText(s)
 
@@ -162,16 +163,17 @@ class NewTrxFragment : Fragment(), ViewInterface.NewTrxView {
 
         }
 
+
+        val second = mcurrentTime.get(Calendar.SECOND)
+
         // Initial Time
-        val time = Time(hour, minute, 0)
+        val time = Time(hour, minute, second)
 
         //format takes in a Date, and Time is a sublcass of Date
         val s = simpleTimeFormat.format(time)
         NewTrxTimeInput.setText(s)
 
 
-        //// getWalletData
-        val walletAccountData = presenter.getAccountData(context!!, userProfile.UserUID)
 
         // Setup Button
         NewTrxSubmit.setOnClickListener{
@@ -181,15 +183,23 @@ class NewTrxFragment : Fragment(), ViewInterface.NewTrxView {
                         var selectedTrxCategory = presenter.getCategoryDataByName(context!!, userProfile.UserUID, NewTrxCategorySpinner.selectedItem.toString())
                         var selectedWalletAccount = presenter.getAccountDataByName(context!!, userProfile.UserUID, NewTrxSelectedAccSpinner.selectedItem.toString())
 
+                        // store 24hour in database for ez sorting purpose
+                        val notConvertedTime = NewTrxTimeInput.text.toString()
+                        val date12Format = SimpleDateFormat("hh:mm:ss a")
+                        val date24Format = SimpleDateFormat("HH:mm:ss")
+                        val convertedTime = date24Format.format(date12Format.parse(notConvertedTime))
 
                         val uniqueID = UUID.randomUUID().toString()
-                        var newTrxInput = Transaction(uniqueID,NewTrxDateInput.text.toString()
-                                ,NewTrxTimeInput.text.toString()
-                                ,NewTrxAmountInput.text.toString().toDouble()
-                                ,NewTrxRemarksInput.text.toString()
-                                ,selectedTrxCategory
-                                ,selectedWalletAccount
-                        )
+                        var newTrxInput =
+
+                                Transaction(
+                                        uniqueID,NewTrxDateInput.text.toString()
+                                        ,convertedTime
+                                        ,NewTrxAmountInput.text.toString().toDouble()
+                                        ,NewTrxRemarksInput.text.toString()
+                                        ,selectedTrxCategory
+                                        ,selectedWalletAccount
+                                )
 
                         presenter.createNewTrx(context!!,newTrxInput)
 

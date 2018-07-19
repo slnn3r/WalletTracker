@@ -130,6 +130,12 @@ interface ViewInterface{
         fun populateDetailTrxAccountSpinner(mainContext: Context, walletAccountList: ArrayList<WalletAccount>)
         fun populateDetailTrxAccountSpinnerFail(mainContext: Context, errorMessage: String)
 
+        fun updateDetailsTrxSuccess(mainContext: Context)
+        fun updateDetailsTrxFail(mainContext: Context, errorMessage: String)
+
+        fun deleteDetailsTrxSuccess(mainContext: Context)
+        fun deleteDetailsTrxFail(mainContext: Context, errorMessage: String)
+
 
 
     }

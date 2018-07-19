@@ -145,7 +145,6 @@
         <string name="dialogTitleDeleteCategory">Delete Account Confirmation</string>
         <string name="dialogMessageDeleteCategory">Are you sure to Delete the Category?</string>
 
-
     <!-- SharedPreference Key -->
         <string name="userProfileKey">UserProfile</string>
         <string name="selectedAccount">SelectedAccount</string>
@@ -164,7 +163,7 @@
         <string name="maxAccNameInputField">15</string>
 
         <!-- Format -->
-        <string name="timeFormat">h:mma</string>
+        <string name="timeFormat">h:mm:ss a</string>
         <string name="dateFormat">dd/MM/yy</string>
 
         <!-- Google Login -->
@@ -219,6 +218,8 @@
         <string name="viewTrxCategoryFragmentTitle">Transaction Category List</string>
         <string name="createTrxCategoryFragmentTitle">Create Transaction Category</string>
         <string name="detailsTrxCategoryFragmentTitle">Transaction Category Details</string>
+        <string name="detailsTransactionFragmentTitle">Transaction Details</string>
+
 
         <!-- TextWatcher Message -->
         <string name="promptToEnter">Please Fill In This Field</string>

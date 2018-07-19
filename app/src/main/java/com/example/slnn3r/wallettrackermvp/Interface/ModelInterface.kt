@@ -37,8 +37,11 @@ interface ModelInterface {
         fun checkTransactionRealm(mainContext: Context, accountID: String, userID:String): ArrayList<Transaction>
 
         // NewTrx Fragment
-        fun createNewTrx(mainContext: Context, newTrxInput:Transaction)
+        fun createNewTrxRealm(mainContext: Context, newTrxInput:Transaction)
 
+        // DetailsTrx Fragment
+        fun updateDetailsTrxRealm(mainContext: Context, detailsTrxInput:Transaction)
+        fun deleteDetailsTrxRealm(mainContext: Context, transactionID:String)
 
 
         // ViewWalletAccount Fragment

@@ -15,6 +15,7 @@ import io.realm.Realm
 import io.realm.RealmConfiguration
 import io.realm.RealmResults
 import io.realm.Sort
+import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.collections.ArrayList
 
@@ -395,9 +396,8 @@ class RealmAccess: ModelInterface.RealmAccess{
             realm!!.executeTransaction {
 
                 val getTransaction = realm.where(TransactionRealm::class.java)
+                        .sort(mainContext.getString(R.string.TransactionDate), Sort.DESCENDING,mainContext.getString(R.string.TransactionTime), Sort.DESCENDING)
                         .findAll()
-                        .sort(mainContext.getString(R.string.TransactionTime), Sort.DESCENDING)
-                        .sort(mainContext.getString(R.string.TransactionDate), Sort.DESCENDING)
 
 
                 var count=0
@@ -417,14 +417,20 @@ class RealmAccess: ModelInterface.RealmAccess{
 
                     if(walletAccountData.WalletAccountID==accountID && walletAccountData.UserUID==userID && count<10){
 
+                        // convert to 12hour for ez display purpose
+                        val notConvertedTime = dataList.transactionTime!!
+                        val date12Format = SimpleDateFormat("hh:mm:ss a")
+                        val date24Format = SimpleDateFormat("HH:mm:ss")
+                        val convertedTime = date12Format.format(date24Format.parse(notConvertedTime))
+
                         transactionData.add(
+
                                 Transaction(
                                         dataList.transactionID!!,
                                         dataList.transactionDate!!,
-                                        dataList.transactionTime!!,
+                                        convertedTime,
                                         dataList.transactionAmount,
                                         dataList.transactionRemark!!,
-
                                         transactionCategoryData,
                                         walletAccountData
                                 )
@@ -772,7 +778,7 @@ class RealmAccess: ModelInterface.RealmAccess{
     }
 
 
-    override fun createNewTrx(mainContext: Context, newTrxInput: Transaction) {
+    override fun createNewTrxRealm(mainContext: Context, newTrxInput: Transaction) {
 
         //
         var realm: Realm? = null
@@ -801,6 +807,80 @@ class RealmAccess: ModelInterface.RealmAccess{
             creating.transactionRemark= newTrxInput.TransactionRemark
             creating.transactionCategory= convertedCategory
                     creating.walletAccount= convertedAccount
+
+        }
+
+        realm.close()
+
+        //
+
+    }
+
+
+    override fun updateDetailsTrxRealm(mainContext: Context, detailsTrxInput: Transaction) {
+
+        //
+        var realm: Realm? = null
+
+        Realm.init(mainContext)
+
+        val config = RealmConfiguration.Builder()
+                .name(mainContext.getString(R.string.transactionRealm))
+                .build()
+
+        realm = Realm.getInstance(config)
+
+
+        realm!!.executeTransaction {
+
+
+            val getTrx = realm.where(TransactionRealm::class.java).equalTo(mainContext.getString(R.string.TransactionID), detailsTrxInput.TransactionID).findAll()
+
+            val gson = Gson()
+            val convertedCategory = gson.toJson(detailsTrxInput.TransactionCategory)
+            val convertedAccount = gson.toJson(detailsTrxInput.WalletAccount)
+
+
+            getTrx.forEach{
+                dataList->
+
+                dataList.transactionDate = detailsTrxInput.TransactionDate
+                dataList.transactionTime = detailsTrxInput.TransactionTime
+                dataList.transactionAmount = detailsTrxInput.TransactionAmount
+                dataList.transactionRemark = detailsTrxInput.TransactionRemark
+                dataList.transactionCategory = convertedCategory
+                dataList.walletAccount = convertedAccount
+
+            }
+        }
+
+        realm.close()
+
+    }
+
+    override fun deleteDetailsTrxRealm(mainContext: Context, transactionID: String) {
+
+        //
+        var realm: Realm? = null
+
+        Realm.init(mainContext)
+
+        val config = RealmConfiguration.Builder()
+                .name(mainContext.getString(R.string.transactionRealm))
+                .build()
+
+        realm = Realm.getInstance(config)
+
+        realm!!.executeTransaction {
+
+            val getTrx = realm.where(TransactionRealm::class.java).equalTo(mainContext.getString(R.string.TransactionID),transactionID).findAll()
+
+
+            getTrx.forEach{
+                dataList->
+
+                dataList.deleteFromRealm()
+            }
 
         }
 

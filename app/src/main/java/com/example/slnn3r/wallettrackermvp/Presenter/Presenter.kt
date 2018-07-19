@@ -961,7 +961,77 @@ class Presenter: PresenterInterface.Presenter{
     }
 
     private fun createNewTrxObservable(mainContext: Context, newTrxInput: Transaction): Observable<Unit>{
-        return Observable.defer { Observable.just(realmModel.createNewTrx(mainContext, newTrxInput)) }
+        return Observable.defer { Observable.just(realmModel.createNewTrxRealm(mainContext, newTrxInput)) }
+    }
+
+
+
+    // DetailsTrx Fragment
+
+    override fun updateDetailsTrx(mainContext: Context, detailsTrxInput: Transaction) {
+
+        updateDetailsTrxObservable(mainContext, detailsTrxInput)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(object : Observer<Unit>
+                {
+                    override fun onSubscribe(d: Disposable)
+                    {
+                    }
+
+                    override fun onNext(value: Unit)
+                    {
+                        detailsTrxView.updateDetailsTrxSuccess(mainContext)
+                    }
+
+                    override fun onError(e: Throwable)
+                    {
+                        detailsTrxView.updateDetailsTrxFail(mainContext, e.toString())
+                    }
+
+                    override fun onComplete()
+                    {
+                    }
+
+                })
+
+    }
+
+    private fun updateDetailsTrxObservable(mainContext: Context, detailsTrxInput: Transaction): Observable<Unit>{
+        return Observable.defer { Observable.just(realmModel.updateDetailsTrxRealm(mainContext, detailsTrxInput)) }
+    }
+
+    override fun deleteDetailsTrx(mainContext: Context, transactionID: String) {
+
+        deleteDetailsTrxObservable(mainContext, transactionID)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(object : Observer<Unit>
+                {
+                    override fun onSubscribe(d: Disposable)
+                    {
+                    }
+
+                    override fun onNext(value: Unit)
+                    {
+                        detailsTrxView.deleteDetailsTrxSuccess(mainContext)
+                    }
+
+                    override fun onError(e: Throwable)
+                    {
+                        detailsTrxView.deleteDetailsTrxFail(mainContext, e.toString())
+                    }
+
+                    override fun onComplete()
+                    {
+                    }
+
+                })
+
+    }
+
+    private fun deleteDetailsTrxObservable(mainContext: Context, transactionID: String): Observable<Unit>{
+        return Observable.defer { Observable.just(realmModel.deleteDetailsTrxRealm(mainContext, transactionID)) }
     }
 
 }
