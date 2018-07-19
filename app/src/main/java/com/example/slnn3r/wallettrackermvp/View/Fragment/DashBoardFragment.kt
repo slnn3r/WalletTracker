@@ -23,6 +23,7 @@ import com.jjoe64.graphview.series.DataPoint
 import com.jjoe64.graphview.series.LineGraphSeries
 import java.util.*
 import android.app.Activity
+import android.graphics.Color
 import android.support.v7.widget.RecyclerView
 import android.util.Log
 import android.view.inputmethod.InputMethodManager
@@ -110,6 +111,8 @@ class DashBoardFragment : Fragment(),ViewInterface.DashBoardView {
 
 
 
+
+
         //// Dummy Graph Setup
 
         // generate Dates
@@ -191,7 +194,6 @@ class DashBoardFragment : Fragment(),ViewInterface.DashBoardView {
 
         val categories = ArrayList<String>()
 
-
         walletAccountList.forEach {
             data->
             categories.add(data.WalletAccountName)
@@ -209,16 +211,11 @@ class DashBoardFragment : Fragment(),ViewInterface.DashBoardView {
 
 
         // Get SharedPreference saved Selection and Set to Spinner Selection
-        var count= 0
         val go = presenter.getSelectedAccount(mainContext)
 
-        walletAccountList.forEach {
-            data ->
-            if(go==data.WalletAccountName){
-                spinner.setSelection(count)
-            }
-            count+=1
-        }
+        val spinnerPosition = dataAdapter.getPosition(go)
+        spinner.setSelection(spinnerPosition)
+
 
         val UserProfile = presenter.getUserData(context!!)
 
@@ -232,6 +229,11 @@ class DashBoardFragment : Fragment(),ViewInterface.DashBoardView {
 
                 presenter.setSelectedAccount(mainContext, walletAccountList[spinner.selectedItemPosition].WalletAccountName) //Save Select Account in SharedPreference for future use
                 presenter.checkTransaction(mainContext, walletAccountList[spinner.selectedItemPosition].WalletAccountID, UserProfile.UserUID)
+
+                // display Balance
+                presenter.getAllIncome(context!!, UserProfile.UserUID, walletAccountList[spinner.selectedItemPosition].WalletAccountID)
+                presenter.getThisMonthExpense(context!!, UserProfile.UserUID, walletAccountList[spinner.selectedItemPosition].WalletAccountID)
+
             }
         }
 
@@ -262,6 +264,22 @@ class DashBoardFragment : Fragment(),ViewInterface.DashBoardView {
         Toast.makeText(mainContext,errorMessage,Toast.LENGTH_LONG).show()
 
     }
+
+
+    override fun populateCurrentBalance(mainContext: Context, currentBalance: Double) {
+
+        val currentBalanceView = (mainContext as Activity).findViewById(R.id.DBCurrentBalTextView) as TextView
+        currentBalanceView.text = "$ "+currentBalance.toString()
+        currentBalanceView.setTextColor(Color.GREEN)
+    }
+
+    override fun populateThisMonthExpense(mainContext: Context, thisMonthExpense: Double) {
+        val thisMonthExpenseView = (mainContext as Activity).findViewById(R.id.DBMonthlyExpTextView) as TextView
+        thisMonthExpenseView.text = "$ "+thisMonthExpense.toString()
+        thisMonthExpenseView.setTextColor(Color.RED)
+
+    }
+
 
 
 

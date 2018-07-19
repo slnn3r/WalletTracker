@@ -48,6 +48,9 @@ interface PresenterInterface{
         fun checkTransaction(mainContext: Context, accountID: String, userID:String)
 
 
+        fun getAllIncome(mainContext: Context, userID: String, accountID: String)
+        fun getThisMonthExpense(mainContext: Context, userID:String, accountID:String)
+
         // NewTrx Fragment
         fun createNewTrx(mainContext: Context, newTrxInput: Transaction)
 

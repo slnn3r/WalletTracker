@@ -36,6 +36,10 @@ interface ModelInterface {
         fun firstTimeRealmSetup(mainContext: Context, userID:String): WalletAccount
         fun checkTransactionRealm(mainContext: Context, accountID: String, userID:String): ArrayList<Transaction>
 
+        fun getCurrentBalanceRealm(mainContext: Context, userID: String, accountID: String): Double
+        fun getAllIncome(mainContext: Context, userID:String, accountID: String): Double
+        fun getAllExpense(mainContext: Context, userID: String, accountID: String): Double
+
         // NewTrx Fragment
         fun createNewTrxRealm(mainContext: Context, newTrxInput:Transaction)
 

@@ -284,7 +284,7 @@
         <string name="unDeletableCategory">Cannot Delete Default Category</string>
 
         <!-- Recycle View Message -->
-        <string name="noDataInDatabase">There is no data in the database</string>
+        <string name="noDataInDatabase">There is no Transaction</string>
         <string name="tabToAddTrx">Please Add New Transaction</string>
 
 

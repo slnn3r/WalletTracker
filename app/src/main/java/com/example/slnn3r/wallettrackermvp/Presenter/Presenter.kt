@@ -621,6 +621,80 @@ class Presenter: PresenterInterface.Presenter{
     }
 
 
+    override fun getAllIncome(mainContext: Context, userID: String, accountID: String) {
+
+        val accountBalance = realmModel.getCurrentBalanceRealm(mainContext, userID, accountID)
+
+        getAllIncomeObservable(mainContext, userID, accountID)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(object : Observer<Double>
+                {
+                    override fun onSubscribe(d: Disposable)
+                    {
+                    }
+
+                    override fun onNext(value: Double)
+                    {
+
+                        dashBoardView.populateCurrentBalance(mainContext, value+accountBalance)
+
+
+                    }
+
+                    override fun onError(e: Throwable)
+                    {
+
+                    }
+
+                    override fun onComplete()
+                    {
+                    }
+                })
+
+    }
+
+    private fun getAllIncomeObservable(mainContext: Context, userID: String, accountID: String): Observable<Double>{
+        return Observable.defer { Observable.just(realmModel.getAllIncome(mainContext,userID,accountID)) }
+    }
+
+
+    override fun getThisMonthExpense(mainContext: Context, userID: String, accountID: String) {
+
+        getThisMonthExpenseObservable(mainContext, userID, accountID)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(object : Observer<Double>
+                {
+                    override fun onSubscribe(d: Disposable)
+                    {
+                    }
+
+                    override fun onNext(value: Double)
+                    {
+
+                        dashBoardView.populateThisMonthExpense(mainContext, value)
+
+
+                    }
+
+                    override fun onError(e: Throwable)
+                    {
+
+                    }
+
+                    override fun onComplete()
+                    {
+                    }
+                })
+
+    }
+
+    private fun getThisMonthExpenseObservable(mainContext: Context, userID: String, accountID: String): Observable<Double>{
+        return Observable.defer { Observable.just(realmModel.getAllExpense(mainContext,userID,accountID)) }
+    }
+
+
 
 
     // ViewWalletAccount Fragment

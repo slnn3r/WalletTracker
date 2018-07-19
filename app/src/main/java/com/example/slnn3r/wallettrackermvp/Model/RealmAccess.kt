@@ -472,6 +472,127 @@ class RealmAccess: ModelInterface.RealmAccess{
     }
 
 
+    override fun getCurrentBalanceRealm(mainContext: Context, userID: String, accountID: String): Double {
+
+        //
+        var realm: Realm? = null
+
+        var balance=0.0
+
+        Realm.init(mainContext)
+
+        val config = RealmConfiguration.Builder()
+                .name(mainContext.getString(R.string.walletAccountRealm))
+                .build()
+
+        realm = Realm.getInstance(config)
+
+
+        realm!!.executeTransaction {
+
+            val getWalletAccount = realm.where(WalletAccountRealm::class.java)
+                    .equalTo(mainContext.getString(R.string.UserUID),userID)
+                    .equalTo(mainContext.getString(R.string.WalletAccountID),accountID)
+                    .findAll()
+
+            getWalletAccount.forEach{
+                dataList->
+
+                balance=dataList.walletAccountInitialBalance
+
+            }
+
+        }
+
+        realm.close()
+
+        //
+        return balance
+
+    }
+
+    override fun getAllIncome(mainContext: Context, userID: String, accountID: String): Double {
+
+        var income=0.0
+        var realm: Realm? = null
+
+        Realm.init(mainContext)
+
+        val config = RealmConfiguration.Builder()
+                .name(mainContext.getString(R.string.transactionRealm))
+                .build()
+
+        realm = Realm.getInstance(config)
+
+
+        realm!!.executeTransaction {
+
+            val getTransaction = realm.where(TransactionRealm::class.java)
+                    .findAll()
+
+
+            getTransaction.forEach { dataList ->
+
+                val gson = Gson()
+                val walletAccount = dataList.walletAccount
+                val transactionCategory = dataList.transactionCategory
+                val walletAccountData = gson.fromJson<WalletAccount>(walletAccount, WalletAccount::class.java)
+                val transactionCategoryData = gson.fromJson<TransactionCategory>(transactionCategory, TransactionCategory::class.java)
+
+                if(transactionCategoryData.TransactionCategoryType=="Income"&&walletAccountData.WalletAccountID==accountID){
+                    income+=dataList.transactionAmount
+                }
+
+            }
+        }
+
+        return income
+
+    }
+
+    override fun getAllExpense(mainContext: Context, userID: String, accountID: String): Double {
+
+        var expense=0.0
+        var realm: Realm? = null
+
+        Realm.init(mainContext)
+
+        val config = RealmConfiguration.Builder()
+                .name(mainContext.getString(R.string.transactionRealm))
+                .build()
+
+        realm = Realm.getInstance(config)
+
+
+        realm!!.executeTransaction {
+
+            val getTransaction = realm.where(TransactionRealm::class.java)
+                    .findAll()
+
+
+            getTransaction.forEach { dataList ->
+
+                val gson = Gson()
+                val walletAccount = dataList.walletAccount
+                val transactionCategory = dataList.transactionCategory
+                val walletAccountData = gson.fromJson<WalletAccount>(walletAccount, WalletAccount::class.java)
+                val transactionCategoryData = gson.fromJson<TransactionCategory>(transactionCategory, TransactionCategory::class.java)
+
+                if(transactionCategoryData.TransactionCategoryType=="Expense"&&walletAccountData.WalletAccountID==accountID){
+                    expense+=dataList.transactionAmount
+                }
+
+            }
+        }
+
+        return expense
+
+    }
+
+
+
+
+
 
     // CreateWalletAccount Fragment
 

@@ -51,6 +51,9 @@ interface ViewInterface{
         fun populateTransactionRecycleViewFail(mainContext: Context, errorMessage: String)
 
 
+        fun populateCurrentBalance(mainContext: Context, currentBalance:Double)
+        fun populateThisMonthExpense(mainContext: Context, thisMonthExpense:Double)
+
     }
 
 
