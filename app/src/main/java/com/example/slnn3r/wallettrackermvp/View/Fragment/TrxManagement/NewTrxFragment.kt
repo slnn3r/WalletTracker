@@ -56,7 +56,7 @@ class NewTrxFragment : Fragment(), ViewInterface.NewTrxView {
 
 
         simpleDateFormat = SimpleDateFormat(getString(R.string.dateFormat), Locale.US)
-        simpleTimeFormat = SimpleDateFormat(context?.getString(R.string.timeFormat))
+        simpleTimeFormat = SimpleDateFormat(context?.getString(R.string.timeFormat12))
 
         return inflater.inflate(R.layout.fragment_new_trx, container, false)
     }
@@ -185,8 +185,8 @@ class NewTrxFragment : Fragment(), ViewInterface.NewTrxView {
 
                         // store 24hour in database for ez sorting purpose
                         val notConvertedTime = NewTrxTimeInput.text.toString()
-                        val date12Format = SimpleDateFormat("hh:mm:ss a")
-                        val date24Format = SimpleDateFormat("HH:mm:ss")
+                        val date12Format = SimpleDateFormat(getString(R.string.timeFormat12))
+                        val date24Format = SimpleDateFormat(getString(R.string.timeFormat12))
                         val convertedTime = date24Format.format(date12Format.parse(notConvertedTime))
 
                         val uniqueID = UUID.randomUUID().toString()

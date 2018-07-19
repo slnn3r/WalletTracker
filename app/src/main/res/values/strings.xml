@@ -163,7 +163,9 @@
         <string name="maxAccNameInputField">15</string>
 
         <!-- Format -->
-        <string name="timeFormat">h:mm:ss a</string>
+        <string name="timeFormat12">hh:mm:ss a</string>
+        <string name="timeFormat24">HH:mm:ss</string>
+
         <string name="dateFormat">dd/MM/yy</string>
 
         <!-- Google Login -->
@@ -258,6 +260,10 @@
         <string name="deleteTrxCategoryFail">Delete Transaction Category </string>
 
         <string name="createNewTrx">New Transaction Added</string>
+
+        <string name="updateTrxDetails">Update Transaction Success</string>
+        <string name="deleteTrxDetails">Delete Transaction Success</string>
+
 
 
         <string name="loginCancel">Login Cancelled</string>

@@ -58,7 +58,7 @@ class DetailsTrxFragment : Fragment(), ViewInterface.DetailsTrxView {
         (activity as? AppCompatActivity)?.supportActionBar?.title = getString(R.string.detailsTransactionFragmentTitle)
 
         simpleDateFormat = SimpleDateFormat(getString(R.string.dateFormat), Locale.US)
-        simpleTimeFormat = SimpleDateFormat(context?.getString(R.string.timeFormat))
+        simpleTimeFormat = SimpleDateFormat(context?.getString(R.string.timeFormat12))
 
         return inflater.inflate(R.layout.fragment_details_trx, container, false)
     }
@@ -181,8 +181,8 @@ class DetailsTrxFragment : Fragment(), ViewInterface.DetailsTrxView {
 
                         // store 24hour in database for ez sorting purpose
                         val notConvertedTime = DetailsTrxTimeInput.text.toString()
-                        val date12Format = SimpleDateFormat("hh:mm:ss a")
-                        val date24Format = SimpleDateFormat("HH:mm:ss")
+                        val date12Format = SimpleDateFormat(getString(R.string.timeFormat12))
+                        val date24Format = SimpleDateFormat(getString(R.string.timeFormat24))
                         val convertedTime = date24Format.format(date12Format.parse(notConvertedTime))
 
                         var DetailsTrxInput =
@@ -350,7 +350,7 @@ class DetailsTrxFragment : Fragment(), ViewInterface.DetailsTrxView {
 
 
     override fun updateDetailsTrxSuccess(mainContext: Context) {
-        Toast.makeText(mainContext,"update", Toast.LENGTH_SHORT).show()
+        Toast.makeText(mainContext,mainContext.getString(R.string.updateTrxDetails), Toast.LENGTH_SHORT).show()
         (mainContext as Activity).onBackPressed()
 
     }
@@ -361,7 +361,7 @@ class DetailsTrxFragment : Fragment(), ViewInterface.DetailsTrxView {
 
     override fun deleteDetailsTrxSuccess(mainContext: Context) {
 
-        Toast.makeText(mainContext,"delete", Toast.LENGTH_SHORT).show()
+        Toast.makeText(mainContext,mainContext.getString(R.string.deleteTrxDetails), Toast.LENGTH_SHORT).show()
         (mainContext as Activity).onBackPressed()
     }
 
