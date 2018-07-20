@@ -60,14 +60,22 @@ class DashBoardTrxAdapter(private val homeFeed: ArrayList<Transaction>): Recycle
 
             if(video.TransactionCategory.TransactionCategoryType == holder.view.context.getString(R.string.expense)){
                 holder.view.DBTrxImageView.background = holder.view.DBTrxImageView.context.resources.getDrawable(R.drawable.fui_idp_button_background_email)
-                Picasso.get().load(R.drawable.expense_icon).into(holder.view.DBTrxImageView)
+
+                // Picasso get LAGGY and affect Navigation Drawer Animation when does not crop it, as it will load full size image
+                Picasso.get().load(R.drawable.expense_icon).resize(400,400).centerCrop().into(holder.view.DBTrxImageView)
+                //holder.view.DBTrxImageView.setImageDrawable(holder.view.DBTrxImageView.context.resources.getDrawable(R.drawable.expense_icon))
+
+
 
             }else{
-                Picasso.get().load(R.drawable.income_icon).into(holder.view.DBTrxImageView)
+
+                // Picasso get LAGGY and affect Navigation Drawer Animation when does not crop it, as it will load full size image
+                Picasso.get().load(R.drawable.income_icon).resize(400,400).centerCrop().into(holder.view.DBTrxImageView)
+                //holder.view.DBTrxImageView.setImageDrawable(holder.view.DBTrxImageView.context.resources.getDrawable(R.drawable.income_icon))
+
             }
 
         }
-
 
         holder.passData = video
     }

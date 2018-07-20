@@ -102,7 +102,7 @@ class MenuActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
     }
 
-    fun setupDrawerMode() {
+    private fun setupDrawerMode() {
         isNavigated = false
         drawer_layout.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED)
         toolbar.setNavigationIcon(R.drawable.ic_drawer_icon)
@@ -190,7 +190,7 @@ class MenuActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     }
 
 
-    fun displayUserInfo() {
+    private fun displayUserInfo() {
 
         // Get SharedPreference data
         presenter = Presenter(this)

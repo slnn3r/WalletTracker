@@ -228,6 +228,7 @@ class DashBoardFragment : Fragment(),ViewInterface.DashBoardView {
             override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
 
                 presenter.setSelectedAccount(mainContext, walletAccountList[spinner.selectedItemPosition].WalletAccountName) //Save Select Account in SharedPreference for future use
+
                 presenter.checkTransaction(mainContext, walletAccountList[spinner.selectedItemPosition].WalletAccountID, UserProfile.UserUID)
 
                 // display Balance
