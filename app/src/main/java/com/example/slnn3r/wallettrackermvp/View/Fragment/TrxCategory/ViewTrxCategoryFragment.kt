@@ -27,13 +27,10 @@ import kotlinx.android.synthetic.main.fragment_view_trx_category.*
 
 class ViewTrxCategoryFragment : Fragment(), ViewInterface.TrxCategoryView {
 
-
     private lateinit var presenter: PresenterInterface.Presenter
-
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
-
 
         (activity as? AppCompatActivity)?.supportActionBar?.title = getString(R.string.viewTrxCategoryFragmentTitle)
 
@@ -44,6 +41,37 @@ class ViewTrxCategoryFragment : Fragment(), ViewInterface.TrxCategoryView {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        presenter = Presenter(this)
+
+        hideDisplayedKeyboard(view)  // Hide Keyboard
+
+        // Get SharedPreference data
+        val userProfile = presenter.getUserData(context!!)
+        val userID = userProfile.UserUID
+
+        presenter = Presenter(this) // Populate RecycleView
+
+
+        // Listener Setter
+        VTCGoToCTC.setOnClickListener {
+            createButtonClick(view)
+        }
+
+        VTCTrxTypeSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(parentView: AdapterView<*>, selectedItemView: View?, position: Int, id: Long) {
+                trxTypeSpinnerClick(position, userID)
+            }
+
+            override fun onNothingSelected(parentView: AdapterView<*>) {
+                // your code here
+            }
+        }
+    }
+
+
+
+    // Function Implementation
+    private fun hideDisplayedKeyboard(view: View) {
         // To Hide KeyBoard
         val inputManager = view
                 .context
@@ -52,55 +80,33 @@ class ViewTrxCategoryFragment : Fragment(), ViewInterface.TrxCategoryView {
         val binder = view.windowToken
         inputManager.hideSoftInputFromWindow(binder,
                 InputMethodManager.HIDE_NOT_ALWAYS)
+    }
 
-        presenter = Presenter(this)
+    private fun createButtonClick(view: View) {
+        val navController = view.findNavController()
+        navController.navigate(R.id.action_viewTrxCategoryFragment_to_createTrxCategoryFragment)
+    }
 
-        VTCGoToCTC.setOnClickListener {
+    private fun trxTypeSpinnerClick(position: Int, userID: String){
 
-            val navController = view.findNavController()
-            navController.navigate(R.id.action_viewTrxCategoryFragment_to_createTrxCategoryFragment)
-
+        if (position >= 0) {
+            presenter.checkTransactionCategory(context!!, userID,VTCTrxTypeSpinner.selectedItem.toString())
         }
-
-
-        // Get SharedPreference data
-        presenter = Presenter(this)
-        val userProfile = presenter.getUserData(context!!)
-        val userID = userProfile.UserUID
-
-
-        VTCTrxTypeSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-            override fun onItemSelected(parentView: AdapterView<*>, selectedItemView: View?, position: Int, id: Long) {
-
-                if (position >= 0) {
-                    presenter.checkTransactionCategory(context!!, userID,VTCTrxTypeSpinner.selectedItem.toString())
-                }
-
-            }
-
-            override fun onNothingSelected(parentView: AdapterView<*>) {
-                // your code here
-            }
-
-        }
-
-
     }
 
 
+    // Presenter Callback
     override fun populateTrxCategoryRecycleView(mainContext: Context, trxCategoryList: ArrayList<TransactionCategory>) {
 
         val vTCRecyclerView = (mainContext as Activity).findViewById(R.id.VTCRecyclerView) as RecyclerView
 
         vTCRecyclerView.layoutManager = LinearLayoutManager(mainContext)
-
         vTCRecyclerView.adapter = TrxCategoryAdapter(trxCategoryList)
 
     }
 
 
     override fun populateTrxCategoryRecycleViewFail(mainContext: Context, errorMessage: String) {
-
         Toast.makeText(mainContext,errorMessage,Toast.LENGTH_LONG).show()
     }
 

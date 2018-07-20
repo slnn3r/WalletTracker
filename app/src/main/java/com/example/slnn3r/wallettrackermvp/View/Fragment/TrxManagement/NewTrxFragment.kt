@@ -28,6 +28,7 @@ import com.example.slnn3r.wallettrackermvp.Interface.PresenterInterface
 import com.example.slnn3r.wallettrackermvp.Interface.ViewInterface
 import com.example.slnn3r.wallettrackermvp.Model.ObjectClass.Transaction
 import com.example.slnn3r.wallettrackermvp.Model.ObjectClass.TransactionCategory
+import com.example.slnn3r.wallettrackermvp.Model.ObjectClass.UserProfile
 import com.example.slnn3r.wallettrackermvp.Model.ObjectClass.WalletAccount
 import com.example.slnn3r.wallettrackermvp.Presenter.Presenter
 import java.sql.Time
@@ -54,7 +55,6 @@ class NewTrxFragment : Fragment(), ViewInterface.NewTrxView {
 
         (activity as? AppCompatActivity)?.supportActionBar?.title = getString(R.string.newTrxFragmentTitle)
 
-
         simpleDateFormat = SimpleDateFormat(getString(R.string.dateFormat), Locale.US)
         simpleTimeFormat = SimpleDateFormat(context?.getString(R.string.timeFormat12))
 
@@ -67,62 +67,67 @@ class NewTrxFragment : Fragment(), ViewInterface.NewTrxView {
         presenter = Presenter(this)
         val userProfile = presenter.getUserData(context!!)
 
-        ///// Populate Account Spinner Item
+        // Setup + Populate Account Spinner Item
         presenter.checkWalletAccount(context!!, userProfile.UserUID )
 
+        // Receive Argumemt
+        val trxTypeSelection = arguments?.getString(getString(R.string.trxTypePassArgKey))
+
+        setupTrxTypeSpinner(trxTypeSelection) // Setup TrxType Spinner
+        setupDatePicker() // Setup Date Picker
+        setupTimePicker() // Setup Time picker
+
+        // Initial UI
+        setupInitialUI()
 
 
+        // Listener Setter
+        NewTrxTypeSpinner.onItemSelectedListener = object : OnItemSelectedListener {
+            override fun onItemSelected(parentView: AdapterView<*>, selectedItemView: View, position: Int, id: Long) {
+                trxTypeSpinnerClick(userProfile)
+            }
 
-        // Creating adapter for Type spinner
+            override fun onNothingSelected(parentView: AdapterView<*>) {
+                // your code here
+            }
+        }
+
+        NewTrxSubmit.setOnClickListener{
+            newTrxSubmitClick(userProfile)
+        }
+
+
+        // TextWatcher Validation
+        NewTrxAmountInput.addTextChangedListener(object: TextWatcher {
+                    override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+                        Log.d("","")
+                    }
+
+                    override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                        validateAmountInput()
+                    }
+
+                    override fun afterTextChanged(s: Editable?) {
+                        validationFinalized()
+                    }
+                })
+    }
+
+
+    // Function Implementation
+    private fun setupTrxTypeSpinner(trxTypeSelection: String?) {
         val dataAdapter = ArrayAdapter(context, android.R.layout.simple_spinner_item, resources.getStringArray(R.array.defaultTrxTypeSpinner))
         // Drop down layout style - list view with radio button
         dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
 
         NewTrxTypeSpinner.adapter = dataAdapter
 
-
-        // Receive Argumemt
-        val trxTypeSelection = arguments?.getString(getString(R.string.trxTypePassArgKey))
-
-
         // Set Transaction Type based on Argument
         val spinnerPosition = dataAdapter.getPosition(trxTypeSelection)
         NewTrxTypeSpinner.setSelection(spinnerPosition)
+    }
 
-
-
-
-        // Setup Spinner listener
-        NewTrxTypeSpinner.onItemSelectedListener = object : OnItemSelectedListener {
-            override fun onItemSelected(parentView: AdapterView<*>, selectedItemView: View, position: Int, id: Long) {
-                if(NewTrxTypeSpinner.selectedItem==getString(R.string.expense)){
-
-                    NewTrxTypeImageView.setImageDrawable(resources.getDrawable(R.drawable.expense_icon))
-                    NewTrxTypeImageView.background = resources.getDrawable(R.drawable.fui_idp_button_background_email)
-                    NewTrxSubmit.background= resources.getDrawable(R.drawable.fui_idp_button_background_email)
-
-                    presenter.checkTransactionCategory(context!!, userProfile.UserUID, NewTrxTypeSpinner.selectedItem.toString())
-
-                }else{
-                    NewTrxTypeImageView.setImageDrawable(resources.getDrawable(R.drawable.income_icon))
-                    NewTrxTypeImageView.background = resources.getDrawable(R.drawable.fui_idp_button_background_phone)
-                    NewTrxSubmit.background= resources.getDrawable(R.drawable.fui_idp_button_background_phone)
-
-                    presenter.checkTransactionCategory(context!!, userProfile.UserUID, NewTrxTypeSpinner.selectedItem.toString())
-
-                }
-
-            }
-
-            override fun onNothingSelected(parentView: AdapterView<*>) {
-                // your code here
-            }
-
-        }
-
-
-
-        // Setup Date Picker
+    private fun setupDatePicker() {
         val date = DatePickerDialog.OnDateSetListener { view, year, monthOfYear, dayOfMonth ->
             myCalendar.set(Calendar.YEAR, year)
             myCalendar.set(Calendar.MONTH, monthOfYear)
@@ -132,37 +137,33 @@ class NewTrxFragment : Fragment(), ViewInterface.NewTrxView {
 
         NewTrxDateInput.setOnClickListener {
 
-                DatePickerDialog(context, date, myCalendar
-                        .get(Calendar.YEAR), myCalendar.get(Calendar.MONTH),
-                        myCalendar.get(Calendar.DAY_OF_MONTH)).show()
+            DatePickerDialog(context, date, myCalendar
+                    .get(Calendar.YEAR), myCalendar.get(Calendar.MONTH),
+                    myCalendar.get(Calendar.DAY_OF_MONTH)).show()
 
         }
 
         // Initial Date
         NewTrxDateInput.setText(simpleDateFormat.format(myCalendar.time))
+    }
 
+    private fun setupTimePicker() {
 
-
-        // Setup Time picker
         NewTrxTimeInput.setOnClickListener{
 
             val mTimePicker: TimePickerDialog
 
             mTimePicker = TimePickerDialog(context, TimePickerDialog.OnTimeSetListener { timePicker, selectedHour, selectedMinute ->
 
-
                 val time = Time(selectedHour, selectedMinute, 0)
                 var s = simpleTimeFormat.format(time)
 
-
                 NewTrxTimeInput.setText(s)
 
-
-                }, hour, minute, false)//Yes 24 hour time
-                mTimePicker.show()
+            }, hour, minute, false)//Yes 24 hour time
+            mTimePicker.show()
 
         }
-
 
         val second = mcurrentTime.get(Calendar.SECOND)
 
@@ -172,84 +173,85 @@ class NewTrxFragment : Fragment(), ViewInterface.NewTrxView {
         //format takes in a Date, and Time is a sublcass of Date
         val s = simpleTimeFormat.format(time)
         NewTrxTimeInput.setText(s)
+    }
 
+    private fun trxTypeSpinnerClick(userProfile: UserProfile) {
+        if(NewTrxTypeSpinner.selectedItem==getString(R.string.expense)){
 
+            NewTrxTypeImageView.setImageDrawable(resources.getDrawable(R.drawable.expense_icon))
+            NewTrxTypeImageView.background = resources.getDrawable(R.drawable.fui_idp_button_background_email)
+            NewTrxSubmit.background= resources.getDrawable(R.drawable.fui_idp_button_background_email)
 
-        // Setup Button
-        NewTrxSubmit.setOnClickListener{
+            presenter.checkTransactionCategory(context!!, userProfile.UserUID, NewTrxTypeSpinner.selectedItem.toString())
 
-                        // get the Transaction Category 1st, then get the wallet account id, only then start to build the NewTransaction Data
+        }else{
+            NewTrxTypeImageView.setImageDrawable(resources.getDrawable(R.drawable.income_icon))
+            NewTrxTypeImageView.background = resources.getDrawable(R.drawable.fui_idp_button_background_phone)
+            NewTrxSubmit.background= resources.getDrawable(R.drawable.fui_idp_button_background_phone)
 
-                        var selectedTrxCategory = presenter.getCategoryDataByName(context!!, userProfile.UserUID, NewTrxCategorySpinner.selectedItem.toString())
-                        var selectedWalletAccount = presenter.getAccountDataByName(context!!, userProfile.UserUID, NewTrxSelectedAccSpinner.selectedItem.toString())
-
-                        // store 24hour in database for ez sorting purpose
-                        val notConvertedTime = NewTrxTimeInput.text.toString()
-                        val date12Format = SimpleDateFormat(getString(R.string.timeFormat12))
-                        val date24Format = SimpleDateFormat(getString(R.string.timeFormat12))
-                        val convertedTime = date24Format.format(date12Format.parse(notConvertedTime))
-
-                        val uniqueID = UUID.randomUUID().toString()
-                        var newTrxInput =
-
-                                Transaction(
-                                        uniqueID,NewTrxDateInput.text.toString()
-                                        ,convertedTime
-                                        ,NewTrxAmountInput.text.toString().toDouble()
-                                        ,NewTrxRemarksInput.text.toString()
-                                        ,selectedTrxCategory
-                                        ,selectedWalletAccount
-                                )
-
-                        presenter.createNewTrx(context!!,newTrxInput)
-
+            presenter.checkTransactionCategory(context!!, userProfile.UserUID, NewTrxTypeSpinner.selectedItem.toString())
 
         }
+    }
 
-        // TextWatcher Validation
-        NewTrxAmountInput.error=getString(R.string.promptToEnter)
+    private fun newTrxSubmitClick(userProfile: UserProfile) {
 
-        NewTrxAmountInput.addTextChangedListener(object: TextWatcher {
-                    override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
-                        Log.d("","")
+        // get the Transaction Category 1st, then get the wallet account id, only then start to build the NewTransaction Data
+        var selectedTrxCategory = presenter.getCategoryDataByName(context!!, userProfile.UserUID, NewTrxCategorySpinner.selectedItem.toString())
+        var selectedWalletAccount = presenter.getAccountDataByName(context!!, userProfile.UserUID, NewTrxSelectedAccSpinner.selectedItem.toString())
 
-                    }
+        // store 24hour in database for ez sorting purpose
+        val notConvertedTime = NewTrxTimeInput.text.toString()
+        val date12Format = SimpleDateFormat(getString(R.string.timeFormat12))
+        val date24Format = SimpleDateFormat(getString(R.string.timeFormat12))
+        val convertedTime = date24Format.format(date12Format.parse(notConvertedTime))
 
-                    override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+        val uniqueID = UUID.randomUUID().toString()
+        var newTrxInput =
 
-                        // Force 2 Decimal Input only (SOLVED)
-                        val text = NewTrxAmountInput.text.toString()
-                        if (text.contains(".") && text.substring(text.indexOf(".") + 1).length > 2) {
-                            NewTrxAmountInput.setText(text.substring(0, text.length - 1))
-                            NewTrxAmountInput.setSelection(NewTrxAmountInput.text.length)
-                        }
+                Transaction(
+                        uniqueID,NewTrxDateInput.text.toString()
+                        ,convertedTime
+                        ,NewTrxAmountInput.text.toString().toDouble()
+                        ,NewTrxRemarksInput.text.toString()
+                        ,selectedTrxCategory
+                        ,selectedWalletAccount
+                )
 
-                        val validationResult = presenter.walletAccountBalanceValidation(context!!,text)
-
-                        if(validationResult!=null){
-                            NewTrxSubmit.isEnabled = false
-                        }
-
-                        NewTrxAmountInput.error=validationResult
-                    }
-
-                    override fun afterTextChanged(s: Editable?) {
-
-                        if(NewTrxAmountInput.error==null){
-                            NewTrxSubmit.isEnabled = true
-                        }
-
-                    }
-
-                })
-
-
-        NewTrxSubmit.isEnabled = false
+        presenter.createNewTrx(context!!,newTrxInput)
 
     }
 
+    private fun setupInitialUI() {
+        NewTrxSubmit.isEnabled = false
+        NewTrxAmountInput.error=getString(R.string.promptToEnter)
+    }
+
+    private fun validateAmountInput(){
+        // Force 2 Decimal Input only (SOLVED)
+        val text = NewTrxAmountInput.text.toString()
+        if (text.contains(".") && text.substring(text.indexOf(".") + 1).length > 2) {
+            NewTrxAmountInput.setText(text.substring(0, text.length - 1))
+            NewTrxAmountInput.setSelection(NewTrxAmountInput.text.length)
+        }
+
+        val validationResult = presenter.walletAccountBalanceValidation(context!!,text)
+
+        if(validationResult!=null){
+            NewTrxSubmit.isEnabled = false
+        }
+
+        NewTrxAmountInput.error=validationResult
+    }
+
+    private fun validationFinalized(){
+        if(NewTrxAmountInput.error==null){
+            NewTrxSubmit.isEnabled = true
+        }
+    }
 
 
+    // Presenter Callback
     override fun populateNewTrxCategorySpinner(mainContext: Context, trxCategoryList: ArrayList<TransactionCategory>) {
 
         val spinnerItem = ArrayList<String>()

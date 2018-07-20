@@ -47,6 +47,8 @@ interface PresenterInterface{
         fun firstTimeDatabaseSetup(mainContext: Context, userID:String)
         fun checkTransaction(mainContext: Context, accountID: String, userID:String)
 
+        // !!!! U need some Synchronous Callback get the All Income, get the All Expense
+        // Get all Expense, then filter by this Month
 
         fun getAllIncome(mainContext: Context, userID: String, accountID: String)
         fun getThisMonthExpense(mainContext: Context, userID:String, accountID:String)

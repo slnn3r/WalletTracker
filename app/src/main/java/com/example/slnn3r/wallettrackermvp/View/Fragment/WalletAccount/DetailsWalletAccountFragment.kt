@@ -43,84 +43,46 @@ class DetailsWalletAccountFragment : Fragment(), ViewInterface.DetailsWalletAcco
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        ///////
+        presenter = Presenter(this)
+
         // Receive Argumemt
         val walletAccountSelection = arguments?.getString(getString(R.string.walletAccountPassArgKey))
 
         // user GSON convert to object
         val gson = Gson()
-
         val walletAccount = gson.fromJson<WalletAccount>(walletAccountSelection, WalletAccount::class.java)
 
-        DWAAccNameInput.setText(walletAccount.WalletAccountName)
-        DWAAccBalanceInput.setText(walletAccount.WalletAccountInitialBalance.toString())
+        // Initial UI
+        setupInitialUI(walletAccount)
 
-        if(walletAccount.WalletAccountStatus==getString(R.string.statusDefault)){
-            DWADeleteSubmit.isEnabled = false
-            DWADeleteSubmit.text = getString(R.string.unDeletableAccount)
-        }
-
-        ///////
-
-        presenter = Presenter(this)
 
         // for database validation (no same name input)
         val userID = presenter.getUserData(context!!)
         val accountNameList = presenter.getAccountData(context!!,userID.UserUID)
 
+
+        // Listener Setter
         DWAUpdateSubmit.setOnClickListener{
-
-            alertDialog.confirmationDialog(context!!,getString(R.string.dialogTitleUpdateAccount),getString(R.string.dialogMessageUpdateAccount),resources.getDrawable(android.R.drawable.ic_dialog_info),
-                    DialogInterface.OnClickListener { dialogBox, which ->
-
-                        val walletAccountInput = WalletAccount(walletAccount.WalletAccountID,DWAAccNameInput.text.toString(),DWAAccBalanceInput.text.toString().toDouble(),walletAccount.UserUID,walletAccount.WalletAccountStatus)
-
-                        presenter.updateWalletAccount(context!!, walletAccountInput)
-
-                    }).show()
-
+            updateSubmitClick(walletAccount)
         }
 
         DWADeleteSubmit.setOnClickListener{
-
-            alertDialog.confirmationDialog(context!!,getString(R.string.dialogTitleDeleteAccount),getString(R.string.dialogMessageDeleteAccount),resources.getDrawable(android.R.drawable.ic_dialog_alert),
-                    DialogInterface.OnClickListener { dialogBox, which ->
-
-                        presenter.deleteWalletAccount(context!!, walletAccount.WalletAccountID)
-
-                    }).show()
-
+            deleteSubmitClick(walletAccount)
         }
 
 
         //// TextWatcher Validation
-
         DWAAccNameInput.addTextChangedListener(object: TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
                 Log.d("","")
-
             }
 
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-
-                val validationResult = presenter.walletAccountNameValidation(context!!,DWAAccNameInput.text.toString(),accountNameList,walletAccount.WalletAccountID)
-
-                if(validationResult!=null){
-                    DWAUpdateSubmit.isEnabled = false
-                }
-
-                DWAAccNameInput.error=validationResult
-
-
+                validateAccNameInput(accountNameList, walletAccount)
             }
 
             override fun afterTextChanged(s: Editable?) {
-
-                if(DWAAccNameInput.error==null && DWAAccBalanceInput.error==null){
-                    DWAUpdateSubmit.isEnabled = true
-
-                }
-
+                validationFinalized()
             }
 
         })
@@ -132,33 +94,11 @@ class DetailsWalletAccountFragment : Fragment(), ViewInterface.DetailsWalletAcco
             }
 
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-
-                val text = DWAAccBalanceInput.text.toString()
-                if (text.contains(".") && text.substring(text.indexOf(".") + 1).length > 2) {
-                    DWAAccBalanceInput.setText(text.substring(0, text.length - 1))
-                    DWAAccBalanceInput.setSelection(DWAAccBalanceInput.text.length)
-                }         // issue, number input not 2 decimal place (SOLVED)
-
-
-                val validationResult = presenter.walletAccountBalanceValidation(context!!,text)
-
-                if(validationResult!=null){
-                    DWAUpdateSubmit.isEnabled = false
-                }
-
-                DWAAccBalanceInput.error=validationResult
-
-
+                validateAccBalanceInput()
             }
 
             override fun afterTextChanged(s: Editable?) {
-
-                if(DWAAccNameInput.error==null && DWAAccBalanceInput.error==null){
-                    DWAUpdateSubmit.isEnabled = true
-
-                }
-
-
+                validationFinalized()
             }
 
         })
@@ -167,6 +107,77 @@ class DetailsWalletAccountFragment : Fragment(), ViewInterface.DetailsWalletAcco
     }
 
 
+    // Function Implementation
+    private fun setupInitialUI(walletAccount: WalletAccount) {
+
+        DWAAccNameInput.setText(walletAccount.WalletAccountName)
+        DWAAccBalanceInput.setText(walletAccount.WalletAccountInitialBalance.toString())
+
+        if(walletAccount.WalletAccountStatus==getString(R.string.statusDefault)){
+            DWADeleteSubmit.isEnabled = false
+            DWADeleteSubmit.text = getString(R.string.unDeletableAccount)
+        }
+
+    }
+
+    private fun updateSubmitClick(walletAccount: WalletAccount) {
+
+        alertDialog.confirmationDialog(context!!,getString(R.string.dialogTitleUpdateAccount),getString(R.string.dialogMessageUpdateAccount),resources.getDrawable(android.R.drawable.ic_dialog_info),
+                DialogInterface.OnClickListener { dialogBox, which ->
+
+                    val walletAccountInput = WalletAccount(walletAccount.WalletAccountID,DWAAccNameInput.text.toString(),DWAAccBalanceInput.text.toString().toDouble(),walletAccount.UserUID,walletAccount.WalletAccountStatus)
+
+                    presenter.updateWalletAccount(context!!, walletAccountInput)
+
+                }).show()
+    }
+
+    private fun deleteSubmitClick(walletAccount: WalletAccount) {
+
+        alertDialog.confirmationDialog(context!!,getString(R.string.dialogTitleDeleteAccount),getString(R.string.dialogMessageDeleteAccount),resources.getDrawable(android.R.drawable.ic_dialog_alert),
+                DialogInterface.OnClickListener { dialogBox, which ->
+
+                    presenter.deleteWalletAccount(context!!, walletAccount.WalletAccountID)
+
+                }).show()
+    }
+
+    private fun validateAccNameInput(accountNameList: ArrayList<WalletAccount>, walletAccount: WalletAccount) {
+
+        val validationResult = presenter.walletAccountNameValidation(context!!,DWAAccNameInput.text.toString(),accountNameList,walletAccount.WalletAccountID)
+
+        if(validationResult!=null){
+            DWAUpdateSubmit.isEnabled = false
+        }
+
+        DWAAccNameInput.error=validationResult
+    }
+
+    private fun validationFinalized(){
+        if(DWAAccNameInput.error==null && DWAAccBalanceInput.error==null){
+            DWAUpdateSubmit.isEnabled = true
+        }
+    }
+
+    private fun validateAccBalanceInput(){
+        val text = DWAAccBalanceInput.text.toString()
+        if (text.contains(".") && text.substring(text.indexOf(".") + 1).length > 2) {
+            DWAAccBalanceInput.setText(text.substring(0, text.length - 1))
+            DWAAccBalanceInput.setSelection(DWAAccBalanceInput.text.length)
+        }         // issue, number input not 2 decimal place (SOLVED)
+
+
+        val validationResult = presenter.walletAccountBalanceValidation(context!!,text)
+
+        if(validationResult!=null){
+            DWAUpdateSubmit.isEnabled = false
+        }
+
+        DWAAccBalanceInput.error=validationResult
+    }
+
+
+    // Presenter Callback
     override fun updateWalletAccountSuccess(mainContext: Context) {
 
         Toast.makeText(mainContext,mainContext.getString(R.string.updateWalletAccountSuccess),Toast.LENGTH_LONG).show()
@@ -177,7 +188,6 @@ class DetailsWalletAccountFragment : Fragment(), ViewInterface.DetailsWalletAcco
     override fun updateWalletAccountFail(mainContext: Context, errorMessage: String) {
 
         Toast.makeText(mainContext,mainContext.getString(R.string.updateWalletAccountFail)+errorMessage,Toast.LENGTH_LONG).show()
-
     }
 
     override fun deleteWalletAccountSuccess(mainContext: Context) {

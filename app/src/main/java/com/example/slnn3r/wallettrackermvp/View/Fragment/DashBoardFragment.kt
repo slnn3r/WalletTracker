@@ -25,11 +25,9 @@ import java.util.*
 import android.app.Activity
 import android.graphics.Color
 import android.support.v7.widget.RecyclerView
-import android.util.Log
 import android.view.inputmethod.InputMethodManager
 import android.widget.*
 import com.example.slnn3r.wallettrackermvp.Model.ObjectClass.Transaction
-import com.example.slnn3r.wallettrackermvp.Model.ObjectClass.UserProfile
 import kotlin.collections.ArrayList
 
 
@@ -48,23 +46,35 @@ class DashBoardFragment : Fragment(),ViewInterface.DashBoardView {
     }
 
 
-
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-
         presenter = Presenter(this)
 
-
+        hideDisplayedKeyboard(view) // Hide Keyboard
+        displayDummyGraph() // Dummy Graph Setup
 
         // Get SharedPreference data
         val userProfile = presenter.getUserData(context!!)
         val userID = userProfile.UserUID
 
+        // Display Account Selection to Spinner
         presenter.checkWalletAccount(context!!, userID )
 
 
+        // Listener Setter
+        DBIncomeFab.setOnClickListener{
+            onIncomeButtonClick(view, userID)
+        }
+
+        DBExpenseFab.setOnClickListener{
+            onExpenseButtonClick(view, userID)
+        }
+    }
+
+
+    // Function Implementation
+    private fun hideDisplayedKeyboard(view: View) {
 
         // To Hide KeyBoard
         val inputManager = view
@@ -74,47 +84,41 @@ class DashBoardFragment : Fragment(),ViewInterface.DashBoardView {
         val binder = view.windowToken
         inputManager.hideSoftInputFromWindow(binder,
                 InputMethodManager.HIDE_NOT_ALWAYS)
+    }
 
-        DBIncomeFab.setOnClickListener{
-            val walletAccountData = presenter.getAccountData(context!!, userID)
+    private fun onIncomeButtonClick(view: View, userID: String) {
 
-            val navController = view.findNavController()
+        val walletAccountData = presenter.getAccountData(context!!, userID)
 
-            val bundle = Bundle()
-            bundle.putString(getString(R.string.trxTypePassArgKey), getString(R.string.income))
-            bundle.putString(getString(R.string.walletAccountPassArgKey), walletAccountData[DBAccountSpinner.selectedItemPosition].WalletAccountName)
+        val navController = view.findNavController()
 
-            navController.navigate(R.id.action_dashBoardFragment_to_addNewTrx, bundle)
+        val bundle = Bundle()
+        bundle.putString(getString(R.string.trxTypePassArgKey), getString(R.string.income))
+        bundle.putString(getString(R.string.walletAccountPassArgKey), walletAccountData[DBAccountSpinner.selectedItemPosition].WalletAccountName)
 
-            (activity as MenuActivity).setupNavigationMode()
+        navController.navigate(R.id.action_dashBoardFragment_to_addNewTrx, bundle)
 
+        (activity as MenuActivity).setupNavigationMode()
+    }
 
-        }
+    private fun onExpenseButtonClick(view: View, userID: String) {
 
+        val walletAccountData = presenter.getAccountData(context!!, userID)
 
-        DBExpenseFab.setOnClickListener{
-            val walletAccountData = presenter.getAccountData(context!!, userID)
+        val navController = view.findNavController()
 
-            val navController = view.findNavController()
-
-            val bundle = Bundle()
-            bundle.putString(getString(R.string.trxTypePassArgKey), getString(R.string.expense))
-            bundle.putString(getString(R.string.walletAccountPassArgKey), walletAccountData[DBAccountSpinner.selectedItemPosition].WalletAccountName)
-
-
-            navController.navigate(R.id.action_dashBoardFragment_to_addNewTrx,bundle)
-
-            (activity as MenuActivity).setupNavigationMode()
+        val bundle = Bundle()
+        bundle.putString(getString(R.string.trxTypePassArgKey), getString(R.string.expense))
+        bundle.putString(getString(R.string.walletAccountPassArgKey), walletAccountData[DBAccountSpinner.selectedItemPosition].WalletAccountName)
 
 
-        }
+        navController.navigate(R.id.action_dashBoardFragment_to_addNewTrx,bundle)
 
+        (activity as MenuActivity).setupNavigationMode()
 
+    }
 
-
-
-        //// Dummy Graph Setup
-
+    private fun displayDummyGraph() {
         // generate Dates
         val calendar = Calendar.getInstance()
 
@@ -137,7 +141,7 @@ class DashBoardFragment : Fragment(),ViewInterface.DashBoardView {
 
         // you can directly pass Date objects to DataPoint-Constructor
         // this will convert the Date to double via Date#getTime()
-        val series = LineGraphSeries<DataPoint>(arrayOf<DataPoint>(DataPoint(d1, 55.0), DataPoint(d2, 23.0), DataPoint(d3, 3.0), DataPoint(d4, 13.0),DataPoint(d5, 8.0)))
+        val series = LineGraphSeries<DataPoint>(arrayOf<DataPoint>(DataPoint(d1, 34.0), DataPoint(d2, 23.0), DataPoint(d3, 5.0), DataPoint(d4, 13.0),DataPoint(d5, 8.0)))
 
         graph.addSeries(series)
 
@@ -153,15 +157,11 @@ class DashBoardFragment : Fragment(),ViewInterface.DashBoardView {
         // as we use dates as labels, the human rounding to nice readable numbers
         // is not necessary
         graph.gridLabelRenderer.setHumanRounding(false)
-        ////
-
-
-
 
     }
 
 
-    //// In Progress
+    //// Presenter Callback
     override fun firstTimeSetup(mainContext: Context) {
 
         // Get SharedPreference data
