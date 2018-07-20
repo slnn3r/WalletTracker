@@ -9,15 +9,17 @@ import androidx.navigation.findNavController
 import com.example.slnn3r.wallettrackermvp.Model.ObjectClass.TransactionCategory
 import com.example.slnn3r.wallettrackermvp.R
 import com.google.gson.Gson
+import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.fragment_view_trx_category.view.*
+import kotlinx.android.synthetic.main.trx_category_list_row.view.*
 import kotlinx.android.synthetic.main.wallet_account_list_row.view.*
 
-class TrxCategoryAdapter(private val homeFeed: ArrayList<TransactionCategory>): RecyclerView.Adapter<TrxCategoryViewHolder>(){
+class TrxCategoryAdapter(private val transactionCategoryList: ArrayList<TransactionCategory>): RecyclerView.Adapter<TrxCategoryViewHolder>(){
 
 
     // numberOfItems
     override  fun getItemCount(): Int{
-        return homeFeed.count()
+        return transactionCategoryList.count()
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TrxCategoryViewHolder {
@@ -31,12 +33,33 @@ class TrxCategoryAdapter(private val homeFeed: ArrayList<TransactionCategory>): 
 
     override fun onBindViewHolder(holder: TrxCategoryViewHolder, position: Int) {
 
-        val spinner = holder.view.VTCTrxTypeSpinner
-        val video = homeFeed[position]
+        /*
+        onBindHolder called several times as recycler news needs a view unless new one. So each time you set visilibity in child views, other views states are also changes.
+        Whenever you scroll up and down, these views are getting re-drawed with wrong visibility options. SO USE setIsRecyclable(false)
+         */
+        holder.setIsRecyclable(false)
 
-        holder.view.VWAAccNameTextView.text = video.TransactionCategoryName
+        val transactionCategoryData = transactionCategoryList[position]
 
-        holder.passData = video
+        holder.view.VTCAccNameTextView.text = transactionCategoryData.TransactionCategoryName
+
+        if(transactionCategoryData.TransactionCategoryType == holder.view.context.getString(R.string.expense)){
+            holder.view.VTCImageView.background = holder.view.VTCImageView.context.resources.getDrawable(R.drawable.fui_idp_button_background_email)
+
+            // Picasso get LAGGY and affect Navigation Drawer Animation when does not crop it, as it will load full size image
+            Picasso.get().load(R.drawable.expense_icon).resize(400,400).centerCrop().into(holder.view.VTCImageView)
+            //holder.view.DBTrxImageView.setImageDrawable(holder.view.DBTrxImageView.context.resources.getDrawable(R.drawable.expense_icon))
+
+        }else{
+
+            // Picasso get LAGGY and affect Navigation Drawer Animation when does not crop it, as it will load full size image
+            Picasso.get().load(R.drawable.income_icon).resize(400,400).centerCrop().into(holder.view.VTCImageView)
+            //holder.view.DBTrxImageView.setImageDrawable(holder.view.DBTrxImageView.context.resources.getDrawable(R.drawable.income_icon))
+
+        }
+
+
+        holder.passData = transactionCategoryData
 
 
     }

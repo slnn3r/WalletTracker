@@ -229,6 +229,9 @@ class DashBoardFragment : Fragment(),ViewInterface.DashBoardView {
 
                 presenter.setSelectedAccount(mainContext, walletAccountList[spinner.selectedItemPosition].WalletAccountName) //Save Select Account in SharedPreference for future use
 
+
+                //!!!!!!! LOAD TRX LIST, BALANCE FIGURE IS HERE
+
                 presenter.checkTransaction(mainContext, walletAccountList[spinner.selectedItemPosition].WalletAccountID, UserProfile.UserUID)
 
                 // display Balance
@@ -238,14 +241,11 @@ class DashBoardFragment : Fragment(),ViewInterface.DashBoardView {
             }
         }
 
-
-
     }
 
     override fun populateWalletAccountSpinnerFail(mainContext: Context, errorMessage: String) {
 
         Toast.makeText(mainContext,errorMessage,Toast.LENGTH_LONG).show()
-
     }
 
 
@@ -256,14 +256,11 @@ class DashBoardFragment : Fragment(),ViewInterface.DashBoardView {
         
         dBTrxRecyclerView.layoutManager = LinearLayoutManager(mainContext)
         dBTrxRecyclerView.adapter = DashBoardTrxAdapter(transactionList)
-
-
     }
 
     override fun populateTransactionRecycleViewFail(mainContext: Context, errorMessage: String) {
 
         Toast.makeText(mainContext,errorMessage,Toast.LENGTH_LONG).show()
-
     }
 
 
@@ -275,10 +272,10 @@ class DashBoardFragment : Fragment(),ViewInterface.DashBoardView {
     }
 
     override fun populateThisMonthExpense(mainContext: Context, thisMonthExpense: Double) {
+
         val thisMonthExpenseView = (mainContext as Activity).findViewById(R.id.DBMonthlyExpTextView) as TextView
         thisMonthExpenseView.text = "$ "+thisMonthExpense.toString()
         thisMonthExpenseView.setTextColor(Color.RED)
-
     }
 
 

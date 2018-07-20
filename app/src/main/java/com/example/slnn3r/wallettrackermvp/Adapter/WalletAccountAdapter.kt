@@ -12,12 +12,12 @@ import com.google.gson.Gson
 import kotlinx.android.synthetic.main.wallet_account_list_row.view.*
 
 
-class WalletAccountAdapter(private val homeFeed: ArrayList<WalletAccount>): RecyclerView.Adapter<WalletAccountViewHolder>(){
+class WalletAccountAdapter(private val walletAccountList: ArrayList<WalletAccount>): RecyclerView.Adapter<WalletAccountViewHolder>(){
 
 
     // numberOfItems
     override  fun getItemCount(): Int{
-        return homeFeed.count()
+        return walletAccountList.count()
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): WalletAccountViewHolder {
@@ -30,11 +30,17 @@ class WalletAccountAdapter(private val homeFeed: ArrayList<WalletAccount>): Recy
 
     override fun onBindViewHolder(holder: WalletAccountViewHolder, position: Int) {
 
-        val video = homeFeed[position]
+        /*
+        onBindHolder called several times as recycler news needs a view unless new one. So each time you set visilibity in child views, other views states are also changes.
+        Whenever you scroll up and down, these views are getting re-drawed with wrong visibility options. SO USE setIsRecyclable(false)
+         */
+        holder.setIsRecyclable(false)
 
-        holder.view.VWAAccNameTextView.text = video.WalletAccountName
+        val walletAccountData = walletAccountList[position]
 
-        holder.passData = video
+        holder.view.VWAAccNameTextView.text = walletAccountData.WalletAccountName
+
+        holder.passData = walletAccountData
 
     }
 
@@ -59,8 +65,6 @@ class WalletAccountViewHolder(val view: View, var passData: WalletAccount?= null
                 navController.navigate(R.id.action_viewWalletAccountFragment_to_detailsWalletAccountFragment, bundle)
 
             }
-
-
 
         }
     }

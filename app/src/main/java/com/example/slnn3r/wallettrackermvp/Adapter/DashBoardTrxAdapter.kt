@@ -17,12 +17,12 @@ import com.google.gson.Gson
 import com.squareup.picasso.Picasso
 
 
-class DashBoardTrxAdapter(private val homeFeed: ArrayList<Transaction>): RecyclerView.Adapter<DashBoardViewHolder>(){
+class DashBoardTrxAdapter(private val transactionList: ArrayList<Transaction>): RecyclerView.Adapter<DashBoardViewHolder>(){
 
 
     // numberOfItems
     override  fun getItemCount(): Int{
-        return homeFeed.count()
+        return transactionList.count()
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): DashBoardViewHolder {
@@ -42,30 +42,28 @@ class DashBoardTrxAdapter(private val homeFeed: ArrayList<Transaction>): Recycle
          */
         holder.setIsRecyclable(false)
 
-        val video = homeFeed[position]
+        val transactionData = transactionList[position]
 
-        if(video.TransactionDate == holder.view.context.getString(R.string.noResult)){
+        if(transactionData.TransactionDate == holder.view.context.getString(R.string.noResult)){
 
 
             Picasso.get().load(R.drawable.not_found).into(holder.view.DBTrxImageView)
-            holder.view.DBAccNameTextView.text = video.TransactionDate
+            holder.view.DBAccNameTextView.text = transactionData.TransactionDate
             holder.view.DBBalTextView.text = holder.view.context.getString(R.string.noDataInDatabase)
             holder.view.DBTrxCategoryTextView.text = holder.view.context.getString(R.string.tabToAddTrx)
 
         }else{
 
-            holder.view.DBAccNameTextView.text = video.TransactionDate + " (" +video.TransactionTime+")"
-            holder.view.DBBalTextView.text = video.TransactionCategory.TransactionCategoryName
-            holder.view.DBTrxCategoryTextView.text = "$ " + video.TransactionAmount
+            holder.view.DBAccNameTextView.text = transactionData.TransactionDate + " (" +transactionData.TransactionTime+")"
+            holder.view.DBBalTextView.text = transactionData.TransactionCategory.TransactionCategoryName
+            holder.view.DBTrxCategoryTextView.text = "$ " + transactionData.TransactionAmount
 
-            if(video.TransactionCategory.TransactionCategoryType == holder.view.context.getString(R.string.expense)){
+            if(transactionData.TransactionCategory.TransactionCategoryType == holder.view.context.getString(R.string.expense)){
                 holder.view.DBTrxImageView.background = holder.view.DBTrxImageView.context.resources.getDrawable(R.drawable.fui_idp_button_background_email)
 
                 // Picasso get LAGGY and affect Navigation Drawer Animation when does not crop it, as it will load full size image
                 Picasso.get().load(R.drawable.expense_icon).resize(400,400).centerCrop().into(holder.view.DBTrxImageView)
                 //holder.view.DBTrxImageView.setImageDrawable(holder.view.DBTrxImageView.context.resources.getDrawable(R.drawable.expense_icon))
-
-
 
             }else{
 
@@ -77,7 +75,7 @@ class DashBoardTrxAdapter(private val homeFeed: ArrayList<Transaction>): Recycle
 
         }
 
-        holder.passData = video
+        holder.passData = transactionData
     }
 
 }
