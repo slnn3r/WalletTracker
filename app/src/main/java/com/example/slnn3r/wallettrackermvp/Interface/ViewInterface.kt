@@ -2,8 +2,6 @@ package com.example.slnn3r.wallettrackermvp.Interface
 
 import android.app.ProgressDialog
 import android.content.Context
-import android.content.Intent
-import android.support.v4.app.FragmentActivity
 import com.example.slnn3r.wallettrackermvp.Model.ObjectClass.Transaction
 import com.example.slnn3r.wallettrackermvp.Model.ObjectClass.TransactionCategory
 import com.example.slnn3r.wallettrackermvp.Model.ObjectClass.WalletAccount

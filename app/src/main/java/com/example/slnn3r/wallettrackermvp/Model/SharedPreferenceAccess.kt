@@ -3,7 +3,6 @@ package com.example.slnn3r.wallettrackermvp.Model
 import android.content.Context
 import android.support.v7.app.AppCompatActivity
 import com.example.slnn3r.wallettrackermvp.Interface.ModelInterface
-import com.example.slnn3r.wallettrackermvp.Interface.PresenterInterface
 import com.example.slnn3r.wallettrackermvp.Model.ObjectClass.UserProfile
 import com.example.slnn3r.wallettrackermvp.R
 import com.google.gson.Gson

@@ -10,9 +10,7 @@ import com.example.slnn3r.wallettrackermvp.Model.ObjectClass.TransactionCategory
 import com.example.slnn3r.wallettrackermvp.R
 import com.google.gson.Gson
 import com.squareup.picasso.Picasso
-import kotlinx.android.synthetic.main.fragment_view_trx_category.view.*
 import kotlinx.android.synthetic.main.trx_category_list_row.view.*
-import kotlinx.android.synthetic.main.wallet_account_list_row.view.*
 
 class TrxCategoryAdapter(private val transactionCategoryList: ArrayList<TransactionCategory>): RecyclerView.Adapter<TrxCategoryViewHolder>(){
 

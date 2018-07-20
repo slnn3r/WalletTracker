@@ -763,17 +763,16 @@ class RealmAccess: ModelInterface.RealmAccess{
                 val incomeType = mainContext.getString(R.string.income)
                 val expenseType = mainContext.getString(R.string.expense)
 
-                if(filterSelection == incomeType){
-                    getTransactionCategory= realm.where(TransactionCategoryRealm::class.java).equalTo(userIDRef,userID).equalTo(transactionCategoryTypeRef,incomeType).findAll()
+                getTransactionCategory = if(filterSelection == incomeType){
+                    realm.where(TransactionCategoryRealm::class.java).equalTo(userIDRef,userID).equalTo(transactionCategoryTypeRef,incomeType).findAll()
 
                 }else if(filterSelection == expenseType){
-                    getTransactionCategory= realm.where(TransactionCategoryRealm::class.java).equalTo(userIDRef,userID).equalTo(transactionCategoryTypeRef,expenseType).findAll()
+                    realm.where(TransactionCategoryRealm::class.java).equalTo(userIDRef,userID).equalTo(transactionCategoryTypeRef,expenseType).findAll()
 
                 }else{
-                    getTransactionCategory= realm.where(TransactionCategoryRealm::class.java).equalTo(userIDRef,userID).findAll()
+                    realm.where(TransactionCategoryRealm::class.java).equalTo(userIDRef,userID).findAll()
 
                 }
-
 
 
                 getTransactionCategory.forEach{

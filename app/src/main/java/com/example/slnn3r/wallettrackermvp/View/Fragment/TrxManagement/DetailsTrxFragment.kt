@@ -177,7 +177,7 @@ class DetailsTrxFragment : Fragment(), ViewInterface.DetailsTrxView {
             mTimePicker = TimePickerDialog(context, TimePickerDialog.OnTimeSetListener { timePicker, selectedHour, selectedMinute ->
 
                 val time = Time(selectedHour, selectedMinute, 0)
-                var s = simpleTimeFormat.format(time)
+                val s = simpleTimeFormat.format(time)
 
                 DetailsTrxTimeInput.setText(s)
 
@@ -191,13 +191,13 @@ class DetailsTrxFragment : Fragment(), ViewInterface.DetailsTrxView {
     private fun trxTypeSpinnerClick(userProfile: UserProfile) {
         if(DetailsTrxTypeSpinner.selectedItem==getString(R.string.expense)){
 
-            DetailsTrxTypeImageView.setImageDrawable(getResources().getDrawable(R.drawable.expense_icon))
-            DetailsTrxTypeImageView.setBackground(getResources().getDrawable(R.drawable.fui_idp_button_background_email))
+            DetailsTrxTypeImageView.setImageDrawable(resources.getDrawable(R.drawable.expense_icon))
+            DetailsTrxTypeImageView.background = resources.getDrawable(R.drawable.fui_idp_button_background_email)
             presenter.checkTransactionCategory(context!!, userProfile.UserUID, DetailsTrxTypeSpinner.selectedItem.toString())
 
         }else{
-            DetailsTrxTypeImageView.setImageDrawable(getResources().getDrawable(R.drawable.income_icon))
-            DetailsTrxTypeImageView.setBackground(getResources().getDrawable(R.drawable.fui_idp_button_background_phone))
+            DetailsTrxTypeImageView.setImageDrawable(resources.getDrawable(R.drawable.income_icon))
+            DetailsTrxTypeImageView.background = resources.getDrawable(R.drawable.fui_idp_button_background_phone)
             presenter.checkTransactionCategory(context!!, userProfile.UserUID, DetailsTrxTypeSpinner.selectedItem.toString())
 
         }
@@ -206,7 +206,7 @@ class DetailsTrxFragment : Fragment(), ViewInterface.DetailsTrxView {
     private fun updateSubmitClick(transaction: Transaction, userProfile: UserProfile) {
         // get the Transaction Category 1st, then get the wallet account id, only then start to build the NewTransaction Data
         var selectedTrxCategory = presenter.getCategoryDataByName(context!!, userProfile.UserUID, DetailsTrxCategorySpinner.selectedItem.toString())
-        var selectedWalletAccount = presenter.getAccountDataByName(context!!, userProfile.UserUID, DetailsTrxSelectedAccSpinner.selectedItem.toString())
+        val selectedWalletAccount = presenter.getAccountDataByName(context!!, userProfile.UserUID, DetailsTrxSelectedAccSpinner.selectedItem.toString())
 
         // Check if the realm return any value, if not then it is the deleted category, so just use back the deleted data
         if(selectedTrxCategory.TransactionCategoryID==""){
@@ -219,7 +219,7 @@ class DetailsTrxFragment : Fragment(), ViewInterface.DetailsTrxView {
         val date24Format = SimpleDateFormat(getString(R.string.timeFormat24))
         val convertedTime = date24Format.format(date12Format.parse(notConvertedTime))
 
-        var DetailsTrxInput =
+        val detailsTrxInput =
 
                 Transaction(
                         transaction.TransactionID
@@ -231,7 +231,7 @@ class DetailsTrxFragment : Fragment(), ViewInterface.DetailsTrxView {
                         ,selectedWalletAccount
                 )
 
-        presenter.updateDetailsTrx(context!!, DetailsTrxInput)
+        presenter.updateDetailsTrx(context!!, detailsTrxInput)
     }
 
     private fun deleteSubmitClick(transaction: Transaction) {

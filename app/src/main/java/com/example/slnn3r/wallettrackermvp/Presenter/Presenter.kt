@@ -182,10 +182,10 @@ class Presenter: PresenterInterface.Presenter{
 
 
 
-            if(detectMatched>0){
-                errorMessage= mainContext.getString(R.string.accNameUsedError)
+            errorMessage = if(detectMatched>0){
+                mainContext.getString(R.string.accNameUsedError)
             }else{
-                errorMessage=null
+                null
             }
 
         }else if(accountNameList.size==0){ //when retrieve nothing database error
@@ -202,16 +202,11 @@ class Presenter: PresenterInterface.Presenter{
 
     override fun walletAccountBalanceValidation(mainContext: Context, input: String): String? {
 
-        val errorMessage: String?
-
-
-        if (input.isEmpty()){
-            errorMessage=mainContext.getString(R.string.promptToEnter)
+        return if (input.isEmpty()){
+            mainContext.getString(R.string.promptToEnter)
         }else{
-            errorMessage=null
+            null
         }
-
-        return errorMessage
 
     }
 
@@ -250,10 +245,10 @@ class Presenter: PresenterInterface.Presenter{
 
 
 
-            if(detectMatched>0){
-                errorMessage= mainContext.getString(R.string.categoryNameUsedError)
+            errorMessage = if(detectMatched>0){
+                mainContext.getString(R.string.categoryNameUsedError)
             }else{
-                errorMessage=null
+                null
             }
 
         }else if(categoryNameList.size==0){ //when retrieve nothing database error

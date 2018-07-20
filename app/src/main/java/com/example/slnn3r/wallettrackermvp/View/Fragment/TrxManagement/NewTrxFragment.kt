@@ -156,7 +156,7 @@ class NewTrxFragment : Fragment(), ViewInterface.NewTrxView {
             mTimePicker = TimePickerDialog(context, TimePickerDialog.OnTimeSetListener { timePicker, selectedHour, selectedMinute ->
 
                 val time = Time(selectedHour, selectedMinute, 0)
-                var s = simpleTimeFormat.format(time)
+                val s = simpleTimeFormat.format(time)
 
                 NewTrxTimeInput.setText(s)
 
@@ -197,8 +197,8 @@ class NewTrxFragment : Fragment(), ViewInterface.NewTrxView {
     private fun newTrxSubmitClick(userProfile: UserProfile) {
 
         // get the Transaction Category 1st, then get the wallet account id, only then start to build the NewTransaction Data
-        var selectedTrxCategory = presenter.getCategoryDataByName(context!!, userProfile.UserUID, NewTrxCategorySpinner.selectedItem.toString())
-        var selectedWalletAccount = presenter.getAccountDataByName(context!!, userProfile.UserUID, NewTrxSelectedAccSpinner.selectedItem.toString())
+        val selectedTrxCategory = presenter.getCategoryDataByName(context!!, userProfile.UserUID, NewTrxCategorySpinner.selectedItem.toString())
+        val selectedWalletAccount = presenter.getAccountDataByName(context!!, userProfile.UserUID, NewTrxSelectedAccSpinner.selectedItem.toString())
 
         // store 24hour in database for ez sorting purpose
         val notConvertedTime = NewTrxTimeInput.text.toString()
@@ -207,7 +207,7 @@ class NewTrxFragment : Fragment(), ViewInterface.NewTrxView {
         val convertedTime = date24Format.format(date12Format.parse(notConvertedTime))
 
         val uniqueID = UUID.randomUUID().toString()
-        var newTrxInput =
+        val newTrxInput =
 
                 Transaction(
                         uniqueID,NewTrxDateInput.text.toString()

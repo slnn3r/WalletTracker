@@ -217,7 +217,7 @@ class DashBoardFragment : Fragment(),ViewInterface.DashBoardView {
         spinner.setSelection(spinnerPosition)
 
 
-        val UserProfile = presenter.getUserData(context!!)
+        val userProfile = presenter.getUserData(context!!)
 
         spinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener{
 
@@ -232,11 +232,11 @@ class DashBoardFragment : Fragment(),ViewInterface.DashBoardView {
 
                 //!!!!!!! LOAD TRX LIST, BALANCE FIGURE IS HERE
 
-                presenter.checkTransaction(mainContext, walletAccountList[spinner.selectedItemPosition].WalletAccountID, UserProfile.UserUID)
+                presenter.checkTransaction(mainContext, walletAccountList[spinner.selectedItemPosition].WalletAccountID, userProfile.UserUID)
 
                 // display Balance
-                presenter.getAllIncome(context!!, UserProfile.UserUID, walletAccountList[spinner.selectedItemPosition].WalletAccountID)
-                presenter.getThisMonthExpense(context!!, UserProfile.UserUID, walletAccountList[spinner.selectedItemPosition].WalletAccountID)
+                presenter.getAllIncome(context!!, userProfile.UserUID, walletAccountList[spinner.selectedItemPosition].WalletAccountID)
+                presenter.getThisMonthExpense(context!!, userProfile.UserUID, walletAccountList[spinner.selectedItemPosition].WalletAccountID)
 
             }
         }
