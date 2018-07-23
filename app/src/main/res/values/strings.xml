@@ -250,6 +250,7 @@
     <string name="categoryNameUsedError">Category Name Already Used</string>
     <string name="categoryNameRetreiveError">Database Validation Failed</string>
 
+    <string name="noZeroInput">Value Must More than 0</string>
 
     <!-- Toast Message -->
     <string name="mainActivityWelcomeMessage">Welcome Back, %s</string>

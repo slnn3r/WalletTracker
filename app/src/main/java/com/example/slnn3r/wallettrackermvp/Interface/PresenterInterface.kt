@@ -31,6 +31,9 @@ interface PresenterInterface{
         // Transaction Category Input Validation
         fun transactionCategoryNameValidation(mainContext: Context, input: String, categoryNameList: ArrayList<TransactionCategory>, updateID:String?): String?
 
+        // NewTrx+DetailsTrx TrxInput Validation
+        fun transactionInputValidation(mainContext: Context, input: String): String?
+
 
         // Main Activity
         fun checkLogin()

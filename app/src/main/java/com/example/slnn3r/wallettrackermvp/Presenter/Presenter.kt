@@ -262,6 +262,19 @@ class Presenter: PresenterInterface.Presenter{
         return errorMessage
     }
 
+    // NewTrx+DetailsTrx TrxInput Validation
+    override fun transactionInputValidation(mainContext: Context, input: String): String? {
+
+        return if (input.isEmpty()){
+            mainContext.getString(R.string.promptToEnter)
+        }else if(input.toDouble()==0.0){
+            mainContext.getString(R.string.noZeroInput)
+        }else{
+            null
+        }
+
+    }
+
 
 
     // Main Activity

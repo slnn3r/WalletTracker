@@ -246,7 +246,7 @@ class DetailsTrxFragment : Fragment(), ViewInterface.DetailsTrxView {
             DetailsTrxAmountInput.setSelection(DetailsTrxAmountInput.text.length)
         }
 
-        val validationResult = presenter.walletAccountBalanceValidation(context!!,text)
+        val validationResult = presenter.transactionInputValidation(context!!,DetailsTrxAmountInput.text.toString())
 
         if(validationResult!=null){
             DetailsTrxUpdateSubmit.isEnabled = false
