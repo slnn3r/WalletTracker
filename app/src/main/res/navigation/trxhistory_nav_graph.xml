@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/trxhistory_nav_graph"
+    app:startDestination="@id/trxHistorySpecificDateFragment">
+
+    <fragment
+        android:id="@+id/trxHistorySpecificDateFragment"
+        android:name="com.example.slnn3r.wallettrackermvp.View.Fragment.TrxHistory.TrxHistorySpecificDateFragment"
+        android:label="fragment_trx_history_specific_date"
+        tools:layout="@layout/fragment_trx_history_specific_date" >
+        <action
+            android:id="@+id/action_trxHistorySpecificDateFragment_to_detailsTrxFragmentforTrxHistory"
+            app:destination="@id/detailsTrxFragmentforTrxHistory" />
+    </fragment>
+    <fragment
+        android:id="@+id/trxHistoryRangeDateFragment"
+        android:name="com.example.slnn3r.wallettrackermvp.View.Fragment.TrxHistory.TrxHistoryRangeDateFragment"
+        android:label="fragment_trx_history_range_date"
+        tools:layout="@layout/fragment_trx_history_range_date" >
+        <action
+            android:id="@+id/action_trxHistoryRangeDateFragment_to_detailsTrxFragmentforTrxHistory"
+            app:destination="@id/detailsTrxFragmentforTrxHistory" />
+    </fragment>
+    <fragment
+        android:id="@+id/detailsTrxFragmentforTrxHistory"
+        android:name="com.example.slnn3r.wallettrackermvp.View.Fragment.TrxManagement.DetailsTrxFragment"
+        android:label="fragment_details_trx"
+        tools:layout="@layout/fragment_details_trx" >
+        <argument
+            android:name="transactionSelection"
+            app:type="string" />
+    </fragment>
+</navigation>

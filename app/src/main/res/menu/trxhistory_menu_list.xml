@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@id/trxHistorySpecificDateFragment"
+        android:icon="@drawable/date_specific"
+        android:title="Filter by Specific Date" />
+
+
+
+    <item
+        android:id="@id/trxHistoryRangeDateFragment"
+        android:icon="@drawable/date_range"
+        android:title="Filter by Date Range" />
+
+</menu>

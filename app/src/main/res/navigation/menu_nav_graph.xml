@@ -22,6 +22,9 @@
         <action
             android:id="@+id/action_dashBoardFragment_to_detailsTrxFragment"
             app:destination="@id/detailsTrxFragment" />
+        <action
+            android:id="@+id/action_dashBoardFragment_to_trxHistoryFragment"
+            app:destination="@id/trxHistoryFragment" />
     </fragment>
     <fragment
         android:id="@+id/viewTrxCategoryFragment"
@@ -93,4 +96,9 @@
             android:name="transactionSelection"
             app:type="string" />
     </fragment>
+    <fragment
+        android:id="@+id/trxHistoryFragment"
+        android:name="com.example.slnn3r.wallettrackermvp.View.Fragment.TrxHistory.TrxHistoryFragment"
+        android:label="fragment_trx_history"
+        tools:layout="@layout/fragment_trx_history" />
 </navigation>
