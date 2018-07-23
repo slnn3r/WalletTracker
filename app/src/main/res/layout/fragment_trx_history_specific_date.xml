@@ -54,14 +54,15 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/textView2"
         app:layout_constraintTop_toBottomOf="@+id/spinner"
+        android:entries="@array/defaultTrxCategorySpinner"
 
         />
 
     <TextView
         android:id="@+id/textView3"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
+        android:layout_marginStart="8dp"
         android:layout_marginTop="16dp"
         android:text="Date : "
         app:layout_constraintEnd_toStartOf="@+id/daySpinner"
@@ -98,7 +99,7 @@
 
     <Spinner
         android:id="@+id/daySpinner"
-        android:layout_width="70dp"
+        android:layout_width="80dp"
         android:layout_height="25dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="12dp"

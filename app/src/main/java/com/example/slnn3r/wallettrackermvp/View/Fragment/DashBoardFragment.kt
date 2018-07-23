@@ -133,25 +133,24 @@ class DashBoardFragment : Fragment(),ViewInterface.DashBoardView {
         calendar.add(Calendar.DATE, 1)
         val d4 = calendar.time
 
-        calendar.add(Calendar.DATE, 1)
-        val d5 = calendar.time
+
 
 
         val graph = DBTrxGraph as GraphView
 
         // you can directly pass Date objects to DataPoint-Constructor
         // this will convert the Date to double via Date#getTime()
-        val series = LineGraphSeries<DataPoint>(arrayOf<DataPoint>(DataPoint(d1, 34.0), DataPoint(d2, 23.0), DataPoint(d3, 5.0), DataPoint(d4, 13.0),DataPoint(d5, 8.0)))
+        val series = LineGraphSeries<DataPoint>(arrayOf<DataPoint>(DataPoint(d1, 23.0), DataPoint(d2, 5.0), DataPoint(d3, 13.0),DataPoint(d4, 8.0)))
 
         graph.addSeries(series)
 
         // set date label formatter
         graph.gridLabelRenderer.labelFormatter = DateAsXAxisLabelFormatter(activity)
-        graph.gridLabelRenderer.numHorizontalLabels = 5
+        graph.gridLabelRenderer.numHorizontalLabels = 4
 
         // set manual x bounds to have nice steps
         graph.viewport.setMinX(d1.time.toDouble())
-        graph.viewport.setMaxX(d5.time.toDouble())
+        graph.viewport.setMaxX(d4.time.toDouble())
         graph.viewport.isXAxisBoundsManual = true
 
         // as we use dates as labels, the human rounding to nice readable numbers

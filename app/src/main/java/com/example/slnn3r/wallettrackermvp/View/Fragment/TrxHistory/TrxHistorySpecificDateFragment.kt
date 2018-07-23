@@ -67,13 +67,13 @@ class TrxHistorySpecificDateFragment : Fragment() {
 
     fun setDays() {
 
-        if(yearSpinner.getSelectedItem().toString()=="All" || monthSpinner.getSelectedItem().toString()=="All"){
+        if(yearSpinner.getSelectedItem().toString()=="All Years" || monthSpinner.getSelectedItem().toString()=="All Months"){
 
             daySpinner.isEnabled=false
             monthSpinner.isEnabled=false
 
             val days_array = arrayOfNulls<String>(1)
-            days_array[0] = "All"
+            days_array[0] = "All Days"
 
             val spinnerArrayAdapter = ArrayAdapter(context,
                     android.R.layout.simple_spinner_dropdown_item, days_array)
@@ -85,12 +85,12 @@ class TrxHistorySpecificDateFragment : Fragment() {
 
         }
 
-        if(yearSpinner.getSelectedItem().toString()!="All" && monthSpinner.getSelectedItem().toString()=="All"){
+        if(yearSpinner.getSelectedItem().toString()!="All Years" && monthSpinner.getSelectedItem().toString()=="All Months"){
             monthSpinner.isEnabled=true
 
         }
 
-        if(monthSpinner.getSelectedItem().toString()!="All" && yearSpinner.getSelectedItem().toString()!="All"){
+        if(monthSpinner.getSelectedItem().toString()!="All Months" && yearSpinner.getSelectedItem().toString()!="All Years"){
 
             daySpinner.isEnabled=true
 
@@ -106,7 +106,7 @@ class TrxHistorySpecificDateFragment : Fragment() {
 
             val days_array = arrayOfNulls<String>(daysInMonth+1)
 
-            days_array[0] = "All"
+            days_array[0] = "All Days"
 
             for (k in 1 until daysInMonth+1)
                 days_array[k] = "" + (k)
@@ -132,7 +132,7 @@ class TrxHistorySpecificDateFragment : Fragment() {
 
         val years_array = arrayOfNulls<String>(maxYear - minYear+2)
 
-        years_array[0] = "All"
+        years_array[0] = "All Years"
 
 
         var count = 1

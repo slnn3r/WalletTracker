@@ -11,7 +11,7 @@
         android:id="@+id/textView6"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="7dp"
+        android:layout_marginStart="8dp"
         android:layout_marginTop="16dp"
         android:layout_marginEnd="8dp"
         android:text="To :"
@@ -36,10 +36,10 @@
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
+        android:background="@drawable/spinner_background"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/textView4"
         app:layout_constraintTop_toTopOf="parent"
-        android:background="@drawable/spinner_background"
 
         />
 
@@ -66,6 +66,7 @@
         android:background="@drawable/spinner_background"
         app:layout_constraintBottom_toTopOf="@+id/startDataLayout"
         app:layout_constraintEnd_toEndOf="parent"
+        android:entries="@array/defaultTrxCategorySpinner"
 
         app:layout_constraintStart_toEndOf="@+id/textView5"
         app:layout_constraintTop_toBottomOf="@+id/spinner3" />
@@ -139,7 +140,6 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
         android:text="Filter"
         android:textSize="14sp"
@@ -154,7 +154,9 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginTop="16dp"
+        android:layout_marginEnd="8dp"
         android:text="From :"
+        app:layout_constraintEnd_toStartOf="@+id/startDataLayout"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/spinner4" />
 </android.support.constraint.ConstraintLayout>

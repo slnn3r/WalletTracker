@@ -25,7 +25,7 @@
         android:id="@+id/DTCTrxTypeLabel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="32dp"
+        android:layout_marginStart="16dp"
         android:layout_marginTop="42dp"
         android:text="@string/DTCTrxTypeLabel"
         app:layout_constraintEnd_toStartOf="@+id/DTCImageView"
@@ -37,7 +37,7 @@
         android:layout_width="0dp"
         android:layout_height="24dp"
         android:layout_marginTop="40dp"
-        android:layout_marginEnd="32dp"
+        android:layout_marginEnd="16dp"
         android:background="@drawable/spinner_background"
         android:entries="@array/defaultTrxTypeSpinner"
 
