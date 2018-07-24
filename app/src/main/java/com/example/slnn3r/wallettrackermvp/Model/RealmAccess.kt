@@ -589,9 +589,8 @@ class RealmAccess: ModelInterface.RealmAccess{
 
     }
 
-    override fun getThisMonthExpenses(mainContext: Context, userID: String, accountID: String): ArrayList<Transaction> {
+    override fun getThisMonthExpenseRealm(mainContext: Context, userID: String, accountID: String): ArrayList<Transaction> {
 
-        var expense=0.0
         var realm: Realm? = null
         val transactionData=ArrayList<Transaction>()
 
@@ -641,6 +640,12 @@ class RealmAccess: ModelInterface.RealmAccess{
         return transactionData
 
     }
+
+
+    override fun getRecentExpenseRealm(mainContext: Context, userID: String, accountID: String) {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
+
 
 
 

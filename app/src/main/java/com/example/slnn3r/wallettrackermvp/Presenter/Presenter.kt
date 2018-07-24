@@ -39,7 +39,6 @@ import java.util.*
 
 class Presenter: PresenterInterface.Presenter{
 
-
     private lateinit var mainView: ViewInterface.MainView
     private lateinit var loginView: ViewInterface.LoginView
     private lateinit var menuView: ViewInterface.MenuView
@@ -715,7 +714,11 @@ class Presenter: PresenterInterface.Presenter{
     }
 
     private fun getThisMonthExpenseObservable(mainContext: Context, userID: String, accountID: String): Observable<ArrayList<Transaction>>{
-        return Observable.defer { Observable.just(realmModel.getThisMonthExpenses(mainContext,userID,accountID)) }
+        return Observable.defer { Observable.just(realmModel.getThisMonthExpenseRealm(mainContext,userID,accountID)) }
+    }
+
+    override fun getRecentExpenses(mainContext: Context, userID: String, accountID: String) {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
 

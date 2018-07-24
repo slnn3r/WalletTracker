@@ -39,18 +39,17 @@ interface ViewInterface{
         fun populateWalletAccountSpinner(mainContext: Context, walletAccountList: ArrayList<WalletAccount>)
         fun populateWalletAccountSpinnerFail(mainContext: Context, errorMessage: String)
 
-
         fun firstTimeSetup(mainContext: Context)
         fun firstTimeSetupSuccess(mainContext: Context, walletAccount: WalletAccount)
         fun firstTimeSetupFail(mainContext: Context, errorMessage: String)
 
-
         fun populateTransactionRecycleView(mainContext: Context, transactionList: ArrayList<Transaction>)
         fun populateTransactionRecycleViewFail(mainContext: Context, errorMessage: String)
 
-
         fun populateCurrentBalance(mainContext: Context, currentBalance:Double)
         fun populateThisMonthExpense(mainContext: Context, thisMonthExpense:Double)
+
+        fun populateExpenseGraph(mainContext: Context, transactionList: ArrayList<Transaction>)
 
     }
 

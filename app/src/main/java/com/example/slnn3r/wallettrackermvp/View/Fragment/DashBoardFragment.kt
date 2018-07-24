@@ -18,9 +18,7 @@ import com.example.slnn3r.wallettrackermvp.Interface.ViewInterface
 import com.example.slnn3r.wallettrackermvp.Model.ObjectClass.WalletAccount
 import com.example.slnn3r.wallettrackermvp.Presenter.Presenter
 import com.jjoe64.graphview.GraphView
-import com.jjoe64.graphview.helper.DateAsXAxisLabelFormatter
 import com.jjoe64.graphview.series.DataPoint
-import com.jjoe64.graphview.series.LineGraphSeries
 import java.util.*
 import android.app.Activity
 import android.graphics.Color
@@ -29,6 +27,9 @@ import android.view.inputmethod.InputMethodManager
 import android.widget.*
 import com.example.slnn3r.wallettrackermvp.Model.ObjectClass.Transaction
 import kotlin.collections.ArrayList
+import com.jjoe64.graphview.series.BarGraphSeries
+import com.jjoe64.graphview.DefaultLabelFormatter
+
 
 
 class DashBoardFragment : Fragment(),ViewInterface.DashBoardView {
@@ -51,7 +52,6 @@ class DashBoardFragment : Fragment(),ViewInterface.DashBoardView {
         presenter = Presenter(this)
 
         hideDisplayedKeyboard(view) // Hide Keyboard
-        displayDummyGraph() // Dummy Graph Setup
 
         // Initial Input
         val thisMonth =mCalendar.getDisplayName(Calendar.MONTH, Calendar.LONG, Locale.getDefault())
@@ -121,46 +121,78 @@ class DashBoardFragment : Fragment(),ViewInterface.DashBoardView {
 
     }
 
-    private fun displayDummyGraph() {
-        // generate Dates
-        val calendar = Calendar.getInstance()
+    private fun displayDummyDateGraph() {
 
-        val d1 = calendar.time
+        val data=ArrayList<String>()
 
-        calendar.add(Calendar.DATE, 1)
-        val d2 = calendar.time
+        for (a in 0..5){
 
-        calendar.add(Calendar.DATE, 1)
-        val d3 = calendar.time
+            val tempCalander = Calendar.getInstance()
 
-        calendar.add(Calendar.DATE, 1)
-        val d4 = calendar.time
+            tempCalander.add(Calendar.DAY_OF_MONTH, -a)
+
+            val thisDay = tempCalander.get(Calendar.DAY_OF_MONTH)
+            val thisMonth= tempCalander.getDisplayName(Calendar.MONTH, Calendar.SHORT, Locale.getDefault())
+            data.add(thisDay.toString()+" "+thisMonth)
 
 
+        }
 
 
         val graph = DBTrxGraph as GraphView
 
-        // you can directly pass Date objects to DataPoint-Constructor
-        // this will convert the Date to double via Date#getTime()
-        val series = LineGraphSeries<DataPoint>(arrayOf<DataPoint>(DataPoint(d1, 23.0), DataPoint(d2, 5.0), DataPoint(d3, 13.0),DataPoint(d4, 8.0)))
+        graph.removeAllSeries()
+
+        val series = BarGraphSeries(arrayOf(
+                DataPoint(0.0, 1.0),
+                DataPoint(1.0, 5.0),
+                DataPoint(2.0, 3.0),
+                DataPoint(3.0, 2.0),
+                DataPoint(4.0, 10.0)
+                ))
 
         graph.addSeries(series)
 
-        // set date label formatter
-        graph.gridLabelRenderer.labelFormatter = DateAsXAxisLabelFormatter(activity)
-        graph.gridLabelRenderer.numHorizontalLabels = 4
+        var count=0
 
-        // set manual x bounds to have nice steps
-        graph.viewport.setMinX(d1.time.toDouble())
-        graph.viewport.setMaxX(d4.time.toDouble())
-        graph.viewport.isXAxisBoundsManual = true
+        // styling
+        series.setValueDependentColor { data -> Color.LTGRAY }
 
-        // as we use dates as labels, the human rounding to nice readable numbers
-        // is not necessary
-        graph.gridLabelRenderer.setHumanRounding(false)
+        series.spacing = 50
+
+        // draw values on top
+        series.isDrawValuesOnTop = true
+        series.valuesOnTopColor = Color.RED
+        //series.setValuesOnTopSize(50);
+
+
+        graph.gridLabelRenderer.labelFormatter = object : DefaultLabelFormatter() {
+            override fun formatLabel(value: Double, isValueX: Boolean): String {
+
+                var label=""
+
+                if (isValueX) {
+
+                    if(count==6){
+                        count=0
+
+                    }
+                    // show normal x values
+                    label = data[count]
+
+                    count+=1
+                } else {
+                    // show currency for y values
+                    label= "$ "+super.formatLabel(value, isValueX)
+                }
+
+                return label
+            }
+        }
+
 
     }
+
 
 
     //// Presenter Callback
@@ -240,6 +272,8 @@ class DashBoardFragment : Fragment(),ViewInterface.DashBoardView {
                 val thisMonth =mCalendar.getDisplayName(Calendar.MONTH, Calendar.LONG, Locale.getDefault())
                 presenter.getThisMonthExpense(context!!, userProfile.UserUID, walletAccountList[spinner.selectedItemPosition].WalletAccountID, thisMonth)
 
+                displayDummyDateGraph() // Dummy Graph Setup
+
             }
         }
 
@@ -291,6 +325,9 @@ class DashBoardFragment : Fragment(),ViewInterface.DashBoardView {
     }
 
 
+    override fun populateExpenseGraph(mainContext: Context, transactionList: ArrayList<Transaction>) {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
 
 
 }
