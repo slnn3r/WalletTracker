@@ -4,13 +4,12 @@
     <item
         android:id="@id/trxHistorySpecificDateFragment"
         android:icon="@drawable/date_specific"
-        android:title="Filter by Specific Date" />
-
+        android:title="@string/filterBySpecific" />
 
 
     <item
         android:id="@id/trxHistoryRangeDateFragment"
         android:icon="@drawable/date_range"
-        android:title="Filter by Date Range" />
+        android:title="@string/filterByRange" />
 
 </menu>

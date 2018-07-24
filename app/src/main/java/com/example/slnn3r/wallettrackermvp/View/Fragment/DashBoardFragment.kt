@@ -55,8 +55,7 @@ class DashBoardFragment : Fragment(),ViewInterface.DashBoardView {
 
         // Initial Input
         val thisMonth =mCalendar.getDisplayName(Calendar.MONTH, Calendar.LONG, Locale.getDefault())
-        DBMonthTextView.text = "("+thisMonth+")"
-
+        DBMonthTextView.text = getString(R.string.formatDisplayMonth,thisMonth)
 
         // Get SharedPreference data
         val userProfile = presenter.getUserData(context!!)
@@ -273,11 +272,11 @@ class DashBoardFragment : Fragment(),ViewInterface.DashBoardView {
 
         if(currentBalance>0){
 
-            currentBalanceView.text = String.format("$ %.2f", currentBalance)
+            currentBalanceView.text = String.format(mainContext.getString(R.string.formatDisplay2DecimalMoney), currentBalance)
             currentBalanceView.setTextColor(Color.GREEN)
         }else{
 
-            currentBalanceView.text = String.format("$ %.2f", currentBalance)
+            currentBalanceView.text = String.format(mainContext.getString(R.string.formatDisplay2DecimalMoney), currentBalance)
             currentBalanceView.setTextColor(Color.RED)
         }
 
@@ -287,7 +286,7 @@ class DashBoardFragment : Fragment(),ViewInterface.DashBoardView {
     override fun populateThisMonthExpense(mainContext: Context, thisMonthExpense: Double) {
 
         val thisMonthExpenseView = (mainContext as Activity).findViewById(R.id.DBMonthlyExpTextView) as TextView
-        thisMonthExpenseView.text = String.format("$ %.2f", thisMonthExpense)
+        thisMonthExpenseView.text = String.format(mainContext.getString(R.string.formatDisplay2DecimalMoney), thisMonthExpense)
         thisMonthExpenseView.setTextColor(Color.RED)
     }
 

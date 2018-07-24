@@ -8,17 +8,17 @@
 
 
     <TextView
-        android:id="@+id/textView"
+        android:id="@+id/THSAccountLabel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginTop="16dp"
-        android:text="Account : "
+        android:text="@string/THSAccountLabel"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView9" />
+        app:layout_constraintTop_toBottomOf="@+id/THSIncomeTextView" />
 
     <Spinner
-        android:id="@+id/spinner"
+        android:id="@+id/THSAccountSpinner"
         android:layout_width="0dp"
         android:layout_height="22dp"
         android:layout_marginStart="8dp"
@@ -28,23 +28,23 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
 
-        app:layout_constraintStart_toEndOf="@+id/textView"
-        app:layout_constraintTop_toBottomOf="@+id/textView10" />
+        app:layout_constraintStart_toEndOf="@+id/THSAccountLabel"
+        app:layout_constraintTop_toBottomOf="@+id/THSExpenseTextView" />
 
     <TextView
-        android:id="@+id/textView2"
+        android:id="@+id/THSTrxTypeLabel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginTop="16dp"
         android:layout_marginEnd="8dp"
-        android:text="Transaction Type : "
-        app:layout_constraintEnd_toStartOf="@+id/spinner2"
+        android:text="@string/THSTrxTypeLabel"
+        app:layout_constraintEnd_toStartOf="@+id/THSTrxTypeSpinner"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView" />
+        app:layout_constraintTop_toBottomOf="@+id/THSAccountLabel" />
 
     <Spinner
-        android:id="@+id/spinner2"
+        android:id="@+id/THSTrxTypeSpinner"
         android:layout_width="0dp"
         android:layout_height="22dp"
         android:layout_marginStart="8dp"
@@ -52,26 +52,26 @@
         android:layout_marginEnd="8dp"
         android:background="@drawable/spinner_background"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/textView2"
-        app:layout_constraintTop_toBottomOf="@+id/spinner"
+        app:layout_constraintStart_toEndOf="@+id/THSTrxTypeLabel"
+        app:layout_constraintTop_toBottomOf="@+id/THSAccountSpinner"
         android:entries="@array/defaultTrxCategorySpinner"
 
         />
 
     <TextView
-        android:id="@+id/textView3"
+        android:id="@+id/THSDateLabel"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginTop="16dp"
-        android:text="Date : "
-        app:layout_constraintEnd_toStartOf="@+id/daySpinner"
+        android:text="@string/THSDateLabel"
+        app:layout_constraintEnd_toStartOf="@+id/THSDaySpinner"
         app:layout_constraintHorizontal_chainStyle="spread"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView8" />
+        app:layout_constraintTop_toBottomOf="@+id/THSTrxCategoryLabel" />
 
     <android.support.v7.widget.RecyclerView
-        android:id="@+id/recyclerView"
+        android:id="@+id/THSRecyclerView"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginStart="8dp"
@@ -81,48 +81,48 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/button" />
+        app:layout_constraintTop_toBottomOf="@+id/THSFilterButton" />
 
     <Button
-        android:id="@+id/button"
+        android:id="@+id/THSFilterButton"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
-        android:text="Filter"
+        android:text="@string/THSFliterButtonLabel"
         android:textSize="14sp"
-        app:layout_constraintBottom_toTopOf="@+id/recyclerView"
+        app:layout_constraintBottom_toTopOf="@+id/THSRecyclerView"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/monthSpinner" />
+        app:layout_constraintTop_toBottomOf="@+id/THSMonthSpinner" />
 
     <Spinner
-        android:id="@+id/daySpinner"
+        android:id="@+id/THSDaySpinner"
         android:layout_width="80dp"
         android:layout_height="25dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="12dp"
         android:background="@drawable/spinner_background"
 
-        app:layout_constraintEnd_toStartOf="@+id/monthSpinner"
-        app:layout_constraintStart_toEndOf="@+id/textView3"
-        app:layout_constraintTop_toBottomOf="@+id/spinner5" />
+        app:layout_constraintEnd_toStartOf="@+id/THSMonthSpinner"
+        app:layout_constraintStart_toEndOf="@+id/THSDateLabel"
+        app:layout_constraintTop_toBottomOf="@+id/THSTrxCategorySpinner" />
 
     <Spinner
-        android:id="@+id/monthSpinner"
+        android:id="@+id/THSMonthSpinner"
         android:layout_width="100dp"
         android:layout_height="25dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="12dp"
         android:background="@drawable/spinner_background"
         android:entries="@array/months"
-        app:layout_constraintEnd_toStartOf="@+id/yearSpinner"
-        app:layout_constraintStart_toEndOf="@+id/daySpinner"
-        app:layout_constraintTop_toBottomOf="@+id/spinner5" />
+        app:layout_constraintEnd_toStartOf="@+id/THSYearSpinner"
+        app:layout_constraintStart_toEndOf="@+id/THSDaySpinner"
+        app:layout_constraintTop_toBottomOf="@+id/THSTrxCategorySpinner" />
 
     <Spinner
-        android:id="@+id/yearSpinner"
+        android:id="@+id/THSYearSpinner"
         android:layout_width="80dp"
         android:layout_height="25dp"
         android:layout_marginStart="8dp"
@@ -131,23 +131,23 @@
         android:background="@drawable/spinner_background"
 
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/monthSpinner"
-        app:layout_constraintTop_toBottomOf="@+id/spinner5" />
+        app:layout_constraintStart_toEndOf="@+id/THSMonthSpinner"
+        app:layout_constraintTop_toBottomOf="@+id/THSTrxCategorySpinner" />
 
     <TextView
-        android:id="@+id/textView8"
+        android:id="@+id/THSTrxCategoryLabel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginTop="16dp"
         android:layout_marginEnd="8dp"
-        android:text="Transaction Category : "
-        app:layout_constraintEnd_toStartOf="@+id/spinner5"
+        android:text="@string/THSTrxCategoryLabel"
+        app:layout_constraintEnd_toStartOf="@+id/THSTrxCategorySpinner"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView2" />
+        app:layout_constraintTop_toBottomOf="@+id/THSTrxTypeLabel" />
 
     <Spinner
-        android:id="@+id/spinner5"
+        android:id="@+id/THSTrxCategorySpinner"
         android:layout_width="0dp"
         android:layout_height="22dp"
         android:layout_marginStart="8dp"
@@ -155,57 +155,57 @@
         android:layout_marginEnd="8dp"
         android:background="@drawable/spinner_background"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/textView8"
-        app:layout_constraintTop_toBottomOf="@+id/spinner2"
+        app:layout_constraintStart_toEndOf="@+id/THSTrxCategoryLabel"
+        app:layout_constraintTop_toBottomOf="@+id/THSTrxTypeSpinner"
 
         />
 
     <TextView
-        android:id="@+id/textView9"
+        android:id="@+id/THSIncomeTextView"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:layout_marginBottom="8dp"
-        android:text="Income: $1000"
+        android:text="@string/THSIncomeLabel"
         android:textAllCaps="false"
         android:textColor="@android:color/holo_green_dark"
         android:textStyle="bold"
-        app:layout_constraintBottom_toTopOf="@+id/textView"
-        app:layout_constraintEnd_toStartOf="@+id/textView10"
+        app:layout_constraintBottom_toTopOf="@+id/THSAccountLabel"
+        app:layout_constraintEnd_toStartOf="@+id/THSExpenseTextView"
         app:layout_constraintHorizontal_chainStyle="spread"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/textView10"
+        android:id="@+id/THSExpenseTextView"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:layout_marginBottom="8dp"
-        android:text="Expense: $2000"
+        android:text="@string/THSExpenseLabel"
         android:textAllCaps="false"
         android:textColor="@android:color/holo_red_dark"
         android:textStyle="bold"
-        app:layout_constraintBottom_toTopOf="@+id/spinner"
-        app:layout_constraintEnd_toStartOf="@+id/textView11"
-        app:layout_constraintStart_toEndOf="@+id/textView9"
+        app:layout_constraintBottom_toTopOf="@+id/THSAccountSpinner"
+        app:layout_constraintEnd_toStartOf="@+id/THSBalanceTextView"
+        app:layout_constraintStart_toEndOf="@+id/THSIncomeTextView"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/textView11"
+        android:id="@+id/THSBalanceTextView"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginBottom="16dp"
-        android:text="Balance: $5000"
+        android:text="@string/THSBalanceLabel"
         android:textColor="@android:color/holo_green_light"
         android:textStyle="bold"
-        app:layout_constraintBottom_toTopOf="@+id/spinner"
+        app:layout_constraintBottom_toTopOf="@+id/THSAccountSpinner"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/textView10"
+        app:layout_constraintStart_toEndOf="@+id/THSExpenseTextView"
         app:layout_constraintTop_toTopOf="parent" />
 </android.support.constraint.ConstraintLayout>

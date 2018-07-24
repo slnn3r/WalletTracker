@@ -296,7 +296,7 @@ class DetailsTrxFragment : Fragment(), ViewInterface.DetailsTrxView {
 
         if(spinnerPosition<0&&firstLaunchCheck<1){
 
-            spinnerItem.add(selectionCategoryName+" (Deleted)")
+            spinnerItem.add(selectionCategoryName+mainContext.getString(R.string.deletedDataIndicator))
             detailsTrxCategorySpinner.setSelection(spinnerItem.size-1)
 
 

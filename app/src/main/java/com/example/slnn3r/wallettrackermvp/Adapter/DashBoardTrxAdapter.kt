@@ -52,9 +52,9 @@ class DashBoardTrxAdapter(private val transactionList: ArrayList<Transaction>): 
 
         }else{
 
-            holder.view.DBAccNameTextView.text = transactionData.TransactionDate + " (" +transactionData.TransactionTime+")"
+            holder.view.DBAccNameTextView.text = holder.view.DBTrxImageView.context.getString(R.string.formatDisplayDateTime,transactionData.TransactionDate,transactionData.TransactionTime)
             holder.view.DBBalTextView.text = transactionData.TransactionCategory.TransactionCategoryName
-            holder.view.DBTrxCategoryTextView.text = "$ " + transactionData.TransactionAmount
+            holder.view.DBTrxCategoryTextView.text = String.format(holder.view.DBTrxImageView.context.getString(R.string.formatDisplay2DecimalMoney), transactionData.TransactionAmount)
 
             if(transactionData.TransactionCategory.TransactionCategoryType == holder.view.context.getString(R.string.expense)){
                 holder.view.DBTrxImageView.background = holder.view.DBTrxImageView.context.resources.getDrawable(R.drawable.fui_idp_button_background_email)

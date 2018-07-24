@@ -1,9 +1,6 @@
 package com.example.slnn3r.wallettrackermvp.Model
 
-import android.app.Activity
 import com.example.slnn3r.wallettrackermvp.Interface.ModelInterface
-import com.example.slnn3r.wallettrackermvp.Interface.PresenterInterface
-import com.google.android.gms.common.api.GoogleApiClient
 import com.google.firebase.auth.FirebaseAuth
 
 

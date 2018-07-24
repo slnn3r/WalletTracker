@@ -419,8 +419,8 @@ class RealmAccess: ModelInterface.RealmAccess{
 
                         // convert to 12hour for ez display purpose
                         val notConvertedTime = dataList.transactionTime!!
-                        val date12Format = SimpleDateFormat("hh:mm:ss a")
-                        val date24Format = SimpleDateFormat("HH:mm:ss")
+                        val date12Format = SimpleDateFormat(mainContext.getString(R.string.timeFormat12))
+                        val date24Format = SimpleDateFormat(mainContext.getString(R.string.timeFormat24))
                         val convertedTime = date12Format.format(date24Format.parse(notConvertedTime))
 
                         transactionData.add(
@@ -539,7 +539,7 @@ class RealmAccess: ModelInterface.RealmAccess{
                 val walletAccountData = gson.fromJson<WalletAccount>(walletAccount, WalletAccount::class.java)
                 val transactionCategoryData = gson.fromJson<TransactionCategory>(transactionCategory, TransactionCategory::class.java)
 
-                if(transactionCategoryData.TransactionCategoryType=="Income"&&walletAccountData.WalletAccountID==accountID){
+                if(transactionCategoryData.TransactionCategoryType==mainContext.getString(R.string.income)&&walletAccountData.WalletAccountID==accountID){
                     income+=dataList.transactionAmount
                 }
 
@@ -578,7 +578,7 @@ class RealmAccess: ModelInterface.RealmAccess{
                 val walletAccountData = gson.fromJson<WalletAccount>(walletAccount, WalletAccount::class.java)
                 val transactionCategoryData = gson.fromJson<TransactionCategory>(transactionCategory, TransactionCategory::class.java)
 
-                if(transactionCategoryData.TransactionCategoryType=="Expense"&&walletAccountData.WalletAccountID==accountID){
+                if(transactionCategoryData.TransactionCategoryType==mainContext.getString(R.string.expense)&&walletAccountData.WalletAccountID==accountID){
                     expense+=dataList.transactionAmount
                 }
 
@@ -619,7 +619,7 @@ class RealmAccess: ModelInterface.RealmAccess{
                 val transactionCategoryData = gson.fromJson<TransactionCategory>(transactionCategory, TransactionCategory::class.java)
 
 
-                if(transactionCategoryData.TransactionCategoryType=="Expense"&&walletAccountData.WalletAccountID==accountID){
+                if(transactionCategoryData.TransactionCategoryType==mainContext.getString(R.string.expense)&&walletAccountData.WalletAccountID==accountID){
 
                     transactionData.add(
                             Transaction(

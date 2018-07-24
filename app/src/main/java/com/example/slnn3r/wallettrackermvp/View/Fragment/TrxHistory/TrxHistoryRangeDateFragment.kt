@@ -7,7 +7,6 @@ import android.support.v4.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.navigation.findNavController
 
 import com.example.slnn3r.wallettrackermvp.R
 import kotlinx.android.synthetic.main.fragment_trx_history_range_date.*
@@ -34,7 +33,7 @@ class TrxHistoryRangeDateFragment : Fragment() {
 
         setupDatePicker()
 
-        button2.setOnClickListener{
+        THRFilterButton.setOnClickListener{
 
             //val navController = view.findNavController()
 
@@ -50,18 +49,18 @@ class TrxHistoryRangeDateFragment : Fragment() {
             myCalendar.set(Calendar.YEAR, year)
             myCalendar.set(Calendar.MONTH, monthOfYear)
             myCalendar.set(Calendar.DAY_OF_MONTH, dayOfMonth)
-            startDateInput.setText(simpleDateFormat.format(myCalendar.time))
+            THRStartDateInput.setText(simpleDateFormat.format(myCalendar.time))
         }
 
         val endDate = DatePickerDialog.OnDateSetListener { view, year, monthOfYear, dayOfMonth ->
             myCalendar.set(Calendar.YEAR, year)
             myCalendar.set(Calendar.MONTH, monthOfYear)
             myCalendar.set(Calendar.DAY_OF_MONTH, dayOfMonth)
-            endDateInput.setText(simpleDateFormat.format(myCalendar.time))
+            THREndDateInput.setText(simpleDateFormat.format(myCalendar.time))
         }
 
 
-        startDateInput.setOnClickListener {
+        THRStartDateInput.setOnClickListener {
 
             DatePickerDialog(context, startDate, myCalendar
                     .get(Calendar.YEAR), myCalendar.get(Calendar.MONTH),
@@ -70,7 +69,7 @@ class TrxHistoryRangeDateFragment : Fragment() {
         }
 
 
-        endDateInput.setOnClickListener {
+        THREndDateInput.setOnClickListener {
 
             DatePickerDialog(context, endDate, myCalendar
                     .get(Calendar.YEAR), myCalendar.get(Calendar.MONTH),
@@ -79,8 +78,8 @@ class TrxHistoryRangeDateFragment : Fragment() {
         }
 
         // Initial Date
-        startDateInput.setText(simpleDateFormat.format(myCalendar.time))
-        endDateInput.setText(simpleDateFormat.format(myCalendar.time))
+        THRStartDateInput.setText(simpleDateFormat.format(myCalendar.time))
+        THREndDateInput.setText(simpleDateFormat.format(myCalendar.time))
     }
 
 }

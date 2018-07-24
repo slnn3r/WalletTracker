@@ -22,6 +22,9 @@
     <string name="navDrawer_title2">My Account</string>
     <string name="navDrawer_SignOut">Sign Out</string>
 
+    <!-- trxhistory_menu_list (bottomNavigation) -->
+    <string name="filterBySpecific">Filter by Specific Date</string>
+    <string name="filterByRange">Filter by Date Range</string>
 
     <!-- Dummy Data for View Purpose-->
     <string name="DummyDate">12/12/2018</string>
@@ -102,6 +105,29 @@
     <string name="DTCUpdateSubmit">Edit Category Info</string>
     <string name="DTCDeleteSubmit">Delete Category</string>
 
+    <!-- fragment_trx_history_specific_date -->
+    <string name="THSAccountLabel">Account : </string>
+    <string name="THSTrxTypeLabel">Transaction Type : </string>
+    <string name="THSDateLabel">Date : </string>
+    <string name="THSFliterButtonLabel">Filter</string>
+    <string name="THSTrxCategoryLabel">Transaction Category : </string>
+    <string name="THSIncomeLabel">Income: $1000</string>
+    <string name="THSExpenseLabel">Expense: $2000</string>
+    <string name="THSBalanceLabel">Balance: $5000</string>
+
+    <!-- fragment_trx_history_range_date -->
+    <string name="THRToLabel">To : </string>
+    <string name="THRFromLabel">From : </string>
+    <string name="THRAccountLabel">Account : </string>
+    <string name="THRTrxTypeLabel">Transaction Type : </string>
+    <string name="THRFilterButtonLabel">Filter</string>
+    <string name="THRIncomeLabel">Income: $1000</string>
+    <string name="THRExpenseLabel">Expense: $2000</string>
+    <string name="THRBalanceLabel">Balance: $5000</string>
+    <string name="THRTrxCategory">Transaction Category : </string>
+    <string name="THRStartDateInput">Start Date</string>
+    <string name="THREndDateInput">End Date</string>
+
 
     <!-- System Configuration String -->
 
@@ -118,6 +144,12 @@
     <string name="defaultAccountBalance">0.0</string>
 
     <string name="maxAccount">5</string>
+
+    <string name="allYear">All Years</string>
+    <string name="allMonth">All Months</string>
+    <string name="allDay">All Days</string>
+
+    <string name="deletedDataIndicator"> (Deleted)</string>
 
     <!-- Alert Dialog String -->
     <string name="dialogPositive">Confirm</string>
@@ -235,7 +267,7 @@
     <string name="createTrxCategoryFragmentTitle">Create Transaction Category</string>
     <string name="detailsTrxCategoryFragmentTitle">Transaction Category Details</string>
     <string name="detailsTransactionFragmentTitle">Transaction Details</string>
-
+    <string name="trxHistoryFragmentTitle">Transaction History</string>
 
     <!-- TextWatcher Message -->
     <string name="promptToEnter">Please Fill In This Field</string>
@@ -301,8 +333,10 @@
     <string name="noDataInDatabase">There is no Transaction</string>
     <string name="tabToAddTrx">Please Add New Transaction</string>
 
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <!-- Formatting Display Value -->
+    <string name="formatDisplayMonth">(%s)</string>
+    <string name="formatDisplay2DecimalMoney">$ %.2f</string>
 
+    <string name="formatDisplayDateTime">%s (%s)</string>
 
 </resources>

@@ -685,10 +685,10 @@ class Presenter: PresenterInterface.Presenter{
 
                         value.forEach { dataList ->
 
-                            val sdf = SimpleDateFormat("yyyy/MM/dd")
+                            val sdf = SimpleDateFormat(mainContext.getString(R.string.dateFormat))
                             val d = sdf.parse(dataList.TransactionDate)
                             val cal = Calendar.getInstance()
-                            cal.setTime(d)
+                            cal.time = d
                             val month = cal.getDisplayName(Calendar.MONTH, Calendar.LONG, Locale.getDefault())
 
                             if(month==thisMonth){
