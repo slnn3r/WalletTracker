@@ -33,9 +33,8 @@ import kotlin.collections.ArrayList
 
 class DashBoardFragment : Fragment(),ViewInterface.DashBoardView {
 
-
     private lateinit var presenter: PresenterInterface.Presenter
-
+    private val mCalendar = Calendar.getInstance()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
@@ -53,6 +52,11 @@ class DashBoardFragment : Fragment(),ViewInterface.DashBoardView {
 
         hideDisplayedKeyboard(view) // Hide Keyboard
         displayDummyGraph() // Dummy Graph Setup
+
+        // Initial Input
+        val thisMonth =mCalendar.getDisplayName(Calendar.MONTH, Calendar.LONG, Locale.getDefault())
+        DBMonthTextView.text = "("+thisMonth+")"
+
 
         // Get SharedPreference data
         val userProfile = presenter.getUserData(context!!)
@@ -228,14 +232,14 @@ class DashBoardFragment : Fragment(),ViewInterface.DashBoardView {
 
                 presenter.setSelectedAccount(mainContext, walletAccountList[spinner.selectedItemPosition].WalletAccountName) //Save Select Account in SharedPreference for future use
 
-
-                //!!!!!!! LOAD TRX LIST, BALANCE FIGURE IS HERE
-
                 presenter.checkTransaction(mainContext, walletAccountList[spinner.selectedItemPosition].WalletAccountID, userProfile.UserUID)
 
-                // display Balance
+
+                //!!!!!!! LOAD TRX LIST, BALANCE FIGURE IS HERE
                 presenter.getAllIncome(context!!, userProfile.UserUID, walletAccountList[spinner.selectedItemPosition].WalletAccountID)
-                presenter.getThisMonthExpense(context!!, userProfile.UserUID, walletAccountList[spinner.selectedItemPosition].WalletAccountID)
+
+                val thisMonth =mCalendar.getDisplayName(Calendar.MONTH, Calendar.LONG, Locale.getDefault())
+                presenter.getThisMonthExpense(context!!, userProfile.UserUID, walletAccountList[spinner.selectedItemPosition].WalletAccountID, thisMonth)
 
             }
         }
@@ -266,14 +270,24 @@ class DashBoardFragment : Fragment(),ViewInterface.DashBoardView {
     override fun populateCurrentBalance(mainContext: Context, currentBalance: Double) {
 
         val currentBalanceView = (mainContext as Activity).findViewById(R.id.DBCurrentBalTextView) as TextView
-        currentBalanceView.text = "$ "+currentBalance.toString()
-        currentBalanceView.setTextColor(Color.GREEN)
+
+        if(currentBalance>0){
+
+            currentBalanceView.text = String.format("$ %.2f", currentBalance)
+            currentBalanceView.setTextColor(Color.GREEN)
+        }else{
+
+            currentBalanceView.text = String.format("$ %.2f", currentBalance)
+            currentBalanceView.setTextColor(Color.RED)
+        }
+
+
     }
 
     override fun populateThisMonthExpense(mainContext: Context, thisMonthExpense: Double) {
 
         val thisMonthExpenseView = (mainContext as Activity).findViewById(R.id.DBMonthlyExpTextView) as TextView
-        thisMonthExpenseView.text = "$ "+thisMonthExpense.toString()
+        thisMonthExpenseView.text = String.format("$ %.2f", thisMonthExpense)
         thisMonthExpenseView.setTextColor(Color.RED)
     }
 

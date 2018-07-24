@@ -33,6 +33,8 @@ import io.reactivex.Observer
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
+import java.text.SimpleDateFormat
+import java.util.*
 
 
 class Presenter: PresenterInterface.Presenter{
@@ -632,6 +634,7 @@ class Presenter: PresenterInterface.Presenter{
     override fun getAllIncome(mainContext: Context, userID: String, accountID: String) {
 
         val accountBalance = realmModel.getCurrentBalanceRealm(mainContext, userID, accountID)
+        val allExpenses = realmModel.getAllExpense(mainContext,userID,accountID)
 
         getAllIncomeObservable(mainContext, userID, accountID)
                 .subscribeOn(Schedulers.io())
@@ -644,10 +647,7 @@ class Presenter: PresenterInterface.Presenter{
 
                     override fun onNext(value: Double)
                     {
-
-                        dashBoardView.populateCurrentBalance(mainContext, value+accountBalance)
-
-
+                        dashBoardView.populateCurrentBalance(mainContext, value+accountBalance-allExpenses)
                     }
 
                     override fun onError(e: Throwable)
@@ -667,21 +667,37 @@ class Presenter: PresenterInterface.Presenter{
     }
 
 
-    override fun getThisMonthExpense(mainContext: Context, userID: String, accountID: String) {
+    override fun getThisMonthExpense(mainContext: Context, userID: String, accountID: String, thisMonth: String) {
 
         getThisMonthExpenseObservable(mainContext, userID, accountID)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(object : Observer<Double>
+                .subscribe(object : Observer< ArrayList<Transaction>>
                 {
                     override fun onSubscribe(d: Disposable)
                     {
                     }
 
-                    override fun onNext(value: Double)
+                    override fun onNext(value:  ArrayList<Transaction>)
                     {
 
-                        dashBoardView.populateThisMonthExpense(mainContext, value)
+                        var expenses=0.0
+
+                        value.forEach { dataList ->
+
+                            val sdf = SimpleDateFormat("yyyy/MM/dd")
+                            val d = sdf.parse(dataList.TransactionDate)
+                            val cal = Calendar.getInstance()
+                            cal.setTime(d)
+                            val month = cal.getDisplayName(Calendar.MONTH, Calendar.LONG, Locale.getDefault())
+
+                            if(month==thisMonth){
+                                expenses+=dataList.TransactionAmount
+                            }
+
+                        }
+
+                        dashBoardView.populateThisMonthExpense(mainContext, expenses)
 
 
                     }
@@ -698,8 +714,8 @@ class Presenter: PresenterInterface.Presenter{
 
     }
 
-    private fun getThisMonthExpenseObservable(mainContext: Context, userID: String, accountID: String): Observable<Double>{
-        return Observable.defer { Observable.just(realmModel.getAllExpense(mainContext,userID,accountID)) }
+    private fun getThisMonthExpenseObservable(mainContext: Context, userID: String, accountID: String): Observable<ArrayList<Transaction>>{
+        return Observable.defer { Observable.just(realmModel.getThisMonthExpenses(mainContext,userID,accountID)) }
     }
 
 

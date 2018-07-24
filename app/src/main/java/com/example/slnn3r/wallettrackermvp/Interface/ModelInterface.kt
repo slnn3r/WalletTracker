@@ -40,6 +40,8 @@ interface ModelInterface {
         fun getAllIncome(mainContext: Context, userID:String, accountID: String): Double
         fun getAllExpense(mainContext: Context, userID: String, accountID: String): Double
 
+        fun getThisMonthExpenses(mainContext: Context, userID: String, accountID: String):  ArrayList<Transaction>
+
         // NewTrx Fragment
         fun createNewTrxRealm(mainContext: Context, newTrxInput:Transaction)
 

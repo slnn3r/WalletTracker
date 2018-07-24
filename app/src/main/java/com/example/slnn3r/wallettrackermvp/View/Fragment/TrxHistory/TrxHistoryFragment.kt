@@ -2,6 +2,7 @@ package com.example.slnn3r.wallettrackermvp.View.Fragment.TrxHistory
 
 import android.app.Activity
 import android.os.Bundle
+
 import android.support.v4.app.Fragment
 import android.support.v7.app.AppCompatActivity
 import android.view.LayoutInflater
@@ -36,6 +37,9 @@ class TrxHistoryFragment : Fragment() {
         val navController = (context as Activity).findNavController(R.id.trxHistoryFragmentNavMenu)
         bottomNavigationFragmentView.setupWithNavController(navController)
 
+
     }
+
+
 
 }

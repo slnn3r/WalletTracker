@@ -26,10 +26,10 @@
     <!-- Dummy Data for View Purpose-->
     <string name="DummyDate">12/12/2018</string>
     <string name="DummyAccountName">Personal Account</string>
-    <string name="DummyAmount1">$ 100000.00</string>
+    <string name="DummyAmount1">$ 0.00</string>
     <string name="DummyCategory">Food and Drink</string>
     <string name="DummyMonth">(July)</string>
-    <string name="DummyAmount2">$ 5000.00</string>
+    <string name="DummyAmount2">$ 0.00</string>
 
 
     <!-- fragment_dash_board -->
@@ -163,7 +163,7 @@
     <string name="timeFormat12">hh:mm:ss a</string>
     <string name="timeFormat24">HH:mm:ss</string>
 
-    <string name="dateFormat">dd/MM/yy</string>
+    <string name="dateFormat">yyyy/MM/dd</string>
 
     <!-- Google Login -->
     <string name="GoogleSignInOptionKey">866059954529-u7ki0u0si1veh1ul9slartd6ejnq0js7.apps.googleusercontent.com</string>

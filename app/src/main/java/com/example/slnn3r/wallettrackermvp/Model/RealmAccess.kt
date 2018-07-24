@@ -589,6 +589,58 @@ class RealmAccess: ModelInterface.RealmAccess{
 
     }
 
+    override fun getThisMonthExpenses(mainContext: Context, userID: String, accountID: String): ArrayList<Transaction> {
+
+        var expense=0.0
+        var realm: Realm? = null
+        val transactionData=ArrayList<Transaction>()
+
+        Realm.init(mainContext)
+
+        val config = RealmConfiguration.Builder()
+                .name(mainContext.getString(R.string.transactionRealm))
+                .build()
+
+        realm = Realm.getInstance(config)
+
+
+        realm!!.executeTransaction {
+
+            val getTransaction = realm.where(TransactionRealm::class.java)
+                    .findAll()
+
+
+            getTransaction.forEach { dataList ->
+
+                val gson = Gson()
+                val walletAccount = dataList.walletAccount
+                val transactionCategory = dataList.transactionCategory
+                val walletAccountData = gson.fromJson<WalletAccount>(walletAccount, WalletAccount::class.java)
+                val transactionCategoryData = gson.fromJson<TransactionCategory>(transactionCategory, TransactionCategory::class.java)
+
+
+                if(transactionCategoryData.TransactionCategoryType=="Expense"&&walletAccountData.WalletAccountID==accountID){
+
+                    transactionData.add(
+                            Transaction(
+                                    dataList.transactionID!!,
+                                    dataList.transactionDate!!,
+                                    dataList.transactionTime!!,
+                                    dataList.transactionAmount,
+                                    dataList.transactionRemark!!,
+                                    transactionCategoryData,
+                                    walletAccountData
+                            )
+                    )
+
+                }
+
+            }
+        }
+
+        return transactionData
+
+    }
 
 
 

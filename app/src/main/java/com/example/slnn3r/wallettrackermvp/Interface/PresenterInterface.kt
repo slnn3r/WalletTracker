@@ -54,7 +54,7 @@ interface PresenterInterface{
         // Get all Expense, then filter by this Month
 
         fun getAllIncome(mainContext: Context, userID: String, accountID: String)
-        fun getThisMonthExpense(mainContext: Context, userID:String, accountID:String)
+        fun getThisMonthExpense(mainContext: Context, userID:String, accountID:String, thisMonth:String)
 
         // NewTrx Fragment
         fun createNewTrx(mainContext: Context, newTrxInput: Transaction)

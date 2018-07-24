@@ -1,23 +1,24 @@
 package com.example.slnn3r.wallettrackermvp.View.Fragment.TrxHistory
 
 
+
+import android.app.Activity
 import android.os.Bundle
+
 import android.support.v4.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.navigation.findNavController
 
 import com.example.slnn3r.wallettrackermvp.R
 import kotlinx.android.synthetic.main.fragment_trx_history_specific_date.*
 import android.widget.ArrayAdapter
-import android.widget.TextView
 import java.util.*
-import java.util.Arrays.asList
 import android.widget.AdapterView
-import android.widget.Spinner
-import kotlin.collections.ArrayList
-import kotlin.math.min
+import androidx.navigation.findNavController
+import androidx.navigation.fragment.findNavController
+import androidx.navigation.ui.setupWithNavController
+import kotlinx.android.synthetic.main.fragment_trx_history.*
 
 
 class TrxHistorySpecificDateFragment : Fragment() {
@@ -43,6 +44,7 @@ class TrxHistorySpecificDateFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+
         calendar = Calendar.getInstance();
 
 
@@ -55,15 +57,26 @@ class TrxHistorySpecificDateFragment : Fragment() {
         button.setOnClickListener{
 
             //val navController = view.findNavController()
-
-
             //navController.navigate(R.id.action_trxHistorySpecificDateFragment_to_detailsTrxFragmentforTrxHistory)
+
+
+            // enable back the navigation by override the navigation path to the right one
+            val navController = (context as Activity).findNavController(R.id.trxHistoryFragmentNavMenu)
+            (context as Activity).bottomNavigationFragmentView.setupWithNavController(navController)
+
 
         }
 
 
+        // Disable navigation through override the navigation path
+        val navController = (context as Activity).findNavController(R.id.navMenu)
+        (context as Activity).bottomNavigationFragmentView.setupWithNavController(navController)
 
     }
+
+
+
+
 
     fun setDays() {
 

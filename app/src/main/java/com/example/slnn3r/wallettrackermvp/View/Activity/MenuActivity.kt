@@ -27,9 +27,7 @@ import com.squareup.picasso.Picasso
 
 import androidx.navigation.Navigation
 import androidx.navigation.findNavController
-import androidx.navigation.ui.setupWithNavController
 
-import kotlinx.android.synthetic.main.fragment_trx_history.*
 
 
 class MenuActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener,  ViewInterface.MenuView {
@@ -166,6 +164,7 @@ class MenuActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
                 setupNavigationMode()
                 Navigation.findNavController(this, R.id.navMenu).navigate(R.id.action_dashBoardFragment_to_trxHistoryFragment)
+
 
             }
 
