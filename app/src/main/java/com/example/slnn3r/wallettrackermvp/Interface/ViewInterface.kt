@@ -157,6 +157,18 @@ interface ViewInterface{
 
     interface TrxHistoryRangeView{
 
+        fun disableBottomNavWhileLoading(mainContext: Context)
+        fun enableBottomNavAfterLoading(mainContext: Context)
+
+        fun populateTrxHistoryRangeAccountSpinner(mainContext: Context, walletAccountList: ArrayList<WalletAccount>)
+        fun populateTrxHistoryRangeAccountSpinnerFail(mainContext: Context, errorMessage: String)
+
+        fun populateTrxHistoryRangeCategorySpinner(mainContext: Context, trxCategoryList: ArrayList<TransactionCategory>)
+        fun populateTrxHistoryRangeCategorySpinnerFail(mainContext: Context, errorMessage: String)
+
+        fun populateTrxHistoryRangeRecycleView(mainContext: Context, transactionList: ArrayList<Transaction>)
+        fun populateTrxHistoryRangeRecycleViewFail(mainContext: Context, errorMessage: String)
+
     }
 
 

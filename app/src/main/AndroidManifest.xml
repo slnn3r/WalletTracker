@@ -33,7 +33,8 @@
             android:label="@string/title_activity_menu"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"
-            android:windowSoftInputMode="adjustPan" />
+            android:windowSoftInputMode="adjustPan"
+            />
     </application>
 
 </manifest>

@@ -39,6 +39,7 @@ import java.util.*
 
 class Presenter: PresenterInterface.Presenter{
 
+
     private lateinit var mainView: ViewInterface.MainView
     private lateinit var loginView: ViewInterface.LoginView
     private lateinit var menuView: ViewInterface.MenuView
@@ -540,6 +541,9 @@ class Presenter: PresenterInterface.Presenter{
                             if(fragmentDestination==R.id.trxHistorySpecificDateFragment){
                                 trxHistorySpecificView.populateTrxHistorySpecificAccountSpinner(mainContext,value)
 
+                            }else if(fragmentDestination==R.id.trxHistoryRangeDateFragment){
+                                trxHistoryRangeView.populateTrxHistoryRangeAccountSpinner(mainContext,value)
+
                             }else if(fragmentDestination==R.id.detailsTrxFragmentTrxHistory){  //?!!
                                 detailsTrxView.populateDetailTrxAccountSpinner(mainContext, value)
                             }
@@ -571,6 +575,9 @@ class Presenter: PresenterInterface.Presenter{
 
                             if(fragmentDestination==R.id.trxHistorySpecificDateFragment){
                                 trxHistorySpecificView.populateTrxHistorySpecificAccountSpinnerFail(mainContext,e.toString())
+
+                            }else if(fragmentDestination==R.id.trxHistoryRangeDateFragment){
+                                trxHistoryRangeView.populateTrxHistoryRangeAccountSpinnerFail(mainContext,e.toString())
 
                             }else if(fragmentDestination==R.id.detailsTrxFragmentTrxHistory){  //?!!
                                 detailsTrxView.populateDetailTrxAccountSpinnerFail(mainContext, e.toString())
@@ -941,6 +948,9 @@ class Presenter: PresenterInterface.Presenter{
                             if(fragmentDestination==R.id.trxHistorySpecificDateFragment){
                                 trxHistorySpecificView.populateTrxHistorySpecificCategorySpinner(mainContext,value)
 
+                            }else if(fragmentDestination==R.id.trxHistoryRangeDateFragment){
+                                trxHistoryRangeView.populateTrxHistoryRangeCategorySpinner(mainContext,value)
+
                             }else if(fragmentDestination==R.id.detailsTrxFragmentTrxHistory){  //?!!
                                 detailsTrxView.populateDetailTrxCategorySpinner(mainContext, value)
                             }
@@ -966,6 +976,9 @@ class Presenter: PresenterInterface.Presenter{
 
                             if(fragmentDestination==R.id.trxHistorySpecificDateFragment){
                                 trxHistorySpecificView.populateTrxHistorySpecificCategorySpinnerFail(mainContext,e.toString())
+
+                            }else if(fragmentDestination==R.id.trxHistoryRangeDateFragment){
+                                trxHistoryRangeView.populateTrxHistoryRangeCategorySpinnerFail(mainContext,e.toString())
 
                             }else if(fragmentDestination==R.id.detailsTrxFragmentTrxHistory){  //?!!
                                 detailsTrxView.populateDetailTrxCategorySpinnerFail(mainContext, e.toString())
@@ -1236,4 +1249,41 @@ class Presenter: PresenterInterface.Presenter{
         return Observable.defer{ Observable.just(realmModel.getTrxForSpecificDateFilterRealm(mainContext, userID,accountID)) }
     }
 
+
+    // TrxHistoryRangeDate Fragment
+    override fun getTrxForRangeDateFilter(mainContext: Context, userID: String, accountID: String, trxType: String, trxCategory: String, startDate: String, endDate: String) {
+
+        getTrxForRangeDateFilterObservable(mainContext, userID, accountID,trxType, trxCategory, startDate, endDate)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(object : Observer<ArrayList<Transaction>>
+                {
+                    override fun onSubscribe(d: Disposable)
+                    {
+                        trxHistoryRangeView.disableBottomNavWhileLoading(mainContext)
+                    }
+
+                    override fun onNext(value: ArrayList<Transaction>)
+                    {
+                        trxHistoryRangeView.populateTrxHistoryRangeRecycleView(mainContext, value)
+                    }
+
+                    override fun onError(e: Throwable)
+                    {
+                        trxHistoryRangeView.populateTrxHistoryRangeRecycleViewFail(mainContext, e.toString())
+                    }
+
+                    override fun onComplete()
+                    {
+                        trxHistoryRangeView.enableBottomNavAfterLoading(mainContext)
+
+                    }
+
+                })
+
+    }
+
+    private fun getTrxForRangeDateFilterObservable(mainContext: Context, userID: String, accountID: String, trxType: String, trxCategory: String, startDate: String, endDate: String): Observable<ArrayList<Transaction>>{
+        return Observable.defer{ Observable.just(realmModel.getTrxForRangeDateFilterRealm(mainContext, userID,accountID)) }
+    }
 }

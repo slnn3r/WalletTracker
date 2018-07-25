@@ -14,7 +14,7 @@ import com.google.gson.Gson
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.transaction_list_row.view.*
 
-class TrxHistorySpecificAdapter(private val transactionList: ArrayList<Transaction>): RecyclerView.Adapter<TrxHistorySpecificViewHolder>(){
+class TrxHistoryRangeAdapter(private val transactionList: ArrayList<Transaction>): RecyclerView.Adapter<TrxHistoryRangeViewHolder>(){
 
 
     // numberOfItems
@@ -22,16 +22,16 @@ class TrxHistorySpecificAdapter(private val transactionList: ArrayList<Transacti
         return transactionList.count()
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TrxHistorySpecificViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TrxHistoryRangeViewHolder {
 
         val layoutInflater = LayoutInflater.from(parent.context)
         val cellForRow = layoutInflater.inflate(R.layout.transaction_list_row, parent, false)
 
 
-        return TrxHistorySpecificViewHolder(cellForRow)
+        return TrxHistoryRangeViewHolder(cellForRow)
     }
 
-    override fun onBindViewHolder(holder: TrxHistorySpecificViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: TrxHistoryRangeViewHolder, position: Int) {
 
         /*
         onBindHolder called several times as recycler news needs a view unless new one. So each time you set visilibity in child views, other views states are also changes.
@@ -79,7 +79,7 @@ class TrxHistorySpecificAdapter(private val transactionList: ArrayList<Transacti
 
 
 
-class TrxHistorySpecificViewHolder(val view: View, var passData: Transaction?= null): RecyclerView.ViewHolder(view){
+class TrxHistoryRangeViewHolder(val view: View, var passData: Transaction?= null): RecyclerView.ViewHolder(view){
 
     init{
         view.setOnClickListener{
@@ -111,9 +111,9 @@ class TrxHistorySpecificViewHolder(val view: View, var passData: Transaction?= n
                 bundle.putString(context.getString(R.string.transactionPassArgKey), json)
 
                 val navController = view.findNavController()
-                navController.navigate(R.id.action_trxHistorySpecificDateFragment_to_detailsTrxFragment, bundle)
+                navController.navigate(R.id.action_trxHistoryRangeDateFragment_to_detailsTrxFragment, bundle)
 
-                (context as MenuActivity).trxHistoryBack("Specific")
+                (context as MenuActivity).trxHistoryBack("Range")
 
 
             }

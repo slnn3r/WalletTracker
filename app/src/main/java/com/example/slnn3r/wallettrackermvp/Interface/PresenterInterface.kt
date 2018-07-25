@@ -89,6 +89,10 @@ interface PresenterInterface{
         fun getTrxForSpecificDateFilter(mainContext: Context, userID: String, accountID: String, trxType:String, trxCategory:String, day:String, month:String, year:String)
 
 
+        // TrxHistoryRangeDate Fragment
+        fun getTrxForRangeDateFilter(mainContext: Context, userID: String, accountID: String, trxType:String, trxCategory:String, startDate:String, endDate:String)
+
+
     }
     
 }

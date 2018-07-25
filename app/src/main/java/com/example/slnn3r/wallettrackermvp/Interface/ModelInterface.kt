@@ -77,6 +77,8 @@ interface ModelInterface {
         // TrxHistorySpecificDate Fragment
         fun getTrxForSpecificDateFilterRealm(mainContext: Context, userID: String, accountID: String):  ArrayList<Transaction>
 
+        // TrxHistoryRangeDate Fragment
+        fun getTrxForRangeDateFilterRealm(mainContext: Context, userID: String, accountID: String):  ArrayList<Transaction>
     }
 
     interface SharedPreference{

@@ -21,6 +21,7 @@ import com.example.slnn3r.wallettrackermvp.R
 import kotlinx.android.synthetic.main.activity_menu.*
 import kotlinx.android.synthetic.main.app_bar_menu.*
 import android.view.View
+import android.view.WindowManager
 import android.widget.ImageView
 import android.widget.TextView
 import com.squareup.picasso.Picasso
@@ -47,6 +48,7 @@ class MenuActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_menu)
         setSupportActionBar(toolbar)
+
 
         // display User info to Drawer
         displayUserInfo()
@@ -85,6 +87,8 @@ class MenuActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
                 }else{
 
+                    val navController = (this as Activity).findNavController(R.id.trxHistoryFragmentNavMenu)
+                    navController.navigate(R.id.action_detailsTrxFragment_to_trxHistoryRangeDateFragment)
                 }
 
                 setupNavigationMode()
@@ -147,6 +151,8 @@ class MenuActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
             }else{
 
+                val navController = (this as Activity).findNavController(R.id.trxHistoryFragmentNavMenu)
+                navController.navigate(R.id.action_detailsTrxFragment_to_trxHistoryRangeDateFragment)
             }
 
             setupNavigationMode()
@@ -178,6 +184,8 @@ class MenuActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
         presenter = Presenter(this)
 
+          Handler().postDelayed({ //For Avoid Lagging Animation
+
         // Handle navigation view item clicks here.
         when (item.itemId) {
             R.id.navDrawer_WalletAccount -> {
@@ -193,8 +201,11 @@ class MenuActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             }
             R.id.navDrawer_TrxHistory -> {
 
-                setupNavigationMode()
-                Navigation.findNavController(this, R.id.navMenu).navigate(R.id.action_dashBoardFragment_to_trxHistoryFragment)
+
+                    setupNavigationMode()
+                    Navigation.findNavController(this, R.id.navMenu).navigate(R.id.action_dashBoardFragment_to_trxHistoryFragment)
+
+
 
 
             }
@@ -205,6 +216,9 @@ class MenuActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             }
 
         }
+
+          }, 200)
+
 
         drawer_layout.closeDrawer(GravityCompat.START)
         return true
