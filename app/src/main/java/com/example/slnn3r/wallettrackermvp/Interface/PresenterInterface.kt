@@ -85,6 +85,8 @@ interface PresenterInterface{
         fun deleteTransactionCategory(mainContext: Context, trxCategoryID:String)
 
 
+        // TrxHistorySpecificDate Fragment
+        fun getTrxForSpecificDateFilter(mainContext: Context, userID: String, accountID: String, trxType:String, trxCategory:String, day:String, month:String, year:String)
 
 
     }

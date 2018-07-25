@@ -74,6 +74,8 @@ interface ModelInterface {
         fun deleteTransactionCategoryRealm(mainContext:Context, walletAccountDataID: String)
 
 
+        // TrxHistorySpecificDate Fragment
+        fun getTrxForSpecificDateFilterRealm(mainContext: Context, userID: String, accountID: String):  ArrayList<Transaction>
 
     }
 

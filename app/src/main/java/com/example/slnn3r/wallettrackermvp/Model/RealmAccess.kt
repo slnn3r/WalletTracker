@@ -22,7 +22,6 @@ import kotlin.collections.ArrayList
 
 class RealmAccess: ModelInterface.RealmAccess{
 
-
     // Get Data Only
     override fun getAccountDataRealm(mainContext: Context, userID: String): ArrayList<WalletAccount> {
 
@@ -1066,6 +1065,101 @@ class RealmAccess: ModelInterface.RealmAccess{
         //
 
     }
+
+
+    // TrxHistorySpecificDate Fragment
+    override fun getTrxForSpecificDateFilterRealm(mainContext: Context, userID: String, accountID: String): ArrayList<Transaction> {
+
+        //
+        var realm: Realm? = null
+
+        val transactionData=ArrayList<Transaction>()
+
+
+        Realm.init(mainContext)
+
+        val config = RealmConfiguration.Builder()
+                .name(mainContext.getString(R.string.transactionRealm))
+                .build()
+
+        realm = Realm.getInstance(config)
+
+
+        realm!!.executeTransaction {
+
+            val getTransaction = realm.where(TransactionRealm::class.java)
+                    .sort(mainContext.getString(R.string.TransactionDate), Sort.DESCENDING,mainContext.getString(R.string.TransactionTime), Sort.DESCENDING)
+                    .findAll()
+
+
+
+            getTransaction.forEach{
+                dataList->
+
+                val gson = Gson()
+
+                val walletAccount = dataList.walletAccount
+                val transactionCategory = dataList.transactionCategory
+
+                val walletAccountData = gson.fromJson<WalletAccount>(walletAccount, WalletAccount::class.java)
+                val transactionCategoryData = gson.fromJson<TransactionCategory>(transactionCategory, TransactionCategory::class.java)
+
+
+
+                if(walletAccountData.WalletAccountID==accountID && walletAccountData.UserUID==userID){
+
+                    // convert to 12hour for ez display purpose
+                    val notConvertedTime = dataList.transactionTime!!
+                    val date12Format = SimpleDateFormat(mainContext.getString(R.string.timeFormat12))
+                    val date24Format = SimpleDateFormat(mainContext.getString(R.string.timeFormat24))
+                    val convertedTime = date12Format.format(date24Format.parse(notConvertedTime))
+
+                    transactionData.add(
+
+                            Transaction(
+                                    dataList.transactionID!!,
+                                    dataList.transactionDate!!,
+                                    convertedTime,
+                                    dataList.transactionAmount,
+                                    dataList.transactionRemark!!,
+                                    transactionCategoryData,
+                                    walletAccountData
+                            )
+                    )
+
+                }
+
+
+            }
+
+            val noResult = mainContext.getString(R.string.noResult) //ONLY USED FOR DASHBOARD GET TRANSACTION LIST
+
+            val transactionCategoryNull= TransactionCategory("","","","","")
+            val walletAccountNull= WalletAccount("","",0.0,"","")
+
+
+            if(transactionData.size<1){
+                transactionData.add(
+                        Transaction(
+                                noResult,
+                                noResult,
+                                noResult,
+                                0.0,
+                                noResult,
+                                transactionCategoryNull,
+                                walletAccountNull
+                        )
+                )
+            }
+
+        }
+
+        realm.close()
+
+        return transactionData
+
+    }
+
 
 
 }

@@ -10,37 +10,17 @@
                 <map>
                   <entry key="createTrxCategoryFragment">
                     <value>
-                      <LayoutPositions>
-                        <option name="myPosition">
-                          <Point>
-                            <option name="x" value="518" />
-                            <option name="y" value="12" />
-                          </Point>
-                        </option>
-                      </LayoutPositions>
+                      <LayoutPositions />
                     </value>
                   </entry>
                   <entry key="createWalletAccountFragment">
                     <value>
-                      <LayoutPositions>
-                        <option name="myPosition">
-                          <Point>
-                            <option name="x" value="518" />
-                            <option name="y" value="1435" />
-                          </Point>
-                        </option>
-                      </LayoutPositions>
+                      <LayoutPositions />
                     </value>
                   </entry>
                   <entry key="dashBoardFragment">
                     <value>
                       <LayoutPositions>
-                        <option name="myPosition">
-                          <Point>
-                            <option name="x" value="12" />
-                            <option name="y" value="140" />
-                          </Point>
-                        </option>
                         <option name="myPositions">
                           <map>
                             <entry key="action_dashBoardFragment_to_addNewTrx">
@@ -75,73 +55,32 @@
                   </entry>
                   <entry key="detailsTrxCategoryFragment">
                     <value>
-                      <LayoutPositions>
-                        <option name="myPosition">
-                          <Point>
-                            <option name="x" value="518" />
-                            <option name="y" value="368" />
-                          </Point>
-                        </option>
-                      </LayoutPositions>
+                      <LayoutPositions />
                     </value>
                   </entry>
                   <entry key="detailsTrxFragment">
                     <value>
-                      <LayoutPositions>
-                        <option name="myPosition">
-                          <Point>
-                            <option name="x" value="265" />
-                            <option name="y" value="766" />
-                          </Point>
-                        </option>
-                      </LayoutPositions>
+                      <LayoutPositions />
                     </value>
                   </entry>
                   <entry key="detailsWalletAccountFragment">
                     <value>
-                      <LayoutPositions>
-                        <option name="myPosition">
-                          <Point>
-                            <option name="x" value="518" />
-                            <option name="y" value="1791" />
-                          </Point>
-                        </option>
-                      </LayoutPositions>
+                      <LayoutPositions />
                     </value>
                   </entry>
                   <entry key="newTrxFragment">
                     <value>
-                      <LayoutPositions>
-                        <option name="myPosition">
-                          <Point>
-                            <option name="x" value="265" />
-                            <option name="y" value="1122" />
-                          </Point>
-                        </option>
-                      </LayoutPositions>
+                      <LayoutPositions />
                     </value>
                   </entry>
                   <entry key="trxHistoryFragment">
                     <value>
-                      <LayoutPositions>
-                        <option name="myPosition">
-                          <Point>
-                            <option name="x" value="265" />
-                            <option name="y" value="410" />
-                          </Point>
-                        </option>
-                      </LayoutPositions>
+                      <LayoutPositions />
                     </value>
                   </entry>
                   <entry key="viewTrxCategoryFragment">
                     <value>
                       <LayoutPositions>
-                        <option name="myPosition">
-                          <Point>
-                            <option name="x" value="265" />
-                            <option name="y" value="54" />
-                          </Point>
-                        </option>
                         <option name="myPositions">
                           <map>
                             <entry key="action_viewTrxCategoryFragment_to_createTrxCategoryFragment">
@@ -162,12 +101,6 @@
                   <entry key="viewWalletAccountFragment">
                     <value>
                       <LayoutPositions>
-                        <option name="myPosition">
-                          <Point>
-                            <option name="x" value="265" />
-                            <option name="y" value="1478" />
-                          </Point>
-                        </option>
                         <option name="myPositions">
                           <map>
                             <entry key="action_viewWalletAccountFragment_to_createWalletAccountFragment">
@@ -235,17 +168,44 @@
             <LayoutPositions>
               <option name="myPositions">
                 <map>
-                  <entry key="detailsTrxFragmentforTrxHistory">
+                  <entry key="detailsTrxFragmentTrxHistory">
                     <value>
-                      <LayoutPositions />
+                      <LayoutPositions>
+                        <option name="myPosition">
+                          <Point>
+                            <option name="x" value="445" />
+                            <option name="y" value="-6" />
+                          </Point>
+                        </option>
+                        <option name="myPositions">
+                          <map>
+                            <entry key="action_detailsTrxFragment_to_trxHistoryRangeDateFragment">
+                              <value>
+                                <LayoutPositions />
+                              </value>
+                            </entry>
+                            <entry key="action_detailsTrxFragment_to_trxHistorySpecificDateFragment">
+                              <value>
+                                <LayoutPositions />
+                              </value>
+                            </entry>
+                          </map>
+                        </option>
+                      </LayoutPositions>
                     </value>
                   </entry>
                   <entry key="trxHistoryRangeDateFragment">
                     <value>
                       <LayoutPositions>
+                        <option name="myPosition">
+                          <Point>
+                            <option name="x" value="9" />
+                            <option name="y" value="-132" />
+                          </Point>
+                        </option>
                         <option name="myPositions">
                           <map>
-                            <entry key="action_trxHistoryRangeDateFragment_to_detailsTrxFragmentforTrxHistory">
+                            <entry key="action_trxHistoryRangeDateFragment_to_detailsTrxFragment">
                               <value>
                                 <LayoutPositions />
                               </value>
@@ -258,9 +218,15 @@
                   <entry key="trxHistorySpecificDateFragment">
                     <value>
                       <LayoutPositions>
+                        <option name="myPosition">
+                          <Point>
+                            <option name="x" value="15" />
+                            <option name="y" value="261" />
+                          </Point>
+                        </option>
                         <option name="myPositions">
                           <map>
-                            <entry key="action_trxHistorySpecificDateFragment_to_detailsTrxFragmentforTrxHistory">
+                            <entry key="action_trxHistorySpecificDateFragment_to_detailsTrxFragment">
                               <value>
                                 <LayoutPositions />
                               </value>

@@ -3,9 +3,12 @@ package com.example.slnn3r.wallettrackermvp.View.Fragment.TrxHistory
 
 
 import android.app.Activity
+import android.content.Context
 import android.os.Bundle
 
 import android.support.v4.app.Fragment
+import android.support.v7.widget.LinearLayoutManager
+import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -15,14 +18,24 @@ import kotlinx.android.synthetic.main.fragment_trx_history_specific_date.*
 import android.widget.ArrayAdapter
 import java.util.*
 import android.widget.AdapterView
+import android.widget.Spinner
+import android.widget.Toast
 import androidx.navigation.findNavController
 import androidx.navigation.ui.setupWithNavController
-import kotlinx.android.synthetic.main.fragment_trx_history.*
+import com.example.slnn3r.wallettrackermvp.Adapter.TrxHistorySpecificAdapter
+import com.example.slnn3r.wallettrackermvp.Interface.PresenterInterface
+import com.example.slnn3r.wallettrackermvp.Interface.ViewInterface
+import com.example.slnn3r.wallettrackermvp.Model.ObjectClass.Transaction
+import com.example.slnn3r.wallettrackermvp.Model.ObjectClass.TransactionCategory
+import com.example.slnn3r.wallettrackermvp.Model.ObjectClass.UserProfile
+import com.example.slnn3r.wallettrackermvp.Model.ObjectClass.WalletAccount
+import com.example.slnn3r.wallettrackermvp.Presenter.Presenter
+import kotlin.collections.ArrayList
 
 
-class TrxHistorySpecificDateFragment : Fragment() {
+class TrxHistorySpecificDateFragment : Fragment(), ViewInterface.TrxHistorySpecificView {
 
-    private var calendar: Calendar? = null
+    private lateinit var presenter: PresenterInterface.Presenter
 
     private var fixDays: AdapterView.OnItemSelectedListener = object : AdapterView.OnItemSelectedListener {
         override fun onItemSelected(parent: AdapterView<*>, view: View, position: Int, id: Long) {
@@ -43,40 +56,90 @@ class TrxHistorySpecificDateFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        // setup bottom navigation
+        val navController = (context as Activity).findNavController(R.id.trxHistoryFragmentNavMenu)
+        bottomNavigationFragmentView.setupWithNavController(navController)
 
-        calendar = Calendar.getInstance()
 
+        presenter = Presenter(this)
+        val userProfile = presenter.getUserData(context!!)
+
+        // populate Account Spinner
+        presenter.checkWalletAccount(context!!,userProfile.UserUID)
+
+
+        setupUI(userProfile)
+
+
+        // Listener Setter
         THSYearSpinner.onItemSelectedListener = fixDays
         THSMonthSpinner.onItemSelectedListener = fixDays
 
-        populateYears(Calendar.getInstance().get(Calendar.YEAR)-5, Calendar.getInstance().get(Calendar.YEAR))
+        THSTrxTypeSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(parentView: AdapterView<*>, selectedItemView: View, position: Int, id: Long) {
+                trxTypeSpinnerClick(userProfile)
+            }
 
+            override fun onNothingSelected(parentView: AdapterView<*>) {
+                // your code here
+            }
+        }
 
         THSFilterButton.setOnClickListener{
+            // populate RecycleView for 1st Time
+            val accountData=presenter.getAccountData(context!!, userProfile.UserUID)
 
-            //val navController = view.findNavController()
-            //navController.navigate(R.id.action_trxHistorySpecificDateFragment_to_detailsTrxFragmentforTrxHistory)
+            presenter.setSelectedAccount(context!!, accountData[THSAccountSpinner.selectedItemPosition].WalletAccountName) //Save Select Account in SharedPreference for future use
 
-
-            // enable back the navigation by override the navigation path to the right one
-            val navController = (context as Activity).findNavController(R.id.trxHistoryFragmentNavMenu)
-            (context as Activity).bottomNavigationFragmentView.setupWithNavController(navController)
-
+            presenter.getTrxForSpecificDateFilter(context!!,
+                    userProfile.UserUID,
+                    accountData[THSAccountSpinner.selectedItemPosition].WalletAccountID,
+                    THSTrxTypeSpinner.selectedItem.toString(),
+                    THSTrxCategorySpinner.selectedItem.toString(),
+                    THSDaySpinner.selectedItem.toString(),
+                    THSMonthSpinner.selectedItem.toString(),
+                    THSYearSpinner.selectedItem.toString()
+            )
 
         }
 
 
-        // Disable navigation through override the navigation path
-        val navController = (context as Activity).findNavController(R.id.navMenu)
-        (context as Activity).bottomNavigationFragmentView.setupWithNavController(navController)
-
     }
 
 
+    // Function Implementation
+    private fun trxTypeSpinnerClick(userProfile: UserProfile) {
+        if(THSTrxTypeSpinner.selectedItem==getString(R.string.expense)){
+
+            presenter.checkTransactionCategory(context!!, userProfile.UserUID, THSTrxTypeSpinner.selectedItem.toString())
 
 
+        }else if(THSTrxTypeSpinner.selectedItem==getString(R.string.income)){
 
-    fun setDays() {
+            presenter.checkTransactionCategory(context!!, userProfile.UserUID, THSTrxTypeSpinner.selectedItem.toString())
+
+        }else{
+            disableTrxTypeSpinner()
+        }
+    }
+
+    private fun disableTrxTypeSpinner(){
+        val spinnerItem = ArrayList<String>()
+
+            spinnerItem.add("All Category")
+
+        val dataAdapter = ArrayAdapter(context, android.R.layout.simple_spinner_item, spinnerItem)
+
+        // Drop down layout style - list view with radio button
+        dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+
+        THSTrxCategorySpinner.adapter = dataAdapter
+
+        THSTrxCategorySpinner.isEnabled = false
+    }
+
+
+    private fun setDays() {
 
         if(THSYearSpinner.selectedItem.toString()==getString(R.string.allYear) || THSMonthSpinner.selectedItem.toString()==getString(R.string.allMonth)){
 
@@ -132,11 +195,7 @@ class TrxHistorySpecificDateFragment : Fragment() {
 
 
 
-
-
     }
-
-
 
 
     private fun populateYears(minYear: Int, maxYear: Int) {
@@ -157,6 +216,130 @@ class TrxHistorySpecificDateFragment : Fragment() {
         spinnerArrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         THSYearSpinner.adapter = spinnerArrayAdapter
 
+    }
+
+
+    private fun setupUI(userProfile: UserProfile){
+        // populate RecycleView for 1st Time
+        val accountData=presenter.getAccountData(context!!, userProfile.UserUID)
+
+        val go = presenter.getSelectedAccount(context!!)
+
+        var selectedAccountID=""
+
+        accountData.forEach {
+            data->
+            if(data.WalletAccountName==go){
+                selectedAccountID=data.WalletAccountID
+            }
+        }
+
+        presenter.getTrxForSpecificDateFilter(context!!,
+                userProfile.UserUID,
+                selectedAccountID,
+                "All Type",
+                "All Category",
+                "All Days",
+                "All Months",
+                "All Years"
+        )
+
+
+        populateYears(Calendar.getInstance().get(Calendar.YEAR)-5, Calendar.getInstance().get(Calendar.YEAR))
+
+    }
+
+
+    // Presenter Callback
+    override fun disableBottomNavWhileLoading(mainContext: Context){
+
+        // Disable navigation through override the navigation path
+        val navController = (mainContext as Activity).findNavController(R.id.navMenu)
+        (mainContext as Activity).bottomNavigationFragmentView.setupWithNavController(navController)
+    }
+
+    override fun enableBottomNavAfterLoading(mainContext: Context){
+
+        // enable back the navigation by override the navigation path to the right one
+        val navController = (mainContext as Activity).findNavController(R.id.trxHistoryFragmentNavMenu)
+        (mainContext as Activity).bottomNavigationFragmentView.setupWithNavController(navController)
+
+    }
+
+    override fun populateTrxHistorySpecificAccountSpinner(mainContext: Context, walletAccountList: ArrayList<WalletAccount>) {
+
+        val categories = ArrayList<String>()
+
+        walletAccountList.forEach {
+            data->
+            categories.add(data.WalletAccountName)
+        }
+
+        // Creating adapter for spinner
+        val dataAdapter = ArrayAdapter(mainContext, android.R.layout.simple_spinner_item, categories)
+
+        // Drop down layout style - list view with radio button
+        dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+
+
+        val spinner = (mainContext as Activity).findViewById(R.id.THSAccountSpinner) as Spinner
+        spinner.adapter = dataAdapter
+
+        // Get SharedPreference saved Selection and Set to Spinner Selection
+        val go = presenter.getSelectedAccount(mainContext)
+
+        val spinnerPosition = dataAdapter.getPosition(go)
+        spinner.setSelection(spinnerPosition)
+
+
+
+    }
+
+    override fun populateTrxHistorySpecificAccountSpinnerFail(mainContext: Context, errorMessage: String) {
+        Toast.makeText(mainContext,errorMessage, Toast.LENGTH_LONG).show()
+    }
+
+
+    override fun populateTrxHistorySpecificCategorySpinner(mainContext: Context, trxCategoryList: ArrayList<TransactionCategory>) {
+
+        val spinnerItem = ArrayList<String>()
+
+        spinnerItem.add("All Category")
+
+
+        trxCategoryList.forEach {
+            data ->
+            spinnerItem.add(data.TransactionCategoryName)
+        }
+
+        val dataAdapter = ArrayAdapter(mainContext, android.R.layout.simple_spinner_item, spinnerItem)
+        val THSTrxCategorySpinner = (mainContext as Activity).findViewById(R.id.THSTrxCategorySpinner) as Spinner
+
+
+        // Drop down layout style - list view with radio button
+        dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+
+        THSTrxCategorySpinner.adapter = dataAdapter
+        THSTrxCategorySpinner.isEnabled = true
+    }
+
+    override fun populateTrxHistorySpecificCategorySpinnerFail(mainContext: Context, errorMessage: String) {
+        Toast.makeText(mainContext,errorMessage, Toast.LENGTH_LONG).show()
+    }
+
+
+    override fun populateTrxHistorySpecificRecycleView(mainContext: Context, transactionList: ArrayList<Transaction>) {
+
+        //!!
+        val TrxRecyclerView = (mainContext as Activity).findViewById(R.id.THSRecyclerView) as RecyclerView
+
+        TrxRecyclerView.layoutManager = LinearLayoutManager(mainContext)
+        TrxRecyclerView.adapter = TrxHistorySpecificAdapter(transactionList)
+
+    }
+
+    override fun populateTrxHistorySpecificRecycleViewFail(mainContext: Context, errorMessage: String) {
+        Toast.makeText(mainContext,errorMessage, Toast.LENGTH_LONG).show()
     }
 
 }

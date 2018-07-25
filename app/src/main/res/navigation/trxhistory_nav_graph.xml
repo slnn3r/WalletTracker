@@ -11,8 +11,8 @@
         android:label="fragment_trx_history_specific_date"
         tools:layout="@layout/fragment_trx_history_specific_date" >
         <action
-            android:id="@+id/action_trxHistorySpecificDateFragment_to_detailsTrxFragmentforTrxHistory"
-            app:destination="@id/detailsTrxFragmentforTrxHistory" />
+            android:id="@+id/action_trxHistorySpecificDateFragment_to_detailsTrxFragment"
+            app:destination="@id/detailsTrxFragmentTrxHistory" />
     </fragment>
     <fragment
         android:id="@+id/trxHistoryRangeDateFragment"
@@ -20,14 +20,20 @@
         android:label="fragment_trx_history_range_date"
         tools:layout="@layout/fragment_trx_history_range_date" >
         <action
-            android:id="@+id/action_trxHistoryRangeDateFragment_to_detailsTrxFragmentforTrxHistory"
-            app:destination="@id/detailsTrxFragmentforTrxHistory" />
+            android:id="@+id/action_trxHistoryRangeDateFragment_to_detailsTrxFragment"
+            app:destination="@id/detailsTrxFragmentTrxHistory" />
     </fragment>
     <fragment
-        android:id="@+id/detailsTrxFragmentforTrxHistory"
+        android:id="@+id/detailsTrxFragmentTrxHistory"
         android:name="com.example.slnn3r.wallettrackermvp.View.Fragment.TrxManagement.DetailsTrxFragment"
         android:label="fragment_details_trx"
         tools:layout="@layout/fragment_details_trx" >
+        <action
+            android:id="@+id/action_detailsTrxFragment_to_trxHistoryRangeDateFragment"
+            app:destination="@id/trxHistoryRangeDateFragment" />
+        <action
+            android:id="@+id/action_detailsTrxFragment_to_trxHistorySpecificDateFragment"
+            app:destination="@id/trxHistorySpecificDateFragment" />
         <argument
             android:name="transactionSelection"
             app:type="string" />

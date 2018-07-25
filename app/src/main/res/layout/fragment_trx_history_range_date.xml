@@ -129,8 +129,7 @@
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
-        android:layout_marginBottom="8dp"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/bottomNavigationFragmentView"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/THRFilterButton" />
@@ -232,4 +231,16 @@
         app:layout_constraintTop_toBottomOf="@+id/THRTrxTypeSpinner"
         android:background="@drawable/spinner_background"
         />
+
+    <android.support.design.widget.BottomNavigationView
+        android:id="@+id/bottomNavigationFragmentView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="?android:attr/windowBackground"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/THRRecyclerView"
+        app:menu="@menu/trxhistory_menu_list" />
+
 </android.support.constraint.ConstraintLayout>

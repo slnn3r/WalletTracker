@@ -56,6 +56,9 @@ class Presenter: PresenterInterface.Presenter{
     private lateinit var newTrxView: ViewInterface.NewTrxView
     private lateinit var detailsTrxView: ViewInterface.DetailsTrxView
 
+    private lateinit var trxHistorySpecificView: ViewInterface.TrxHistorySpecificView
+    private lateinit var trxHistoryRangeView: ViewInterface.TrxHistoryRangeView
+
     private val firebaseModel: ModelInterface.FirebaseAccess = FirebaseAccess()
     private val realmModel: ModelInterface.RealmAccess = RealmAccess()
     private val sharedPreferenceModel: ModelInterface.SharedPreference = SharedPreferenceAccess()
@@ -110,6 +113,15 @@ class Presenter: PresenterInterface.Presenter{
     constructor(detailsTrxView: ViewInterface.DetailsTrxView){
         this.detailsTrxView=detailsTrxView
     }
+
+    constructor(trxHistorySpecificView: ViewInterface.TrxHistorySpecificView){
+        this.trxHistorySpecificView=trxHistorySpecificView
+    }
+
+    constructor(trxHistoryRangeView: ViewInterface.TrxHistoryRangeView){
+        this.trxHistoryRangeView=trxHistoryRangeView
+    }
+
 
 
     // SharedPreference Retreive
@@ -481,7 +493,7 @@ class Presenter: PresenterInterface.Presenter{
 
     // DashBoard Fragment
 
-    // use by both Dashboard and WalletAccount Fragment
+    // use by both Dashboard and WalletAccount Fragment + TrxHistoryFragment + newTrx+ DetailsTrx
     override fun checkWalletAccount(mainContext: Context, userID: String) {
 
         val view = (mainContext as Activity).findViewById(R.id.navMenu) as View
@@ -519,6 +531,19 @@ class Presenter: PresenterInterface.Presenter{
 
                         }else if(currentDestination==R.id.detailsTrxFragment){
                             detailsTrxView.populateDetailTrxAccountSpinner(mainContext,value)
+
+                        }else if(currentDestination==R.id.trxHistoryFragment){
+
+                            val fragmentView = mainContext.findViewById(R.id.trxHistoryFragmentNavMenu) as View
+                            val fragmentDestination = findNavController(fragmentView).currentDestination.id
+
+                            if(fragmentDestination==R.id.trxHistorySpecificDateFragment){
+                                trxHistorySpecificView.populateTrxHistorySpecificAccountSpinner(mainContext,value)
+
+                            }else if(fragmentDestination==R.id.detailsTrxFragmentTrxHistory){  //?!!
+                                detailsTrxView.populateDetailTrxAccountSpinner(mainContext, value)
+                            }
+
                         }
 
 
@@ -528,18 +553,29 @@ class Presenter: PresenterInterface.Presenter{
                     {
 
                         if(currentDestination==R.id.dashBoardFragment){
-
                             dashBoardView.populateWalletAccountSpinnerFail(mainContext,e.toString())
 
                         }else if(currentDestination==R.id.viewWalletAccountFragment){
-
                             walletAccountView.populateWalletAccountRecycleViewFail(mainContext,e.toString())
 
                         }else if(currentDestination==R.id.newTrxFragment){
-
                             newTrxView.populateSelectedAccountSpinnerFail(mainContext,e.toString())
+
                         }else if(currentDestination==R.id.detailsTrxFragment){
                             detailsTrxView.populateDetailTrxAccountSpinnerFail(mainContext,e.toString())
+
+                        }else if(currentDestination==R.id.trxHistoryFragment){
+
+                            val fragmentView = mainContext.findViewById(R.id.trxHistoryFragmentNavMenu) as View
+                            val fragmentDestination = findNavController(fragmentView).currentDestination.id
+
+                            if(fragmentDestination==R.id.trxHistorySpecificDateFragment){
+                                trxHistorySpecificView.populateTrxHistorySpecificAccountSpinnerFail(mainContext,e.toString())
+
+                            }else if(fragmentDestination==R.id.detailsTrxFragmentTrxHistory){  //?!!
+                                detailsTrxView.populateDetailTrxAccountSpinnerFail(mainContext, e.toString())
+                            }
+
                         }
 
                     }
@@ -896,6 +932,19 @@ class Presenter: PresenterInterface.Presenter{
 
                         }else if(currentDestination==R.id.detailsTrxFragment){
                             detailsTrxView.populateDetailTrxCategorySpinner(mainContext, value)
+
+                        }else if(currentDestination==R.id.trxHistoryFragment){
+
+                            val fragmentView = mainContext.findViewById(R.id.trxHistoryFragmentNavMenu) as View
+                            val fragmentDestination = findNavController(fragmentView).currentDestination.id
+
+                            if(fragmentDestination==R.id.trxHistorySpecificDateFragment){
+                                trxHistorySpecificView.populateTrxHistorySpecificCategorySpinner(mainContext,value)
+
+                            }else if(fragmentDestination==R.id.detailsTrxFragmentTrxHistory){  //?!!
+                                detailsTrxView.populateDetailTrxCategorySpinner(mainContext, value)
+                            }
+
                         }
                     }
 
@@ -909,6 +958,19 @@ class Presenter: PresenterInterface.Presenter{
 
                         }else if(currentDestination==R.id.detailsTrxFragment){
                             detailsTrxView.populateDetailTrxAccountSpinnerFail(mainContext, e.toString())
+
+                        }else if(currentDestination==R.id.trxHistoryFragment){
+
+                            val fragmentView = mainContext.findViewById(R.id.trxHistoryFragmentNavMenu) as View
+                            val fragmentDestination = findNavController(fragmentView).currentDestination.id
+
+                            if(fragmentDestination==R.id.trxHistorySpecificDateFragment){
+                                trxHistorySpecificView.populateTrxHistorySpecificCategorySpinnerFail(mainContext,e.toString())
+
+                            }else if(fragmentDestination==R.id.detailsTrxFragmentTrxHistory){  //?!!
+                                detailsTrxView.populateDetailTrxCategorySpinnerFail(mainContext, e.toString())
+                            }
+
                         }
                     }
 
@@ -1133,6 +1195,45 @@ class Presenter: PresenterInterface.Presenter{
 
     private fun deleteDetailsTrxObservable(mainContext: Context, transactionID: String): Observable<Unit>{
         return Observable.defer { Observable.just(realmModel.deleteDetailsTrxRealm(mainContext, transactionID)) }
+    }
+
+
+    // TrxHistorySpecificDate Fragment
+    override fun getTrxForSpecificDateFilter(mainContext: Context, userID: String, accountID: String, trxType: String, trxCategory: String, day: String, month: String, year: String) {
+
+        getTrxForSpecificDateFilterObservable(mainContext, userID, accountID,trxType, trxCategory, day, month, year)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(object : Observer<ArrayList<Transaction>>
+                {
+                    override fun onSubscribe(d: Disposable)
+                    {
+                        trxHistorySpecificView.disableBottomNavWhileLoading(mainContext)
+                    }
+
+                    override fun onNext(value: ArrayList<Transaction>)
+                    {
+                        trxHistorySpecificView.populateTrxHistorySpecificRecycleView(mainContext, value)
+                    }
+
+                    override fun onError(e: Throwable)
+                    {
+                        trxHistorySpecificView.populateTrxHistorySpecificRecycleViewFail(mainContext, e.toString())
+                    }
+
+                    override fun onComplete()
+                    {
+                        trxHistorySpecificView.enableBottomNavAfterLoading(mainContext)
+
+                    }
+
+                })
+
+
+    }
+
+    private fun getTrxForSpecificDateFilterObservable(mainContext: Context, userID: String, accountID: String, trxType: String, trxCategory: String, day: String, month: String, year: String): Observable<ArrayList<Transaction>>{
+        return Observable.defer{ Observable.just(realmModel.getTrxForSpecificDateFilterRealm(mainContext, userID,accountID)) }
     }
 
 }

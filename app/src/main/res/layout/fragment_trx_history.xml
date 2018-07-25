@@ -7,35 +7,23 @@ android:layout_width="match_parent"
 android:layout_height="match_parent"
 tools:context=".View.Fragment.TrxHistory.TrxHistoryFragment">
 
-<fragment
-    android:id="@+id/trxHistoryFragmentNavMenu"
-    android:name="androidx.navigation.fragment.NavHostFragment"
-    android:layout_width="match_parent"
-    android:layout_height="0dp"
+    <fragment
+        android:id="@+id/trxHistoryFragmentNavMenu"
+        android:name="androidx.navigation.fragment.NavHostFragment"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
 
-    android:layout_marginStart="8dp"
-    android:layout_marginTop="8dp"
-    android:layout_marginEnd="8dp"
-    android:layout_marginBottom="8dp"
-    app:layout_constraintBottom_toTopOf="@+id/bottomNavigationFragmentView"
-    app:layout_constraintEnd_toEndOf="parent"
-    app:layout_constraintStart_toStartOf="parent"
-    app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="8dp"
+        app:defaultNavHost="true"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
 
-    app:defaultNavHost="true"
-    app:navGraph="@navigation/trxhistory_nav_graph"
-    />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:navGraph="@navigation/trxhistory_nav_graph" />
 
-
-
-<android.support.design.widget.BottomNavigationView
-    android:id="@+id/bottomNavigationFragmentView"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:background="?android:attr/windowBackground"
-    app:layout_constraintBottom_toBottomOf="parent"
-    app:layout_constraintEnd_toEndOf="parent"
-    app:layout_constraintStart_toStartOf="parent"
-    app:menu="@menu/trxhistory_menu_list" />
 
 </android.support.constraint.ConstraintLayout>

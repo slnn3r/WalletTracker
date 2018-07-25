@@ -35,7 +35,9 @@ class MenuActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
     private lateinit var presenter: PresenterInterface.Presenter
 
-    private var isNavigated:Boolean =false // Set Initial Navigation Status to false
+    private var isNavigated:Boolean? =false // Set Initial Navigation Status to false
+    private var trxScreenSelection=""
+
     private val initialScreen:Int = R.id.dashBoardFragment
 
     private var doubleBackToExitPressedOnce = false
@@ -71,9 +73,22 @@ class MenuActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         toolbar.setNavigationOnClickListener {
 
             // Check if Screen is navigated or not
-            if (isNavigated) { //
+            if (isNavigated==true) {
                 setupNavigationFlow()
-            } else {
+            } else if(isNavigated==null){
+
+
+                if(trxScreenSelection=="Specific"){
+
+                    val navController = (this as Activity).findNavController(R.id.trxHistoryFragmentNavMenu)
+                    navController.navigate(R.id.action_detailsTrxFragment_to_trxHistorySpecificDateFragment)
+
+                }else{
+
+                }
+
+                setupNavigationMode()
+            }else {
                 drawer_layout.openDrawer(GravityCompat.START)
             }
         }
@@ -109,6 +124,11 @@ class MenuActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
     }
 
+    fun trxHistoryBack(trxScreen:String){
+        trxScreenSelection=trxScreen
+        isNavigated = null
+
+    }
 
     ////
 
@@ -116,10 +136,21 @@ class MenuActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     override fun onBackPressed() {
         if (drawer_layout.isDrawerOpen(GravityCompat.START)) {
             drawer_layout.closeDrawer(GravityCompat.START)
-        } else if (isNavigated) {
+        } else if (isNavigated==true) {
             setupNavigationFlow()
+        } else if(isNavigated==null){ // for TrxHistory Navigation
 
-        } else{
+            if(trxScreenSelection=="Specific"){
+
+                val navController = (this as Activity).findNavController(R.id.trxHistoryFragmentNavMenu)
+                navController.navigate(R.id.action_detailsTrxFragment_to_trxHistorySpecificDateFragment)
+
+            }else{
+
+            }
+
+            setupNavigationMode()
+        }else{
 
             val currentScreen = findNavController(R.id.navMenu).currentDestination.id
 

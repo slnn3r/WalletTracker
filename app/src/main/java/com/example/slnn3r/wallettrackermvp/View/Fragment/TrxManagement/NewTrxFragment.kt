@@ -258,7 +258,7 @@ class NewTrxFragment : Fragment(), ViewInterface.NewTrxView {
 
         trxCategoryList.forEach {
             data ->
-                spinnerItem.add(data.TransactionCategoryName)
+            spinnerItem.add(data.TransactionCategoryName)
         }
 
         val dataAdapter = ArrayAdapter(mainContext, android.R.layout.simple_spinner_item, spinnerItem)

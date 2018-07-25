@@ -140,5 +140,24 @@ interface ViewInterface{
 
     }
 
+    interface TrxHistorySpecificView{
+
+        fun disableBottomNavWhileLoading(mainContext: Context)
+        fun enableBottomNavAfterLoading(mainContext: Context)
+
+        fun populateTrxHistorySpecificAccountSpinner(mainContext: Context, walletAccountList: ArrayList<WalletAccount>)
+        fun populateTrxHistorySpecificAccountSpinnerFail(mainContext: Context, errorMessage: String)
+
+        fun populateTrxHistorySpecificCategorySpinner(mainContext: Context, trxCategoryList: ArrayList<TransactionCategory>)
+        fun populateTrxHistorySpecificCategorySpinnerFail(mainContext: Context, errorMessage: String)
+
+        fun populateTrxHistorySpecificRecycleView(mainContext: Context, transactionList: ArrayList<Transaction>)
+        fun populateTrxHistorySpecificRecycleViewFail(mainContext: Context, errorMessage: String)
+    }
+
+    interface TrxHistoryRangeView{
+
+    }
+
 
 }

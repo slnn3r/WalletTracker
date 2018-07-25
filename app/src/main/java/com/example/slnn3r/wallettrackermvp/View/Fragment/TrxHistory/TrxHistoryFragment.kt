@@ -30,16 +30,4 @@ class TrxHistoryFragment : Fragment() {
         return inflater.inflate(R.layout.fragment_trx_history, container, false)
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-
-        // setup bottom navigation
-        val navController = (context as Activity).findNavController(R.id.trxHistoryFragmentNavMenu)
-        bottomNavigationFragmentView.setupWithNavController(navController)
-
-
-    }
-
-
-
 }

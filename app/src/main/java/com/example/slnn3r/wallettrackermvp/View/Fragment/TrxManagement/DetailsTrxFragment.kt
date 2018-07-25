@@ -5,6 +5,7 @@ import android.app.Activity
 import android.app.DatePickerDialog
 import android.app.TimePickerDialog
 import android.content.Context
+import android.content.DialogInterface
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v7.app.AppCompatActivity
@@ -204,38 +205,50 @@ class DetailsTrxFragment : Fragment(), ViewInterface.DetailsTrxView {
     }
 
     private fun updateSubmitClick(transaction: Transaction, userProfile: UserProfile) {
-        // get the Transaction Category 1st, then get the wallet account id, only then start to build the NewTransaction Data
-        var selectedTrxCategory = presenter.getCategoryDataByName(context!!, userProfile.UserUID, DetailsTrxCategorySpinner.selectedItem.toString())
-        val selectedWalletAccount = presenter.getAccountDataByName(context!!, userProfile.UserUID, DetailsTrxSelectedAccSpinner.selectedItem.toString())
 
-        // Check if the realm return any value, if not then it is the deleted category, so just use back the deleted data
-        if(selectedTrxCategory.TransactionCategoryID==""){
-            selectedTrxCategory = transaction.TransactionCategory
-        }
+        alertDialog.confirmationDialog(context!!,getString(R.string.dialogTitleUpdateTrx),getString(R.string.dialogMessageUpdateTrx),resources.getDrawable(android.R.drawable.ic_dialog_info),
+                DialogInterface.OnClickListener { dialogBox, which ->
 
-        // store 24hour in database for ez sorting purpose
-        val notConvertedTime = DetailsTrxTimeInput.text.toString()
-        val date12Format = SimpleDateFormat(getString(R.string.timeFormat12))
-        val date24Format = SimpleDateFormat(getString(R.string.timeFormat24))
-        val convertedTime = date24Format.format(date12Format.parse(notConvertedTime))
+                    // get the Transaction Category 1st, then get the wallet account id, only then start to build the NewTransaction Data
+                    var selectedTrxCategory = presenter.getCategoryDataByName(context!!, userProfile.UserUID, DetailsTrxCategorySpinner.selectedItem.toString())
+                    val selectedWalletAccount = presenter.getAccountDataByName(context!!, userProfile.UserUID, DetailsTrxSelectedAccSpinner.selectedItem.toString())
 
-        val detailsTrxInput =
+                    // Check if the realm return any value, if not then it is the deleted category, so just use back the deleted data
+                    if(selectedTrxCategory.TransactionCategoryID==""){
+                        selectedTrxCategory = transaction.TransactionCategory
+                    }
 
-                Transaction(
-                        transaction.TransactionID
-                        ,DetailsTrxDateInput.text.toString()
-                        ,convertedTime
-                        ,DetailsTrxAmountInput.text.toString().toDouble()
-                        ,DetailsTrxRemarksInput.text.toString()
-                        ,selectedTrxCategory
-                        ,selectedWalletAccount
-                )
+                    // store 24hour in database for ez sorting purpose
+                    val notConvertedTime = DetailsTrxTimeInput.text.toString()
+                    val date12Format = SimpleDateFormat(getString(R.string.timeFormat12))
+                    val date24Format = SimpleDateFormat(getString(R.string.timeFormat24))
+                    val convertedTime = date24Format.format(date12Format.parse(notConvertedTime))
 
-        presenter.updateDetailsTrx(context!!, detailsTrxInput)
+                    val detailsTrxInput =
+
+                            Transaction(
+                                    transaction.TransactionID
+                                    ,DetailsTrxDateInput.text.toString()
+                                    ,convertedTime
+                                    ,DetailsTrxAmountInput.text.toString().toDouble()
+                                    ,DetailsTrxRemarksInput.text.toString()
+                                    ,selectedTrxCategory
+                                    ,selectedWalletAccount
+                            )
+
+                    presenter.updateDetailsTrx(context!!, detailsTrxInput)
+
+                }).show()
+
     }
 
     private fun deleteSubmitClick(transaction: Transaction) {
-        presenter.deleteDetailsTrx(context!!, transaction.TransactionID)
+
+        alertDialog.confirmationDialog(context!!,getString(R.string.dialogTitleDeleteTrx),getString(R.string.dialogMessageDeleteTrx),resources.getDrawable(android.R.drawable.ic_dialog_info),
+                DialogInterface.OnClickListener { dialogBox, which ->
+
+                presenter.deleteDetailsTrx(context!!, transaction.TransactionID)
+                }).show()
     }
 
     private fun validateAmountInput(){
@@ -337,15 +350,18 @@ class DetailsTrxFragment : Fragment(), ViewInterface.DetailsTrxView {
 
         // Get SharedPreference saved Selection and Set to Spinner Selection
         val go = presenter.getSelectedAccount(mainContext)
-        var count= 0
+/*        var count= 0
         categories.forEach {
             data ->
             if(go==data){
                 spinner.setSelection(count)
             }
             count+=1
-        }
+        }*/
 
+
+        val spinnerPosition = dataAdapter.getPosition(go)
+        spinner.setSelection(spinnerPosition)
 
     }
 

@@ -1,19 +1,23 @@
 package com.example.slnn3r.wallettrackermvp.View.Fragment.TrxHistory
 
 
+import android.app.Activity
 import android.app.DatePickerDialog
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.navigation.findNavController
+import androidx.navigation.ui.setupWithNavController
+import com.example.slnn3r.wallettrackermvp.Interface.ViewInterface
 
 import com.example.slnn3r.wallettrackermvp.R
 import kotlinx.android.synthetic.main.fragment_trx_history_range_date.*
 import java.text.SimpleDateFormat
 import java.util.*
 
-class TrxHistoryRangeDateFragment : Fragment() {
+class TrxHistoryRangeDateFragment : Fragment(), ViewInterface.TrxHistoryRangeView {
 
     private val myCalendar = Calendar.getInstance()
     private lateinit var simpleDateFormat: SimpleDateFormat
@@ -30,6 +34,10 @@ class TrxHistoryRangeDateFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        // setup bottom navigation
+        val navController = (context as Activity).findNavController(R.id.trxHistoryFragmentNavMenu)
+        bottomNavigationFragmentView.setupWithNavController(navController)
 
         setupDatePicker()
 

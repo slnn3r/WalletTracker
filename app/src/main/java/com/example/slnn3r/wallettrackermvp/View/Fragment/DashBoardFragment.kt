@@ -125,6 +125,7 @@ class DashBoardFragment : Fragment(),ViewInterface.DashBoardView {
 
         val data=ArrayList<String>()
 
+        // minus by 1 Day
         for (a in 0..5){
 
             val tempCalander = Calendar.getInstance()
@@ -134,9 +135,19 @@ class DashBoardFragment : Fragment(),ViewInterface.DashBoardView {
             val thisDay = tempCalander.get(Calendar.DAY_OF_MONTH)
             val thisMonth= tempCalander.getDisplayName(Calendar.MONTH, Calendar.SHORT, Locale.getDefault())
             data.add(thisDay.toString()+" "+thisMonth)
-
-
         }
+
+        // minus by 5 Day
+        // Requirement is to having 5 days previous range data for each label
+        /*val tempCalander = Calendar.getInstance()
+        for (a in 0..5){
+
+            tempCalander.add(Calendar.DAY_OF_MONTH, -5)
+
+            val thisDay = tempCalander.get(Calendar.DAY_OF_MONTH)
+            val thisMonth= tempCalander.getDisplayName(Calendar.MONTH, Calendar.SHORT, Locale.getDefault())
+            data.add(thisDay.toString()+" "+thisMonth)
+        }*/
 
 
         val graph = DBTrxGraph as GraphView
@@ -272,7 +283,7 @@ class DashBoardFragment : Fragment(),ViewInterface.DashBoardView {
                 val thisMonth =mCalendar.getDisplayName(Calendar.MONTH, Calendar.LONG, Locale.getDefault())
                 presenter.getThisMonthExpense(context!!, userProfile.UserUID, walletAccountList[spinner.selectedItemPosition].WalletAccountID, thisMonth)
 
-                displayDummyDateGraph() // Dummy Graph Setup
+                displayDummyDateGraph() // Dummy Graph Setup - Must Reload the Graph everytime Account selection change
 
             }
         }
