@@ -7,6 +7,7 @@ import android.content.Context
 import android.os.Bundle
 
 import android.support.v4.app.Fragment
+import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
@@ -49,6 +50,9 @@ class TrxHistorySpecificDateFragment : Fragment(), ViewInterface.TrxHistorySpeci
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
+
+        (activity as? AppCompatActivity)?.supportActionBar?.title = getString(R.string.trxHistoryFragmentTitle)
+
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_trx_history_specific_date, container, false)
     }
@@ -126,7 +130,7 @@ class TrxHistorySpecificDateFragment : Fragment(), ViewInterface.TrxHistorySpeci
     private fun disableTrxTypeSpinner(){
         val spinnerItem = ArrayList<String>()
 
-            spinnerItem.add("All Category")
+            spinnerItem.add(getString(R.string.allCategory))
 
         val dataAdapter = ArrayAdapter(context, android.R.layout.simple_spinner_item, spinnerItem)
 
@@ -178,15 +182,15 @@ class TrxHistorySpecificDateFragment : Fragment(), ViewInterface.TrxHistorySpeci
             // Get the number of days in that month
             val daysInMonth = mycal.getActualMaximum(Calendar.DAY_OF_MONTH)
 
-            val days_array = arrayOfNulls<String>(daysInMonth+1)
+            val daysArray = arrayOfNulls<String>(daysInMonth+1)
 
-            days_array[0] = getString(R.string.allDay)
+            daysArray[0] = getString(R.string.allDay)
 
             for (k in 1 until daysInMonth+1)
-                days_array[k] = "" + (k)
+                daysArray[k] = "" + (k)
 
             val spinnerArrayAdapter = ArrayAdapter(context,
-                    android.R.layout.simple_spinner_dropdown_item, days_array)
+                    android.R.layout.simple_spinner_dropdown_item, daysArray)
             spinnerArrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
 
             THSDaySpinner.adapter = spinnerArrayAdapter
@@ -200,19 +204,19 @@ class TrxHistorySpecificDateFragment : Fragment(), ViewInterface.TrxHistorySpeci
 
     private fun populateYears(minYear: Int, maxYear: Int) {
 
-        val years_array = arrayOfNulls<String>(maxYear - minYear+2)
+        val yearsArray = arrayOfNulls<String>(maxYear - minYear+2)
 
-        years_array[0] = getString(R.string.allYear)
+        yearsArray[0] = getString(R.string.allYear)
 
 
         var count = 1
         for (i in minYear..maxYear) {
-            years_array[count] = "" + i
+            yearsArray[count] = "" + i
             count++
         }
 
         val spinnerArrayAdapter = ArrayAdapter(context,
-                android.R.layout.simple_spinner_dropdown_item, years_array)
+                android.R.layout.simple_spinner_dropdown_item, yearsArray)
         spinnerArrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         THSYearSpinner.adapter = spinnerArrayAdapter
 
@@ -255,14 +259,14 @@ class TrxHistorySpecificDateFragment : Fragment(), ViewInterface.TrxHistorySpeci
 
         // Disable navigation through override the navigation path
         val navController = (mainContext as Activity).findNavController(R.id.navMenu)
-        (mainContext as Activity).bottomNavigationFragmentView.setupWithNavController(navController)
+        mainContext.bottomNavigationFragmentView.setupWithNavController(navController)
     }
 
     override fun enableBottomNavAfterLoading(mainContext: Context){
 
         // enable back the navigation by override the navigation path to the right one
         val navController = (mainContext as Activity).findNavController(R.id.trxHistoryFragmentNavMenu)
-        (mainContext as Activity).bottomNavigationFragmentView.setupWithNavController(navController)
+        mainContext.bottomNavigationFragmentView.setupWithNavController(navController)
 
     }
 
@@ -304,7 +308,7 @@ class TrxHistorySpecificDateFragment : Fragment(), ViewInterface.TrxHistorySpeci
 
         val spinnerItem = ArrayList<String>()
 
-        spinnerItem.add("All Category")
+        spinnerItem.add(mainContext.getString(R.string.allCategory))
 
 
         trxCategoryList.forEach {
@@ -313,14 +317,14 @@ class TrxHistorySpecificDateFragment : Fragment(), ViewInterface.TrxHistorySpeci
         }
 
         val dataAdapter = ArrayAdapter(mainContext, android.R.layout.simple_spinner_item, spinnerItem)
-        val THSTrxCategorySpinner = (mainContext as Activity).findViewById(R.id.THSTrxCategorySpinner) as Spinner
+        val tHSTrxCategorySpinner = (mainContext as Activity).findViewById(R.id.THSTrxCategorySpinner) as Spinner
 
 
         // Drop down layout style - list view with radio button
         dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
 
-        THSTrxCategorySpinner.adapter = dataAdapter
-        THSTrxCategorySpinner.isEnabled = true
+        tHSTrxCategorySpinner.adapter = dataAdapter
+        tHSTrxCategorySpinner.isEnabled = true
     }
 
     override fun populateTrxHistorySpecificCategorySpinnerFail(mainContext: Context, errorMessage: String) {
@@ -331,10 +335,10 @@ class TrxHistorySpecificDateFragment : Fragment(), ViewInterface.TrxHistorySpeci
     override fun populateTrxHistorySpecificRecycleView(mainContext: Context, transactionList: ArrayList<Transaction>) {
 
         //!!
-        val TrxRecyclerView = (mainContext as Activity).findViewById(R.id.THSRecyclerView) as RecyclerView
+        val trxRecyclerView = (mainContext as Activity).findViewById(R.id.THSRecyclerView) as RecyclerView
 
-        TrxRecyclerView.layoutManager = LinearLayoutManager(mainContext)
-        TrxRecyclerView.adapter = TrxHistorySpecificAdapter(transactionList)
+        trxRecyclerView.layoutManager = LinearLayoutManager(mainContext)
+        trxRecyclerView.adapter = TrxHistorySpecificAdapter(transactionList)
 
     }
 

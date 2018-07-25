@@ -6,6 +6,7 @@ import android.app.DatePickerDialog
 import android.content.Context
 import android.os.Bundle
 import android.support.v4.app.Fragment
+import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
@@ -43,6 +44,8 @@ class TrxHistoryRangeDateFragment : Fragment(), ViewInterface.TrxHistoryRangeVie
                               savedInstanceState: Bundle?): View? {
 
         simpleDateFormat = SimpleDateFormat(getString(R.string.dateFormat), Locale.US)
+
+        (activity as? AppCompatActivity)?.supportActionBar?.title = getString(R.string.trxHistoryFragmentTitle)
 
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_trx_history_range_date, container, false)
@@ -119,7 +122,7 @@ class TrxHistoryRangeDateFragment : Fragment(), ViewInterface.TrxHistoryRangeVie
     private fun disableTrxTypeSpinner(){
         val spinnerItem = ArrayList<String>()
 
-        spinnerItem.add("All Category")
+        spinnerItem.add(getString(R.string.allCategory))
 
         val dataAdapter = ArrayAdapter(context, android.R.layout.simple_spinner_item, spinnerItem)
 
@@ -204,7 +207,7 @@ class TrxHistoryRangeDateFragment : Fragment(), ViewInterface.TrxHistoryRangeVie
 
         // Disable navigation through override the navigation path
         val navController = (mainContext as Activity).findNavController(R.id.navMenu)
-        (mainContext as Activity).bottomNavigationFragmentView.setupWithNavController(navController)
+        mainContext.bottomNavigationFragmentView.setupWithNavController(navController)
 
     }
 
@@ -212,7 +215,7 @@ class TrxHistoryRangeDateFragment : Fragment(), ViewInterface.TrxHistoryRangeVie
 
         // enable back the navigation by override the navigation path to the right one
         val navController = (mainContext as Activity).findNavController(R.id.trxHistoryFragmentNavMenu)
-        (mainContext as Activity).bottomNavigationFragmentView.setupWithNavController(navController)
+        mainContext.bottomNavigationFragmentView.setupWithNavController(navController)
 
     }
 
@@ -251,7 +254,7 @@ class TrxHistoryRangeDateFragment : Fragment(), ViewInterface.TrxHistoryRangeVie
 
         val spinnerItem = ArrayList<String>()
 
-        spinnerItem.add("All Category")
+        spinnerItem.add(mainContext.getString(R.string.allCategory))
 
 
         trxCategoryList.forEach {
@@ -260,14 +263,14 @@ class TrxHistoryRangeDateFragment : Fragment(), ViewInterface.TrxHistoryRangeVie
         }
 
         val dataAdapter = ArrayAdapter(mainContext, android.R.layout.simple_spinner_item, spinnerItem)
-        val THRTrxCategorySpinner = (mainContext as Activity).findViewById(R.id.THRTrxCategorySpinner) as Spinner
+        val tHRTrxCategorySpinner = (mainContext as Activity).findViewById(R.id.THRTrxCategorySpinner) as Spinner
 
 
         // Drop down layout style - list view with radio button
         dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
 
-        THRTrxCategorySpinner.adapter = dataAdapter
-        THRTrxCategorySpinner.isEnabled = true
+        tHRTrxCategorySpinner.adapter = dataAdapter
+        tHRTrxCategorySpinner.isEnabled = true
 
     }
 
@@ -278,10 +281,10 @@ class TrxHistoryRangeDateFragment : Fragment(), ViewInterface.TrxHistoryRangeVie
     override fun populateTrxHistoryRangeRecycleView(mainContext: Context, transactionList: ArrayList<Transaction>) {
 
         //!!
-        val TrxRecyclerView = (mainContext as Activity).findViewById(R.id.THRRecyclerView) as RecyclerView
+        val trxRecyclerView = (mainContext as Activity).findViewById(R.id.THRRecyclerView) as RecyclerView
 
-        TrxRecyclerView.layoutManager = LinearLayoutManager(mainContext)
-        TrxRecyclerView.adapter = TrxHistoryRangeAdapter(transactionList)
+        trxRecyclerView.layoutManager = LinearLayoutManager(mainContext)
+        trxRecyclerView.adapter = TrxHistoryRangeAdapter(transactionList)
     }
 
     override fun populateTrxHistoryRangeRecycleViewFail(mainContext: Context, errorMessage: String) {

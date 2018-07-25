@@ -59,13 +59,13 @@ class TrxHistorySpecificAdapter(private val transactionList: ArrayList<Transacti
                 holder.view.DBTrxImageView.background = holder.view.DBTrxImageView.context.resources.getDrawable(R.drawable.fui_idp_button_background_email)
 
                 // Picasso get LAGGY and affect Navigation Drawer Animation when does not crop it, as it will load full size image
-                Picasso.get().load(R.drawable.expense_icon).resize(400,400).centerCrop().into(holder.view.DBTrxImageView)
+                Picasso.get().load(R.drawable.expense_icon).resize(200,200).centerCrop().into(holder.view.DBTrxImageView)
                 //holder.view.DBTrxImageView.setImageDrawable(holder.view.DBTrxImageView.context.resources.getDrawable(R.drawable.expense_icon))
 
             }else{
 
                 // Picasso get LAGGY and affect Navigation Drawer Animation when does not crop it, as it will load full size image
-                Picasso.get().load(R.drawable.income_icon).resize(400,400).centerCrop().into(holder.view.DBTrxImageView)
+                Picasso.get().load(R.drawable.income_icon).resize(200,200).centerCrop().into(holder.view.DBTrxImageView)
                 //holder.view.DBTrxImageView.setImageDrawable(holder.view.DBTrxImageView.context.resources.getDrawable(R.drawable.income_icon))
 
             }
@@ -113,7 +113,7 @@ class TrxHistorySpecificViewHolder(val view: View, var passData: Transaction?= n
                 val navController = view.findNavController()
                 navController.navigate(R.id.action_trxHistorySpecificDateFragment_to_detailsTrxFragment, bundle)
 
-                (context as MenuActivity).trxHistoryBack("Specific")
+                (context as MenuActivity).trxHistoryBack(context.getString(R.string.trxHistoryNavSpecificKey))
 
 
             }

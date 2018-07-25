@@ -169,7 +169,7 @@ class DashBoardFragment : Fragment(),ViewInterface.DashBoardView {
         // styling
         series.setValueDependentColor { data -> Color.LTGRAY }
 
-        series.spacing = 50
+        series.spacing = 30
 
         // draw values on top
         series.isDrawValuesOnTop = true
@@ -194,7 +194,7 @@ class DashBoardFragment : Fragment(),ViewInterface.DashBoardView {
                     count+=1
                 } else {
                     // show currency for y values
-                    label= "$ "+super.formatLabel(value, isValueX)
+                    label= getString(R.string.formatDisplay2DecimalMoney,super.formatLabel(value, isValueX).toDouble())
                 }
 
                 return label

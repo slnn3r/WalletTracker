@@ -100,5 +100,5 @@
         android:id="@+id/trxHistoryFragment"
         android:name="com.example.slnn3r.wallettrackermvp.View.Fragment.TrxHistory.TrxHistoryFragment"
         android:label="fragment_trx_history"
-        tools:layout="@layout/fragment_trx_history" ></fragment>
+        tools:layout="@layout/fragment_trx_history" />
 </navigation>

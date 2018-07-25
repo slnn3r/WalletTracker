@@ -148,8 +148,13 @@
     <string name="allYear">All Years</string>
     <string name="allMonth">All Months</string>
     <string name="allDay">All Days</string>
+    <string name="allCategory">All Category</string>
 
     <string name="deletedDataIndicator"> (Deleted)</string>
+
+    <string name="trxHistoryNavSpecificKey">Specific</string>
+    <string name="trxHistoryNavRangeKey">Range</string>
+
 
     <!-- Alert Dialog String -->
     <string name="dialogPositive">Confirm</string>
@@ -347,7 +352,5 @@
 
     <string name="formatDisplayDateTime">%s (%s)</string>
 
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
 
 </resources>

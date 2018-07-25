@@ -21,7 +21,6 @@ import com.example.slnn3r.wallettrackermvp.R
 import kotlinx.android.synthetic.main.activity_menu.*
 import kotlinx.android.synthetic.main.app_bar_menu.*
 import android.view.View
-import android.view.WindowManager
 import android.widget.ImageView
 import android.widget.TextView
 import com.squareup.picasso.Picasso
@@ -80,7 +79,7 @@ class MenuActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             } else if(isNavigated==null){
 
 
-                if(trxScreenSelection=="Specific"){
+                if(trxScreenSelection==getString(R.string.trxHistoryNavSpecificKey)){
 
                     val navController = (this as Activity).findNavController(R.id.trxHistoryFragmentNavMenu)
                     navController.navigate(R.id.action_detailsTrxFragment_to_trxHistorySpecificDateFragment)
@@ -144,7 +143,7 @@ class MenuActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             setupNavigationFlow()
         } else if(isNavigated==null){ // for TrxHistory Navigation
 
-            if(trxScreenSelection=="Specific"){
+            if(trxScreenSelection==getString(R.string.trxHistoryNavSpecificKey)){
 
                 val navController = (this as Activity).findNavController(R.id.trxHistoryFragmentNavMenu)
                 navController.navigate(R.id.action_detailsTrxFragment_to_trxHistorySpecificDateFragment)
