@@ -35,6 +35,7 @@ import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
 import java.text.SimpleDateFormat
 import java.util.*
+import kotlin.collections.ArrayList
 
 
 class Presenter: PresenterInterface.Presenter{
@@ -1226,7 +1227,53 @@ class Presenter: PresenterInterface.Presenter{
 
                     override fun onNext(value: ArrayList<Transaction>)
                     {
-                        trxHistorySpecificView.populateTrxHistorySpecificRecycleView(mainContext, value)
+
+                        //!!! Filtering urself HERE
+                        var filteredData = ArrayList<Transaction>()
+
+                        val noResult = mainContext.getString(R.string.noResult) //ONLY USED FOR DASHBOARD GET TRANSACTION LIST
+
+                        var nullData= Transaction(noResult,
+                                noResult,
+                                noResult,
+                                0.0,
+                                noResult,
+                                TransactionCategory("","","","","")
+                                ,WalletAccount("","",0.0,"","")
+                        )
+
+
+                        value.forEach {
+                            data->
+
+                            if(trxType=="All Type"){
+
+                                if(trxCategory=="All Category"){
+                                    filteredData.add(data)
+
+                                }else if(trxCategory!="All Category" && data.TransactionCategory.TransactionCategoryName==trxCategory){
+                                    filteredData.add(data)
+
+                                }
+
+                            }else if(trxType!="All Type"){
+
+                                if(trxCategory=="All Category" && data.TransactionCategory.TransactionCategoryType==trxType){
+                                    filteredData.add(data)
+
+                                }else if(trxCategory!="All Category" && data.TransactionCategory.TransactionCategoryName==trxCategory && data.TransactionCategory.TransactionCategoryType==trxType){
+                                    filteredData.add(data)
+
+                                }
+
+                            }
+                        }
+
+                        if(filteredData.size<1){
+                            filteredData.add(nullData)
+                        }
+
+                        trxHistorySpecificView.populateTrxHistorySpecificRecycleView(mainContext, filteredData)
                     }
 
                     override fun onError(e: Throwable)
@@ -1265,6 +1312,9 @@ class Presenter: PresenterInterface.Presenter{
 
                     override fun onNext(value: ArrayList<Transaction>)
                     {
+                        //!!! Filtering urself HERE
+
+
                         trxHistoryRangeView.populateTrxHistoryRangeRecycleView(mainContext, value)
                     }
 
