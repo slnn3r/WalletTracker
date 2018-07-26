@@ -149,6 +149,7 @@
     <string name="allMonth">All Months</string>
     <string name="allDay">All Days</string>
     <string name="allCategory">All Category</string>
+    <string name="allType">All Type</string>
 
     <string name="deletedDataIndicator"> (Deleted)</string>
 
@@ -209,6 +210,7 @@
     <string name="timeFormat24">HH:mm:ss</string>
 
     <string name="dateFormat">yyyy/MM/dd</string>
+    <string name="monthFormat">MMM</string>
 
     <!-- Google Login -->
     <string name="GoogleSignInOptionKey">866059954529-u7ki0u0si1veh1ul9slartd6ejnq0js7.apps.googleusercontent.com</string>

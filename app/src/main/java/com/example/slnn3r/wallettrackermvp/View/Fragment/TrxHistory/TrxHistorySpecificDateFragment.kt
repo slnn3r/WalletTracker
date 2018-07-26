@@ -334,11 +334,11 @@ class TrxHistorySpecificDateFragment : Fragment(), ViewInterface.TrxHistorySpeci
 
         var income=0.0
         var expense=0.0
-        var balance: Double
+        val balance: Double
 
         transactionList.forEach {
             data->
-            if(data.TransactionCategory.TransactionCategoryType=="Income"){
+            if(data.TransactionCategory.TransactionCategoryType==mainContext.getString(R.string.income)){
                 income+=data.TransactionAmount
             }else{
                 expense+=data.TransactionAmount

@@ -1244,7 +1244,7 @@ class Presenter: PresenterInterface.Presenter{
                         )
 
 
-                        val sdf=SimpleDateFormat("yyyy/MM/dd")
+                        val sdf=SimpleDateFormat(mainContext.getString(R.string.dateFormat))
 
                         value.forEach {
                             data->
@@ -1261,60 +1261,60 @@ class Presenter: PresenterInterface.Presenter{
                             val dataMonth= calendar.get(Calendar.MONTH).toString()
 
                             var selectedMonth =""
-                            if(month!="All Months"){
+                            if(month!=mainContext.getString(R.string.allMonth)){
                                 val cal = Calendar.getInstance()
-                                cal.time = SimpleDateFormat("MMM").parse(month)
+                                cal.time = SimpleDateFormat(mainContext.getString(R.string.monthFormat)).parse(month)
                                 selectedMonth = (cal.get(Calendar.MONTH)).toString()
                             }
 
                             val dataYear= calendar.get(Calendar.YEAR).toString()
 
 
-                            if(trxType=="All Type") {
+                            if(trxType==mainContext.getString(R.string.allType)) {
 
-                                if (trxCategory == "All Category") {
+                                if (trxCategory == mainContext.getString(R.string.allCategory)) {
 
                                     ///////!!!!
-                                    if (year == "All Years") {
+                                    if (year == mainContext.getString(R.string.allYear)) {
 
-                                        if (month == "All Months") {
+                                        if (month == mainContext.getString(R.string.allMonth)) {
 
-                                            if (day == "All Days") {
+                                            if (day == mainContext.getString(R.string.allDay)) {
                                                 filteredData.add(data)
 
-                                            } else if (day != "All Days" && day == dataDay){
+                                            } else if (day != mainContext.getString(R.string.allDay) && day == dataDay){
                                                 filteredData.add(data)
                                             }
 
-                                        } else if (month != "All Months" && selectedMonth == dataMonth) {
+                                        } else if (month != mainContext.getString(R.string.allMonth) && selectedMonth == dataMonth) {
 
-                                            if (day == "All Days") {
+                                            if (day == mainContext.getString(R.string.allDay)) {
                                                 filteredData.add(data)
 
-                                            } else if (day != "All Days" && day == dataDay) {
+                                            } else if (day != mainContext.getString(R.string.allDay) && day == dataDay) {
                                                 filteredData.add(data)
 
                                             }
 
                                         }
 
-                                    } else if(year != "All Years" && year==dataYear) {
+                                    } else if(year != mainContext.getString(R.string.allYear) && year==dataYear) {
 
-                                        if (month == "All Months") {
+                                        if (month == mainContext.getString(R.string.allMonth)) {
 
-                                            if (day == "All Days") {
+                                            if (day == mainContext.getString(R.string.allDay)) {
                                                 filteredData.add(data)
 
-                                            } else if (day != "All Days" && day == dataDay){
+                                            } else if (day != mainContext.getString(R.string.allDay) && day == dataDay){
                                                 filteredData.add(data)
                                             }
 
-                                        } else if (month != "All Months" && selectedMonth == dataMonth) {
+                                        } else if (month != mainContext.getString(R.string.allMonth) && selectedMonth == dataMonth) {
 
-                                            if (day == "All Days") {
+                                            if (day == mainContext.getString(R.string.allDay)) {
                                                 filteredData.add(data)
 
-                                            } else if (day != "All Days" && day == dataDay) {
+                                            } else if (day != mainContext.getString(R.string.allDay) && day == dataDay) {
                                                 filteredData.add(data)
 
                                             }
@@ -1325,48 +1325,48 @@ class Presenter: PresenterInterface.Presenter{
                                     ///////!!!!
 
 
-                                }else if(trxCategory!="All Category" && data.TransactionCategory.TransactionCategoryName==trxCategory){
+                                }else if(trxCategory!=mainContext.getString(R.string.allCategory) && data.TransactionCategory.TransactionCategoryName==trxCategory){
                                     ///////!!!!
-                                    if (year == "All Years") {
+                                    if (year == mainContext.getString(R.string.allYear)) {
 
-                                        if (month == "All Months") {
+                                        if (month == mainContext.getString(R.string.allMonth)) {
 
-                                            if (day == "All Days") {
+                                            if (day == mainContext.getString(R.string.allDay)) {
                                                 filteredData.add(data)
 
-                                            } else if (day != "All Days" && day == dataDay){
+                                            } else if (day != mainContext.getString(R.string.allDay) && day == dataDay){
                                                 filteredData.add(data)
                                             }
 
-                                        } else if (month != "All Months" && selectedMonth == dataMonth) {
+                                        } else if (month != mainContext.getString(R.string.allMonth) && selectedMonth == dataMonth) {
 
-                                            if (day == "All Days") {
+                                            if (day == mainContext.getString(R.string.allDay)) {
                                                 filteredData.add(data)
 
-                                            } else if (day != "All Days" && day == dataDay) {
+                                            } else if (day != mainContext.getString(R.string.allDay) && day == dataDay) {
                                                 filteredData.add(data)
 
                                             }
 
                                         }
 
-                                    } else if(year != "All Years" && year==dataYear) {
+                                    } else if(year != mainContext.getString(R.string.allYear) && year==dataYear) {
 
-                                        if (month == "All Months") {
+                                        if (month == mainContext.getString(R.string.allMonth)) {
 
-                                            if (day == "All Days") {
+                                            if (day == mainContext.getString(R.string.allDay)) {
                                                 filteredData.add(data)
 
-                                            } else if (day != "All Days" && day == dataDay){
+                                            } else if (day != mainContext.getString(R.string.allDay) && day == dataDay){
                                                 filteredData.add(data)
                                             }
 
-                                        } else if (month != "All Months" && selectedMonth == dataMonth) {
+                                        } else if (month != mainContext.getString(R.string.allMonth) && selectedMonth == dataMonth) {
 
-                                            if (day == "All Days") {
+                                            if (day == mainContext.getString(R.string.allDay)) {
                                                 filteredData.add(data)
 
-                                            } else if (day != "All Days" && day == dataDay) {
+                                            } else if (day != mainContext.getString(R.string.allDay) && day == dataDay) {
                                                 filteredData.add(data)
 
                                             }
@@ -1378,50 +1378,50 @@ class Presenter: PresenterInterface.Presenter{
 
                                 }
 
-                            }else if(trxType!="All Type"){
+                            }else if(trxType!=mainContext.getString(R.string.allType)){
 
-                                if(trxCategory=="All Category" && data.TransactionCategory.TransactionCategoryType==trxType){
+                                if(trxCategory==mainContext.getString(R.string.allCategory) && data.TransactionCategory.TransactionCategoryType==trxType){
                                     ///////!!!!
-                                    if (year == "All Years") {
+                                    if (year == mainContext.getString(R.string.allYear)) {
 
-                                        if (month == "All Months") {
+                                        if (month == mainContext.getString(R.string.allMonth)) {
 
-                                            if (day == "All Days") {
+                                            if (day == mainContext.getString(R.string.allDay)) {
                                                 filteredData.add(data)
 
-                                            } else if (day != "All Days" && day == dataDay){
+                                            } else if (day != mainContext.getString(R.string.allDay) && day == dataDay){
                                                 filteredData.add(data)
                                             }
 
-                                        } else if (month != "All Months" && selectedMonth == dataMonth) {
+                                        } else if (month != mainContext.getString(R.string.allMonth) && selectedMonth == dataMonth) {
 
-                                            if (day == "All Days") {
+                                            if (day == mainContext.getString(R.string.allDay)) {
                                                 filteredData.add(data)
 
-                                            } else if (day != "All Days" && day == dataDay) {
+                                            } else if (day != mainContext.getString(R.string.allDay) && day == dataDay) {
                                                 filteredData.add(data)
 
                                             }
 
                                         }
 
-                                    } else if(year != "All Years" && year==dataYear) {
+                                    } else if(year != mainContext.getString(R.string.allYear) && year==dataYear) {
 
-                                        if (month == "All Months") {
+                                        if (month == mainContext.getString(R.string.allMonth)) {
 
-                                            if (day == "All Days") {
+                                            if (day == mainContext.getString(R.string.allDay)) {
                                                 filteredData.add(data)
 
-                                            } else if (day != "All Days" && day == dataDay){
+                                            } else if (day != mainContext.getString(R.string.allDay) && day == dataDay){
                                                 filteredData.add(data)
                                             }
 
-                                        } else if (month != "All Months" && selectedMonth == dataMonth) {
+                                        } else if (month != mainContext.getString(R.string.allMonth) && selectedMonth == dataMonth) {
 
-                                            if (day == "All Days") {
+                                            if (day == mainContext.getString(R.string.allDay)) {
                                                 filteredData.add(data)
 
-                                            } else if (day != "All Days" && day == dataDay) {
+                                            } else if (day != mainContext.getString(R.string.allDay) && day == dataDay) {
                                                 filteredData.add(data)
 
                                             }
@@ -1431,48 +1431,48 @@ class Presenter: PresenterInterface.Presenter{
                                     }
                                     ///////!!!!
 
-                                }else if(trxCategory!="All Category" && data.TransactionCategory.TransactionCategoryName==trxCategory && data.TransactionCategory.TransactionCategoryType==trxType){
+                                }else if(trxCategory!=mainContext.getString(R.string.allCategory) && data.TransactionCategory.TransactionCategoryName==trxCategory && data.TransactionCategory.TransactionCategoryType==trxType){
                                     ///////!!!!
-                                    if (year == "All Years") {
+                                    if (year == mainContext.getString(R.string.allYear)) {
 
-                                        if (month == "All Months") {
+                                        if (month == mainContext.getString(R.string.allMonth)) {
 
-                                            if (day == "All Days") {
+                                            if (day == mainContext.getString(R.string.allDay)) {
                                                 filteredData.add(data)
 
-                                            } else if (day != "All Days" && day == dataDay){
+                                            } else if (day != mainContext.getString(R.string.allDay) && day == dataDay){
                                                 filteredData.add(data)
                                             }
 
-                                        } else if (month != "All Months" && selectedMonth == dataMonth) {
+                                        } else if (month != mainContext.getString(R.string.allMonth) && selectedMonth == dataMonth) {
 
-                                            if (day == "All Days") {
+                                            if (day == mainContext.getString(R.string.allDay)) {
                                                 filteredData.add(data)
 
-                                            } else if (day != "All Days" && day == dataDay) {
+                                            } else if (day != mainContext.getString(R.string.allDay) && day == dataDay) {
                                                 filteredData.add(data)
 
                                             }
 
                                         }
 
-                                    } else if(year != "All Years" && year==dataYear) {
+                                    } else if(year != mainContext.getString(R.string.allYear) && year==dataYear) {
 
-                                        if (month == "All Months") {
+                                        if (month == mainContext.getString(R.string.allMonth)) {
 
-                                            if (day == "All Days") {
+                                            if (day == mainContext.getString(R.string.allDay)) {
                                                 filteredData.add(data)
 
-                                            } else if (day != "All Days" && day == dataDay){
+                                            } else if (day != mainContext.getString(R.string.allDay) && day == dataDay){
                                                 filteredData.add(data)
                                             }
 
-                                        } else if (month != "All Months" && selectedMonth == dataMonth) {
+                                        } else if (month != mainContext.getString(R.string.allMonth) && selectedMonth == dataMonth) {
 
-                                            if (day == "All Days") {
+                                            if (day == mainContext.getString(R.string.allDay)) {
                                                 filteredData.add(data)
 
-                                            } else if (day != "All Days" && day == dataDay) {
+                                            } else if (day != mainContext.getString(R.string.allDay) && day == dataDay) {
                                                 filteredData.add(data)
 
                                             }
@@ -1550,16 +1550,16 @@ class Presenter: PresenterInterface.Presenter{
                         value.forEach {
                             data->
 
-                            if (trxType == "All Type") {
+                            if (trxType == mainContext.getString(R.string.allType)) {
 
-                                if (trxCategory == "All Category") {
+                                if (trxCategory == mainContext.getString(R.string.allCategory)) {
 
                                     if(data.TransactionDate in startDate..endDate){
                                         filteredData.add(data)
                                     }
 
 
-                                } else if (trxCategory != "All Category" && data.TransactionCategory.TransactionCategoryName == trxCategory) {
+                                } else if (trxCategory != mainContext.getString(R.string.allCategory) && data.TransactionCategory.TransactionCategoryName == trxCategory) {
 
                                     if(data.TransactionDate in startDate..endDate){
                                         filteredData.add(data)
@@ -1567,15 +1567,15 @@ class Presenter: PresenterInterface.Presenter{
 
                                 }
 
-                            } else if (trxType != "All Type") {
+                            } else if (trxType != mainContext.getString(R.string.allType)) {
 
-                                if (trxCategory == "All Category" && data.TransactionCategory.TransactionCategoryType == trxType) {
+                                if (trxCategory == mainContext.getString(R.string.allCategory) && data.TransactionCategory.TransactionCategoryType == trxType) {
 
                                     if(data.TransactionDate in startDate..endDate){
                                         filteredData.add(data)
                                     }
 
-                                } else if (trxCategory != "All Category" && data.TransactionCategory.TransactionCategoryName == trxCategory && data.TransactionCategory.TransactionCategoryType == trxType) {
+                                } else if (trxCategory != mainContext.getString(R.string.allCategory) && data.TransactionCategory.TransactionCategoryName == trxCategory && data.TransactionCategory.TransactionCategoryType == trxType) {
 
                                     if(data.TransactionDate in startDate..endDate){
                                         filteredData.add(data)
