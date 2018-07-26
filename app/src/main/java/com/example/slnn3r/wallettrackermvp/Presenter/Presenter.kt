@@ -1230,11 +1230,11 @@ class Presenter: PresenterInterface.Presenter{
                     {
 
                         //!!! Filtering urself HERE
-                        var filteredData = ArrayList<Transaction>()
+                        val filteredData = ArrayList<Transaction>()
 
                         val noResult = mainContext.getString(R.string.noResult)
 
-                        var nullData= Transaction(noResult,
+                        val nullData= Transaction(noResult,
                                 noResult,
                                 noResult,
                                 0.0,
@@ -1524,20 +1524,79 @@ class Presenter: PresenterInterface.Presenter{
         getTrxForRangeDateFilterObservable(mainContext, userID, accountID,trxType, trxCategory, startDate, endDate)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(object : Observer<ArrayList<Transaction>>
-                {
-                    override fun onSubscribe(d: Disposable)
-                    {
+                .subscribe(object : Observer<ArrayList<Transaction>> {
+                    override fun onSubscribe(d: Disposable) {
                         trxHistoryRangeView.disableBottomNavWhileLoading(mainContext)
                     }
 
-                    override fun onNext(value: ArrayList<Transaction>)
-                    {
+                    override fun onNext(value: ArrayList<Transaction>) {
+
                         //!!! Filtering urself HERE
 
+                        val filteredData = ArrayList<Transaction>()
 
-                        trxHistoryRangeView.populateTrxHistoryRangeRecycleView(mainContext, value)
+                        val noResult = mainContext.getString(R.string.noResult)
+
+                        val nullData = Transaction(noResult,
+                                noResult,
+                                noResult,
+                                0.0,
+                                noResult,
+                                TransactionCategory("", "", "", "", "")
+                                , WalletAccount("", "", 0.0, "", "")
+                        )
+
+
+                        value.forEach {
+                            data->
+
+                            if (trxType == "All Type") {
+
+                                if (trxCategory == "All Category") {
+
+                                    if(data.TransactionDate in startDate..endDate){
+                                        filteredData.add(data)
+                                    }
+
+
+                                } else if (trxCategory != "All Category" && data.TransactionCategory.TransactionCategoryName == trxCategory) {
+
+                                    if(data.TransactionDate in startDate..endDate){
+                                        filteredData.add(data)
+                                    }
+
+                                }
+
+                            } else if (trxType != "All Type") {
+
+                                if (trxCategory == "All Category" && data.TransactionCategory.TransactionCategoryType == trxType) {
+
+                                    if(data.TransactionDate in startDate..endDate){
+                                        filteredData.add(data)
+                                    }
+
+                                } else if (trxCategory != "All Category" && data.TransactionCategory.TransactionCategoryName == trxCategory && data.TransactionCategory.TransactionCategoryType == trxType) {
+
+                                    if(data.TransactionDate in startDate..endDate){
+                                        filteredData.add(data)
+                                    }
+
+                                }
+
+                            }
+
+                        }
+
+
+
+                        if(filteredData.size<1){
+                            filteredData.add(nullData)
+                        }
+
+                        trxHistoryRangeView.populateTrxHistoryRangeRecycleView(mainContext, filteredData)
+
                     }
+
 
                     override fun onError(e: Throwable)
                     {

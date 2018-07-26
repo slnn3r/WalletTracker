@@ -4,6 +4,7 @@ package com.example.slnn3r.wallettrackermvp.View.Fragment.TrxHistory
 import android.app.Activity
 import android.app.DatePickerDialog
 import android.content.Context
+import android.graphics.Color
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v7.app.AppCompatActivity
@@ -12,10 +13,7 @@ import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.AdapterView
-import android.widget.ArrayAdapter
-import android.widget.Spinner
-import android.widget.Toast
+import android.widget.*
 import androidx.navigation.findNavController
 import androidx.navigation.ui.setupWithNavController
 import com.example.slnn3r.wallettrackermvp.Adapter.TrxHistoryRangeAdapter
@@ -279,6 +277,36 @@ class TrxHistoryRangeDateFragment : Fragment(), ViewInterface.TrxHistoryRangeVie
     }
 
     override fun populateTrxHistoryRangeRecycleView(mainContext: Context, transactionList: ArrayList<Transaction>) {
+
+        var income=0.0
+        var expense=0.0
+        var balance: Double
+
+        transactionList.forEach {
+            data->
+            if(data.TransactionCategory.TransactionCategoryType=="Income"){
+                income+=data.TransactionAmount
+            }else{
+                expense+=data.TransactionAmount
+            }
+        }
+
+        balance= income-expense
+
+        //Display Summary Figure
+        val incomeView = (mainContext as Activity).findViewById(R.id.THRIncomeTextView) as TextView
+        val expenseView = mainContext.findViewById(R.id.THRExpenseTextView) as TextView
+        val balanceView = mainContext.findViewById(R.id.THRBalanceTextView) as TextView
+
+        if(balance<0){
+            balanceView.setTextColor(Color.RED)
+        }else{
+            balanceView.setTextColor(Color.GREEN)
+        }
+
+        incomeView.text=mainContext.getString(R.string.formatTotalIncome, income)
+        expenseView.text=mainContext.getString(R.string.formatTotalExpense, expense)
+        balanceView.text=mainContext.getString(R.string.formatTotalBalance, balance)
 
         //!!
         val trxRecyclerView = (mainContext as Activity).findViewById(R.id.THRRecyclerView) as RecyclerView

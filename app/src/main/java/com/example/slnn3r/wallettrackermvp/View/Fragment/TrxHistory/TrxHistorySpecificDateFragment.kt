@@ -358,9 +358,9 @@ class TrxHistorySpecificDateFragment : Fragment(), ViewInterface.TrxHistorySpeci
             balanceView.setTextColor(Color.GREEN)
         }
 
-        incomeView.text=mainContext.getString(R.string.formatTHRIncome, income)
-        expenseView.text=mainContext.getString(R.string.formatTHRExpense, expense)
-        balanceView.text=mainContext.getString(R.string.formatTHRBalance, balance)
+        incomeView.text=mainContext.getString(R.string.formatTotalIncome, income)
+        expenseView.text=mainContext.getString(R.string.formatTotalExpense, expense)
+        balanceView.text=mainContext.getString(R.string.formatTotalBalance, balance)
 
         //!!
         val trxRecyclerView = mainContext.findViewById(R.id.THSRecyclerView) as RecyclerView

@@ -352,8 +352,8 @@
 
     <string name="formatDisplayDateTime">%s (%s)</string>
 
-    <string name="formatTHRIncome">Total Income: \n$ %.2f</string>
-    <string name="formatTHRExpense">Total Expense: \n$ %.2f</string>
-    <string name="formatTHRBalance">Total Balance: \n$ %.2f</string>
+    <string name="formatTotalIncome">Total Income: \n$ %.2f</string>
+    <string name="formatTotalExpense">Total Expense: \n$ %.2f</string>
+    <string name="formatTotalBalance">Total Balance: \n$ %.2f</string>
 
 </resources>
