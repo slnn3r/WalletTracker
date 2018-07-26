@@ -15,7 +15,6 @@ import com.example.slnn3r.wallettrackermvp.Model.ObjectClass.WalletAccount
 import com.example.slnn3r.wallettrackermvp.Model.RealmAccess
 import android.app.Activity
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import androidx.navigation.Navigation.findNavController
 import com.example.slnn3r.wallettrackermvp.Model.ObjectClass.TransactionCategory

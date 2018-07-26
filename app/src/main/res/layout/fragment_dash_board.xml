@@ -19,11 +19,11 @@
         app:layout_constraintTop_toBottomOf="@+id/DBTrxGraph" />
 
 
-    <com.jjoe64.graphview.GraphView
+
+    <com.github.mikephil.charting.charts.BarChart
         android:id="@+id/DBTrxGraph"
         android:layout_width="match_parent"
-        android:layout_height="200dip"
-        android:layout_marginBottom="16dp"
+        android:layout_height="200dp"
         app:layout_constraintBottom_toTopOf="@+id/DBAccountSpinner"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
@@ -31,7 +31,7 @@
         app:layout_constraintTop_toBottomOf="@+id/DBOverviewLabel"
         app:layout_constraintVertical_chainStyle="spread_inside" />
 
-    <android.support.v7.widget.RecyclerView
+        <android.support.v7.widget.RecyclerView
         android:id="@+id/DBTrxRecyclerView"
         android:layout_width="0dp"
         android:layout_height="0dp"

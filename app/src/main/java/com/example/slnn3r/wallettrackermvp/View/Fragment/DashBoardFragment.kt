@@ -17,8 +17,6 @@ import com.example.slnn3r.wallettrackermvp.Interface.PresenterInterface
 import com.example.slnn3r.wallettrackermvp.Interface.ViewInterface
 import com.example.slnn3r.wallettrackermvp.Model.ObjectClass.WalletAccount
 import com.example.slnn3r.wallettrackermvp.Presenter.Presenter
-import com.jjoe64.graphview.GraphView
-import com.jjoe64.graphview.series.DataPoint
 import java.util.*
 import android.app.Activity
 import android.graphics.Color
@@ -26,10 +24,19 @@ import android.support.v7.widget.RecyclerView
 import android.view.inputmethod.InputMethodManager
 import android.widget.*
 import com.example.slnn3r.wallettrackermvp.Model.ObjectClass.Transaction
+import com.github.mikephil.charting.data.BarData
+import com.github.mikephil.charting.data.BarDataSet
+import com.github.mikephil.charting.data.BarEntry
 import kotlin.collections.ArrayList
-import com.jjoe64.graphview.series.BarGraphSeries
-import com.jjoe64.graphview.DefaultLabelFormatter
-
+import com.github.mikephil.charting.charts.BarChart
+import com.github.mikephil.charting.components.AxisBase
+import com.github.mikephil.charting.components.Description
+import com.github.mikephil.charting.components.XAxis
+import com.github.mikephil.charting.data.Entry
+import com.github.mikephil.charting.formatter.IAxisValueFormatter
+import com.github.mikephil.charting.utils.ViewPortHandler
+import com.github.mikephil.charting.formatter.IValueFormatter
+import java.text.DecimalFormat
 
 
 class DashBoardFragment : Fragment(),ViewInterface.DashBoardView {
@@ -123,85 +130,60 @@ class DashBoardFragment : Fragment(),ViewInterface.DashBoardView {
 
     private fun displayDummyDateGraph() {
 
-        val data=ArrayList<String>()
+        val xAxisLabel = ArrayList<String>()
+            xAxisLabel.add("Mon")
+            xAxisLabel.add("Tue")
+            xAxisLabel.add("Wed")
+            xAxisLabel.add("Thu")
+            xAxisLabel.add("Fri")
+            xAxisLabel.add("Sat")
 
-        // minus by 1 Day
-        for (a in 0..5){
 
-            val tempCalander = Calendar.getInstance()
 
-            tempCalander.add(Calendar.DAY_OF_MONTH, -a)
+        val entries = ArrayList<BarEntry>()
+        entries.add(BarEntry(0f, 30.26f))
+        entries.add(BarEntry(1f, 80.88f))
+        entries.add(BarEntry(2f, 60f))
+        entries.add(BarEntry(3f, 50f))
+        entries.add(BarEntry(4f, 70f))
+        entries.add(BarEntry(5f, 60f))
 
-            val thisDay = tempCalander.get(Calendar.DAY_OF_MONTH)
-            val thisMonth= tempCalander.getDisplayName(Calendar.MONTH, Calendar.SHORT, Locale.getDefault())
-            data.add(thisDay.toString()+" "+thisMonth)
+        val set = BarDataSet(entries, "Total Expenses")
+
+        set.setValueFormatter(MyValueFormatter())
+
+        val data = BarData(set)
+        data.barWidth = 0.7f // set custom bar width
+        DBTrxGraph.setData(data)
+        DBTrxGraph.setFitBars(true) // make the x-axis fit exactly all bars
+        DBTrxGraph.invalidate() // refresh
+
+        DBTrxGraph.setTouchEnabled(false)
+        DBTrxGraph.description=null
+
+        val xAxis = DBTrxGraph.getXAxis();
+
+        xAxis.setValueFormatter { value, axis ->
+
+            xAxisLabel.get(value.toInt())
+        }
+        xAxis.setPosition(XAxis.XAxisPosition.BOTTOM)
+    }
+
+
+
+    inner class MyValueFormatter : IValueFormatter {
+
+        private val mFormat: DecimalFormat
+
+        init {
+            mFormat = DecimalFormat("###,###,##0.00") // use one decimal
         }
 
-        // minus by 5 Day
-        // Requirement is to having 5 days previous range data for each label
-        /*val tempCalander = Calendar.getInstance()
-        for (a in 0..5){
-
-            tempCalander.add(Calendar.DAY_OF_MONTH, -5)
-
-            val thisDay = tempCalander.get(Calendar.DAY_OF_MONTH)
-            val thisMonth= tempCalander.getDisplayName(Calendar.MONTH, Calendar.SHORT, Locale.getDefault())
-            data.add(thisDay.toString()+" "+thisMonth)
-        }*/
-
-
-        val graph = DBTrxGraph as GraphView
-
-        graph.removeAllSeries()
-
-        val series = BarGraphSeries(arrayOf(
-                DataPoint(0.0, 1.0),
-                DataPoint(1.0, 5.0),
-                DataPoint(2.0, 3.0),
-                DataPoint(3.0, 2.0),
-                DataPoint(4.0, 10.0)
-                ))
-
-        graph.addSeries(series)
-
-        var count=0
-
-        // styling
-        series.setValueDependentColor { data -> Color.LTGRAY }
-
-        series.spacing = 30
-
-        // draw values on top
-        series.isDrawValuesOnTop = true
-        series.valuesOnTopColor = Color.RED
-        //series.setValuesOnTopSize(50);
-
-
-        graph.gridLabelRenderer.labelFormatter = object : DefaultLabelFormatter() {
-            override fun formatLabel(value: Double, isValueX: Boolean): String {
-
-                var label=""
-
-                if (isValueX) {
-
-                    if(count==6){
-                        count=0
-
-                    }
-                    // show normal x values
-                    label = data[count]
-
-                    count+=1
-                } else {
-                    // show currency for y values
-                    label= getString(R.string.formatDisplay2DecimalMoney,super.formatLabel(value, isValueX).toDouble())
-                }
-
-                return label
-            }
+        override fun getFormattedValue(value: Float, entry: Entry, dataSetIndex: Int, viewPortHandler: ViewPortHandler): String {
+            // write your logic here
+            return "$ "+mFormat.format(value) // e.g. append a dollar-sign
         }
-
-
     }
 
 
@@ -262,7 +244,7 @@ class DashBoardFragment : Fragment(),ViewInterface.DashBoardView {
         spinner.setSelection(spinnerPosition)
 
 
-        val userProfile = presenter.getUserData(context!!)
+        val userProfile = presenter.getUserData(mainContext)
 
         spinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener{
 
@@ -278,12 +260,12 @@ class DashBoardFragment : Fragment(),ViewInterface.DashBoardView {
 
 
                 //!!!!!!! LOAD TRX LIST, BALANCE FIGURE IS HERE
-                presenter.getAllIncome(context!!, userProfile.UserUID, walletAccountList[spinner.selectedItemPosition].WalletAccountID)
+                presenter.getAllIncome(mainContext, userProfile.UserUID, walletAccountList[spinner.selectedItemPosition].WalletAccountID)
 
                 val thisMonth =mCalendar.getDisplayName(Calendar.MONTH, Calendar.LONG, Locale.getDefault())
-                presenter.getThisMonthExpense(context!!, userProfile.UserUID, walletAccountList[spinner.selectedItemPosition].WalletAccountID, thisMonth)
+                presenter.getThisMonthExpense(mainContext, userProfile.UserUID, walletAccountList[spinner.selectedItemPosition].WalletAccountID, thisMonth)
 
-                displayDummyDateGraph() // Dummy Graph Setup - Must Reload the Graph everytime Account selection change
+                displayDummyDateGraph() // Dummy Graph Setup - Must Reload the Graph everytime Account selection change !!!!!!!!!! NO USE
 
             }
         }

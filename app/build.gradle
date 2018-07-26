@@ -19,6 +19,8 @@ android {
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        multiDexEnabled true // when Add MPAndroidChart need this only can build project
+
     }
     buildTypes {
         release {
@@ -47,7 +49,9 @@ dependencies {
     implementation 'com.firebaseui:firebase-ui-auth:4.0.0' // Firebase Auth
     implementation 'com.google.code.gson:gson:2.8.5' //GSON
     implementation 'com.squareup.picasso:picasso:2.71828' //PICASSO
-    implementation 'com.jjoe64:graphview:4.2.2' // Graph
+
+    implementation 'com.github.PhilJay:MPAndroidChart:v3.0.3' // Graph
+
 
     // Android Navigation Library
     def nav_version = "1.0.0-alpha02"
