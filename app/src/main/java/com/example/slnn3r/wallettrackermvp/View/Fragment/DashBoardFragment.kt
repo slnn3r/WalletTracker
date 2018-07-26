@@ -131,13 +131,38 @@ class DashBoardFragment : Fragment(),ViewInterface.DashBoardView {
     private fun displayDummyDateGraph() {
 
         val xAxisLabel = ArrayList<String>()
-            xAxisLabel.add("Mon")
-            xAxisLabel.add("Tue")
-            xAxisLabel.add("Wed")
-            xAxisLabel.add("Thu")
-            xAxisLabel.add("Fri")
-            xAxisLabel.add("Sat")
+            //xAxisLabel.add("11Jul - 12Jul")
+            //xAxisLabel.add("62Jul - 10Jul")
+            //xAxisLabel.add("11Jul - 15Jul")
+            //xAxisLabel.add("16Jul - 20Jul")
+            //xAxisLabel.add("21Jul-25Jul")
+            //xAxisLabel.add("21-25Jul")
 
+
+        //
+
+        var tempCalander = Calendar.getInstance()
+
+        for (a in 0..3){
+
+            val thisDay = tempCalander.get(Calendar.DAY_OF_MONTH)
+            val thisMonth= tempCalander.getDisplayName(Calendar.MONTH, Calendar.SHORT, Locale.getDefault())
+
+            var firstDate=thisDay.toString()+thisMonth
+
+            tempCalander.add(Calendar.DAY_OF_MONTH, -4)
+
+            val thisDay2 = tempCalander.get(Calendar.DAY_OF_MONTH)
+            val thisMonth2= tempCalander.getDisplayName(Calendar.MONTH, Calendar.SHORT, Locale.getDefault())
+
+            var secondDate=thisDay2.toString()+thisMonth2
+
+            xAxisLabel.add(firstDate+" - "+secondDate)
+
+            tempCalander.add(Calendar.DAY_OF_MONTH, -1)
+
+
+        }
 
 
         val entries = ArrayList<BarEntry>()
@@ -145,44 +170,52 @@ class DashBoardFragment : Fragment(),ViewInterface.DashBoardView {
         entries.add(BarEntry(1f, 80.88f))
         entries.add(BarEntry(2f, 60f))
         entries.add(BarEntry(3f, 50f))
-        entries.add(BarEntry(4f, 70f))
-        entries.add(BarEntry(5f, 60f))
+        //entries.add(BarEntry(4f, 70f))
+        //entries.add(BarEntry(5f, 50f))
 
         val set = BarDataSet(entries, "Total Expenses")
 
-        set.setValueFormatter(MyValueFormatter())
+        set.valueFormatter = MyValueFormatter()
+        set.setColors(Color.LTGRAY)
 
         val data = BarData(set)
-        data.barWidth = 0.7f // set custom bar width
-        DBTrxGraph.setData(data)
+        data.barWidth = 0.3f // set custom bar width
+
+        val xAxis = DBTrxGraph.xAxis
+        xAxis.isGranularityEnabled = true
+        xAxis.valueFormatter = MyXAxisValueFormatter(xAxisLabel)
+        xAxis.position = XAxis.XAxisPosition.BOTTOM
+
+
+        DBTrxGraph.description=null
+        DBTrxGraph.data = data
         DBTrxGraph.setFitBars(true) // make the x-axis fit exactly all bars
+        DBTrxGraph.setTouchEnabled(false)
+
+        DBTrxGraph.notifyDataSetChanged() // this line solve weird auto resize when refresh graph(becuz of being call from spinner listener change)
         DBTrxGraph.invalidate() // refresh
 
-        DBTrxGraph.setTouchEnabled(false)
-        DBTrxGraph.description=null
-
-        val xAxis = DBTrxGraph.getXAxis();
-
-        xAxis.setValueFormatter { value, axis ->
-
-            xAxisLabel.get(value.toInt())
-        }
-        xAxis.setPosition(XAxis.XAxisPosition.BOTTOM)
     }
-
-
 
     inner class MyValueFormatter : IValueFormatter {
 
-        private val mFormat: DecimalFormat
-
-        init {
-            mFormat = DecimalFormat("###,###,##0.00") // use one decimal
-        }
+        private val mFormat: DecimalFormat = DecimalFormat("###,###,##0.00")
 
         override fun getFormattedValue(value: Float, entry: Entry, dataSetIndex: Int, viewPortHandler: ViewPortHandler): String {
             // write your logic here
             return "$ "+mFormat.format(value) // e.g. append a dollar-sign
+        }
+    }
+
+    inner class MyXAxisValueFormatter(private val mValues: ArrayList<String>) : IAxisValueFormatter {
+
+        /** this is only needed if numbers are returned, else return 0  */
+        val decimalDigits: Int
+            get() = 0
+
+        override fun getFormattedValue(value: Float, axis: AxisBase): String {
+            // "value" represents the position of the label on the axis (x or y)
+            return mValues[value.toInt()]
         }
     }
 
