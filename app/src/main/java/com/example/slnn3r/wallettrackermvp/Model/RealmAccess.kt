@@ -1133,26 +1133,6 @@ class RealmAccess: ModelInterface.RealmAccess{
 
             }
 
-            val noResult = mainContext.getString(R.string.noResult) //ONLY USED FOR DASHBOARD GET TRANSACTION LIST
-
-            val transactionCategoryNull= TransactionCategory("","","","","")
-            val walletAccountNull= WalletAccount("","",0.0,"","")
-
-
-            if(transactionData.size<1){
-                transactionData.add(
-                        Transaction(
-                                noResult,
-                                noResult,
-                                noResult,
-                                0.0,
-                                noResult,
-                                transactionCategoryNull,
-                                walletAccountNull
-                        )
-                )
-            }
-
         }
 
         realm.close()
@@ -1226,26 +1206,6 @@ class RealmAccess: ModelInterface.RealmAccess{
                 }
 
 
-            }
-
-            val noResult = mainContext.getString(R.string.noResult) //ONLY USED FOR DASHBOARD GET TRANSACTION LIST
-
-            val transactionCategoryNull= TransactionCategory("","","","","")
-            val walletAccountNull= WalletAccount("","",0.0,"","")
-
-
-            if(transactionData.size<1){
-                transactionData.add(
-                        Transaction(
-                                noResult,
-                                noResult,
-                                noResult,
-                                0.0,
-                                noResult,
-                                transactionCategoryNull,
-                                walletAccountNull
-                        )
-                )
             }
 
         }

@@ -131,15 +131,7 @@ class DashBoardFragment : Fragment(),ViewInterface.DashBoardView {
     private fun displayDummyDateGraph() {
 
         val xAxisLabel = ArrayList<String>()
-            //xAxisLabel.add("11Jul - 12Jul")
-            //xAxisLabel.add("62Jul - 10Jul")
-            //xAxisLabel.add("11Jul - 15Jul")
-            //xAxisLabel.add("16Jul - 20Jul")
-            //xAxisLabel.add("21Jul-25Jul")
-            //xAxisLabel.add("21-25Jul")
 
-
-        //
 
         var tempCalander = Calendar.getInstance()
 
