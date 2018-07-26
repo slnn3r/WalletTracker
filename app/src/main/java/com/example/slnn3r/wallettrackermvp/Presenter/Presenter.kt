@@ -15,6 +15,7 @@ import com.example.slnn3r.wallettrackermvp.Model.ObjectClass.WalletAccount
 import com.example.slnn3r.wallettrackermvp.Model.RealmAccess
 import android.app.Activity
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import androidx.navigation.Navigation.findNavController
 import com.example.slnn3r.wallettrackermvp.Model.ObjectClass.TransactionCategory
@@ -1231,7 +1232,7 @@ class Presenter: PresenterInterface.Presenter{
                         //!!! Filtering urself HERE
                         var filteredData = ArrayList<Transaction>()
 
-                        val noResult = mainContext.getString(R.string.noResult) //ONLY USED FOR DASHBOARD GET TRANSACTION LIST
+                        val noResult = mainContext.getString(R.string.noResult)
 
                         var nullData= Transaction(noResult,
                                 noResult,
@@ -1243,26 +1244,243 @@ class Presenter: PresenterInterface.Presenter{
                         )
 
 
+                        val sdf=SimpleDateFormat("yyyy/MM/dd")
+
                         value.forEach {
                             data->
 
-                            if(trxType=="All Type"){
+                            val mytime = data.TransactionDate
 
-                                if(trxCategory=="All Category"){
-                                    filteredData.add(data)
+                            var myDate: Date? = null
+                            myDate = sdf.parse(mytime)
+
+                            val calendar = Calendar.getInstance()
+                            calendar.time = myDate
+                            val dataDay= calendar.get(Calendar.DAY_OF_MONTH).toString()
+
+                            val dataMonth= calendar.get(Calendar.MONTH).toString()
+
+                            var selectedMonth =""
+                            if(month!="All Months"){
+                                val cal = Calendar.getInstance()
+                                cal.time = SimpleDateFormat("MMM").parse(month)
+                                selectedMonth = (cal.get(Calendar.MONTH)).toString()
+                            }
+
+                            val dataYear= calendar.get(Calendar.YEAR).toString()
+
+
+                            if(trxType=="All Type") {
+
+                                if (trxCategory == "All Category") {
+
+                                    ///////!!!!
+                                    if (year == "All Years") {
+
+                                        if (month == "All Months") {
+
+                                            if (day == "All Days") {
+                                                filteredData.add(data)
+
+                                            } else if (day != "All Days" && day == dataDay){
+                                                filteredData.add(data)
+                                            }
+
+                                        } else if (month != "All Months" && selectedMonth == dataMonth) {
+
+                                            if (day == "All Days") {
+                                                filteredData.add(data)
+
+                                            } else if (day != "All Days" && day == dataDay) {
+                                                filteredData.add(data)
+
+                                            }
+
+                                        }
+
+                                    } else if(year != "All Years" && year==dataYear) {
+
+                                        if (month == "All Months") {
+
+                                            if (day == "All Days") {
+                                                filteredData.add(data)
+
+                                            } else if (day != "All Days" && day == dataDay){
+                                                filteredData.add(data)
+                                            }
+
+                                        } else if (month != "All Months" && selectedMonth == dataMonth) {
+
+                                            if (day == "All Days") {
+                                                filteredData.add(data)
+
+                                            } else if (day != "All Days" && day == dataDay) {
+                                                filteredData.add(data)
+
+                                            }
+
+                                        }
+
+                                    }
+                                    ///////!!!!
+
 
                                 }else if(trxCategory!="All Category" && data.TransactionCategory.TransactionCategoryName==trxCategory){
-                                    filteredData.add(data)
+                                    ///////!!!!
+                                    if (year == "All Years") {
+
+                                        if (month == "All Months") {
+
+                                            if (day == "All Days") {
+                                                filteredData.add(data)
+
+                                            } else if (day != "All Days" && day == dataDay){
+                                                filteredData.add(data)
+                                            }
+
+                                        } else if (month != "All Months" && selectedMonth == dataMonth) {
+
+                                            if (day == "All Days") {
+                                                filteredData.add(data)
+
+                                            } else if (day != "All Days" && day == dataDay) {
+                                                filteredData.add(data)
+
+                                            }
+
+                                        }
+
+                                    } else if(year != "All Years" && year==dataYear) {
+
+                                        if (month == "All Months") {
+
+                                            if (day == "All Days") {
+                                                filteredData.add(data)
+
+                                            } else if (day != "All Days" && day == dataDay){
+                                                filteredData.add(data)
+                                            }
+
+                                        } else if (month != "All Months" && selectedMonth == dataMonth) {
+
+                                            if (day == "All Days") {
+                                                filteredData.add(data)
+
+                                            } else if (day != "All Days" && day == dataDay) {
+                                                filteredData.add(data)
+
+                                            }
+
+                                        }
+
+                                    }
+                                    ///////!!!!
 
                                 }
 
                             }else if(trxType!="All Type"){
 
                                 if(trxCategory=="All Category" && data.TransactionCategory.TransactionCategoryType==trxType){
-                                    filteredData.add(data)
+                                    ///////!!!!
+                                    if (year == "All Years") {
+
+                                        if (month == "All Months") {
+
+                                            if (day == "All Days") {
+                                                filteredData.add(data)
+
+                                            } else if (day != "All Days" && day == dataDay){
+                                                filteredData.add(data)
+                                            }
+
+                                        } else if (month != "All Months" && selectedMonth == dataMonth) {
+
+                                            if (day == "All Days") {
+                                                filteredData.add(data)
+
+                                            } else if (day != "All Days" && day == dataDay) {
+                                                filteredData.add(data)
+
+                                            }
+
+                                        }
+
+                                    } else if(year != "All Years" && year==dataYear) {
+
+                                        if (month == "All Months") {
+
+                                            if (day == "All Days") {
+                                                filteredData.add(data)
+
+                                            } else if (day != "All Days" && day == dataDay){
+                                                filteredData.add(data)
+                                            }
+
+                                        } else if (month != "All Months" && selectedMonth == dataMonth) {
+
+                                            if (day == "All Days") {
+                                                filteredData.add(data)
+
+                                            } else if (day != "All Days" && day == dataDay) {
+                                                filteredData.add(data)
+
+                                            }
+
+                                        }
+
+                                    }
+                                    ///////!!!!
 
                                 }else if(trxCategory!="All Category" && data.TransactionCategory.TransactionCategoryName==trxCategory && data.TransactionCategory.TransactionCategoryType==trxType){
-                                    filteredData.add(data)
+                                    ///////!!!!
+                                    if (year == "All Years") {
+
+                                        if (month == "All Months") {
+
+                                            if (day == "All Days") {
+                                                filteredData.add(data)
+
+                                            } else if (day != "All Days" && day == dataDay){
+                                                filteredData.add(data)
+                                            }
+
+                                        } else if (month != "All Months" && selectedMonth == dataMonth) {
+
+                                            if (day == "All Days") {
+                                                filteredData.add(data)
+
+                                            } else if (day != "All Days" && day == dataDay) {
+                                                filteredData.add(data)
+
+                                            }
+
+                                        }
+
+                                    } else if(year != "All Years" && year==dataYear) {
+
+                                        if (month == "All Months") {
+
+                                            if (day == "All Days") {
+                                                filteredData.add(data)
+
+                                            } else if (day != "All Days" && day == dataDay){
+                                                filteredData.add(data)
+                                            }
+
+                                        } else if (month != "All Months" && selectedMonth == dataMonth) {
+
+                                            if (day == "All Days") {
+                                                filteredData.add(data)
+
+                                            } else if (day != "All Days" && day == dataDay) {
+                                                filteredData.add(data)
+
+                                            }
+
+                                        }
+
+                                    }
+                                    ///////!!!!
 
                                 }
 
@@ -1291,6 +1509,9 @@ class Presenter: PresenterInterface.Presenter{
 
 
     }
+
+
+
 
     private fun getTrxForSpecificDateFilterObservable(mainContext: Context, userID: String, accountID: String, trxType: String, trxCategory: String, day: String, month: String, year: String): Observable<ArrayList<Transaction>>{
         return Observable.defer{ Observable.just(realmModel.getTrxForSpecificDateFilterRealm(mainContext, userID,accountID)) }
