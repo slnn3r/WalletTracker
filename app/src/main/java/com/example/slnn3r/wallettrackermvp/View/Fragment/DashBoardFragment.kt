@@ -24,19 +24,20 @@ import android.support.v7.widget.RecyclerView
 import android.view.inputmethod.InputMethodManager
 import android.widget.*
 import com.example.slnn3r.wallettrackermvp.Model.ObjectClass.Transaction
-import com.github.mikephil.charting.data.BarData
-import com.github.mikephil.charting.data.BarDataSet
-import com.github.mikephil.charting.data.BarEntry
+import com.example.slnn3r.wallettrackermvp.Utility.CustomMarkerView
 import kotlin.collections.ArrayList
 import com.github.mikephil.charting.charts.BarChart
 import com.github.mikephil.charting.components.AxisBase
 import com.github.mikephil.charting.components.Description
 import com.github.mikephil.charting.components.XAxis
-import com.github.mikephil.charting.data.Entry
+import com.github.mikephil.charting.data.*
 import com.github.mikephil.charting.formatter.IAxisValueFormatter
 import com.github.mikephil.charting.utils.ViewPortHandler
 import com.github.mikephil.charting.formatter.IValueFormatter
 import java.text.DecimalFormat
+import com.github.mikephil.charting.data.LineDataSet
+
+
 
 
 class DashBoardFragment : Fragment(),ViewInterface.DashBoardView {
@@ -59,6 +60,9 @@ class DashBoardFragment : Fragment(),ViewInterface.DashBoardView {
         presenter = Presenter(this)
 
         hideDisplayedKeyboard(view) // Hide Keyboard
+
+        DBTrxGraph.setNoDataText("Loading Data...");
+
 
         // Initial Input
         val thisMonth =mCalendar.getDisplayName(Calendar.MONTH, Calendar.LONG, Locale.getDefault())
@@ -128,61 +132,46 @@ class DashBoardFragment : Fragment(),ViewInterface.DashBoardView {
 
     }
 
-    private fun displayDummyDateGraph() {
+    private fun displayDummyDateGraph(entries:ArrayList<Entry>, xAxisLabel:ArrayList<String>) {
 
-        val xAxisLabel = ArrayList<String>()
+        //val set = LineDataSet(entries, "Total Expenses")
 
+        val dataset = LineDataSet(entries, null)
 
-        var tempCalander = Calendar.getInstance()
+        dataset.setDrawFilled(true)
 
-        for (a in 0..3){
+        dataset.valueFormatter = MyValueFormatter()
 
-            val thisDay = tempCalander.get(Calendar.DAY_OF_MONTH)
-            val thisMonth= tempCalander.getDisplayName(Calendar.MONTH, Calendar.SHORT, Locale.getDefault())
+        dataset.setColors(Color.LTGRAY)
 
-            var firstDate=thisDay.toString()+thisMonth
+        dataset.setDrawFilled(true)
 
-            tempCalander.add(Calendar.DAY_OF_MONTH, -4)
+        //dataset.mode = LineDataSet.Mode.CUBIC_BEZIER;
 
-            val thisDay2 = tempCalander.get(Calendar.DAY_OF_MONTH)
-            val thisMonth2= tempCalander.getDisplayName(Calendar.MONTH, Calendar.SHORT, Locale.getDefault())
-
-            var secondDate=thisDay2.toString()+thisMonth2
-
-            xAxisLabel.add(firstDate+" - "+secondDate)
-
-            tempCalander.add(Calendar.DAY_OF_MONTH, -1)
-
-
-        }
-
-
-        val entries = ArrayList<BarEntry>()
-        entries.add(BarEntry(0f, 30.26f))
-        entries.add(BarEntry(1f, 80.88f))
-        entries.add(BarEntry(2f, 60f))
-        entries.add(BarEntry(3f, 50f))
-        //entries.add(BarEntry(4f, 70f))
-        //entries.add(BarEntry(5f, 50f))
-
-        val set = BarDataSet(entries, "Total Expenses")
-
-        set.valueFormatter = MyValueFormatter()
-        set.setColors(Color.LTGRAY)
-
-        val data = BarData(set)
-        data.barWidth = 0.3f // set custom bar width
+        val data = LineData(dataset)
+        //data.barWidth = 0.3f // set custom bar width
 
         val xAxis = DBTrxGraph.xAxis
         xAxis.isGranularityEnabled = true
         xAxis.valueFormatter = MyXAxisValueFormatter(xAxisLabel)
         xAxis.position = XAxis.XAxisPosition.BOTTOM
+        xAxis.setDrawGridLines(false)
+
+
 
 
         DBTrxGraph.description=null
         DBTrxGraph.data = data
-        DBTrxGraph.setFitBars(true) // make the x-axis fit exactly all bars
-        DBTrxGraph.setTouchEnabled(false)
+        //DBTrxGraph.setFitBars(true) // make the x-axis fit exactly all bars
+        //DBTrxGraph.setTouchEnabled(false)
+
+        //DBTrxGraph.isScaleYEnabled = false
+
+        //DBTrxGraph.zoom(4f, 0f, 0f, 0f)
+        DBTrxGraph.legend.isEnabled = false;
+
+        val mv = CustomMarkerView(context!!, R.layout.marker_view);
+        DBTrxGraph.markerView = mv
 
         DBTrxGraph.notifyDataSetChanged() // this line solve weird auto resize when refresh graph(becuz of being call from spinner listener change)
         DBTrxGraph.invalidate() // refresh
@@ -196,7 +185,8 @@ class DashBoardFragment : Fragment(),ViewInterface.DashBoardView {
 
         override fun getFormattedValue(value: Float, entry: Entry, dataSetIndex: Int, viewPortHandler: ViewPortHandler): String {
             // write your logic here
-            return "$ "+mFormat.format(value) // e.g. append a dollar-sign
+            //return "$ "+mFormat.format(value) // e.g. append a dollar-sign
+            return ""
         }
     }
 
@@ -292,7 +282,9 @@ class DashBoardFragment : Fragment(),ViewInterface.DashBoardView {
                 val thisMonth =mCalendar.getDisplayName(Calendar.MONTH, Calendar.LONG, Locale.getDefault())
                 presenter.getThisMonthExpense(mainContext, userProfile.UserUID, walletAccountList[spinner.selectedItemPosition].WalletAccountID, thisMonth)
 
-                displayDummyDateGraph() // Dummy Graph Setup - Must Reload the Graph everytime Account selection change !!!!!!!!!! NO USE
+
+                presenter.getRecentExpenses(mainContext,userProfile.UserUID,walletAccountList[spinner.selectedItemPosition].WalletAccountID)
+
 
             }
         }
@@ -345,8 +337,10 @@ class DashBoardFragment : Fragment(),ViewInterface.DashBoardView {
     }
 
 
-    override fun populateExpenseGraph(mainContext: Context, transactionList: ArrayList<Transaction>) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    override fun populateExpenseGraph(mainContext: Context, entryList: ArrayList<Entry>, xAxisList: ArrayList<String>) {
+
+        displayDummyDateGraph(entryList, xAxisList) // Dummy Graph Setup - Must Reload the Graph everytime Account selection change !!!!!!!!!! NO USE
+
     }
 
 

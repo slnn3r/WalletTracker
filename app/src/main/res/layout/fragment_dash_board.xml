@@ -10,7 +10,7 @@
         android:id="@+id/DBAccountSpinner"
         android:layout_width="0dp"
         android:layout_height="24dp"
-        android:layout_marginTop="12dp"
+        android:layout_marginTop="16dp"
         android:layout_marginEnd="64dp"
         android:background="@drawable/spinner_background"
         app:layout_constraintEnd_toEndOf="parent"
@@ -19,8 +19,7 @@
         app:layout_constraintTop_toBottomOf="@+id/DBTrxGraph" />
 
 
-
-    <com.github.mikephil.charting.charts.BarChart
+    <com.github.mikephil.charting.charts.LineChart
         android:id="@+id/DBTrxGraph"
         android:layout_width="match_parent"
         android:layout_height="200dp"
@@ -67,7 +66,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="64dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="20dp"
         android:layout_marginEnd="8dp"
         android:text="@string/DBAccountLabel"
         android:textAllCaps="true"

@@ -40,7 +40,7 @@
     <string name="DBRecentLabel">Recent Transaction List</string>
     <string name="DBCurrentBalLabel">Current Account Balance : </string>
     <string name="DBExpensesLabel">This Month Expenses : </string>
-    <string name="DBOverviewLabel">Recent Expenses Graph</string>
+    <string name="DBOverviewLabel">Last 31 Days Expenses CashFlow</string>
 
     <!-- transaction_list_row -->
 

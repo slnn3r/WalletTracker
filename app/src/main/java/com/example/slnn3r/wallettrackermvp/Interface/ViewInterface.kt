@@ -5,6 +5,7 @@ import android.content.Context
 import com.example.slnn3r.wallettrackermvp.Model.ObjectClass.Transaction
 import com.example.slnn3r.wallettrackermvp.Model.ObjectClass.TransactionCategory
 import com.example.slnn3r.wallettrackermvp.Model.ObjectClass.WalletAccount
+import com.github.mikephil.charting.data.Entry
 
 interface ViewInterface{
 
@@ -49,7 +50,7 @@ interface ViewInterface{
         fun populateCurrentBalance(mainContext: Context, currentBalance:Double)
         fun populateThisMonthExpense(mainContext: Context, thisMonthExpense:Double)
 
-        fun populateExpenseGraph(mainContext: Context, transactionList: ArrayList<Transaction>)
+        fun populateExpenseGraph(mainContext: Context, entryList: ArrayList<Entry>, xAxisList: ArrayList<String>)
 
     }
 

@@ -642,8 +642,77 @@ class RealmAccess: ModelInterface.RealmAccess{
     }
 
 
-    override fun getRecentExpenseRealm(mainContext: Context, userID: String, accountID: String) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    override fun getRecentExpenseRealm(mainContext: Context, userID: String, accountID: String): ArrayList<Transaction> {
+
+        //
+        var realm: Realm? = null
+
+        val transactionData=ArrayList<Transaction>()
+
+
+        Realm.init(mainContext)
+
+        val config = RealmConfiguration.Builder()
+                .name(mainContext.getString(R.string.transactionRealm))
+                .build()
+
+        realm = Realm.getInstance(config)
+
+
+        realm!!.executeTransaction {
+
+            val getTransaction = realm.where(TransactionRealm::class.java)
+                    .sort(mainContext.getString(R.string.TransactionDate), Sort.DESCENDING,mainContext.getString(R.string.TransactionTime), Sort.DESCENDING)
+                    .findAll()
+
+
+
+            getTransaction.forEach{
+                dataList->
+
+                val gson = Gson()
+
+                val walletAccount = dataList.walletAccount
+                val transactionCategory = dataList.transactionCategory
+
+                val walletAccountData = gson.fromJson<WalletAccount>(walletAccount, WalletAccount::class.java)
+                val transactionCategoryData = gson.fromJson<TransactionCategory>(transactionCategory, TransactionCategory::class.java)
+
+
+
+                if(walletAccountData.WalletAccountID==accountID && walletAccountData.UserUID==userID){
+
+                    // convert to 12hour for ez display purpose
+                    val notConvertedTime = dataList.transactionTime!!
+                    val date12Format = SimpleDateFormat(mainContext.getString(R.string.timeFormat12))
+                    val date24Format = SimpleDateFormat(mainContext.getString(R.string.timeFormat24))
+                    val convertedTime = date12Format.format(date24Format.parse(notConvertedTime))
+
+                    transactionData.add(
+
+                            Transaction(
+                                    dataList.transactionID!!,
+                                    dataList.transactionDate!!,
+                                    convertedTime,
+                                    dataList.transactionAmount,
+                                    dataList.transactionRemark!!,
+                                    transactionCategoryData,
+                                    walletAccountData
+                            )
+                    )
+
+                }
+
+
+            }
+
+
+        }
+
+        realm.close()
+
+        return transactionData
+
     }
 
 

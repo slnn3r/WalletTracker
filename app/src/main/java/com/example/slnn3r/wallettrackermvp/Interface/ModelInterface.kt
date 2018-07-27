@@ -42,7 +42,7 @@ interface ModelInterface {
 
         fun getThisMonthExpenseRealm(mainContext: Context, userID: String, accountID: String):  ArrayList<Transaction>
 
-        fun getRecentExpenseRealm(mainContext: Context, userID: String, accountID: String)
+        fun getRecentExpenseRealm(mainContext: Context, userID: String, accountID: String):  ArrayList<Transaction>
 
         // NewTrx Fragment
         fun createNewTrxRealm(mainContext: Context, newTrxInput:Transaction)

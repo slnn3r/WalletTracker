@@ -21,6 +21,8 @@ import com.example.slnn3r.wallettrackermvp.Model.ObjectClass.TransactionCategory
 import com.example.slnn3r.wallettrackermvp.Model.ObjectClass.UserProfile
 import com.example.slnn3r.wallettrackermvp.Model.SharedPreferenceAccess
 import com.example.slnn3r.wallettrackermvp.R
+import com.github.mikephil.charting.data.BarEntry
+import com.github.mikephil.charting.data.Entry
 import com.google.android.gms.auth.api.Auth
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
@@ -762,10 +764,73 @@ class Presenter: PresenterInterface.Presenter{
     }
 
     override fun getRecentExpenses(mainContext: Context, userID: String, accountID: String) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+
+        getRecentExpensesObservable(mainContext, userID, accountID)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(object : Observer< ArrayList<Transaction>>
+                {
+                    override fun onSubscribe(d: Disposable)
+                    {
+                    }
+
+                    override fun onNext(value:  ArrayList<Transaction>)
+                    {
+                        val entries = ArrayList<Entry>()
+                        val xAxisLabel = ArrayList<String>()
+
+                        val sdf=SimpleDateFormat(mainContext.getString(R.string.dateFormat))
+
+
+                        for (a in 0..30){
+                            var tempCalander = Calendar.getInstance()
+
+                            tempCalander.add(Calendar.DAY_OF_MONTH, -a)
+
+                            val thisDay = tempCalander.get(Calendar.DAY_OF_MONTH)
+                            val thisMonth= tempCalander.getDisplayName(Calendar.MONTH, Calendar.SHORT, Locale.getDefault())
+
+                            xAxisLabel.add(thisDay.toString()+thisMonth)
+
+                            val compareDate = sdf.format(tempCalander.getTime())
+
+                            var expense=0.0
+
+                            value.forEach {
+                                data->
+
+                                if(data.TransactionDate==compareDate && data.TransactionCategory.TransactionCategoryType=="Expense"){
+                                    expense+=data.TransactionAmount
+                                }
+
+                            }
+
+                            entries.add(BarEntry(a.toFloat(), expense.toFloat()))
+
+                        }
+
+
+
+
+                        dashBoardView.populateExpenseGraph(mainContext, entries,xAxisLabel)
+
+                    }
+
+                    override fun onError(e: Throwable)
+                    {
+
+                    }
+
+                    override fun onComplete()
+                    {
+                    }
+                })
+
     }
 
-
+    private fun getRecentExpensesObservable(mainContext: Context, userID: String, accountID: String): Observable<ArrayList<Transaction>>{
+        return Observable.defer { Observable.just(realmModel.getRecentExpenseRealm(mainContext,userID,accountID)) }
+    }
 
 
     // ViewWalletAccount Fragment
