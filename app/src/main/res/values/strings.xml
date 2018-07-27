@@ -41,6 +41,7 @@
     <string name="DBCurrentBalLabel">Current Account Balance : </string>
     <string name="DBExpensesLabel">This Month Expenses : </string>
     <string name="DBOverviewLabel">Last 31 Days Expenses CashFlow</string>
+    <string name="DBGraphLoading">Loading Graph Data…</string>
 
     <!-- transaction_list_row -->
 

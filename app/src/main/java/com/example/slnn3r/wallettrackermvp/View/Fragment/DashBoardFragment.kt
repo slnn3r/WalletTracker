@@ -26,9 +26,7 @@ import android.widget.*
 import com.example.slnn3r.wallettrackermvp.Model.ObjectClass.Transaction
 import com.example.slnn3r.wallettrackermvp.Utility.CustomMarkerView
 import kotlin.collections.ArrayList
-import com.github.mikephil.charting.charts.BarChart
 import com.github.mikephil.charting.components.AxisBase
-import com.github.mikephil.charting.components.Description
 import com.github.mikephil.charting.components.XAxis
 import com.github.mikephil.charting.data.*
 import com.github.mikephil.charting.formatter.IAxisValueFormatter
@@ -61,12 +59,7 @@ class DashBoardFragment : Fragment(),ViewInterface.DashBoardView {
 
         hideDisplayedKeyboard(view) // Hide Keyboard
 
-        DBTrxGraph.setNoDataText("Loading Data...");
-
-
-        // Initial Input
-        val thisMonth =mCalendar.getDisplayName(Calendar.MONTH, Calendar.LONG, Locale.getDefault())
-        DBMonthTextView.text = getString(R.string.formatDisplayMonth,thisMonth)
+        setupUI()
 
         // Get SharedPreference data
         val userProfile = presenter.getUserData(context!!)
@@ -88,6 +81,14 @@ class DashBoardFragment : Fragment(),ViewInterface.DashBoardView {
 
 
     // Function Implementation
+    private fun setupUI(){
+        DBTrxGraph.setNoDataText(getString(R.string.DBGraphLoading))
+
+        // Initial Input
+        val thisMonth =mCalendar.getDisplayName(Calendar.MONTH, Calendar.LONG, Locale.getDefault())
+        DBMonthTextView.text = getString(R.string.formatDisplayMonth,thisMonth)
+    }
+
     private fun hideDisplayedKeyboard(view: View) {
 
         // To Hide KeyBoard
@@ -134,22 +135,19 @@ class DashBoardFragment : Fragment(),ViewInterface.DashBoardView {
 
     private fun displayDummyDateGraph(entries:ArrayList<Entry>, xAxisLabel:ArrayList<String>) {
 
-        //val set = LineDataSet(entries, "Total Expenses")
+        val dataSet = LineDataSet(entries, null)
 
-        val dataset = LineDataSet(entries, null)
+        dataSet.setDrawFilled(true)
 
-        dataset.setDrawFilled(true)
+        dataSet.valueFormatter = MyValueFormatter()
 
-        dataset.valueFormatter = MyValueFormatter()
+        dataSet.setColors(Color.LTGRAY)
 
-        dataset.setColors(Color.LTGRAY)
+        dataSet.setDrawFilled(true)
 
-        dataset.setDrawFilled(true)
+        //dataset.mode = LineDataSet.Mode.CUBIC_BEZIER
 
-        //dataset.mode = LineDataSet.Mode.CUBIC_BEZIER;
-
-        val data = LineData(dataset)
-        //data.barWidth = 0.3f // set custom bar width
+        val data = LineData(dataSet)
 
         val xAxis = DBTrxGraph.xAxis
         xAxis.isGranularityEnabled = true
@@ -158,19 +156,14 @@ class DashBoardFragment : Fragment(),ViewInterface.DashBoardView {
         xAxis.setDrawGridLines(false)
 
 
-
-
         DBTrxGraph.description=null
         DBTrxGraph.data = data
-        //DBTrxGraph.setFitBars(true) // make the x-axis fit exactly all bars
         //DBTrxGraph.setTouchEnabled(false)
-
         //DBTrxGraph.isScaleYEnabled = false
-
         //DBTrxGraph.zoom(4f, 0f, 0f, 0f)
-        DBTrxGraph.legend.isEnabled = false;
+        DBTrxGraph.legend.isEnabled = false
 
-        val mv = CustomMarkerView(context!!, R.layout.marker_view);
+        val mv = CustomMarkerView(context!!, R.layout.marker_view)
         DBTrxGraph.markerView = mv
 
         DBTrxGraph.notifyDataSetChanged() // this line solve weird auto resize when refresh graph(becuz of being call from spinner listener change)
@@ -186,7 +179,7 @@ class DashBoardFragment : Fragment(),ViewInterface.DashBoardView {
         override fun getFormattedValue(value: Float, entry: Entry, dataSetIndex: Int, viewPortHandler: ViewPortHandler): String {
             // write your logic here
             //return "$ "+mFormat.format(value) // e.g. append a dollar-sign
-            return ""
+            return "" // Override the Implementation Display Nothing
         }
     }
 

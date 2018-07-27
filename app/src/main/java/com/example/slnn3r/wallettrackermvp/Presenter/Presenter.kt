@@ -781,9 +781,8 @@ class Presenter: PresenterInterface.Presenter{
 
                         val sdf=SimpleDateFormat(mainContext.getString(R.string.dateFormat))
 
-
                         for (a in 0..30){
-                            var tempCalander = Calendar.getInstance()
+                            val tempCalander = Calendar.getInstance()
 
                             tempCalander.add(Calendar.DAY_OF_MONTH, -a)
 
@@ -792,14 +791,14 @@ class Presenter: PresenterInterface.Presenter{
 
                             xAxisLabel.add(thisDay.toString()+thisMonth)
 
-                            val compareDate = sdf.format(tempCalander.getTime())
+                            val compareDate = sdf.format(tempCalander.time)
 
                             var expense=0.0
 
                             value.forEach {
                                 data->
 
-                                if(data.TransactionDate==compareDate && data.TransactionCategory.TransactionCategoryType=="Expense"){
+                                if(data.TransactionDate==compareDate && data.TransactionCategory.TransactionCategoryType==mainContext.getString(R.string.expense)){
                                     expense+=data.TransactionAmount
                                 }
 

@@ -1,8 +1,6 @@
 package com.example.slnn3r.wallettrackermvp.Utility
 
 import android.content.Context
-import android.opengl.ETC1.getHeight
-import android.opengl.ETC1.getWidth
 import android.widget.TextView
 import com.example.slnn3r.wallettrackermvp.R
 import com.github.mikephil.charting.components.MarkerView
@@ -13,21 +11,15 @@ import com.github.mikephil.charting.utils.MPPointF
 
 class CustomMarkerView(context: Context, layoutResource: Int) : MarkerView(context, layoutResource) {
 
-    private val tvContent: TextView
+    private val tvContent: TextView = findViewById(R.id.tvContent)
 
     private var mOffset: MPPointF? = null
-
-    init {
-
-        // find your layout components
-        tvContent = findViewById(R.id.tvContent)
-    }
 
     // callbacks everytime the MarkerView is redrawn, can be used to update the
     // content (user-interface)
     override fun refreshContent(e: Entry?, highlight: Highlight?) {
 
-        tvContent.text = "$ " + e!!.y
+        tvContent.text = context.getString(R.string.formatDisplay2DecimalMoney, e!!.y)
 
         // this will perform necessary layouting
         super.refreshContent(e, highlight)

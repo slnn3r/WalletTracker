@@ -161,11 +161,11 @@ class MenuActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
     private fun animateIcon(start:Int, end:Int, duration:Int){
 
-        var anim= ValueAnimator.ofFloat(start.toFloat(),end.toFloat())
+        val anim= ValueAnimator.ofFloat(start.toFloat(),end.toFloat())
 
         anim.addUpdateListener { animation ->
             val slideOffset = animation?.animatedValue as Float
-            toggle!!.onDrawerSlide(drawer_layout, slideOffset)
+            toggle.onDrawerSlide(drawer_layout, slideOffset)
         }
 
         anim.interpolator = DecelerateInterpolator()
