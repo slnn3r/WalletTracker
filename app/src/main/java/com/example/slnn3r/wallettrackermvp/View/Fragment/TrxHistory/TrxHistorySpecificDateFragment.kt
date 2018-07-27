@@ -239,11 +239,11 @@ class TrxHistorySpecificDateFragment : Fragment(), ViewInterface.TrxHistorySpeci
         presenter.getTrxForSpecificDateFilter(context!!,
                 userProfile.UserUID,
                 selectedAccountID,
-                "All Type",
-                "All Category",
-                "All Days",
-                "All Months",
-                "All Years"
+                getString(R.string.allType),
+                getString(R.string.allCategory),
+                getString(R.string.allDay),
+                getString(R.string.allMonth),
+                getString(R.string.allYear)
         )
 
 

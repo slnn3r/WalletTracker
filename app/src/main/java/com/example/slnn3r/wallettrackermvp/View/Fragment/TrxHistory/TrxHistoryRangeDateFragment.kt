@@ -190,8 +190,8 @@ class TrxHistoryRangeDateFragment : Fragment(), ViewInterface.TrxHistoryRangeVie
         presenter.getTrxForRangeDateFilter(context!!,
                 userProfile.UserUID,
                 selectedAccountID,
-                "All Type",
-                "All Category",
+                getString(R.string.allType),
+                getString(R.string.allCategory),
                 simpleDateFormat.format(myCalendar.time),
                 simpleDateFormat.format(myCalendar.time)
         )
