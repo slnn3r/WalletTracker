@@ -1,6 +1,7 @@
 
 package com.example.slnn3r.wallettrackermvp.View.Activity
 
+import android.animation.ValueAnimator
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
@@ -21,6 +22,7 @@ import com.example.slnn3r.wallettrackermvp.R
 import kotlinx.android.synthetic.main.activity_menu.*
 import kotlinx.android.synthetic.main.app_bar_menu.*
 import android.view.View
+import android.view.animation.DecelerateInterpolator
 import android.widget.ImageView
 import android.widget.TextView
 import com.squareup.picasso.Picasso
@@ -42,6 +44,8 @@ class MenuActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
     private var doubleBackToExitPressedOnce = false
 
+    private lateinit var toggle:ActionBarDrawerToggle
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -58,17 +62,35 @@ class MenuActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
     }
 
+    private fun displayUserInfo() {
+
+        // Get SharedPreference data
+        presenter = Presenter(this)
+        val userProfile = presenter.getUserData(this)
+
+
+        val navigationView = findViewById<View>(R.id.nav_view) as NavigationView
+        val headerView = navigationView.getHeaderView(0)
+
+        val navUserName = headerView.findViewById(R.id.userProfileName) as TextView
+        val navUserEmail = headerView.findViewById(R.id.userProfileEmail) as TextView
+        val navUserPicture = headerView.findViewById(R.id.userProfileImageView) as ImageView
+
+        navUserName.text = userProfile.UserName
+        navUserEmail.text = userProfile.UserEmail
+        Picasso.get().load(userProfile.UserPicURL).into(navUserPicture)
+
+    }
+
+
 
     private fun setupNavigationUpButton() {
 
         // Display the Navigation Drawer Button (Default Generated Function)
-        val toggle = ActionBarDrawerToggle(
+        toggle = ActionBarDrawerToggle(
                 this, drawer_layout, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close)
         drawer_layout.addDrawerListener(toggle)
         toggle.syncState()
-
-        toolbar.setNavigationIcon(R.drawable.ic_drawer_icon)
-
 
         // Setup Custom Navigation Drawer Button Listener
         toolbar.setNavigationOnClickListener {
@@ -110,21 +132,23 @@ class MenuActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
     }
 
-    override fun onSupportNavigateUp() = findNavController(R.id.navMenu).navigateUp()
 
-
-    fun setupNavigationMode() {
-        isNavigated = true
-        drawer_layout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED)
-        toolbar.setNavigationIcon(R.drawable.abc_ic_ab_back_material)
-
-    }
 
     private fun setupDrawerMode() {
         isNavigated = false
         drawer_layout.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED)
-        toolbar.setNavigationIcon(R.drawable.ic_drawer_icon)
+        animateIcon(1,0,800) // with Animation no need to deal with any Icon Change stuff
 
+        //supportActionBar!!.setDisplayHomeAsUpEnabled(false) // Remove the ActionBar
+        //setupNavigationUpButton() // Recreate new Action Bar with Drawer Icon
+    }
+
+    fun setupNavigationMode() {
+        isNavigated = true
+        drawer_layout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED)
+        animateIcon(0,1,800) // with Animation no need to deal with any Icon Change stuff
+
+        //supportActionBar!!.setDisplayHomeAsUpEnabled(true) // Make the button become Back Icon
     }
 
     fun trxHistoryBack(trxScreen:String){
@@ -135,6 +159,20 @@ class MenuActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
     ////
 
+    private fun animateIcon(start:Int, end:Int, duration:Int){
+
+        var anim= ValueAnimator.ofFloat(start.toFloat(),end.toFloat())
+
+        anim.addUpdateListener { animation ->
+            val slideOffset = animation?.animatedValue as Float
+            toggle!!.onDrawerSlide(drawer_layout, slideOffset)
+        }
+
+        anim.interpolator = DecelerateInterpolator()
+        anim.duration = duration.toLong()
+        anim.start()
+
+    }
 
     override fun onBackPressed() {
         if (drawer_layout.isDrawerOpen(GravityCompat.START)) {
@@ -170,6 +208,7 @@ class MenuActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
                 Handler().postDelayed({ doubleBackToExitPressedOnce = false }, 2000)
             }else{
+
                 super.onBackPressed()
 
             }
@@ -178,6 +217,7 @@ class MenuActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         }
     }
 
+    override fun onSupportNavigateUp() = findNavController(R.id.navMenu).navigateUp()
 
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
 
@@ -224,6 +264,7 @@ class MenuActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     }
 
 
+
     override fun logoutSuccess(mainContext: Context, successLogoutMessage: String) {
 
         val myIntent = Intent(mainContext, LoginActivity::class.java)
@@ -238,25 +279,6 @@ class MenuActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     }
 
 
-    private fun displayUserInfo() {
-
-        // Get SharedPreference data
-        presenter = Presenter(this)
-        val userProfile = presenter.getUserData(this)
-
-
-        val navigationView = findViewById<View>(R.id.nav_view) as NavigationView
-        val headerView = navigationView.getHeaderView(0)
-
-        val navUserName = headerView.findViewById(R.id.userProfileName) as TextView
-        val navUserEmail = headerView.findViewById(R.id.userProfileEmail) as TextView
-        val navUserPicture = headerView.findViewById(R.id.userProfileImageView) as ImageView
-
-        navUserName.text = userProfile.UserName
-        navUserEmail.text = userProfile.UserEmail
-        Picasso.get().load(userProfile.UserPicURL).into(navUserPicture)
-
-    }
 
 
 

@@ -189,6 +189,7 @@ class DashBoardFragment : Fragment(),ViewInterface.DashBoardView {
 
     }
 
+    // Format the Y Axis Value to 2Decimal value + add Dollar Sign
     inner class MyValueFormatter : IValueFormatter {
 
         private val mFormat: DecimalFormat = DecimalFormat("###,###,##0.00")
@@ -199,6 +200,7 @@ class DashBoardFragment : Fragment(),ViewInterface.DashBoardView {
         }
     }
 
+    // Format the X Axis Value to Display Desired String Value
     inner class MyXAxisValueFormatter(private val mValues: ArrayList<String>) : IAxisValueFormatter {
 
         /** this is only needed if numbers are returned, else return 0  */
