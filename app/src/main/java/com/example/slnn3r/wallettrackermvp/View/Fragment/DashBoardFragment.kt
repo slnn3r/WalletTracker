@@ -20,6 +20,7 @@ import com.example.slnn3r.wallettrackermvp.Presenter.Presenter
 import java.util.*
 import android.app.Activity
 import android.graphics.Color
+import android.graphics.Paint
 import android.support.v7.widget.RecyclerView
 import android.view.inputmethod.InputMethodManager
 import android.widget.*
@@ -27,6 +28,7 @@ import com.example.slnn3r.wallettrackermvp.Model.ObjectClass.Transaction
 import com.example.slnn3r.wallettrackermvp.Utility.CustomMarkerView
 import kotlin.collections.ArrayList
 import com.github.mikephil.charting.components.AxisBase
+import com.github.mikephil.charting.components.Description
 import com.github.mikephil.charting.components.XAxis
 import com.github.mikephil.charting.data.*
 import com.github.mikephil.charting.formatter.IAxisValueFormatter
@@ -144,7 +146,6 @@ class DashBoardFragment : Fragment(),ViewInterface.DashBoardView {
         dataSet.setColors(Color.LTGRAY)
 
         dataSet.setDrawFilled(true)
-
         //dataset.mode = LineDataSet.Mode.CUBIC_BEZIER
 
         val data = LineData(dataSet)
@@ -155,8 +156,12 @@ class DashBoardFragment : Fragment(),ViewInterface.DashBoardView {
         xAxis.position = XAxis.XAxisPosition.BOTTOM
         xAxis.setDrawGridLines(false)
 
+        //DBTrxGraph.description= null
 
-        DBTrxGraph.description=null
+        DBTrxGraph.description.text = getString(R.string.DBGraphInfo)
+        DBTrxGraph.description.textAlign = Paint.Align.CENTER
+        DBTrxGraph.description.setPosition(DBTrxGraph.pivotX,25f)
+
         DBTrxGraph.data = data
         //DBTrxGraph.setTouchEnabled(false)
         //DBTrxGraph.isScaleYEnabled = false
