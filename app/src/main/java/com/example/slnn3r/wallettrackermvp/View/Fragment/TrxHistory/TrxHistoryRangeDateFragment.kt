@@ -192,8 +192,8 @@ class TrxHistoryRangeDateFragment : Fragment(), ViewInterface.TrxHistoryRangeVie
                 selectedAccountID,
                 "All Type",
                 "All Category",
-                "All Days",
-                "All Months"
+                simpleDateFormat.format(myCalendar.time),
+                simpleDateFormat.format(myCalendar.time)
         )
 
 
