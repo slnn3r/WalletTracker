@@ -16,7 +16,6 @@ import kotlinx.android.synthetic.main.transaction_list_row.view.*
 
 class TrxHistoryRangeAdapter(private val transactionList: ArrayList<Transaction>): RecyclerView.Adapter<TrxHistoryRangeViewHolder>(){
 
-
     // numberOfItems
     override  fun getItemCount(): Int{
         return transactionList.count()
@@ -26,7 +25,6 @@ class TrxHistoryRangeAdapter(private val transactionList: ArrayList<Transaction>
 
         val layoutInflater = LayoutInflater.from(parent.context)
         val cellForRow = layoutInflater.inflate(R.layout.transaction_list_row, parent, false)
-
 
         return TrxHistoryRangeViewHolder(cellForRow)
     }
@@ -67,16 +65,12 @@ class TrxHistoryRangeAdapter(private val transactionList: ArrayList<Transaction>
                 // Picasso get LAGGY and affect Navigation Drawer Animation when does not crop it, as it will load full size image
                 Picasso.get().load(R.drawable.income_icon).resize(200,200).centerCrop().into(holder.view.DBTrxImageView)
                 //holder.view.DBTrxImageView.setImageDrawable(holder.view.DBTrxImageView.context.resources.getDrawable(R.drawable.income_icon))
-
             }
-
         }
 
         holder.passData = transactionData
     }
-
 }
-
 
 
 class TrxHistoryRangeViewHolder(val view: View, var passData: Transaction?= null): RecyclerView.ViewHolder(view){
@@ -106,7 +100,6 @@ class TrxHistoryRangeViewHolder(val view: View, var passData: Transaction?= null
 
                 val json = gson.toJson(transactionData)
 
-
                 val bundle = Bundle()
                 bundle.putString(context.getString(R.string.transactionPassArgKey), json)
 
@@ -114,10 +107,7 @@ class TrxHistoryRangeViewHolder(val view: View, var passData: Transaction?= null
                 navController.navigate(R.id.action_trxHistoryRangeDateFragment_to_detailsTrxFragment, bundle)
 
                 (context as MenuActivity).trxHistoryBack(context.getString(R.string.trxHistoryNavRangeKey))
-
-
             }
         }
     }
-
 }

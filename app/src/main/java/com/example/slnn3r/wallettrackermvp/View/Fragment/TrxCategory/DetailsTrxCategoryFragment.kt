@@ -20,7 +20,6 @@ import com.example.slnn3r.wallettrackermvp.Interface.PresenterInterface
 import com.example.slnn3r.wallettrackermvp.Interface.ViewInterface
 import com.example.slnn3r.wallettrackermvp.Model.ObjectClass.TransactionCategory
 import com.example.slnn3r.wallettrackermvp.Presenter.Presenter
-
 import com.example.slnn3r.wallettrackermvp.R
 import com.google.gson.Gson
 import kotlinx.android.synthetic.main.fragment_details_trx_category.*
@@ -111,7 +110,6 @@ class DetailsTrxCategoryFragment : Fragment(), ViewInterface.DetailsTrxCategoryV
         // Set Transaction Type based on Argument
         val spinnerPosition = dataAdapter.getPosition(trxCategory.TransactionCategoryType)
         DTCTrxTypeSpinner.setSelection(spinnerPosition)
-
     }
 
     private fun setupInitialUI(trxCategory: TransactionCategory) {
@@ -121,7 +119,6 @@ class DetailsTrxCategoryFragment : Fragment(), ViewInterface.DetailsTrxCategoryV
         }
 
         DTCCategoryNameInput.setText(trxCategory.TransactionCategoryName)
-
     }
 
     private fun updateSubmitClick(trxCategory: TransactionCategory) {
@@ -182,7 +179,6 @@ class DetailsTrxCategoryFragment : Fragment(), ViewInterface.DetailsTrxCategoryV
     override fun updateTrxCategoryFail(mainContext: Context, errorMessage: String) {
 
         Toast.makeText(mainContext,mainContext.getString(R.string.updateTrxCategoryFail)+errorMessage,Toast.LENGTH_LONG).show()
-
     }
 
     override fun deleteTrxCategorySuccess(mainContext: Context) {
@@ -194,10 +190,5 @@ class DetailsTrxCategoryFragment : Fragment(), ViewInterface.DetailsTrxCategoryV
     override fun deleteTrxCategoryFail(mainContext: Context, errorMessage: String) {
 
         Toast.makeText(mainContext,mainContext.getString(R.string.deleteTrxCategoryFail)+errorMessage,Toast.LENGTH_LONG).show()
-
     }
-
-
-
-
 }

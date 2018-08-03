@@ -6,10 +6,7 @@ import android.os.Bundle
 import android.widget.Toast
 import com.example.slnn3r.wallettrackermvp.Interface.ViewInterface
 import com.example.slnn3r.wallettrackermvp.Interface.PresenterInterface
-
 import com.example.slnn3r.wallettrackermvp.Presenter.Presenter
-
-
 import com.example.slnn3r.wallettrackermvp.R
 
 class MainActivity : AppCompatActivity(),ViewInterface.MainView {
@@ -23,7 +20,6 @@ class MainActivity : AppCompatActivity(),ViewInterface.MainView {
         presenter = Presenter(this)
         presenter.checkLogin()
     }
-
 
     override fun navigateToLoginScreen() {
 

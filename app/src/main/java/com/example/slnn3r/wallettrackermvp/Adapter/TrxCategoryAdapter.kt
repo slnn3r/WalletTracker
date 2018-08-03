@@ -14,7 +14,6 @@ import kotlinx.android.synthetic.main.trx_category_list_row.view.*
 
 class TrxCategoryAdapter(private val transactionCategoryList: ArrayList<TransactionCategory>): RecyclerView.Adapter<TrxCategoryViewHolder>(){
 
-
     // numberOfItems
     override  fun getItemCount(): Int{
         return transactionCategoryList.count()
@@ -24,7 +23,6 @@ class TrxCategoryAdapter(private val transactionCategoryList: ArrayList<Transact
 
         val layoutInflater = LayoutInflater.from(parent.context)
         val cellForRow = layoutInflater.inflate(R.layout.trx_category_list_row, parent, false)
-
 
         return TrxCategoryViewHolder(cellForRow)
     }
@@ -53,16 +51,12 @@ class TrxCategoryAdapter(private val transactionCategoryList: ArrayList<Transact
             // Picasso get LAGGY and affect Navigation Drawer Animation when does not crop it, as it will load full size image
             Picasso.get().load(R.drawable.income_icon).resize(400,400).centerCrop().into(holder.view.VTCImageView)
             //holder.view.DBTrxImageView.setImageDrawable(holder.view.DBTrxImageView.context.resources.getDrawable(R.drawable.income_icon))
-
         }
 
-
         holder.passData = transactionCategoryData
-
-
     }
-
 }
+
 
 class TrxCategoryViewHolder(val view: View, var passData: TransactionCategory?= null): RecyclerView.ViewHolder(view){
 
@@ -75,19 +69,12 @@ class TrxCategoryViewHolder(val view: View, var passData: TransactionCategory?= 
                 val walletAccountData = TransactionCategory(passData!!.TransactionCategoryID,passData!!.TransactionCategoryName,passData!!.TransactionCategoryType, passData!!.TransactionCategoryStatus, passData!!.UserUID)
                 val json = gson.toJson(walletAccountData)
 
-
                 val navController = view.findNavController()
 
                 val bundle = Bundle()
                 bundle.putString(view.context.getString(R.string.trxCategoryPassArgKey), json)
                 navController.navigate(R.id.action_viewTrxCategoryFragment_to_detailsTrxCategoryFragment, bundle)
-
-
             }
-
-
-
         }
     }
-
 }

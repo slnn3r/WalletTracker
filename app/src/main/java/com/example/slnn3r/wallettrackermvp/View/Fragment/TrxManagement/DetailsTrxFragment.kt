@@ -22,7 +22,6 @@ import com.example.slnn3r.wallettrackermvp.Model.ObjectClass.Transaction
 import com.example.slnn3r.wallettrackermvp.Model.ObjectClass.TransactionCategory
 import com.example.slnn3r.wallettrackermvp.Model.ObjectClass.UserProfile
 import com.example.slnn3r.wallettrackermvp.Model.ObjectClass.WalletAccount
-
 import com.example.slnn3r.wallettrackermvp.R
 import com.google.gson.Gson
 import kotlinx.android.synthetic.main.fragment_details_trx.*
@@ -115,7 +114,6 @@ class DetailsTrxFragment : Fragment(), ViewInterface.DetailsTrxView, CalculatorC
 
             disableUIComponents()
             displayCalculatorInput()
-
         }
 
 
@@ -174,7 +172,6 @@ class DetailsTrxFragment : Fragment(), ViewInterface.DetailsTrxView, CalculatorC
             DatePickerDialog(context, date, myCalendar
                     .get(Calendar.YEAR), myCalendar.get(Calendar.MONTH),
                     myCalendar.get(Calendar.DAY_OF_MONTH)).show()
-
         }
     }
 
@@ -190,10 +187,8 @@ class DetailsTrxFragment : Fragment(), ViewInterface.DetailsTrxView, CalculatorC
 
                 DetailsTrxTimeInput.setText(s)
 
-
             }, hour, minute, false)//Yes 24 hour time
             mTimePicker.show()
-
         }
     }
 
@@ -208,7 +203,6 @@ class DetailsTrxFragment : Fragment(), ViewInterface.DetailsTrxView, CalculatorC
             DetailsTrxTypeImageView.setImageDrawable(resources.getDrawable(R.drawable.income_icon))
             DetailsTrxTypeImageView.background = resources.getDrawable(R.drawable.fui_idp_button_background_phone)
             presenter.checkTransactionCategory(context!!, userProfile.UserUID, DetailsTrxTypeSpinner.selectedItem.toString())
-
         }
     }
 
@@ -247,7 +241,6 @@ class DetailsTrxFragment : Fragment(), ViewInterface.DetailsTrxView, CalculatorC
                     presenter.updateDetailsTrx(context!!, detailsTrxInput)
 
                 }).show()
-
     }
 
     private fun deleteSubmitClick(transaction: Transaction) {
@@ -305,13 +298,12 @@ class DetailsTrxFragment : Fragment(), ViewInterface.DetailsTrxView, CalculatorC
 
         val args = Bundle()
         if(DetailsTrxAmountInput.text.toString().toDoubleOrNull()!=null){
-            args.putString("trxAmount", DetailsTrxAmountInput.text.toString())
+            args.putString(getString(R.string.trxAmountPassArgKey), DetailsTrxAmountInput.text.toString())
         }else{
-            args.putString("trxAmount", "")
-
+            args.putString(getString(R.string.trxAmountPassArgKey), "")
         }
 
-        DetailsTrxAmountInput.setText("Loading...")
+        DetailsTrxAmountInput.setText(getString(R.string.loadingIndication))
 
         val calCustomDialog = CalculatorCustomDialog()
         calCustomDialog.arguments = args
@@ -323,7 +315,6 @@ class DetailsTrxFragment : Fragment(), ViewInterface.DetailsTrxView, CalculatorC
     // Presenter Callback
     override fun populateDetailTrxCategorySpinner(mainContext: Context, trxCategoryList: ArrayList<TransactionCategory>) {
 
-
         val spinnerItem = ArrayList<String>()
 
         trxCategoryList.forEach {
@@ -333,7 +324,6 @@ class DetailsTrxFragment : Fragment(), ViewInterface.DetailsTrxView, CalculatorC
 
         val dataAdapter = ArrayAdapter(mainContext, android.R.layout.simple_spinner_item, spinnerItem)
         val detailsTrxCategorySpinner = (mainContext as Activity).findViewById(R.id.DetailsTrxCategorySpinner) as Spinner
-
 
         // Drop down layout style - list view with radio button
         dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
@@ -356,21 +346,16 @@ class DetailsTrxFragment : Fragment(), ViewInterface.DetailsTrxView, CalculatorC
             spinnerItem.add(selectionCategoryName+mainContext.getString(R.string.deletedDataIndicator))
             detailsTrxCategorySpinner.setSelection(spinnerItem.size-1)
 
-
         }else{
             detailsTrxCategorySpinner.setSelection(spinnerPosition)
         }
-        ////
 
         firstLaunchCheck+=1
-
     }
 
     override fun populateDetailTrxCategorySpinnerFail(mainContext: Context, errorMessage: String) {
 
         Toast.makeText(mainContext,errorMessage, Toast.LENGTH_LONG).show()
-
-
     }
 
     override fun populateDetailTrxAccountSpinner(mainContext: Context, walletAccountList: ArrayList<WalletAccount>) {
@@ -394,32 +379,20 @@ class DetailsTrxFragment : Fragment(), ViewInterface.DetailsTrxView, CalculatorC
 
         // Get SharedPreference saved Selection and Set to Spinner Selection
         val go = presenter.getSelectedAccount(mainContext)
-/*        var count= 0
-        categories.forEach {
-            data ->
-            if(go==data){
-                spinner.setSelection(count)
-            }
-            count+=1
-        }*/
-
 
         val spinnerPosition = dataAdapter.getPosition(go)
         spinner.setSelection(spinnerPosition)
-
     }
 
     override fun populateDetailTrxAccountSpinnerFail(mainContext: Context, errorMessage: String) {
 
         Toast.makeText(mainContext,errorMessage, Toast.LENGTH_LONG).show()
-
     }
 
 
     override fun updateDetailsTrxSuccess(mainContext: Context) {
         Toast.makeText(mainContext,mainContext.getString(R.string.updateTrxDetails), Toast.LENGTH_SHORT).show()
         (mainContext as Activity).onBackPressed()
-
     }
 
     override fun updateDetailsTrxFail(mainContext: Context, errorMessage: String) {
@@ -440,10 +413,9 @@ class DetailsTrxFragment : Fragment(), ViewInterface.DetailsTrxView, CalculatorC
         enableUIComponents()
 
         if(input==""){
-            DetailsTrxAmountInput.setText("Enter Amount")
+            DetailsTrxAmountInput.setText(getString(R.string.NewTrxDefaultAmount))
         }else{
             DetailsTrxAmountInput.setText(input)
         }
     }
-
 }

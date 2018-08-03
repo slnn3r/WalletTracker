@@ -24,7 +24,6 @@ import com.example.slnn3r.wallettrackermvp.Model.ObjectClass.TransactionCategory
 import com.example.slnn3r.wallettrackermvp.Model.ObjectClass.UserProfile
 import com.example.slnn3r.wallettrackermvp.Model.ObjectClass.WalletAccount
 import com.example.slnn3r.wallettrackermvp.Presenter.Presenter
-
 import com.example.slnn3r.wallettrackermvp.R
 import kotlinx.android.synthetic.main.fragment_trx_history_range_date.*
 import java.text.SimpleDateFormat
@@ -37,7 +36,6 @@ class TrxHistoryRangeDateFragment : Fragment(), ViewInterface.TrxHistoryRangeVie
     private lateinit var simpleDateFormat: SimpleDateFormat
     private lateinit var presenter: PresenterInterface.Presenter
 
-
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
 
@@ -45,7 +43,6 @@ class TrxHistoryRangeDateFragment : Fragment(), ViewInterface.TrxHistoryRangeVie
 
         (activity as? AppCompatActivity)?.supportActionBar?.title = getString(R.string.trxHistoryFragmentTitle)
 
-        // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_trx_history_range_date, container, false)
     }
 
@@ -95,9 +92,7 @@ class TrxHistoryRangeDateFragment : Fragment(), ViewInterface.TrxHistoryRangeVie
                     THREndDateInput.text.toString()
 
             )
-
         }
-
     }
 
 
@@ -132,8 +127,6 @@ class TrxHistoryRangeDateFragment : Fragment(), ViewInterface.TrxHistoryRangeVie
         THRTrxCategorySpinner.isEnabled = false
     }
 
-
-
     private fun setupDatePicker() {
         val startDate = DatePickerDialog.OnDateSetListener { view, year, monthOfYear, dayOfMonth ->
             myCalendar.set(Calendar.YEAR, year)
@@ -149,7 +142,6 @@ class TrxHistoryRangeDateFragment : Fragment(), ViewInterface.TrxHistoryRangeVie
             THREndDateInput.setText(simpleDateFormat.format(myCalendar.time))
         }
 
-
         THRStartDateInput.setOnClickListener {
 
             DatePickerDialog(context, startDate, myCalendar
@@ -157,7 +149,6 @@ class TrxHistoryRangeDateFragment : Fragment(), ViewInterface.TrxHistoryRangeVie
                     myCalendar.get(Calendar.DAY_OF_MONTH)).show()
 
         }
-
 
         THREndDateInput.setOnClickListener {
 
@@ -195,8 +186,6 @@ class TrxHistoryRangeDateFragment : Fragment(), ViewInterface.TrxHistoryRangeVie
                 simpleDateFormat.format(myCalendar.time),
                 simpleDateFormat.format(myCalendar.time)
         )
-
-
     }
 
 
@@ -206,7 +195,6 @@ class TrxHistoryRangeDateFragment : Fragment(), ViewInterface.TrxHistoryRangeVie
         // Disable navigation through override the navigation path
         val navController = (mainContext as Activity).findNavController(R.id.navMenu)
         mainContext.bottomNavigationFragmentView.setupWithNavController(navController)
-
     }
 
     override fun enableBottomNavAfterLoading(mainContext: Context) {
@@ -214,7 +202,6 @@ class TrxHistoryRangeDateFragment : Fragment(), ViewInterface.TrxHistoryRangeVie
         // enable back the navigation by override the navigation path to the right one
         val navController = (mainContext as Activity).findNavController(R.id.trxHistoryFragmentNavMenu)
         mainContext.bottomNavigationFragmentView.setupWithNavController(navController)
-
     }
 
     override fun populateTrxHistoryRangeAccountSpinner(mainContext: Context, walletAccountList: ArrayList<WalletAccount>) {
@@ -241,7 +228,6 @@ class TrxHistoryRangeDateFragment : Fragment(), ViewInterface.TrxHistoryRangeVie
 
         val spinnerPosition = dataAdapter.getPosition(go)
         spinner.setSelection(spinnerPosition)
-
     }
 
     override fun populateTrxHistoryRangeAccountSpinnerFail(mainContext: Context, errorMessage: String) {
@@ -254,7 +240,6 @@ class TrxHistoryRangeDateFragment : Fragment(), ViewInterface.TrxHistoryRangeVie
 
         spinnerItem.add(mainContext.getString(R.string.allCategory))
 
-
         trxCategoryList.forEach {
             data ->
             spinnerItem.add(data.TransactionCategoryName)
@@ -263,13 +248,11 @@ class TrxHistoryRangeDateFragment : Fragment(), ViewInterface.TrxHistoryRangeVie
         val dataAdapter = ArrayAdapter(mainContext, android.R.layout.simple_spinner_item, spinnerItem)
         val tHRTrxCategorySpinner = (mainContext as Activity).findViewById(R.id.THRTrxCategorySpinner) as Spinner
 
-
         // Drop down layout style - list view with radio button
         dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
 
         tHRTrxCategorySpinner.adapter = dataAdapter
         tHRTrxCategorySpinner.isEnabled = true
-
     }
 
     override fun populateTrxHistoryRangeCategorySpinnerFail(mainContext: Context, errorMessage: String) {
@@ -318,7 +301,4 @@ class TrxHistoryRangeDateFragment : Fragment(), ViewInterface.TrxHistoryRangeVie
     override fun populateTrxHistoryRangeRecycleViewFail(mainContext: Context, errorMessage: String) {
         Toast.makeText(mainContext,errorMessage, Toast.LENGTH_LONG).show()
     }
-
-
-
 }

@@ -22,5 +22,4 @@ class AlertDialog{
                 }
         return confirmationDialog.create()
     }
-
 }

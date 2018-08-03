@@ -87,8 +87,5 @@ class LoginActivity : AppCompatActivity(), ViewInterface.LoginView {
 
         loginLoading.dismiss()
     }
-
-
-
 }
 

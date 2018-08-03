@@ -1,12 +1,9 @@
 package com.example.slnn3r.wallettrackermvp.View.Fragment.TrxHistory
 
-
-
 import android.app.Activity
 import android.content.Context
 import android.graphics.Color
 import android.os.Bundle
-
 import android.support.v4.app.Fragment
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
@@ -15,7 +12,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
-
 import com.example.slnn3r.wallettrackermvp.R
 import kotlinx.android.synthetic.main.fragment_trx_history_specific_date.*
 import java.util.*
@@ -51,7 +47,6 @@ class TrxHistorySpecificDateFragment : Fragment(), ViewInterface.TrxHistorySpeci
 
         (activity as? AppCompatActivity)?.supportActionBar?.title = getString(R.string.trxHistoryFragmentTitle)
 
-        // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_trx_history_specific_date, container, false)
     }
 
@@ -69,9 +64,7 @@ class TrxHistorySpecificDateFragment : Fragment(), ViewInterface.TrxHistorySpeci
         // populate Account Spinner
         presenter.checkWalletAccount(context!!,userProfile.UserUID)
 
-
         setupUI(userProfile)
-
 
         // Listener Setter
         THSYearSpinner.onItemSelectedListener = fixDays
@@ -102,10 +95,7 @@ class TrxHistorySpecificDateFragment : Fragment(), ViewInterface.TrxHistorySpeci
                     THSMonthSpinner.selectedItem.toString(),
                     THSYearSpinner.selectedItem.toString()
             )
-
         }
-
-
     }
 
 
@@ -114,7 +104,6 @@ class TrxHistorySpecificDateFragment : Fragment(), ViewInterface.TrxHistorySpeci
         if(THSTrxTypeSpinner.selectedItem==getString(R.string.expense)){
 
             presenter.checkTransactionCategory(context!!, userProfile.UserUID, THSTrxTypeSpinner.selectedItem.toString())
-
 
         }else if(THSTrxTypeSpinner.selectedItem==getString(R.string.income)){
 
@@ -128,7 +117,7 @@ class TrxHistorySpecificDateFragment : Fragment(), ViewInterface.TrxHistorySpeci
     private fun disableTrxTypeSpinner(){
         val spinnerItem = ArrayList<String>()
 
-            spinnerItem.add(getString(R.string.allCategory))
+        spinnerItem.add(getString(R.string.allCategory))
 
         val dataAdapter = ArrayAdapter(context, android.R.layout.simple_spinner_item, spinnerItem)
 
@@ -148,22 +137,20 @@ class TrxHistorySpecificDateFragment : Fragment(), ViewInterface.TrxHistorySpeci
             THSDaySpinner.isEnabled=false
             THSMonthSpinner.isEnabled=false
 
-            val days_array = arrayOfNulls<String>(1)
-            days_array[0] = getString(R.string.allDay)
+            val daysArray = arrayOfNulls<String>(1)
+            daysArray[0] = getString(R.string.allDay)
 
             val spinnerArrayAdapter = ArrayAdapter(context,
-                    android.R.layout.simple_spinner_dropdown_item, days_array)
+                    android.R.layout.simple_spinner_dropdown_item, daysArray)
             spinnerArrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
 
             THSDaySpinner.adapter = spinnerArrayAdapter
 
             THSMonthSpinner.setSelection(0)
-
         }
 
         if(THSYearSpinner.selectedItem.toString()!=getString(R.string.allYear) && THSMonthSpinner.selectedItem.toString()==getString(R.string.allMonth)){
             THSMonthSpinner.isEnabled=true
-
         }
 
         if(THSMonthSpinner.selectedItem.toString()!=getString(R.string.allMonth) && THSYearSpinner.selectedItem.toString()!=getString(R.string.allYear)){
@@ -192,11 +179,7 @@ class TrxHistorySpecificDateFragment : Fragment(), ViewInterface.TrxHistorySpeci
             spinnerArrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
 
             THSDaySpinner.adapter = spinnerArrayAdapter
-
         }
-
-
-
     }
 
 
@@ -205,7 +188,6 @@ class TrxHistorySpecificDateFragment : Fragment(), ViewInterface.TrxHistorySpeci
         val yearsArray = arrayOfNulls<String>(maxYear - minYear+2)
 
         yearsArray[0] = getString(R.string.allYear)
-
 
         var count = 1
         for (i in minYear..maxYear) {
@@ -217,7 +199,6 @@ class TrxHistorySpecificDateFragment : Fragment(), ViewInterface.TrxHistorySpeci
                 android.R.layout.simple_spinner_dropdown_item, yearsArray)
         spinnerArrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         THSYearSpinner.adapter = spinnerArrayAdapter
-
     }
 
 
@@ -246,9 +227,7 @@ class TrxHistorySpecificDateFragment : Fragment(), ViewInterface.TrxHistorySpeci
                 getString(R.string.allYear)
         )
 
-
         populateYears(Calendar.getInstance().get(Calendar.YEAR)-5, Calendar.getInstance().get(Calendar.YEAR))
-
     }
 
 
@@ -265,7 +244,6 @@ class TrxHistorySpecificDateFragment : Fragment(), ViewInterface.TrxHistorySpeci
         // enable back the navigation by override the navigation path to the right one
         val navController = (mainContext as Activity).findNavController(R.id.trxHistoryFragmentNavMenu)
         mainContext.bottomNavigationFragmentView.setupWithNavController(navController)
-
     }
 
     override fun populateTrxHistorySpecificAccountSpinner(mainContext: Context, walletAccountList: ArrayList<WalletAccount>) {
@@ -292,22 +270,17 @@ class TrxHistorySpecificDateFragment : Fragment(), ViewInterface.TrxHistorySpeci
 
         val spinnerPosition = dataAdapter.getPosition(go)
         spinner.setSelection(spinnerPosition)
-
-
-
     }
 
     override fun populateTrxHistorySpecificAccountSpinnerFail(mainContext: Context, errorMessage: String) {
         Toast.makeText(mainContext,errorMessage, Toast.LENGTH_LONG).show()
     }
 
-
     override fun populateTrxHistorySpecificCategorySpinner(mainContext: Context, trxCategoryList: ArrayList<TransactionCategory>) {
 
         val spinnerItem = ArrayList<String>()
 
         spinnerItem.add(mainContext.getString(R.string.allCategory))
-
 
         trxCategoryList.forEach {
             data ->
@@ -316,7 +289,6 @@ class TrxHistorySpecificDateFragment : Fragment(), ViewInterface.TrxHistorySpeci
 
         val dataAdapter = ArrayAdapter(mainContext, android.R.layout.simple_spinner_item, spinnerItem)
         val tHSTrxCategorySpinner = (mainContext as Activity).findViewById(R.id.THSTrxCategorySpinner) as Spinner
-
 
         // Drop down layout style - list view with radio button
         dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
@@ -362,16 +334,13 @@ class TrxHistorySpecificDateFragment : Fragment(), ViewInterface.TrxHistorySpeci
         expenseView.text=mainContext.getString(R.string.formatTotalExpense, expense)
         balanceView.text=mainContext.getString(R.string.formatTotalBalance, balance)
 
-        //!!
         val trxRecyclerView = mainContext.findViewById(R.id.THSRecyclerView) as RecyclerView
 
         trxRecyclerView.layoutManager = LinearLayoutManager(mainContext)
         trxRecyclerView.adapter = TrxHistorySpecificAdapter(transactionList)
-
     }
 
     override fun populateTrxHistorySpecificRecycleViewFail(mainContext: Context, errorMessage: String) {
         Toast.makeText(mainContext,errorMessage, Toast.LENGTH_LONG).show()
     }
-
 }

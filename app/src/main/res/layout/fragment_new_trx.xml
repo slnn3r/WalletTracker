@@ -61,12 +61,13 @@
             android:id="@+id/NewTrxAmountInput"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:hint="@string/NewAmountInput"
-            android:inputType="numberDecimal"
-
             android:clickable="true"
             android:focusable="false"
 
+            android:hint="@string/NewAmountInput"
+            android:inputType="numberDecimal"
+
+            android:text="@string/NewTrxDefaultAmount"
             android:textAlignment="center"
             android:textSize="36sp" />
 

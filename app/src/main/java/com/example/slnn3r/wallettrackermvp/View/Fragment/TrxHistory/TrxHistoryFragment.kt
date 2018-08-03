@@ -14,12 +14,9 @@ class TrxHistoryFragment : Fragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
-        // Inflate the layout for this fragment
 
         (activity as? AppCompatActivity)?.supportActionBar?.title = getString(R.string.trxHistoryFragmentTitle)
 
-
         return inflater.inflate(R.layout.fragment_trx_history, container, false)
     }
-
 }

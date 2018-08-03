@@ -10,10 +10,8 @@ open class WalletAccountRealm(): RealmObject(){
 
     @PrimaryKey
     var walletAccountID:String? = null
-
     var walletAccountName: String? = null
     var walletAccountInitialBalance:Double = 0.0
     var userUID:String? = null
     var walletAccountStatus: String?= null
-
 }

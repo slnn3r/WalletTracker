@@ -20,13 +20,10 @@ class FirebaseAccess: ModelInterface.FirebaseAccess{
         }else{
             ""
         }
-
     }
 
 
     // Login Activity
-
-
 
 
 

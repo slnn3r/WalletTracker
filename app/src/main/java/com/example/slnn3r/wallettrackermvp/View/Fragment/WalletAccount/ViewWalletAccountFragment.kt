@@ -19,11 +19,8 @@ import com.example.slnn3r.wallettrackermvp.Interface.PresenterInterface
 import com.example.slnn3r.wallettrackermvp.Interface.ViewInterface
 import com.example.slnn3r.wallettrackermvp.Model.ObjectClass.WalletAccount
 import com.example.slnn3r.wallettrackermvp.Presenter.Presenter
-
 import com.example.slnn3r.wallettrackermvp.R
-
 import kotlinx.android.synthetic.main.fragment_view_wallet_account.*
-
 import android.view.inputmethod.InputMethodManager
 
 
@@ -60,7 +57,6 @@ class ViewWalletAccountFragment : Fragment(), ViewInterface.WalletAccountView {
         // Disable CreateButton is Account is Max
         presenter.checkWalletAccount(context!!, userID)
         presenter.checkWalletAccountCount(context!!, userID)
-
     }
 
     private fun createButtonClick(view: View) {
@@ -89,7 +85,6 @@ class ViewWalletAccountFragment : Fragment(), ViewInterface.WalletAccountView {
 
         vWARecyclerView.layoutManager = LinearLayoutManager(context)
         vWARecyclerView.adapter = WalletAccountAdapter(walletAccountList)
-
     }
 
     override fun populateWalletAccountRecycleViewFail(mainContext: Context, errorMessage: String) {
@@ -108,10 +103,7 @@ class ViewWalletAccountFragment : Fragment(), ViewInterface.WalletAccountView {
         }else{
             createSubmitButton.isEnabled = false
             createSubmitButton.text = mainContext.getString(R.string.accExceedQuota)
-
         }
-
-
     }
 
     override fun createButtonStatusFail(mainContext: Context, errorMessage: String) {
@@ -121,6 +113,4 @@ class ViewWalletAccountFragment : Fragment(), ViewInterface.WalletAccountView {
         createSubmitButton.isEnabled = false
         Toast.makeText(mainContext,errorMessage,Toast.LENGTH_LONG).show()
     }
-
-
 }

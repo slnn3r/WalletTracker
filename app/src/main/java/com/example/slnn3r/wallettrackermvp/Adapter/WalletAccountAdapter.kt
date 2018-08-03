@@ -14,7 +14,6 @@ import kotlinx.android.synthetic.main.wallet_account_list_row.view.*
 
 class WalletAccountAdapter(private val walletAccountList: ArrayList<WalletAccount>): RecyclerView.Adapter<WalletAccountViewHolder>(){
 
-
     // numberOfItems
     override  fun getItemCount(): Int{
         return walletAccountList.count()
@@ -41,9 +40,7 @@ class WalletAccountAdapter(private val walletAccountList: ArrayList<WalletAccoun
         holder.view.VWAAccNameTextView.text = walletAccountData.WalletAccountName
 
         holder.passData = walletAccountData
-
     }
-
 }
 
 class WalletAccountViewHolder(val view: View, var passData: WalletAccount?= null): RecyclerView.ViewHolder(view){
@@ -57,16 +54,12 @@ class WalletAccountViewHolder(val view: View, var passData: WalletAccount?= null
                 val walletAccountData = WalletAccount(passData!!.WalletAccountID,passData!!.WalletAccountName,passData!!.WalletAccountInitialBalance,passData!!.UserUID,passData!!.WalletAccountStatus)
                 val json = gson.toJson(walletAccountData)
 
-
                 val navController = view.findNavController()
 
                 val bundle = Bundle()
                 bundle.putString(view.context.getString(R.string.walletAccountPassArgKey), json)
                 navController.navigate(R.id.action_viewWalletAccountFragment_to_detailsWalletAccountFragment, bundle)
-
             }
-
         }
     }
-
 }

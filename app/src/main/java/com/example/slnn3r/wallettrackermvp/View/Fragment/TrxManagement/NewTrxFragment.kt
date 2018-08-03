@@ -9,7 +9,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
-
 import com.example.slnn3r.wallettrackermvp.R
 import kotlinx.android.synthetic.main.fragment_new_trx.*
 import android.widget.AdapterView
@@ -40,7 +39,6 @@ import kotlin.collections.ArrayList
 class NewTrxFragment : Fragment(), ViewInterface.NewTrxView, CalculatorCustomDialog.OnInputSelected {
 
 
-
     private val myCalendar = Calendar.getInstance()
     private lateinit var simpleDateFormat:SimpleDateFormat
 
@@ -50,7 +48,6 @@ class NewTrxFragment : Fragment(), ViewInterface.NewTrxView, CalculatorCustomDia
     private lateinit var simpleTimeFormat:SimpleDateFormat
 
     private lateinit var presenter: PresenterInterface.Presenter
-
 
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
@@ -103,7 +100,6 @@ class NewTrxFragment : Fragment(), ViewInterface.NewTrxView, CalculatorCustomDia
 
             disableUIComponents()
             displayCalculatorInput()
-
         }
 
 
@@ -121,10 +117,6 @@ class NewTrxFragment : Fragment(), ViewInterface.NewTrxView, CalculatorCustomDia
                         validationFinalized()
                     }
         })
-
-
-
-
     }
 
 
@@ -154,7 +146,6 @@ class NewTrxFragment : Fragment(), ViewInterface.NewTrxView, CalculatorCustomDia
             DatePickerDialog(context, date, myCalendar
                     .get(Calendar.YEAR), myCalendar.get(Calendar.MONTH),
                     myCalendar.get(Calendar.DAY_OF_MONTH)).show()
-
         }
 
         // Initial Date
@@ -176,7 +167,6 @@ class NewTrxFragment : Fragment(), ViewInterface.NewTrxView, CalculatorCustomDia
 
             }, hour, minute, false)//Yes 24 hour time
             mTimePicker.show()
-
         }
 
         val second = mcurrentTime.get(Calendar.SECOND)
@@ -204,7 +194,6 @@ class NewTrxFragment : Fragment(), ViewInterface.NewTrxView, CalculatorCustomDia
             NewTrxSubmit.background= resources.getDrawable(R.drawable.fui_idp_button_background_phone)
 
             presenter.checkTransactionCategory(context!!, userProfile.UserUID, NewTrxTypeSpinner.selectedItem.toString())
-
         }
     }
 
@@ -233,15 +222,11 @@ class NewTrxFragment : Fragment(), ViewInterface.NewTrxView, CalculatorCustomDia
                 )
 
         presenter.createNewTrx(context!!,newTrxInput)
-
     }
 
     private fun setupInitialUI() {
         NewTrxSubmit.isEnabled = false
         NewTrxAmountInput.error=getString(R.string.promptToEnter)
-
-        NewTrxAmountInput.setText("Enter Amount")
-
     }
 
     private fun validateAmountInput(){
@@ -289,13 +274,13 @@ class NewTrxFragment : Fragment(), ViewInterface.NewTrxView, CalculatorCustomDia
 
         val args = Bundle()
         if(NewTrxAmountInput.text.toString().toDoubleOrNull()!=null){
-            args.putString("trxAmount", NewTrxAmountInput.text.toString())
+            args.putString(getString(R.string.trxAmountPassArgKey), NewTrxAmountInput.text.toString())
         }else{
-            args.putString("trxAmount", "")
+            args.putString(getString(R.string.trxAmountPassArgKey), "")
 
         }
 
-        NewTrxAmountInput.setText("Loading...")
+        NewTrxAmountInput.setText(getString(R.string.loadingIndication))
 
         val calCustomDialog = CalculatorCustomDialog()
         calCustomDialog.arguments = args
@@ -324,16 +309,11 @@ class NewTrxFragment : Fragment(), ViewInterface.NewTrxView, CalculatorCustomDia
         dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
 
         newTrxCategorySpinner.adapter = dataAdapter
-
-
-
-
     }
 
     override fun populateNewTrxCategorySpinnerFail(mainContext: Context, errorMessage: String) {
 
         Toast.makeText(mainContext,errorMessage, Toast.LENGTH_LONG).show()
-
     }
 
     override fun populateSelectedAccountSpinner(mainContext: Context, walletAccountList: ArrayList<WalletAccount>) {
@@ -365,14 +345,11 @@ class NewTrxFragment : Fragment(), ViewInterface.NewTrxView, CalculatorCustomDia
             }
             count+=1
         }
-
-
     }
 
     override fun populateSelectedAccountSpinnerFail(mainContext: Context, errorMessage: String) {
 
         Toast.makeText(mainContext,errorMessage, Toast.LENGTH_LONG).show()
-
     }
 
 
@@ -380,8 +357,6 @@ class NewTrxFragment : Fragment(), ViewInterface.NewTrxView, CalculatorCustomDia
 
         Toast.makeText(mainContext,mainContext.getString(R.string.createNewTrx), Toast.LENGTH_SHORT).show()
         (mainContext as Activity).onBackPressed()
-
-
     }
 
     override fun createNewTrxFail(mainContext: Context, errorMessage: String) {
@@ -394,11 +369,9 @@ class NewTrxFragment : Fragment(), ViewInterface.NewTrxView, CalculatorCustomDia
         enableUIComponents()
 
         if(input==""){
-            NewTrxAmountInput.setText("Enter Amount")
+            NewTrxAmountInput.setText(getString(R.string.NewTrxDefaultAmount))
         }else{
             NewTrxAmountInput.setText(input)
         }
     }
-
-
 }

@@ -14,12 +14,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-
 import com.example.slnn3r.wallettrackermvp.Interface.PresenterInterface
 import com.example.slnn3r.wallettrackermvp.Interface.ViewInterface
 import com.example.slnn3r.wallettrackermvp.Model.ObjectClass.WalletAccount
 import com.example.slnn3r.wallettrackermvp.Presenter.Presenter
-
 import com.example.slnn3r.wallettrackermvp.R
 import kotlinx.android.synthetic.main.fragment_create_wallet_account.*
 import java.util.*
@@ -28,7 +26,6 @@ import kotlin.collections.ArrayList
 
 
 class CreateWalletAccountFragment : Fragment(), ViewInterface.CreateWalletAccountView {
-
 
     private lateinit var presenter: PresenterInterface.Presenter
     private val alertDialog:AlertDialog= AlertDialog()
@@ -73,13 +70,11 @@ class CreateWalletAccountFragment : Fragment(), ViewInterface.CreateWalletAccoun
             override fun afterTextChanged(s: Editable?) {
                 validationFinalized()
             }
-
         })
 
         CWAAccBalanceInput.addTextChangedListener(object: TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
                 Log.d("","")
-
             }
 
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
@@ -89,11 +84,8 @@ class CreateWalletAccountFragment : Fragment(), ViewInterface.CreateWalletAccoun
             override fun afterTextChanged(s: Editable?) {
                 validationFinalized()
             }
-
         })
-
     }
-
 
 
     // Function Implementation
@@ -173,6 +165,4 @@ class CreateWalletAccountFragment : Fragment(), ViewInterface.CreateWalletAccoun
 
         Toast.makeText(mainContext,mainContext.getString(R.string.createWalletAccountFail)+errorMessage,Toast.LENGTH_LONG).show()
     }
-
-
 }

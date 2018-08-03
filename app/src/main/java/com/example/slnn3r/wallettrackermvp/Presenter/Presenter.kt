@@ -198,7 +198,6 @@ class Presenter: PresenterInterface.Presenter{
             }
 
 
-
             errorMessage = if(detectMatched>0){
                 mainContext.getString(R.string.accNameUsedError)
             }else{
@@ -224,7 +223,6 @@ class Presenter: PresenterInterface.Presenter{
         }else{
             null
         }
-
     }
 
 
@@ -259,7 +257,6 @@ class Presenter: PresenterInterface.Presenter{
                     }
                 }
             }
-
 
 
             errorMessage = if(detectMatched>0){
@@ -355,7 +352,6 @@ class Presenter: PresenterInterface.Presenter{
                 }
             }
 
-
         }else{
             var errorMessage= mainContext!!.getString(R.string.loginCancel)
 
@@ -368,9 +364,7 @@ class Presenter: PresenterInterface.Presenter{
             }
 
             loginView.loginFail(mainContext, errorMessage)
-
         }
-
     }
 
     private fun firebaseAuthWithGoogle(acct: GoogleSignInAccount, mainContext: Context?, loginLoading:ProgressDialog){
@@ -387,7 +381,6 @@ class Presenter: PresenterInterface.Presenter{
                         // Sign in success
                         val user = mAuth.currentUser
 
-
                         // User GSON convert object to JSON String to store to shared Preference
                         val gson = Gson()
                         val userProfile = UserProfile(user!!.uid, user.displayName.toString(), user.email.toString(), user.photoUrl.toString())
@@ -400,7 +393,6 @@ class Presenter: PresenterInterface.Presenter{
                         loginView.dismissLoginLoading(loginLoading)
                         loginView.loginSuccess(mainContext,successLoginMessage)
 
-
                     } else {
                         // Sign in fails
                         loginView.dismissLoginLoading(loginLoading)
@@ -408,7 +400,6 @@ class Presenter: PresenterInterface.Presenter{
 
                     }
                 }
-
     }
 
 
@@ -422,7 +413,6 @@ class Presenter: PresenterInterface.Presenter{
 
         val errorMessage = mainContext.getString(R.string.GAPCCError)
 
-
         val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestIdToken(mainContext.getString(R.string.GoogleSignInOptionKey))
                 .requestEmail()
@@ -432,13 +422,11 @@ class Presenter: PresenterInterface.Presenter{
                 .enableAutoManage(fragment) {
 
                     menuView.logoutFail(mainContext,errorMessage)
-
                 }
                 .addApi(Auth.GOOGLE_SIGN_IN_API, gso)
                 .build()
 
         logOutGoogleFireBaseExecute(mainContext)
-
     }
 
     private fun logOutGoogleFireBaseExecute(mainContext: Context) {
@@ -454,7 +442,6 @@ class Presenter: PresenterInterface.Presenter{
 
                 menuView.logoutFail(mainContext,errorMessage)
 
-
                 mGoogleApiClient?.stopAutoManage(mainContext as FragmentActivity)
                 mGoogleApiClient?.disconnect()
             }
@@ -466,12 +453,10 @@ class Presenter: PresenterInterface.Presenter{
                     Auth.GoogleSignInApi.signOut(mGoogleApiClient).setResultCallback { status ->
                         if (status.isSuccess) {
 
-
                             // remove SharedPreference data
                             sharedPreferenceModel.removeUserData(mainContext)
 
                             menuView.logoutSuccess(mainContext,successLoginMessage)
-
 
                             mGoogleApiClient?.stopAutoManage(mainContext as FragmentActivity)
                             mGoogleApiClient?.disconnect()
@@ -486,12 +471,8 @@ class Presenter: PresenterInterface.Presenter{
                     }
                 }
             }
-
-
         })
     }
-
-
 
     override fun logoutGoogleStatus(mainContext: Context, logoutStatus: Boolean, statusMessage: String) {
 
@@ -499,7 +480,6 @@ class Presenter: PresenterInterface.Presenter{
             menuView.logoutSuccess(mainContext,statusMessage)
         }else{
             menuView.logoutFail(mainContext,statusMessage)
-
         }
     }
 
@@ -520,7 +500,6 @@ class Presenter: PresenterInterface.Presenter{
                 {
                     override fun onSubscribe(d: Disposable)
                     {
-
                     }
 
                     override fun onNext(value: ArrayList<WalletAccount>)
@@ -561,8 +540,6 @@ class Presenter: PresenterInterface.Presenter{
                             }
 
                         }
-
-
                     }
 
                     override fun onError(e: Throwable)
@@ -596,12 +573,10 @@ class Presenter: PresenterInterface.Presenter{
                             }
 
                         }
-
                     }
 
                     override fun onComplete()
                     {
-
                     }
                 })
     }
@@ -621,20 +596,16 @@ class Presenter: PresenterInterface.Presenter{
                 {
                     override fun onSubscribe(d: Disposable)
                     {
-                        // Log.d(TAG, "onSubscribe: $d")
                     }
 
                     override fun onNext(value: WalletAccount)
                     {
                         dashBoardView.firstTimeSetupSuccess(mainContext,value)
-
-
                     }
 
                     override fun onError(e: Throwable)
                     {
                         dashBoardView.firstTimeSetupFail(mainContext,e.toString())
-
                     }
 
                     override fun onComplete()
@@ -663,21 +634,17 @@ class Presenter: PresenterInterface.Presenter{
                     override fun onNext(value: ArrayList<Transaction>)
                     {
                         dashBoardView.populateTransactionRecycleView(mainContext, value)
-
-
                     }
 
                     override fun onError(e: Throwable)
                     {
                         dashBoardView.populateTransactionRecycleViewFail(mainContext,e.toString())
-
                     }
 
                     override fun onComplete()
                     {
                     }
                 })
-
     }
 
     private fun checkTransactionObservable(mainContext: Context, accountID: String, userID: String): Observable<ArrayList<Transaction>>{
@@ -706,14 +673,12 @@ class Presenter: PresenterInterface.Presenter{
 
                     override fun onError(e: Throwable)
                     {
-
                     }
 
                     override fun onComplete()
                     {
                     }
                 })
-
     }
 
     private fun getAllIncomeObservable(mainContext: Context, userID: String, accountID: String): Observable<Double>{
@@ -752,25 +717,22 @@ class Presenter: PresenterInterface.Presenter{
                         }
 
                         dashBoardView.populateThisMonthExpense(mainContext, expenses)
-
-
                     }
 
                     override fun onError(e: Throwable)
                     {
-
                     }
 
                     override fun onComplete()
                     {
                     }
                 })
-
     }
 
     private fun getThisMonthExpenseObservable(mainContext: Context, userID: String, accountID: String): Observable<ArrayList<Transaction>>{
         return Observable.defer { Observable.just(realmModel.getThisMonthExpenseRealm(mainContext,userID,accountID)) }
     }
+
 
     override fun getRecentExpenses(mainContext: Context, userID: String, accountID: String) {
 
@@ -790,50 +752,41 @@ class Presenter: PresenterInterface.Presenter{
 
                         val sdf=SimpleDateFormat(mainContext.getString(R.string.dateFormat))
 
-                        for (a in 0..30){
+                        for (a in 0..30) {
                             val tempCalander = Calendar.getInstance()
 
                             tempCalander.add(Calendar.DAY_OF_MONTH, -a)
 
                             val thisDay = tempCalander.get(Calendar.DAY_OF_MONTH)
-                            val thisMonth= tempCalander.getDisplayName(Calendar.MONTH, Calendar.SHORT, Locale.getDefault())
+                            val thisMonth = tempCalander.getDisplayName(Calendar.MONTH, Calendar.SHORT, Locale.getDefault())
 
-                            xAxisLabel.add(thisDay.toString()+thisMonth)
+                            xAxisLabel.add(thisDay.toString() + thisMonth)
 
                             val compareDate = sdf.format(tempCalander.time)
 
-                            var expense=0.0
+                            var expense = 0.0
 
-                            value.forEach {
-                                data->
+                            value.forEach { data ->
 
-                                if(data.TransactionDate==compareDate && data.TransactionCategory.TransactionCategoryType==mainContext.getString(R.string.expense)){
-                                    expense+=data.TransactionAmount
+                                if (data.TransactionDate == compareDate && data.TransactionCategory.TransactionCategoryType == mainContext.getString(R.string.expense)) {
+                                    expense += data.TransactionAmount
                                 }
-
                             }
 
                             entries.add(BarEntry(a.toFloat(), expense.toFloat()))
-
                         }
 
-
-
-
                         dashBoardView.populateExpenseGraph(mainContext, entries,xAxisLabel)
-
                     }
 
                     override fun onError(e: Throwable)
                     {
-
                     }
 
                     override fun onComplete()
                     {
                     }
                 })
-
     }
 
     private fun getRecentExpensesObservable(mainContext: Context, userID: String, accountID: String): Observable<ArrayList<Transaction>>{
@@ -896,20 +849,17 @@ class Presenter: PresenterInterface.Presenter{
                     override fun onError(e: Throwable)
                     {
                         createWalletAccountView.createWalletAccountFail(mainContext,e.toString())
-
                     }
 
                     override fun onComplete()
                     {
                     }
                 })
-
     }
 
     private fun createWalletAccountObservable(mainContext: Context, walletAccountInput: WalletAccount): Observable<Unit>{
         return Observable.defer { Observable.just(realmModel.createWalletAccountRealm(mainContext, walletAccountInput)) }
     }
-
 
 
 
@@ -929,20 +879,17 @@ class Presenter: PresenterInterface.Presenter{
                     override fun onNext(value: Unit)
                     {
                         detailsWalletAccountView.updateWalletAccountSuccess(mainContext)
-
                     }
 
                     override fun onError(e: Throwable)
                     {
                         detailsWalletAccountView.updateWalletAccountFail(mainContext,e.toString())
-
                     }
 
                     override fun onComplete()
                     {
                     }
                 })
-
     }
 
     private fun updateWalletAccountObservable(mainContext: Context, walletAccountData: WalletAccount): Observable<Unit>{
@@ -964,27 +911,22 @@ class Presenter: PresenterInterface.Presenter{
                     override fun onNext(value: Unit)
                     {
                         detailsWalletAccountView.deleteWalletAccountSuccess(mainContext)
-
                     }
 
                     override fun onError(e: Throwable)
                     {
                         detailsWalletAccountView.deleteWalletAccountFail(mainContext,e.toString())
-
                     }
 
                     override fun onComplete()
                     {
                     }
                 })
-
-
     }
 
     private fun deleteWalletAccountObservable(mainContext: Context, walletAccountID: String): Observable<Unit>{
         return Observable.defer { Observable.just(realmModel.deleteWalletAccountRealm(mainContext, walletAccountID)) }
     }
-
 
 
 
@@ -1065,7 +1007,6 @@ class Presenter: PresenterInterface.Presenter{
                     {
                     }
                 })
-
     }
 
     private fun checkTransactionCategoryObservable(mainContext: Context, userID: String, filterSelection: String): Observable<ArrayList<TransactionCategory>>{
@@ -1093,16 +1034,13 @@ class Presenter: PresenterInterface.Presenter{
                     override fun onError(e: Throwable)
                     {
                         createTrxCategoryView.createTrxCategoryFail(mainContext,e.toString())
-
                     }
 
                     override fun onComplete()
                     {
                     }
-
         })
     }
-
 
     private fun createTransactionCategoryObservable(mainContext: Context, trxCategoryInput: TransactionCategory): Observable<Unit>{
         return Observable.defer { Observable.just(realmModel.createTransactionCategoryRealm(mainContext,trxCategoryInput)) }
@@ -1134,9 +1072,7 @@ class Presenter: PresenterInterface.Presenter{
                     override fun onComplete()
                     {
                     }
-
                 })
-
     }
 
     private fun updateTransactionCategoryObservable(mainContext: Context, trxCategoryInput: TransactionCategory): Observable<Unit>{
@@ -1149,29 +1085,21 @@ class Presenter: PresenterInterface.Presenter{
         deleteTransactionCategoryObservable(mainContext, trxCategoryID)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(object : Observer<Unit>
-                {
-                    override fun onSubscribe(d: Disposable)
-                    {
+                .subscribe(object : Observer<Unit> {
+                    override fun onSubscribe(d: Disposable) {
                     }
 
-                    override fun onNext(value: Unit)
-                    {
+                    override fun onNext(value: Unit) {
                         detailsTrxCategoryView.deleteTrxCategorySuccess(mainContext)
                     }
 
-                    override fun onError(e: Throwable)
-                    {
-                        detailsTrxCategoryView.deleteTrxCategoryFail(mainContext,e.toString())
-
+                    override fun onError(e: Throwable) {
+                        detailsTrxCategoryView.deleteTrxCategoryFail(mainContext, e.toString())
                     }
 
-                    override fun onComplete()
-                    {
+                    override fun onComplete() {
                     }
-
                 })
-
     }
 
     private fun deleteTransactionCategoryObservable(mainContext: Context, trxCategoryID: String): Observable<Unit>{
@@ -1205,9 +1133,7 @@ class Presenter: PresenterInterface.Presenter{
                     override fun onComplete()
                     {
                     }
-
                 })
-
     }
 
     private fun createNewTrxObservable(mainContext: Context, newTrxInput: Transaction): Observable<Unit>{
@@ -1242,14 +1168,13 @@ class Presenter: PresenterInterface.Presenter{
                     override fun onComplete()
                     {
                     }
-
                 })
-
     }
 
     private fun updateDetailsTrxObservable(mainContext: Context, detailsTrxInput: Transaction): Observable<Unit>{
         return Observable.defer { Observable.just(realmModel.updateDetailsTrxRealm(mainContext, detailsTrxInput)) }
     }
+
 
     override fun deleteDetailsTrx(mainContext: Context, transactionID: String) {
 
@@ -1275,9 +1200,7 @@ class Presenter: PresenterInterface.Presenter{
                     override fun onComplete()
                     {
                     }
-
                 })
-
     }
 
     private fun deleteDetailsTrxObservable(mainContext: Context, transactionID: String): Observable<Unit>{
@@ -1394,11 +1317,9 @@ class Presenter: PresenterInterface.Presenter{
                                         }
 
                                     }
-                                    ///////!!!!
-
 
                                 }else if(trxCategory!=mainContext.getString(R.string.allCategory) && data.TransactionCategory.TransactionCategoryName==trxCategory){
-                                    ///////!!!!
+
                                     if (year == mainContext.getString(R.string.allYear)) {
 
                                         if (month == mainContext.getString(R.string.allMonth)) {
@@ -1419,7 +1340,6 @@ class Presenter: PresenterInterface.Presenter{
                                                 filteredData.add(data)
 
                                             }
-
                                         }
 
                                     } else if(year != mainContext.getString(R.string.allYear) && year==dataYear) {
@@ -1442,12 +1362,8 @@ class Presenter: PresenterInterface.Presenter{
                                                 filteredData.add(data)
 
                                             }
-
                                         }
-
                                     }
-                                    ///////!!!!
-
                                 }
 
                             }else if(trxType!=mainContext.getString(R.string.allType)){
@@ -1474,7 +1390,6 @@ class Presenter: PresenterInterface.Presenter{
                                                 filteredData.add(data)
 
                                             }
-
                                         }
 
                                     } else if(year != mainContext.getString(R.string.allYear) && year==dataYear) {
@@ -1497,14 +1412,11 @@ class Presenter: PresenterInterface.Presenter{
                                                 filteredData.add(data)
 
                                             }
-
                                         }
-
                                     }
-                                    ///////!!!!
 
                                 }else if(trxCategory!=mainContext.getString(R.string.allCategory) && data.TransactionCategory.TransactionCategoryName==trxCategory && data.TransactionCategory.TransactionCategoryType==trxType){
-                                    ///////!!!!
+
                                     if (year == mainContext.getString(R.string.allYear)) {
 
                                         if (month == mainContext.getString(R.string.allMonth)) {
@@ -1525,7 +1437,6 @@ class Presenter: PresenterInterface.Presenter{
                                                 filteredData.add(data)
 
                                             }
-
                                         }
 
                                     } else if(year != mainContext.getString(R.string.allYear) && year==dataYear) {
@@ -1546,16 +1457,10 @@ class Presenter: PresenterInterface.Presenter{
 
                                             } else if (day != mainContext.getString(R.string.allDay) && day == dataDay) {
                                                 filteredData.add(data)
-
                                             }
-
                                         }
-
                                     }
-                                    ///////!!!!
-
                                 }
-
                             }
                         }
 
@@ -1566,24 +1471,15 @@ class Presenter: PresenterInterface.Presenter{
                         trxHistorySpecificView.populateTrxHistorySpecificRecycleView(mainContext, filteredData)
                     }
 
-                    override fun onError(e: Throwable)
-                    {
+                    override fun onError(e: Throwable) {
                         trxHistorySpecificView.populateTrxHistorySpecificRecycleViewFail(mainContext, e.toString())
                     }
 
-                    override fun onComplete()
-                    {
+                    override fun onComplete() {
                         trxHistorySpecificView.enableBottomNavAfterLoading(mainContext)
-
                     }
-
                 })
-
-
     }
-
-
-
 
     private fun getTrxForSpecificDateFilterObservable(mainContext: Context, userID: String, accountID: String, trxType: String, trxCategory: String, day: String, month: String, year: String): Observable<ArrayList<Transaction>>{
         return Observable.defer{ Observable.just(realmModel.getTrxForSpecificDateFilterRealm(mainContext, userID,accountID)) }
@@ -1603,8 +1499,6 @@ class Presenter: PresenterInterface.Presenter{
 
                     override fun onNext(value: ArrayList<Transaction>) {
 
-                        //!!! Filtering urself HERE
-
                         val filteredData = ArrayList<Transaction>()
 
                         val noResult = mainContext.getString(R.string.noResult)
@@ -1618,7 +1512,6 @@ class Presenter: PresenterInterface.Presenter{
                                 , WalletAccount("", "", 0.0, "", "")
                         )
 
-
                         value.forEach {
                             data->
 
@@ -1630,13 +1523,11 @@ class Presenter: PresenterInterface.Presenter{
                                         filteredData.add(data)
                                     }
 
-
                                 } else if (trxCategory != mainContext.getString(R.string.allCategory) && data.TransactionCategory.TransactionCategoryName == trxCategory) {
 
                                     if(data.TransactionDate in startDate..endDate){
                                         filteredData.add(data)
                                     }
-
                                 }
 
                             } else if (trxType != mainContext.getString(R.string.allType)) {
@@ -1652,37 +1543,25 @@ class Presenter: PresenterInterface.Presenter{
                                     if(data.TransactionDate in startDate..endDate){
                                         filteredData.add(data)
                                     }
-
                                 }
-
                             }
-
                         }
-
-
 
                         if(filteredData.size<1){
                             filteredData.add(nullData)
                         }
 
                         trxHistoryRangeView.populateTrxHistoryRangeRecycleView(mainContext, filteredData)
-
                     }
 
-
-                    override fun onError(e: Throwable)
-                    {
+                    override fun onError(e: Throwable) {
                         trxHistoryRangeView.populateTrxHistoryRangeRecycleViewFail(mainContext, e.toString())
                     }
 
-                    override fun onComplete()
-                    {
+                    override fun onComplete() {
                         trxHistoryRangeView.enableBottomNavAfterLoading(mainContext)
-
                     }
-
                 })
-
     }
 
     private fun getTrxForRangeDateFilterObservable(mainContext: Context, userID: String, accountID: String, trxType: String, trxCategory: String, startDate: String, endDate: String): Observable<ArrayList<Transaction>>{

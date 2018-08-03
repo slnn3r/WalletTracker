@@ -20,7 +20,6 @@ import com.example.slnn3r.wallettrackermvp.Interface.PresenterInterface
 import com.example.slnn3r.wallettrackermvp.Interface.ViewInterface
 import com.example.slnn3r.wallettrackermvp.Model.ObjectClass.TransactionCategory
 import com.example.slnn3r.wallettrackermvp.Presenter.Presenter
-
 import com.example.slnn3r.wallettrackermvp.R
 import kotlinx.android.synthetic.main.fragment_view_trx_category.*
 
@@ -36,7 +35,6 @@ class ViewTrxCategoryFragment : Fragment(), ViewInterface.TrxCategoryView {
 
         return inflater.inflate(R.layout.fragment_view_trx_category, container, false)
     }
-
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -102,13 +100,10 @@ class ViewTrxCategoryFragment : Fragment(), ViewInterface.TrxCategoryView {
 
         vTCRecyclerView.layoutManager = LinearLayoutManager(mainContext)
         vTCRecyclerView.adapter = TrxCategoryAdapter(trxCategoryList)
-
     }
 
 
     override fun populateTrxCategoryRecycleViewFail(mainContext: Context, errorMessage: String) {
         Toast.makeText(mainContext,errorMessage,Toast.LENGTH_LONG).show()
     }
-
-
 }

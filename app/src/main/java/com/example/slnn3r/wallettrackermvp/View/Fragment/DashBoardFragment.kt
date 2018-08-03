@@ -1,6 +1,5 @@
 package com.example.slnn3r.wallettrackermvp.View.Fragment
 
-
 import android.content.Context
 import android.os.Bundle
 import android.support.v4.app.Fragment
@@ -9,7 +8,6 @@ import android.support.v7.widget.LinearLayoutManager
 import android.view.*
 import androidx.navigation.findNavController
 import com.example.slnn3r.wallettrackermvp.Adapter.DashBoardTrxAdapter
-
 import com.example.slnn3r.wallettrackermvp.R
 import com.example.slnn3r.wallettrackermvp.View.Activity.MenuActivity
 import kotlinx.android.synthetic.main.fragment_dash_board.*
@@ -33,7 +31,6 @@ import com.github.mikephil.charting.data.*
 import com.github.mikephil.charting.formatter.IAxisValueFormatter
 import com.github.mikephil.charting.utils.ViewPortHandler
 import com.github.mikephil.charting.formatter.IValueFormatter
-import java.text.DecimalFormat
 import com.github.mikephil.charting.data.LineDataSet
 
 
@@ -70,7 +67,6 @@ class DashBoardFragment : Fragment(),ViewInterface.DashBoardView {
         setupUI(userID)
 
 
-
         // Listener Setter
         DBIncomeFab.setOnClickListener{
             onIncomeButtonClick(view, userID)
@@ -89,9 +85,6 @@ class DashBoardFragment : Fragment(),ViewInterface.DashBoardView {
         // Initial Input
         val thisMonth =mCalendar.getDisplayName(Calendar.MONTH, Calendar.LONG, Locale.getDefault())
         DBMonthTextView.text = getString(R.string.formatDisplayMonth,thisMonth)
-
-
-
 
     }
 
@@ -136,7 +129,6 @@ class DashBoardFragment : Fragment(),ViewInterface.DashBoardView {
         navController.navigate(R.id.action_dashBoardFragment_to_addNewTrx,bundle)
 
         (activity as MenuActivity).setupNavigationMode()
-
     }
 
     private fun displayDummyDateGraph(entries:ArrayList<Entry>, xAxisLabel:ArrayList<String>) {
@@ -144,11 +136,8 @@ class DashBoardFragment : Fragment(),ViewInterface.DashBoardView {
         val dataSet = LineDataSet(entries, null)
 
         dataSet.setDrawFilled(true)
-
         dataSet.valueFormatter = MyValueFormatter()
-
         dataSet.setColors(Color.LTGRAY)
-
         dataSet.setDrawFilled(true)
         //dataset.mode = LineDataSet.Mode.CUBIC_BEZIER
 
@@ -183,7 +172,7 @@ class DashBoardFragment : Fragment(),ViewInterface.DashBoardView {
     // Format the Y Axis Value to 2Decimal value + add Dollar Sign
     inner class MyValueFormatter : IValueFormatter {
 
-        private val mFormat: DecimalFormat = DecimalFormat("###,###,##0.00")
+        //private val mFormat: DecimalFormat = DecimalFormat("###,###,##0.00")
 
         override fun getFormattedValue(value: Float, entry: Entry, dataSetIndex: Int, viewPortHandler: ViewPortHandler): String {
             // write your logic here
@@ -216,7 +205,6 @@ class DashBoardFragment : Fragment(),ViewInterface.DashBoardView {
         val userID = userProfile.UserUID
 
         presenter.firstTimeDatabaseSetup(mainContext, userID)
-
     }
 
 
@@ -229,7 +217,6 @@ class DashBoardFragment : Fragment(),ViewInterface.DashBoardView {
     override fun firstTimeSetupFail(mainContext: Context, errorMessage: String) {
 
         Toast.makeText(mainContext,errorMessage,Toast.LENGTH_LONG).show()
-
     }
 
 
@@ -267,9 +254,7 @@ class DashBoardFragment : Fragment(),ViewInterface.DashBoardView {
 
         spinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener{
 
-            override fun onNothingSelected(parent: AdapterView<*>?) {
-
-            }
+            override fun onNothingSelected(parent: AdapterView<*>?) {}
 
             override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
 
@@ -284,13 +269,9 @@ class DashBoardFragment : Fragment(),ViewInterface.DashBoardView {
                 val thisMonth =mCalendar.getDisplayName(Calendar.MONTH, Calendar.LONG, Locale.getDefault())
                 presenter.getThisMonthExpense(mainContext, userProfile.UserUID, walletAccountList[spinner.selectedItemPosition].WalletAccountID, thisMonth)
 
-
                 presenter.getRecentExpenses(mainContext,userProfile.UserUID,walletAccountList[spinner.selectedItemPosition].WalletAccountID)
-
-
             }
         }
-
     }
 
     override fun populateWalletAccountSpinnerFail(mainContext: Context, errorMessage: String) {
@@ -327,8 +308,6 @@ class DashBoardFragment : Fragment(),ViewInterface.DashBoardView {
             currentBalanceView.text = String.format(mainContext.getString(R.string.formatDisplay2DecimalMoney), currentBalance)
             currentBalanceView.setTextColor(Color.RED)
         }
-
-
     }
 
     override fun populateThisMonthExpense(mainContext: Context, thisMonthExpense: Double) {
@@ -342,8 +321,6 @@ class DashBoardFragment : Fragment(),ViewInterface.DashBoardView {
     override fun populateExpenseGraph(mainContext: Context, entryList: ArrayList<Entry>, xAxisList: ArrayList<String>) {
 
         displayDummyDateGraph(entryList, xAxisList)
-
     }
-
 
 }

@@ -57,6 +57,8 @@
     <string name="NewTrxDateInput">Date</string>
     <string name="NewTrxTimeInput">Time</string>
     <string name="NewTrxSelectedAccLabel">Selected Account : </string>
+    <string name="NewTrxDefaultAmount">Enter Amount</string>
+
 
     <!-- fragment_details_trx -->
     <string name="DetailsTrxTypeLabel">Transaction Type : </string>
@@ -130,6 +132,35 @@
     <string name="THRStartDateInput">Start Date</string>
     <string name="THREndDateInput">End Date</string>
 
+    <!-- calculator_custom_dialog -->
+    <string name="btnPlus">+</string>
+    <string name="btnMinus">-</string>
+    <string name="btnMultiply">*</string>
+    <string name="btnDivide">/</string>
+    <string name="btn0">0</string>
+    <string name="btn1">1</string>
+    <string name="btn2">2</string>
+    <string name="btn3">3</string>
+    <string name="btn4">4</string>
+    <string name="btn5">5</string>
+    <string name="btn6">6</string>
+    <string name="btn7">7</string>
+    <string name="btn8">8</string>
+    <string name="btn9">9</string>
+    <string name="btnDot">.</string>
+    <string name="btnEqual">=</string>
+    <string name="btnDelete">Del</string>
+    <string name="btnClear">Clear</string>
+    <string name="btnConfirm">Confirm</string>
+    <string name="btnCancel">Cancel</string>
+    <string name="calCustomDialogLabel">Transaction Amount</string>
+
+
+
+
+
+
+
 
     <!-- System Configuration String -->
 
@@ -159,37 +190,6 @@
     <string name="trxHistoryNavRangeKey">Range</string>
 
 
-    <!-- Alert Dialog String -->
-    <string name="dialogPositive">Confirm</string>
-    <string name="dialogNegative">Cancel</string>
-
-    <string name="dialogTitleCreateAccount">Create Account Confirmation</string>
-    <string name="dialogMessageCreateAccount">Are you sure to Create the Account?</string>
-
-    <string name="dialogTitleUpdateAccount">Update Account Confirmation</string>
-    <string name="dialogMessageUpdateAccount">Are you sure to Update the Account?</string>
-
-    <string name="dialogTitleDeleteAccount">Delete Account Confirmation</string>
-    <string name="dialogMessageDeleteAccount">Are you sure to Delete the Account?</string>
-
-
-    <string name="dialogTitleCreateCategory">Create Category Confirmation</string>
-    <string name="dialogMessageCreateCategory">Are you sure to Create the Category?</string>
-
-    <string name="dialogTitleUpdateCategory">Update Category Confirmation</string>
-    <string name="dialogMessageUpdateCategory">Are you sure to Update the Category?</string>
-
-    <string name="dialogTitleDeleteCategory">Delete Account Confirmation</string>
-    <string name="dialogMessageDeleteCategory">Are you sure to Delete the Category?</string>
-
-
-    <string name="dialogTitleUpdateTrx">Update Category Confirmation</string>
-    <string name="dialogMessageUpdateTrx">Are you sure to Update the Category?</string>
-
-    <string name="dialogTitleDeleteTrx">Delete Account Confirmation</string>
-    <string name="dialogMessageDeleteTrx">Are you sure to Delete the Category?</string>
-
-
     <!-- SharedPreference Key -->
     <string name="userProfileKey">UserProfile</string>
     <string name="selectedAccount">SelectedAccount</string>
@@ -200,6 +200,9 @@
     <string name="walletAccountPassArgKey">walletAccountSelection</string>
     <string name="trxCategoryPassArgKey">trxCategorySelection</string>
     <string name="transactionPassArgKey">transactionSelection</string>
+
+    <!-- Arg Bundle Passing to DialogFragment -->
+    <string name="trxAmountPassArgKey">trxAmount</string>
 
     <!-- Validation RegEx -->
     <string name="regExNoCharacterOnly">^[a-zA-Z]{4,}(?: [a-zA-Z]+){0,2}$</string>
@@ -264,8 +267,32 @@
     <string name="TransactionDate">transactionDate</string>
     <string name="TransactionTime">transactionTime</string>
 
+    <!-- MenuActivity Navigation Indicators -->
+    <string name="navigatedIndicate">Navigated</string>
+    <string name="trxHistoryNavigatedIndicate">TrxHistoryNavigated</string>
+    <string name="disableNavigatedIndicate">Disable</string>
+
+    <!-- Calculator Dialog Fragment -->
+    <string name="additionStatus">+</string>
+    <string name="subtractionStatus">-</string>
+    <string name="multiplicationStatus">*</string>
+    <string name="divisionStatus">/</string>
+    <string name="decimalFormat">#.##</string>
+    <string name="NotANumber">NaN</string>
+    <string name="maxCalAmount">999999999.99</string>
+    <string name="minCalAmount">-999999999.99</string>
+
+
+
+
+
+
+
+
 
     <!-- System Informative String -->
+
+    <string name="loadingIndication">Loading…</string>
 
     <!-- Loading Dialog -->
     <string name="loadingTitle">Loading</string>
@@ -359,5 +386,35 @@
     <string name="formatTotalIncome">Total Income: \n$ %.2f</string>
     <string name="formatTotalExpense">Total Expense: \n$ %.2f</string>
     <string name="formatTotalBalance">Total Balance: \n$ %.2f</string>
+
+    <!-- Alert Dialog String -->
+    <string name="dialogPositive">Confirm</string>
+    <string name="dialogNegative">Cancel</string>
+
+    <string name="dialogTitleCreateAccount">Create Account Confirmation</string>
+    <string name="dialogMessageCreateAccount">Are you sure to Create the Account?</string>
+
+    <string name="dialogTitleUpdateAccount">Update Account Confirmation</string>
+    <string name="dialogMessageUpdateAccount">Are you sure to Update the Account?</string>
+
+    <string name="dialogTitleDeleteAccount">Delete Account Confirmation</string>
+    <string name="dialogMessageDeleteAccount">Are you sure to Delete the Account?</string>
+
+
+    <string name="dialogTitleCreateCategory">Create Category Confirmation</string>
+    <string name="dialogMessageCreateCategory">Are you sure to Create the Category?</string>
+
+    <string name="dialogTitleUpdateCategory">Update Category Confirmation</string>
+    <string name="dialogMessageUpdateCategory">Are you sure to Update the Category?</string>
+
+    <string name="dialogTitleDeleteCategory">Delete Account Confirmation</string>
+    <string name="dialogMessageDeleteCategory">Are you sure to Delete the Category?</string>
+
+
+    <string name="dialogTitleUpdateTrx">Update Category Confirmation</string>
+    <string name="dialogMessageUpdateTrx">Are you sure to Update the Category?</string>
+
+    <string name="dialogTitleDeleteTrx">Delete Account Confirmation</string>
+    <string name="dialogMessageDeleteTrx">Are you sure to Delete the Category?</string>
 
 </resources>

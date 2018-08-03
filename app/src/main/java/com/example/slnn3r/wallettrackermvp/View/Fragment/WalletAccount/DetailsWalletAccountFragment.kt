@@ -18,7 +18,6 @@ import com.example.slnn3r.wallettrackermvp.Interface.PresenterInterface
 import com.example.slnn3r.wallettrackermvp.Interface.ViewInterface
 import com.example.slnn3r.wallettrackermvp.Model.ObjectClass.WalletAccount
 import com.example.slnn3r.wallettrackermvp.Presenter.Presenter
-
 import com.example.slnn3r.wallettrackermvp.R
 import com.google.gson.Gson
 import kotlinx.android.synthetic.main.fragment_details_wallet_account.*
@@ -26,7 +25,6 @@ import com.example.slnn3r.wallettrackermvp.Utility.AlertDialog
 
 
 class DetailsWalletAccountFragment : Fragment(), ViewInterface.DetailsWalletAccountView {
-
 
     private lateinit var presenter: PresenterInterface.Presenter
     private val alertDialog:AlertDialog= AlertDialog()
@@ -84,7 +82,6 @@ class DetailsWalletAccountFragment : Fragment(), ViewInterface.DetailsWalletAcco
             override fun afterTextChanged(s: Editable?) {
                 validationFinalized()
             }
-
         })
 
         DWAAccBalanceInput.addTextChangedListener(object: TextWatcher {
@@ -100,10 +97,7 @@ class DetailsWalletAccountFragment : Fragment(), ViewInterface.DetailsWalletAcco
             override fun afterTextChanged(s: Editable?) {
                 validationFinalized()
             }
-
         })
-
-
     }
 
 
@@ -117,7 +111,6 @@ class DetailsWalletAccountFragment : Fragment(), ViewInterface.DetailsWalletAcco
             DWADeleteSubmit.isEnabled = false
             DWADeleteSubmit.text = getString(R.string.unDeletableAccount)
         }
-
     }
 
     private fun updateSubmitClick(walletAccount: WalletAccount) {
@@ -182,7 +175,6 @@ class DetailsWalletAccountFragment : Fragment(), ViewInterface.DetailsWalletAcco
 
         Toast.makeText(mainContext,mainContext.getString(R.string.updateWalletAccountSuccess),Toast.LENGTH_LONG).show()
         (mainContext as Activity).onBackPressed()
-
     }
 
     override fun updateWalletAccountFail(mainContext: Context, errorMessage: String) {
@@ -199,5 +191,4 @@ class DetailsWalletAccountFragment : Fragment(), ViewInterface.DetailsWalletAcco
     override fun deleteWalletAccountFail(mainContext: Context, errorMessage: String) {
         Toast.makeText(mainContext,mainContext.getString(R.string.deleteWalletAccountFail)+errorMessage,Toast.LENGTH_LONG).show()
     }
-
 }

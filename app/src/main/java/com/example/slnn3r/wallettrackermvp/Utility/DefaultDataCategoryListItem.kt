@@ -6,10 +6,7 @@ class DefaultDataCategoryListItem{
 
     fun getListItem(): ArrayList<TransactionCategory> {
 
-
-
         val spinnerItem = ArrayList<TransactionCategory>()
-
 
         spinnerItem.add(TransactionCategory("", "Food and Drink", "Expense", "Default", ""))
         spinnerItem.add(TransactionCategory("", "Entertainment", "Expense", "Default", ""))
@@ -18,9 +15,6 @@ class DefaultDataCategoryListItem{
         spinnerItem.add(TransactionCategory("", "Other", "Expense", "Default", ""))
         spinnerItem.add(TransactionCategory("", "Salary", "Income", "Default", ""))
 
-
         return spinnerItem
     }
-
-
 }

@@ -10,7 +10,6 @@ import com.google.gson.Gson
 class SharedPreferenceAccess: ModelInterface.SharedPreference{
 
 
-
     override fun getUserData(mainContext: Context): UserProfile {
 
         val editor = mainContext.getSharedPreferences(mainContext.getString(R.string.userProfileKey), AppCompatActivity.MODE_PRIVATE)
@@ -20,7 +19,6 @@ class SharedPreferenceAccess: ModelInterface.SharedPreference{
         val json = editor.getString(mainContext.getString(R.string.userProfileKey), "")
 
         return gson.fromJson<UserProfile>(json, UserProfile::class.java)
-
     }
 
     override fun saveSelectedAccount(mainContext: Context, selection: String) {
@@ -48,9 +46,5 @@ class SharedPreferenceAccess: ModelInterface.SharedPreference{
         val editor = mainContext.getSharedPreferences(mainContext.getString(R.string.userProfileKey), Context.MODE_PRIVATE).edit()
         editor.remove(mainContext.getString(R.string.userProfileKey)).apply()
         editor.remove(mainContext.getString(R.string.selectedAccount)).apply()
-
-
     }
-
-
 }

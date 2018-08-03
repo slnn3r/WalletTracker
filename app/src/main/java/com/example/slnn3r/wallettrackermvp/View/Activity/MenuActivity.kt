@@ -18,7 +18,6 @@ import com.example.slnn3r.wallettrackermvp.Interface.PresenterInterface
 import com.example.slnn3r.wallettrackermvp.Interface.ViewInterface
 import com.example.slnn3r.wallettrackermvp.Presenter.Presenter
 import com.example.slnn3r.wallettrackermvp.R
-
 import kotlinx.android.synthetic.main.activity_menu.*
 import kotlinx.android.synthetic.main.app_bar_menu.*
 import android.view.View
@@ -26,7 +25,6 @@ import android.view.animation.DecelerateInterpolator
 import android.widget.ImageView
 import android.widget.TextView
 import com.squareup.picasso.Picasso
-
 import androidx.navigation.Navigation
 import androidx.navigation.findNavController
 
@@ -52,14 +50,12 @@ class MenuActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         setContentView(R.layout.activity_menu)
         setSupportActionBar(toolbar)
 
-
         // display User info to Drawer
         displayUserInfo()
 
         nav_view.setNavigationItemSelectedListener(this)
 
         setupNavigationUpButton()
-
     }
 
     private fun displayUserInfo() {
@@ -67,7 +63,6 @@ class MenuActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         // Get SharedPreference data
         presenter = Presenter(this)
         val userProfile = presenter.getUserData(this)
-
 
         val navigationView = findViewById<View>(R.id.nav_view) as NavigationView
         val headerView = navigationView.getHeaderView(0)
@@ -79,10 +74,7 @@ class MenuActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         navUserName.text = userProfile.UserName
         navUserEmail.text = userProfile.UserEmail
         Picasso.get().load(userProfile.UserPicURL).into(navUserPicture)
-
     }
-
-
 
     private fun setupNavigationUpButton() {
 
@@ -96,9 +88,9 @@ class MenuActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         toolbar.setNavigationOnClickListener {
 
             // Check if Screen is navigated or not
-            if (isNavigated=="Navigated") {
+            if (isNavigated==getString(R.string.navigatedIndicate)) {
                 setupNavigationFlow()
-            } else if(isNavigated=="TrxHistoryNavigated"){
+            } else if(isNavigated==getString(R.string.trxHistoryNavigatedIndicate)){
 
                 if(trxScreenSelection==getString(R.string.trxHistoryNavSpecificKey)){
 
@@ -112,13 +104,12 @@ class MenuActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                 }
 
                 setupNavigationMode()
-            }else if(isNavigated=="Disable"){
+            }else if(isNavigated==getString(R.string.disableNavigatedIndicate)){
 
             }else {
                 drawer_layout.openDrawer(GravityCompat.START)
             }
         }
-
     }
 
     private fun setupNavigationFlow() {
@@ -130,10 +121,7 @@ class MenuActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         if (currentScreen == initialScreen) { // if Current screen is initial screen (Dashboard), switch Navigation Up button back to Drawer function
             setupDrawerMode()
         }
-
     }
-
-
 
     private fun setupDrawerMode() {
         isNavigated = ""
@@ -145,11 +133,11 @@ class MenuActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     }
 
     fun setupToDisable(){
-        isNavigated = "Disable"
+        isNavigated = getString(R.string.disableNavigatedIndicate)
     }
 
     fun setupNavigationMode() {
-        isNavigated = "Navigated"
+        isNavigated = getString(R.string.navigatedIndicate)
         drawer_layout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED)
         animateIcon(0,1,800) // with Animation no need to deal with any Icon Change stuff
 
@@ -158,11 +146,8 @@ class MenuActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
     fun trxHistoryBack(trxScreen:String){
         trxScreenSelection=trxScreen
-        isNavigated = "TrxHistoryNavigated"
-
+        isNavigated = getString(R.string.trxHistoryNavigatedIndicate)
     }
-
-    ////
 
     private fun animateIcon(start:Int, end:Int, duration:Int){
 
@@ -176,15 +161,14 @@ class MenuActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         anim.interpolator = DecelerateInterpolator()
         anim.duration = duration.toLong()
         anim.start()
-
     }
 
     override fun onBackPressed() {
         if (drawer_layout.isDrawerOpen(GravityCompat.START)) {
             drawer_layout.closeDrawer(GravityCompat.START)
-        } else if (isNavigated=="Navigated") {
+        } else if (isNavigated==getString(R.string.navigatedIndicate)) {
             setupNavigationFlow()
-        } else if(isNavigated=="TrxHistoryNavigated"){ // for TrxHistory Navigation
+        } else if(isNavigated==getString(R.string.trxHistoryNavigatedIndicate)){ // for TrxHistory Navigation
 
             if(trxScreenSelection==getString(R.string.trxHistoryNavSpecificKey)){
 
@@ -215,10 +199,7 @@ class MenuActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             }else{
 
                 super.onBackPressed()
-
             }
-
-
         }
     }
 
@@ -228,47 +209,35 @@ class MenuActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
         presenter = Presenter(this)
 
-          Handler().postDelayed({ //For Avoid Lagging Animation
+        Handler().postDelayed({ //For Avoid Lagging Animation
 
-        // Handle navigation view item clicks here.
-        when (item.itemId) {
-            R.id.navDrawer_WalletAccount -> {
+            // Handle navigation view item clicks here.
+            when (item.itemId) {
+                R.id.navDrawer_WalletAccount -> {
 
-                setupNavigationMode()
-                Navigation.findNavController(this, R.id.navMenu).navigate(R.id.action_dashBoardFragment_to_viewWalletAccountFragment)
+                    setupNavigationMode()
+                    Navigation.findNavController(this, R.id.navMenu).navigate(R.id.action_dashBoardFragment_to_viewWalletAccountFragment)
+                }
+                R.id.navDrawer_TrxCategory -> {
 
-            }
-            R.id.navDrawer_TrxCategory -> {
-
-                setupNavigationMode()
-                Navigation.findNavController(this, R.id.navMenu).navigate(R.id.action_dashBoardFragment_to_viewTrxCategoryFragment)
-            }
-            R.id.navDrawer_TrxHistory -> {
-
+                    setupNavigationMode()
+                    Navigation.findNavController(this, R.id.navMenu).navigate(R.id.action_dashBoardFragment_to_viewTrxCategoryFragment)
+                }
+                R.id.navDrawer_TrxHistory -> {
 
                     setupNavigationMode()
                     Navigation.findNavController(this, R.id.navMenu).navigate(R.id.action_dashBoardFragment_to_trxHistoryFragment)
-
-
-
-
+                }
+                R.id.navDrawer_SignOut -> {
+                    presenter.logoutGoogleExecute(this)
+                }
             }
 
-            R.id.navDrawer_SignOut -> {
-                presenter.logoutGoogleExecute(this)
-
-            }
-
-        }
-
-          }, 200)
-
+        }, 200)
 
         drawer_layout.closeDrawer(GravityCompat.START)
         return true
     }
-
-
 
     override fun logoutSuccess(mainContext: Context, successLogoutMessage: String) {
 
@@ -276,18 +245,9 @@ class MenuActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         mainContext.startActivity(myIntent)
         Toast.makeText(mainContext, successLogoutMessage, Toast.LENGTH_LONG).show()
         (mainContext as Activity).finish()
-
     }
 
     override fun logoutFail(mainContext: Context, errorMessage: String) {
         Toast.makeText(mainContext, errorMessage, Toast.LENGTH_LONG).show()
     }
-
-
-
-
-
-
-
-
 }

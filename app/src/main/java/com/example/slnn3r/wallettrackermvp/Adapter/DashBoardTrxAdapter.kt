@@ -15,11 +15,10 @@ import com.google.gson.Gson
 import com.squareup.picasso.Picasso
 
 
-class DashBoardTrxAdapter(private val transactionList: ArrayList<Transaction>): RecyclerView.Adapter<DashBoardViewHolder>(){
-
+class DashBoardTrxAdapter(private val transactionList: ArrayList<Transaction>): RecyclerView.Adapter<DashBoardViewHolder>() {
 
     // numberOfItems
-    override  fun getItemCount(): Int{
+    override fun getItemCount(): Int {
         return transactionList.count()
     }
 
@@ -27,7 +26,6 @@ class DashBoardTrxAdapter(private val transactionList: ArrayList<Transaction>): 
 
         val layoutInflater = LayoutInflater.from(parent.context)
         val cellForRow = layoutInflater.inflate(R.layout.transaction_list_row, parent, false)
-
 
         return DashBoardViewHolder(cellForRow)
     }
@@ -42,40 +40,36 @@ class DashBoardTrxAdapter(private val transactionList: ArrayList<Transaction>): 
 
         val transactionData = transactionList[position]
 
-        if(transactionData.TransactionDate == holder.view.context.getString(R.string.noResult)){
-
+        if (transactionData.TransactionDate == holder.view.context.getString(R.string.noResult)) {
 
             Picasso.get().load(R.drawable.not_found).into(holder.view.DBTrxImageView)
             holder.view.DBAccNameTextView.text = transactionData.TransactionDate
             holder.view.DBBalTextView.text = holder.view.context.getString(R.string.noDataInDatabase)
             holder.view.DBTrxCategoryTextView.text = holder.view.context.getString(R.string.tabToAddTrx)
 
-        }else{
+        } else {
 
-            holder.view.DBAccNameTextView.text = holder.view.DBTrxImageView.context.getString(R.string.formatDisplayDateTime,transactionData.TransactionDate,transactionData.TransactionTime)
+            holder.view.DBAccNameTextView.text = holder.view.DBTrxImageView.context.getString(R.string.formatDisplayDateTime, transactionData.TransactionDate, transactionData.TransactionTime)
             holder.view.DBBalTextView.text = transactionData.TransactionCategory.TransactionCategoryName
             holder.view.DBTrxCategoryTextView.text = String.format(holder.view.DBTrxImageView.context.getString(R.string.formatDisplay2DecimalMoney), transactionData.TransactionAmount)
 
-            if(transactionData.TransactionCategory.TransactionCategoryType == holder.view.context.getString(R.string.expense)){
+            if (transactionData.TransactionCategory.TransactionCategoryType == holder.view.context.getString(R.string.expense)) {
                 holder.view.DBTrxImageView.background = holder.view.DBTrxImageView.context.resources.getDrawable(R.drawable.fui_idp_button_background_email)
 
                 // Picasso get LAGGY and affect Navigation Drawer Animation when does not crop it, as it will load full size image
-                Picasso.get().load(R.drawable.expense_icon).resize(200,200).centerCrop().into(holder.view.DBTrxImageView)
+                Picasso.get().load(R.drawable.expense_icon).resize(200, 200).centerCrop().into(holder.view.DBTrxImageView)
                 //holder.view.DBTrxImageView.setImageDrawable(holder.view.DBTrxImageView.context.resources.getDrawable(R.drawable.expense_icon))
 
-            }else{
+            } else {
 
                 // Picasso get LAGGY and affect Navigation Drawer Animation when does not crop it, as it will load full size image
-                Picasso.get().load(R.drawable.income_icon).resize(200,200).centerCrop().into(holder.view.DBTrxImageView)
+                Picasso.get().load(R.drawable.income_icon).resize(200, 200).centerCrop().into(holder.view.DBTrxImageView)
                 //holder.view.DBTrxImageView.setImageDrawable(holder.view.DBTrxImageView.context.resources.getDrawable(R.drawable.income_icon))
-
             }
-
         }
 
         holder.passData = transactionData
     }
-
 }
 
 
@@ -107,7 +101,6 @@ class DashBoardViewHolder(val view: View, var passData: Transaction?= null): Rec
 
                 val json = gson.toJson(transactionData)
 
-
                 val bundle = Bundle()
                 bundle.putString(view.context.getString(R.string.transactionPassArgKey), json)
 
@@ -115,9 +108,7 @@ class DashBoardViewHolder(val view: View, var passData: Transaction?= null): Rec
                 navController.navigate(R.id.action_dashBoardFragment_to_detailsTrxFragment, bundle)
 
                 (context as MenuActivity).setupNavigationMode()
-
             }
         }
     }
-
 }

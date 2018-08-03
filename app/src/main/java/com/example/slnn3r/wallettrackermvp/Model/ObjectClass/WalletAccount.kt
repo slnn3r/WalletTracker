@@ -4,5 +4,4 @@ class WalletAccount(val WalletAccountID:String,
                     val WalletAccountName: String,
                     val WalletAccountInitialBalance:Double,
                     val UserUID:String,
-                    val WalletAccountStatus:String
-                    )
+                    val WalletAccountStatus:String)

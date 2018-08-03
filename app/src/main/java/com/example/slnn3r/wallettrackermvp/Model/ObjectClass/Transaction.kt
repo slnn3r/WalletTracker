@@ -5,5 +5,5 @@ class Transaction(val TransactionID:String,
                   val TransactionTime:String,
                   val TransactionAmount:Double,
                   val TransactionRemark: String?,
-                  val TransactionCategory: TransactionCategory, // to display Info TrxType info in dashboard easily
+                  val TransactionCategory: TransactionCategory,
                   val WalletAccount: WalletAccount)
