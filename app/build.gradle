@@ -41,12 +41,14 @@ dependencies {
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
 
     // 3rd Party Library
-
     implementation 'io.reactivex.rxjava2:rxandroid:2.0.1'
     implementation 'io.reactivex.rxjava2:rxjava:2.1.1'
 
-    implementation 'com.google.firebase:firebase-core:16.0.0' // Firebase Online Database
+    implementation 'com.google.firebase:firebase-core:16.0.0' // Firebase Login Database
     implementation 'com.firebaseui:firebase-ui-auth:4.0.0' // Firebase Auth
+
+    implementation 'com.google.firebase:firebase-database:16.0.1' // Firebase Online Database
+
     implementation 'com.google.code.gson:gson:2.8.5' //GSON
     implementation 'com.squareup.picasso:picasso:2.71828' //PICASSO
 

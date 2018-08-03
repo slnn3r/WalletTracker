@@ -284,8 +284,17 @@ class Presenter: PresenterInterface.Presenter{
 
         return if (input.isEmpty()){
             mainContext.getString(R.string.promptToEnter)
-        }else if(input.toDouble()==0.0){
+        }else if(input.toDoubleOrNull()==null){
             mainContext.getString(R.string.noZeroInput)
+
+        }else if(input.toDoubleOrNull()!=null){
+
+            return if(input.toDouble()<=0.0){
+                mainContext.getString(R.string.noZeroInput)
+            }else{
+                null
+            }
+
         }else{
             null
         }

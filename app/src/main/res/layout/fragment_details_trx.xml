@@ -64,6 +64,9 @@
             android:hint="@string/DetailsAmountInput"
             android:inputType="numberDecimal"
 
+            android:clickable="true"
+            android:focusable="false"
+
             android:textAlignment="center"
             android:textSize="36sp" />
 

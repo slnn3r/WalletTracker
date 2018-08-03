@@ -37,7 +37,7 @@ class MenuActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
     private lateinit var presenter: PresenterInterface.Presenter
 
-    private var isNavigated:Boolean? =false // Set Initial Navigation Status to false
+    private var isNavigated:String? ="" // Set Initial Navigation Status to false
     private var trxScreenSelection=""
 
     private val initialScreen:Int = R.id.dashBoardFragment
@@ -96,10 +96,9 @@ class MenuActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         toolbar.setNavigationOnClickListener {
 
             // Check if Screen is navigated or not
-            if (isNavigated==true) {
+            if (isNavigated=="Navigated") {
                 setupNavigationFlow()
-            } else if(isNavigated==null){
-
+            } else if(isNavigated=="TrxHistoryNavigated"){
 
                 if(trxScreenSelection==getString(R.string.trxHistoryNavSpecificKey)){
 
@@ -113,6 +112,8 @@ class MenuActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                 }
 
                 setupNavigationMode()
+            }else if(isNavigated=="Disable"){
+
             }else {
                 drawer_layout.openDrawer(GravityCompat.START)
             }
@@ -135,7 +136,7 @@ class MenuActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
 
     private fun setupDrawerMode() {
-        isNavigated = false
+        isNavigated = ""
         drawer_layout.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED)
         animateIcon(1,0,800) // with Animation no need to deal with any Icon Change stuff
 
@@ -143,8 +144,12 @@ class MenuActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         //setupNavigationUpButton() // Recreate new Action Bar with Drawer Icon
     }
 
+    fun setupToDisable(){
+        isNavigated = "Disable"
+    }
+
     fun setupNavigationMode() {
-        isNavigated = true
+        isNavigated = "Navigated"
         drawer_layout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED)
         animateIcon(0,1,800) // with Animation no need to deal with any Icon Change stuff
 
@@ -153,7 +158,7 @@ class MenuActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
     fun trxHistoryBack(trxScreen:String){
         trxScreenSelection=trxScreen
-        isNavigated = null
+        isNavigated = "TrxHistoryNavigated"
 
     }
 
@@ -177,9 +182,9 @@ class MenuActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     override fun onBackPressed() {
         if (drawer_layout.isDrawerOpen(GravityCompat.START)) {
             drawer_layout.closeDrawer(GravityCompat.START)
-        } else if (isNavigated==true) {
+        } else if (isNavigated=="Navigated") {
             setupNavigationFlow()
-        } else if(isNavigated==null){ // for TrxHistory Navigation
+        } else if(isNavigated=="TrxHistoryNavigated"){ // for TrxHistory Navigation
 
             if(trxScreenSelection==getString(R.string.trxHistoryNavSpecificKey)){
 

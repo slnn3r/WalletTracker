@@ -32,10 +32,11 @@ import java.util.*
 import kotlin.collections.ArrayList
 import com.example.slnn3r.wallettrackermvp.Utility.AlertDialog
 import com.example.slnn3r.wallettrackermvp.Presenter.Presenter
+import com.example.slnn3r.wallettrackermvp.Utility.CalculatorCustomDialog
+import com.example.slnn3r.wallettrackermvp.View.Activity.MenuActivity
 
 
-class DetailsTrxFragment : Fragment(), ViewInterface.DetailsTrxView {
-
+class DetailsTrxFragment : Fragment(), ViewInterface.DetailsTrxView, CalculatorCustomDialog.OnInputSelected  {
 
     private val myCalendar = Calendar.getInstance()
     private lateinit var simpleDateFormat:SimpleDateFormat
@@ -108,6 +109,13 @@ class DetailsTrxFragment : Fragment(), ViewInterface.DetailsTrxView {
 
         DetailsTrxDeleteSubmit.setOnClickListener{
             deleteSubmitClick(transaction)
+        }
+
+        DetailsTrxAmountInput.setOnClickListener{ // Dialog Fragment
+
+            disableUIComponents()
+            displayCalculatorInput()
+
         }
 
 
@@ -252,12 +260,6 @@ class DetailsTrxFragment : Fragment(), ViewInterface.DetailsTrxView {
     }
 
     private fun validateAmountInput(){
-        // Force 2 Decimal Input only (SOLVED)
-        val text = DetailsTrxAmountInput.text.toString()
-        if (text.contains(".") && text.substring(text.indexOf(".") + 1).length > 2) {
-            DetailsTrxAmountInput.setText(text.substring(0, text.length - 1))
-            DetailsTrxAmountInput.setSelection(DetailsTrxAmountInput.text.length)
-        }
 
         val validationResult = presenter.transactionInputValidation(context!!,DetailsTrxAmountInput.text.toString())
 
@@ -274,7 +276,49 @@ class DetailsTrxFragment : Fragment(), ViewInterface.DetailsTrxView {
         }
     }
 
+    private fun enableUIComponents() {
+        (context as MenuActivity).setupNavigationMode()
+        DetailsTrxDeleteSubmit.isEnabled = true
+        DetailsTrxRemarksInput.isEnabled = true
+        DetailsTrxAmountInput.isEnabled= true
+        DetailsTrxSelectedAccSpinner.isEnabled = true
+        DetailsTrxTypeSpinner.isEnabled = true
+        DetailsTrxCategorySpinner.isEnabled = true
+        DetailsTrxTimeInput.isEnabled = true
+        DetailsTrxDateInput.isEnabled = true
+    }
 
+    private fun disableUIComponents() {
+
+        (context as MenuActivity).setupToDisable()
+        DetailsTrxDeleteSubmit.isEnabled = false
+        DetailsTrxRemarksInput.isEnabled = false
+        DetailsTrxAmountInput.isEnabled= false
+        DetailsTrxSelectedAccSpinner.isEnabled = false
+        DetailsTrxTypeSpinner.isEnabled = false
+        DetailsTrxCategorySpinner.isEnabled = false
+        DetailsTrxTimeInput.isEnabled = false
+        DetailsTrxDateInput.isEnabled = false
+    }
+
+    private fun displayCalculatorInput() {
+
+        val args = Bundle()
+        if(DetailsTrxAmountInput.text.toString().toDoubleOrNull()!=null){
+            args.putString("trxAmount", DetailsTrxAmountInput.text.toString())
+        }else{
+            args.putString("trxAmount", "")
+
+        }
+
+        DetailsTrxAmountInput.setText("Loading...")
+
+        val calCustomDialog = CalculatorCustomDialog()
+        calCustomDialog.arguments = args
+        calCustomDialog.isCancelable= false
+        calCustomDialog.setTargetFragment(this,1)
+        calCustomDialog.show(this.fragmentManager,"")
+    }
 
     // Presenter Callback
     override fun populateDetailTrxCategorySpinner(mainContext: Context, trxCategoryList: ArrayList<TransactionCategory>) {
@@ -392,5 +436,14 @@ class DetailsTrxFragment : Fragment(), ViewInterface.DetailsTrxView {
         Toast.makeText(mainContext,errorMessage, Toast.LENGTH_LONG).show()
     }
 
+    override fun calculatorInput(input: String) {
+        enableUIComponents()
+
+        if(input==""){
+            DetailsTrxAmountInput.setText("Enter Amount")
+        }else{
+            DetailsTrxAmountInput.setText(input)
+        }
+    }
 
 }

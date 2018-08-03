@@ -28,7 +28,6 @@ import com.example.slnn3r.wallettrackermvp.Model.ObjectClass.Transaction
 import com.example.slnn3r.wallettrackermvp.Utility.CustomMarkerView
 import kotlin.collections.ArrayList
 import com.github.mikephil.charting.components.AxisBase
-import com.github.mikephil.charting.components.Description
 import com.github.mikephil.charting.components.XAxis
 import com.github.mikephil.charting.data.*
 import com.github.mikephil.charting.formatter.IAxisValueFormatter
@@ -36,7 +35,6 @@ import com.github.mikephil.charting.utils.ViewPortHandler
 import com.github.mikephil.charting.formatter.IValueFormatter
 import java.text.DecimalFormat
 import com.github.mikephil.charting.data.LineDataSet
-
 
 
 
@@ -61,7 +59,6 @@ class DashBoardFragment : Fragment(),ViewInterface.DashBoardView {
 
         hideDisplayedKeyboard(view) // Hide Keyboard
 
-        setupUI()
 
         // Get SharedPreference data
         val userProfile = presenter.getUserData(context!!)
@@ -69,6 +66,9 @@ class DashBoardFragment : Fragment(),ViewInterface.DashBoardView {
 
         // Display Account Selection to Spinner
         presenter.checkWalletAccount(context!!, userID )
+
+        setupUI(userID)
+
 
 
         // Listener Setter
@@ -83,12 +83,16 @@ class DashBoardFragment : Fragment(),ViewInterface.DashBoardView {
 
 
     // Function Implementation
-    private fun setupUI(){
+    private fun setupUI(userID: String){
         DBTrxGraph.setNoDataText(getString(R.string.DBGraphLoading))
 
         // Initial Input
         val thisMonth =mCalendar.getDisplayName(Calendar.MONTH, Calendar.LONG, Locale.getDefault())
         DBMonthTextView.text = getString(R.string.formatDisplayMonth,thisMonth)
+
+
+
+
     }
 
     private fun hideDisplayedKeyboard(view: View) {
@@ -337,7 +341,7 @@ class DashBoardFragment : Fragment(),ViewInterface.DashBoardView {
 
     override fun populateExpenseGraph(mainContext: Context, entryList: ArrayList<Entry>, xAxisList: ArrayList<String>) {
 
-        displayDummyDateGraph(entryList, xAxisList) // Dummy Graph Setup - Must Reload the Graph everytime Account selection change !!!!!!!!!! NO USE
+        displayDummyDateGraph(entryList, xAxisList)
 
     }
 
