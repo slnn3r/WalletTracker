@@ -58,6 +58,8 @@ class MenuActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         setupNavigationUpButton()
     }
 
+
+
     private fun displayUserInfo() {
 
         // Get SharedPreference data

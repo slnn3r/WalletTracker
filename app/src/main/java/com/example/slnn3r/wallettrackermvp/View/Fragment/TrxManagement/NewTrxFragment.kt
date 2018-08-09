@@ -30,14 +30,13 @@ import com.example.slnn3r.wallettrackermvp.Model.ObjectClass.TransactionCategory
 import com.example.slnn3r.wallettrackermvp.Model.ObjectClass.UserProfile
 import com.example.slnn3r.wallettrackermvp.Model.ObjectClass.WalletAccount
 import com.example.slnn3r.wallettrackermvp.Presenter.Presenter
-import com.example.slnn3r.wallettrackermvp.Utility.CalculatorCustomDialog
+import com.example.slnn3r.wallettrackermvp.Utility.CustomBottomSheetDialogFragment
 import com.example.slnn3r.wallettrackermvp.View.Activity.MenuActivity
 import java.sql.Time
 import kotlin.collections.ArrayList
 
 
-class NewTrxFragment : Fragment(), ViewInterface.NewTrxView, CalculatorCustomDialog.OnInputSelected {
-
+class NewTrxFragment : Fragment(), ViewInterface.NewTrxView, CustomBottomSheetDialogFragment.OnInputSelected {
 
     private val myCalendar = Calendar.getInstance()
     private lateinit var simpleDateFormat:SimpleDateFormat
@@ -282,7 +281,7 @@ class NewTrxFragment : Fragment(), ViewInterface.NewTrxView, CalculatorCustomDia
 
         NewTrxAmountInput.setText(getString(R.string.loadingIndication))
 
-        val calCustomDialog = CalculatorCustomDialog()
+        val calCustomDialog = CustomBottomSheetDialogFragment()
         calCustomDialog.arguments = args
         calCustomDialog.isCancelable= false
         calCustomDialog.setTargetFragment(this,1)

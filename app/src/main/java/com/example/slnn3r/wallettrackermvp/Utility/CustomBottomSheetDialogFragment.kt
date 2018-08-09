@@ -3,7 +3,7 @@ package com.example.slnn3r.wallettrackermvp.Utility
 import android.content.Context
 import android.graphics.Color
 import android.os.Bundle
-import android.support.v4.app.DialogFragment
+import android.support.design.widget.BottomSheetDialogFragment
 import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
@@ -13,9 +13,12 @@ import android.view.ViewGroup
 import com.example.slnn3r.wallettrackermvp.R
 import kotlinx.android.synthetic.main.calculator_custom_dialog.*
 import java.text.DecimalFormat
+import android.support.design.widget.BottomSheetBehavior
+import android.widget.FrameLayout
+import android.support.design.widget.BottomSheetDialog
 
 
-class CalculatorCustomDialog: DialogFragment(){
+class CustomBottomSheetDialogFragment() : BottomSheetDialogFragment() {
 
     interface OnInputSelected{
         fun calculatorInput( input:String)
@@ -36,6 +39,8 @@ class CalculatorCustomDialog: DialogFragment(){
 
     private lateinit var decFormat: DecimalFormat
 
+
+
     override fun onCreateView
             (inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
 
@@ -50,6 +55,15 @@ class CalculatorCustomDialog: DialogFragment(){
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        view.viewTreeObserver.addOnGlobalLayoutListener {
+            val dialog = dialog as BottomSheetDialog
+            val bottomSheet = dialog.findViewById<View>(android.support.design.R.id.design_bottom_sheet) as FrameLayout?
+            val behavior = BottomSheetBehavior.from(bottomSheet!!)
+            behavior.state = BottomSheetBehavior.STATE_EXPANDED
+            behavior.peekHeight = 0
+        }
+
 
         val mArgs = this.arguments
         val myValue = mArgs!!.getString(getString(R.string.trxAmountPassArgKey))

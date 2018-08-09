@@ -17,11 +17,17 @@ import com.example.slnn3r.wallettrackermvp.Model.ObjectClass.WalletAccount
 import com.example.slnn3r.wallettrackermvp.Presenter.Presenter
 import java.util.*
 import android.app.Activity
+import android.app.job.JobInfo
+import android.app.job.JobScheduler
+import android.content.ComponentName
+import android.content.Context.JOB_SCHEDULER_SERVICE
 import android.graphics.Color
 import android.graphics.Paint
 import android.support.v7.widget.RecyclerView
+import android.util.Log
 import android.view.inputmethod.InputMethodManager
 import android.widget.*
+import com.example.slnn3r.wallettrackermvp.JobService.theJobService
 import com.example.slnn3r.wallettrackermvp.Model.ObjectClass.Transaction
 import com.example.slnn3r.wallettrackermvp.Utility.CustomMarkerView
 import kotlin.collections.ArrayList
@@ -32,7 +38,6 @@ import com.github.mikephil.charting.formatter.IAxisValueFormatter
 import com.github.mikephil.charting.utils.ViewPortHandler
 import com.github.mikephil.charting.formatter.IValueFormatter
 import com.github.mikephil.charting.data.LineDataSet
-
 
 
 class DashBoardFragment : Fragment(),ViewInterface.DashBoardView {
@@ -69,10 +74,32 @@ class DashBoardFragment : Fragment(),ViewInterface.DashBoardView {
 
         // Listener Setter
         DBIncomeFab.setOnClickListener{
+            /*val scheduler: JobScheduler = context!!.applicationContext.getSystemService(JOB_SCHEDULER_SERVICE) as JobScheduler
+            scheduler.cancel(123)
+            Log.e("","Job Cancelled")*/
+
             onIncomeButtonClick(view, userID)
         }
 
         DBExpenseFab.setOnClickListener{
+
+            // JobScheduler test
+            /*val component=ComponentName(context!!, theJobService::class.java)
+            val info = JobInfo.Builder(123, component)
+                    .setRequiresCharging(true)
+                    .setRequiredNetworkType(JobInfo.NETWORK_TYPE_UNMETERED)
+                    .setPersisted(true)
+                    .build()
+            val scheduler: JobScheduler = context!!.applicationContext.getSystemService(JOB_SCHEDULER_SERVICE) as JobScheduler
+            val resultCode = scheduler.schedule(info)
+
+            if(resultCode== JobScheduler.RESULT_SUCCESS){
+                Log.e("","Job Schedule")
+            }else{
+                Log.e("","Job Schedule Failed")
+
+            }*/
+
             onExpenseButtonClick(view, userID)
         }
     }
@@ -85,6 +112,8 @@ class DashBoardFragment : Fragment(),ViewInterface.DashBoardView {
         // Initial Input
         val thisMonth =mCalendar.getDisplayName(Calendar.MONTH, Calendar.LONG, Locale.getDefault())
         DBMonthTextView.text = getString(R.string.formatDisplayMonth,thisMonth)
+
+
 
     }
 
