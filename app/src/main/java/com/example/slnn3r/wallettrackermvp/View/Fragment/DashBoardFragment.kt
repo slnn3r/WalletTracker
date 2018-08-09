@@ -87,7 +87,7 @@ class DashBoardFragment : Fragment(),ViewInterface.DashBoardView {
             /*val component=ComponentName(context!!, theJobService::class.java)
             val info = JobInfo.Builder(123, component)
                     .setRequiresCharging(true)
-                    .setRequiredNetworkType(JobInfo.NETWORK_TYPE_UNMETERED)
+                    .setRequiredNetworkType(JobInfo.NETWORK_TYPE_ANY)
                     .setPersisted(true)
                     .build()
             val scheduler: JobScheduler = context!!.applicationContext.getSystemService(JOB_SCHEDULER_SERVICE) as JobScheduler

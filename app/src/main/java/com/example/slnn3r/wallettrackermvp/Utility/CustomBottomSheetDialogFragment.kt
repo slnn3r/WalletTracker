@@ -60,6 +60,17 @@ class CustomBottomSheetDialogFragment() : BottomSheetDialogFragment() {
             val dialog = dialog as BottomSheetDialog
             val bottomSheet = dialog.findViewById<View>(android.support.design.R.id.design_bottom_sheet) as FrameLayout?
             val behavior = BottomSheetBehavior.from(bottomSheet!!)
+
+            behavior.setBottomSheetCallback(object : BottomSheetBehavior.BottomSheetCallback() {
+                override fun onStateChanged(bottomSheet: View, newState: Int) {
+                    if (newState == BottomSheetBehavior.STATE_DRAGGING) {
+                        behavior.state = BottomSheetBehavior.STATE_EXPANDED
+                    }
+                }
+
+                override fun onSlide(bottomSheet: View, slideOffset: Float) {}
+            })
+
             behavior.state = BottomSheetBehavior.STATE_EXPANDED
             behavior.peekHeight = 0
         }
