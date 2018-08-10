@@ -28,6 +28,8 @@ interface ModelInterface {
         fun getAccountDataRealm(mainContext: Context, userID: String): ArrayList<WalletAccount>
         fun getCategoryDataRealm(mainContext: Context, userID: String): ArrayList<TransactionCategory>
 
+        fun getTransactionDataRealm(mainContext: Context, userID: String): ArrayList<Transaction>
+
         fun getAccountDataByNameRealm(mainContext: Context, userID: String, accountName: String): WalletAccount
         fun getCategoryDataByNameRealm(mainContext: Context, userID: String, categoryName: String): TransactionCategory
 

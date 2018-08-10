@@ -41,6 +41,9 @@ import kotlin.collections.ArrayList
 
 
 class Presenter: PresenterInterface.Presenter{
+    override fun getTransactionData(mainContext: Context, userID: String): ArrayList<Transaction> {
+        return realmModel.getTransactionDataRealm(mainContext,userID)
+    }
 
 
     private lateinit var mainView: ViewInterface.MainView

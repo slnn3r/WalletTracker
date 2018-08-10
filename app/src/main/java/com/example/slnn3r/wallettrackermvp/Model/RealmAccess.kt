@@ -21,6 +21,62 @@ import kotlin.collections.ArrayList
 
 
 class RealmAccess: ModelInterface.RealmAccess{
+    override fun getTransactionDataRealm(mainContext: Context, userID: String): ArrayList<Transaction> {
+        var realm: Realm? = null
+        val transactionData=ArrayList<Transaction>()
+
+        try {
+            Realm.init(mainContext)
+
+            val config = RealmConfiguration.Builder()
+                    .name(mainContext.getString(R.string.transactionRealm))
+                    .build()
+
+            realm = Realm.getInstance(config)
+
+            val gson = Gson()
+
+            realm!!.executeTransaction {
+
+                val getTransaction = realm.where(TransactionRealm::class.java).findAll()
+
+                getTransaction.forEach{
+                    dataList->
+
+                    val walletAccountData = gson.fromJson<WalletAccount>(dataList.walletAccount, WalletAccount::class.java)
+                    val transactionCategoryData = gson.fromJson<TransactionCategory>(dataList.transactionCategory, TransactionCategory::class.java)
+
+                    if(walletAccountData.UserUID==userID){
+                        transactionData.add(
+                                Transaction(
+                                        dataList.transactionID!!,
+                                        dataList.transactionDate!!,
+                                        dataList.transactionTime!!,
+                                        dataList.transactionAmount,
+                                        dataList.transactionRemark!!,
+                                        transactionCategoryData,
+                                        walletAccountData
+
+                                )
+                        )
+                    }
+
+                }
+            }
+
+            realm.close()
+            return transactionData
+
+
+        }catch(e:Exception) {
+
+            realm?.close()
+            return ArrayList()
+
+        }finally {
+            realm?.close()
+        }
+    }
 
     // Get Data Only
     override fun getAccountDataRealm(mainContext: Context, userID: String): ArrayList<WalletAccount> {

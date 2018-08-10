@@ -19,8 +19,12 @@
     <string name="navDrawer_WalletAccount">Wallet Account</string>
     <string name="navDrawer_TrxCategory">Transaction Category</string>
     <string name="navDrawer_TrxHistory">Transaction History</string>
-    <string name="navDrawer_title2">My Account</string>
+    <string name="navDrawer_SyncData">Sync Data</string>
+    <string name="navDrawer_title2">Last Sync - 2020/12/12 (01:03:12 PM)</string>
+    <string name="navDrawer_title3">My Account</string>
+
     <string name="navDrawer_SignOut">Sign Out</string>
+
 
     <!-- trxhistory_menu_list (bottomNavigation) -->
     <string name="filterBySpecific">Filter by Specific Date</string>

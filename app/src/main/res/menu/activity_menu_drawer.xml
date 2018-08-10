@@ -28,6 +28,8 @@
                     android:title="@string/navDrawer_TrxHistory" />
 
 
+
+
             </menu>
         </item>
 
@@ -38,6 +40,19 @@
     <item
         android:id="@+id/navDrawer_title2"
         android:title="@string/navDrawer_title2">
+        <menu>
+            <item
+                android:id="@+id/navDrawer_SyncData"
+                android:icon="@drawable/sync_icon"
+                android:title="@string/navDrawer_SyncData" />
+
+        </menu>
+    </item>
+
+
+    <item
+        android:id="@+id/navDrawer_title3"
+        android:title="@string/navDrawer_title3">
         <menu>
             <item
                 android:id="@+id/navDrawer_SignOut"

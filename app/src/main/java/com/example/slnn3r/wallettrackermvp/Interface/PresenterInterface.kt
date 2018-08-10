@@ -20,6 +20,8 @@ interface PresenterInterface{
         fun getAccountData(mainContext: Context, userID: String): ArrayList<WalletAccount>
         fun getCategoryData(mainContext: Context, userID: String): ArrayList<TransactionCategory>
 
+        fun getTransactionData(mainContext: Context, userID:String): ArrayList<Transaction>
+
         fun getAccountDataByName(mainContext: Context, userID:String, accountName:String): WalletAccount
         fun getCategoryDataByName(mainContext: Context, userID:String, categoryName:String): TransactionCategory
 
