@@ -1,6 +1,7 @@
 package com.example.slnn3r.wallettrackermvp.Model
 
 import android.content.Context
+import android.support.v7.app.AppCompatActivity
 import com.example.slnn3r.wallettrackermvp.Interface.ModelInterface
 import com.example.slnn3r.wallettrackermvp.Model.ObjectClass.Transaction
 import com.example.slnn3r.wallettrackermvp.Model.ObjectClass.TransactionCategory
@@ -355,6 +356,13 @@ class RealmAccess: ModelInterface.RealmAccess{
         }
 
         realm.close()
+
+        // Save Never Sync Before
+        val sync = mainContext.getSharedPreferences(userID, AppCompatActivity.MODE_PRIVATE)!!.edit()
+        sync.putString(userID, "Never Sync Before")
+        sync.apply()
+        sync.commit()
+
         return WalletAccount(uniqueID,defaultAccountName,defaultAccountBalance,userID,defaultAccountStatus)
     }
 

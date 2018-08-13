@@ -134,8 +134,8 @@ class SyncDataJobService: JobService() {
 
                 updateWalletAccount(accountList)
 
-                val editor = applicationContext.getSharedPreferences("SyncDateTime", AppCompatActivity.MODE_PRIVATE)!!.edit()
-                editor.putString("SyncDateTime", Calendar.getInstance().time.toString())
+                val editor = applicationContext.getSharedPreferences(userID, AppCompatActivity.MODE_PRIVATE)!!.edit()
+                editor.putString(userID, Calendar.getInstance().time.toString())
                 editor.apply()
                 editor.commit()
 

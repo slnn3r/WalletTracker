@@ -3,7 +3,9 @@ package com.example.slnn3r.wallettrackermvp.View.Activity
 
 import android.animation.ValueAnimator
 import android.app.Activity
+import android.app.job.JobScheduler
 import android.content.Context
+import android.content.DialogInterface
 import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
@@ -27,6 +29,8 @@ import android.widget.TextView
 import com.squareup.picasso.Picasso
 import androidx.navigation.Navigation
 import androidx.navigation.findNavController
+import com.example.slnn3r.wallettrackermvp.Model.ObjectClass.UserProfile
+import com.example.slnn3r.wallettrackermvp.Utility.AlertDialog
 import com.google.firebase.database.FirebaseDatabase
 
 
@@ -44,11 +48,19 @@ class MenuActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
     private lateinit var toggle:ActionBarDrawerToggle
 
+    private val alertDialog: AlertDialog = AlertDialog()
+
+    private lateinit var userProfile: UserProfile
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_menu)
         setSupportActionBar(toolbar)
+
+        // Get SharedPreference data
+        presenter = Presenter(this)
+        userProfile = presenter.getUserData(this)
 
         // display User info to Drawer
         displayUserInfo()
@@ -62,10 +74,6 @@ class MenuActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
 
     private fun displayUserInfo() {
-
-        // Get SharedPreference data
-        presenter = Presenter(this)
-        val userProfile = presenter.getUserData(this)
 
         val navigationView = findViewById<View>(R.id.nav_view) as NavigationView
         val headerView = navigationView.getHeaderView(0)
@@ -82,12 +90,12 @@ class MenuActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     }
 
     private fun displaySyncDateTime(){
-        val editor = getSharedPreferences("SyncDateTime", AppCompatActivity.MODE_PRIVATE)
+        val editor = getSharedPreferences(userProfile.UserUID, AppCompatActivity.MODE_PRIVATE)
 
         val navigationView = findViewById<View>(R.id.nav_view) as NavigationView
         val menu = navigationView.menu
         val navSyncData = menu.findItem(R.id.navDrawer_title2)
-        navSyncData.title = getString(R.string.navDrawer_title2, editor.getString("SyncDateTime",""))
+        navSyncData.title = getString(R.string.navDrawer_title2, editor.getString(userProfile.UserUID,""))
     }
 
 
@@ -245,7 +253,17 @@ class MenuActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                     Navigation.findNavController(this, R.id.navMenu).navigate(R.id.action_dashBoardFragment_to_trxHistoryFragment)
                 }
                 R.id.navDrawer_SignOut -> {
-                    presenter.logoutGoogleExecute(this)
+
+                    alertDialog.confirmationDialog(this,"Sign Out","Please Make Sure to Complete the Sync Data Before Sign Out. All Pending Sync Data Process will Remove.",resources.getDrawable(android.R.drawable.ic_dialog_alert),
+                            DialogInterface.OnClickListener { dialogBox, which ->
+
+                                // Cancel Job Schedule
+                                val scheduler: JobScheduler = this.applicationContext.getSystemService(JOB_SCHEDULER_SERVICE) as JobScheduler
+                                scheduler.cancel(123)
+
+                                presenter.logoutGoogleExecute(this)
+
+                            }).show()
                 }
                 R.id.navDrawer_SyncData -> {
                     val userProfile = presenter.getUserData(this)
@@ -280,6 +298,7 @@ class MenuActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         mainContext.startActivity(myIntent)
         Toast.makeText(mainContext, successLogoutMessage, Toast.LENGTH_LONG).show()
         (mainContext as Activity).finish()
+
     }
 
     override fun logoutFail(mainContext: Context, errorMessage: String) {

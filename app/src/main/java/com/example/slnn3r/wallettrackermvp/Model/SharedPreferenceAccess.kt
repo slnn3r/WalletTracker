@@ -39,18 +39,14 @@ class SharedPreferenceAccess: ModelInterface.SharedPreference{
         editor.putString(mainContext.getString(R.string.userProfileKey), userData)
         editor.apply()
         editor.commit()
-
-
-        val sync = mainContext.getSharedPreferences("SyncDateTime", AppCompatActivity.MODE_PRIVATE)!!.edit()
-        sync.putString("SyncDateTime", "Never Sync Before")
-        sync.apply()
-        sync.commit()
     }
 
     override fun removeUserData(mainContext: Context) {
 
         val editor = mainContext.getSharedPreferences(mainContext.getString(R.string.userProfileKey), Context.MODE_PRIVATE).edit()
         editor.remove(mainContext.getString(R.string.userProfileKey)).apply()
-        editor.remove(mainContext.getString(R.string.selectedAccount)).apply()
+        editor.remove(mainContext.getString(R.string.selectedAccount)).apply() // Did this really removed?
     }
+
+
 }

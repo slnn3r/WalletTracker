@@ -54,7 +54,7 @@ class FirebaseAccess: ModelInterface.FirebaseAccess{
 
     // Menu Activity
 
-    fun syncDataPeriodicFirebase(mainContext: Context, userID: String){         // JobScheduler test
+    fun syncDataPeriodicFirebase(mainContext: Context, userID: String){
 
         val bundle = PersistableBundle()
         bundle.putString("user", userID)
