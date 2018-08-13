@@ -44,8 +44,10 @@ interface PresenterInterface{
         fun loginGoogleExecute(mainContext: Context?, requestCode: Int, resultCode: Int, data: Intent)
 
         // Menu Activity
+        fun syncDataManually(mainContext: Context, userID: String)
         fun logoutGoogleExecute(mainContext: Context)
         fun logoutGoogleStatus(mainContext: Context, logoutStatus:Boolean, statusMessage:String)
+
 
         // DashBoard Fragment
         fun checkWalletAccount(mainContext: Context, userID:String) // (used by ViewWalletAccount Fragment as well)

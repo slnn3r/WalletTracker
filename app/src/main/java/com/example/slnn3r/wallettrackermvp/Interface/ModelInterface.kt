@@ -16,6 +16,7 @@ interface ModelInterface {
         // Login Activity
 
         // Menu Activity
+        fun syncDataManuallyFirebase(mainContext: Context,userID: String)
 
         // DashBoard Fragment
 

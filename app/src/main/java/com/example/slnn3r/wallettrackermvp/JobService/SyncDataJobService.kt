@@ -1,8 +1,14 @@
 package com.example.slnn3r.wallettrackermvp.JobService
 
+import android.app.Activity
 import android.app.job.JobParameters
 import android.app.job.JobService
+import android.os.Handler
+import android.support.design.widget.NavigationView
+import android.support.v7.app.AppCompatActivity
 import android.util.Log
+import android.view.View
+import android.widget.Toast
 import com.example.slnn3r.wallettrackermvp.Interface.PresenterInterface
 import com.example.slnn3r.wallettrackermvp.Model.FirebaseClass.TransactionCategoryFirebase
 import com.example.slnn3r.wallettrackermvp.Model.FirebaseClass.TransactionFirebase
@@ -11,6 +17,7 @@ import com.example.slnn3r.wallettrackermvp.Model.ObjectClass.Transaction
 import com.example.slnn3r.wallettrackermvp.Model.ObjectClass.TransactionCategory
 import com.example.slnn3r.wallettrackermvp.Model.ObjectClass.WalletAccount
 import com.example.slnn3r.wallettrackermvp.Presenter.Presenter
+import com.example.slnn3r.wallettrackermvp.R
 import com.example.slnn3r.wallettrackermvp.View.Fragment.DashBoardFragment
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
@@ -18,9 +25,10 @@ import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.ValueEventListener
+import java.util.*
 
 
-class theJobService: JobService() {
+class SyncDataJobService: JobService() {
 
     private var jobCancelled:Boolean = false
     private val database = FirebaseDatabase.getInstance()
@@ -34,8 +42,19 @@ class theJobService: JobService() {
 
 
         return true
+
     }
 
+    override fun onStopJob(params: JobParameters?): Boolean {
+
+        Log.e("","Job Cancel")
+        jobCancelled=true
+        return true
+
+    }
+
+
+    /////
     private fun updateTransactionCategory(categoryList:ArrayList<TransactionCategory>){
 
         categoryList.forEach {
@@ -55,6 +74,8 @@ class theJobService: JobService() {
 
         Log.e("","WalletAccount DONE")
 
+
+
     }
 
     private fun updateTransaction(transactionList:ArrayList<Transaction>){
@@ -67,15 +88,16 @@ class theJobService: JobService() {
 
     }
 
+
     private fun doBackgroundWork( params:JobParameters){
 
         val userID = params.extras.getString("user")
 
         presenter = Presenter(DashBoardFragment())
 
-        val accountList = presenter.getAccountData(applicationContext!!, userID)
-        val categoryList = presenter.getCategoryData(applicationContext!!, userID)
-        val transactionList = presenter.getTransactionData(applicationContext!!,userID)
+        val accountList = presenter.getAccountData(applicationContext, userID)
+        val categoryList = presenter.getCategoryData(applicationContext, userID)
+        val transactionList = presenter.getTransactionData(applicationContext,userID)
 
         database.reference.child("TransactionCategory").addListenerForSingleValueEvent(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
@@ -111,6 +133,19 @@ class theJobService: JobService() {
                 }
 
                 updateWalletAccount(accountList)
+
+                val editor = applicationContext.getSharedPreferences("SyncDateTime", AppCompatActivity.MODE_PRIVATE)!!.edit()
+                editor.putString("SyncDateTime", Calendar.getInstance().time.toString())
+                editor.apply()
+                editor.commit()
+
+                Handler().postDelayed({
+
+                    Toast.makeText(applicationContext, "Wallet Tracker Sync Completed", Toast.LENGTH_LONG).show()
+
+                }, 200)
+
+
             }
 
             override fun onCancelled(databaseError: DatabaseError) {
@@ -142,14 +177,6 @@ class theJobService: JobService() {
 
     }
 
-
-    override fun onStopJob(params: JobParameters?): Boolean {
-
-        Log.e("","Job Cancel")
-        jobCancelled=true
-        return true
-
-    }
 
 
 

@@ -28,9 +28,8 @@ import android.support.v7.widget.RecyclerView
 import android.util.Log
 import android.view.inputmethod.InputMethodManager
 import android.widget.*
-import com.example.slnn3r.wallettrackermvp.JobService.theJobService
+import com.example.slnn3r.wallettrackermvp.JobService.SyncDataJobService
 import com.example.slnn3r.wallettrackermvp.Model.ObjectClass.Transaction
-import com.example.slnn3r.wallettrackermvp.Model.ObjectClass.TransactionCategory
 import com.example.slnn3r.wallettrackermvp.Utility.CustomMarkerView
 import kotlin.collections.ArrayList
 import com.github.mikephil.charting.components.AxisBase
@@ -40,8 +39,6 @@ import com.github.mikephil.charting.formatter.IAxisValueFormatter
 import com.github.mikephil.charting.utils.ViewPortHandler
 import com.github.mikephil.charting.formatter.IValueFormatter
 import com.github.mikephil.charting.data.LineDataSet
-import com.google.firebase.database.FirebaseDatabase
-import com.google.gson.Gson
 import java.util.concurrent.TimeUnit
 
 
@@ -79,39 +76,16 @@ class DashBoardFragment : Fragment(),ViewInterface.DashBoardView {
 
         // Listener Setter
         DBIncomeFab.setOnClickListener{
-            val scheduler: JobScheduler = context!!.applicationContext.getSystemService(JOB_SCHEDULER_SERVICE) as JobScheduler
+            /*val scheduler: JobScheduler = context!!.applicationContext.getSystemService(JOB_SCHEDULER_SERVICE) as JobScheduler
             scheduler.cancel(123)
-            Log.e("","Job Cancelled")
+            Log.e("","Job Cancelled")*/
 
-            //onIncomeButtonClick(view, userID)
+            onIncomeButtonClick(view, userID)
         }
 
         DBExpenseFab.setOnClickListener{
 
-            // JobScheduler test
-            val bundle = PersistableBundle()
-                bundle.putString("user", userID)
-
-
-            val component=ComponentName(context!!, theJobService::class.java)
-            val info = JobInfo.Builder(123, component)
-                    .setPeriodic(TimeUnit.MINUTES.toMillis(1))
-                    .setExtras(bundle)
-                    .setRequiresCharging(true)
-                    .setRequiredNetworkType(JobInfo.NETWORK_TYPE_ANY)
-                    .setPersisted(true)
-                    .build()
-            val scheduler: JobScheduler = context!!.applicationContext.getSystemService(JOB_SCHEDULER_SERVICE) as JobScheduler
-            val resultCode = scheduler.schedule(info)
-
-            if(resultCode== JobScheduler.RESULT_SUCCESS){
-                Log.e("","Job Schedule")
-            }else{
-                Log.e("","Job Schedule Failed")
-
-            }
-
-            //onExpenseButtonClick(view, userID)
+            onExpenseButtonClick(view, userID)
         }
     }
 

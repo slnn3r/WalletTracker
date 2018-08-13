@@ -30,6 +30,10 @@ interface ViewInterface{
 
     interface MenuView{
 
+        fun syncDataSuccess(mainContext: Context)
+        fun syncDataFail(mainContext: Context, errorMessage: String)
+
+
         fun logoutSuccess(mainContext: Context, successLogoutMessage:String)
         fun logoutFail(mainContext: Context, errorMessage:String)
 

@@ -27,7 +27,7 @@ import android.widget.TextView
 import com.squareup.picasso.Picasso
 import androidx.navigation.Navigation
 import androidx.navigation.findNavController
-
+import com.google.firebase.database.FirebaseDatabase
 
 
 class MenuActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener,  ViewInterface.MenuView {
@@ -52,6 +52,7 @@ class MenuActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
         // display User info to Drawer
         displayUserInfo()
+        displaySyncDateTime()
 
         nav_view.setNavigationItemSelectedListener(this)
 
@@ -76,7 +77,19 @@ class MenuActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         navUserName.text = userProfile.UserName
         navUserEmail.text = userProfile.UserEmail
         Picasso.get().load(userProfile.UserPicURL).into(navUserPicture)
+
+
     }
+
+    private fun displaySyncDateTime(){
+        val editor = getSharedPreferences("SyncDateTime", AppCompatActivity.MODE_PRIVATE)
+
+        val navigationView = findViewById<View>(R.id.nav_view) as NavigationView
+        val menu = navigationView.menu
+        val navSyncData = menu.findItem(R.id.navDrawer_title2)
+        navSyncData.title = getString(R.string.navDrawer_title2, editor.getString("SyncDateTime",""))
+    }
+
 
     private fun setupNavigationUpButton() {
 
@@ -107,8 +120,9 @@ class MenuActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
                 setupNavigationMode()
             }else if(isNavigated==getString(R.string.disableNavigatedIndicate)){
-
+                // Do Nothing for the ToolBar at Dialogfragment Display
             }else {
+                displaySyncDateTime()
                 drawer_layout.openDrawer(GravityCompat.START)
             }
         }
@@ -233,12 +247,31 @@ class MenuActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                 R.id.navDrawer_SignOut -> {
                     presenter.logoutGoogleExecute(this)
                 }
+                R.id.navDrawer_SyncData -> {
+                    val userProfile = presenter.getUserData(this)
+                    presenter.syncDataManually(this, userProfile.UserUID)
+
+
+                }
+
             }
 
         }, 200)
 
         drawer_layout.closeDrawer(GravityCompat.START)
         return true
+    }
+
+
+    override fun syncDataSuccess(mainContext: Context) {
+
+        Toast.makeText(mainContext, "Sync is Executed on Background", Toast.LENGTH_SHORT).show()
+
+    }
+
+    override fun syncDataFail(mainContext: Context, errorMessage: String) {
+
+        Toast.makeText(mainContext, "Sync Data have Failed: "+errorMessage, Toast.LENGTH_LONG).show()
     }
 
     override fun logoutSuccess(mainContext: Context, successLogoutMessage: String) {

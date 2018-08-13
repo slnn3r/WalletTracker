@@ -41,9 +41,6 @@ import kotlin.collections.ArrayList
 
 
 class Presenter: PresenterInterface.Presenter{
-    override fun getTransactionData(mainContext: Context, userID: String): ArrayList<Transaction> {
-        return realmModel.getTransactionDataRealm(mainContext,userID)
-    }
 
 
     private lateinit var mainView: ViewInterface.MainView
@@ -144,6 +141,9 @@ class Presenter: PresenterInterface.Presenter{
         return sharedPreferenceModel.getSelectedAccountData(mainContext)
     }
 
+    override fun getTransactionData(mainContext: Context, userID: String): ArrayList<Transaction> {
+        return realmModel.getTransactionDataRealm(mainContext,userID)
+    }
 
 
 
@@ -409,6 +409,40 @@ class Presenter: PresenterInterface.Presenter{
 
 
     // Menu Activity
+    override fun syncDataManually(mainContext: Context, userID: String) {
+
+        syncDataManuallyObservable(mainContext,userID)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(object : Observer<Unit>
+                {
+                    override fun onSubscribe(d: Disposable)
+                    {
+                    }
+
+                    override fun onNext(value: Unit)
+                    {
+                        // Store to Value Shared Preference HERE
+
+                        menuView.syncDataSuccess(mainContext)
+                    }
+
+                    override fun onError(e: Throwable)
+                    {
+                        menuView.syncDataFail(mainContext,e.toString())
+                    }
+
+                    override fun onComplete()
+                    {
+                    }
+                })
+    }
+
+    private fun syncDataManuallyObservable(mainContext: Context, userID:String): Observable<Unit>{
+        return Observable.defer { Observable.just(firebaseModel.syncDataManuallyFirebase(mainContext,userID)) }
+    }
+
+
     override fun logoutGoogleExecute(mainContext: Context) {
 
         val activity = mainContext as Activity
