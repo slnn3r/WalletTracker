@@ -45,6 +45,8 @@ interface PresenterInterface{
 
         // Menu Activity
         fun syncDataManually(mainContext: Context, userID: String)
+        fun syncDataPeriodically(mainContext: Context, userID: String)
+
         fun logoutGoogleExecute(mainContext: Context)
         fun logoutGoogleStatus(mainContext: Context, logoutStatus:Boolean, statusMessage:String)
 

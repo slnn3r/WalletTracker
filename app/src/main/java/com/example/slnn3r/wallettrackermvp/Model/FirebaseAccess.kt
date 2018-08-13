@@ -54,7 +54,7 @@ class FirebaseAccess: ModelInterface.FirebaseAccess{
 
     // Menu Activity
 
-    fun syncDataPeriodicFirebase(mainContext: Context, userID: String){
+    override fun syncDataPeriodicallyFirebase(mainContext: Context, userID: String){
 
         val bundle = PersistableBundle()
         bundle.putString("user", userID)
@@ -64,7 +64,6 @@ class FirebaseAccess: ModelInterface.FirebaseAccess{
         val info = JobInfo.Builder(123, component)
                 .setPeriodic(TimeUnit.MINUTES.toMillis(1))
                 .setExtras(bundle)
-                .setRequiresCharging(true)
                 .setRequiredNetworkType(JobInfo.NETWORK_TYPE_ANY)
                 .setPersisted(true)
                 .build()
@@ -90,7 +89,6 @@ class FirebaseAccess: ModelInterface.FirebaseAccess{
         val info = JobInfo.Builder(123, component)
                 //.setPeriodic(TimeUnit.MINUTES.toMillis(1))
                 .setExtras(bundle)
-                .setRequiresCharging(true)
                 .setRequiredNetworkType(JobInfo.NETWORK_TYPE_ANY)
                 .setPersisted(true)
                 .build()

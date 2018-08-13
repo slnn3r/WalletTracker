@@ -442,6 +442,39 @@ class Presenter: PresenterInterface.Presenter{
         return Observable.defer { Observable.just(firebaseModel.syncDataManuallyFirebase(mainContext,userID)) }
     }
 
+    override fun syncDataPeriodically(mainContext: Context, userID: String) {
+
+        syncDataPeriodicallyObservable(mainContext,userID)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(object : Observer<Unit>
+                {
+                    override fun onSubscribe(d: Disposable)
+                    {
+                    }
+
+                    override fun onNext(value: Unit)
+                    {
+                        // Store to Value Shared Preference HERE
+
+                        menuView.startPeriodicSyncSuccess(mainContext)
+                    }
+
+                    override fun onError(e: Throwable)
+                    {
+                        menuView.startPeriodicSyncFail(mainContext,e.toString())
+                    }
+
+                    override fun onComplete()
+                    {
+                    }
+                })
+    }
+
+    private fun syncDataPeriodicallyObservable(mainContext: Context, userID:String): Observable<Unit>{
+        return Observable.defer { Observable.just(firebaseModel.syncDataPeriodicallyFirebase(mainContext,userID)) }
+    }
+
 
     override fun logoutGoogleExecute(mainContext: Context) {
 

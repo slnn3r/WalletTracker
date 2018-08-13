@@ -65,6 +65,7 @@ class MenuActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         // display User info to Drawer
         displayUserInfo()
         displaySyncDateTime()
+        presenter.syncDataPeriodically(this, userProfile.UserUID)
 
         nav_view.setNavigationItemSelectedListener(this)
 
@@ -281,10 +282,24 @@ class MenuActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     }
 
 
+
+    override fun startPeriodicSyncSuccess(mainContext: Context) {
+
+        Toast.makeText(mainContext, "Auto Sync Run Every 15mins from Now", Toast.LENGTH_LONG).show()
+    }
+
+    override fun startPeriodicSyncFail(mainContext: Context, errorMessage: String) {
+
+        Toast.makeText(mainContext, "Auto Sync Failed: "+errorMessage, Toast.LENGTH_LONG).show()
+    }
+
     override fun syncDataSuccess(mainContext: Context) {
 
-        Toast.makeText(mainContext, "Sync is Executed on Background", Toast.LENGTH_SHORT).show()
+        //Handler().postDelayed({
 
+            Toast.makeText(mainContext, "Sync is Executed on Background", Toast.LENGTH_SHORT).show()
+
+        //}, 200)
     }
 
     override fun syncDataFail(mainContext: Context, errorMessage: String) {

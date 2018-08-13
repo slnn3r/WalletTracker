@@ -33,6 +33,8 @@ interface ViewInterface{
         fun syncDataSuccess(mainContext: Context)
         fun syncDataFail(mainContext: Context, errorMessage: String)
 
+        fun startPeriodicSyncSuccess(mainContext: Context)
+        fun startPeriodicSyncFail(mainContext: Context, errorMessage: String)
 
         fun logoutSuccess(mainContext: Context, successLogoutMessage:String)
         fun logoutFail(mainContext: Context, errorMessage:String)
