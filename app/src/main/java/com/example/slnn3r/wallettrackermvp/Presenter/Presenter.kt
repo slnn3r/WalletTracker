@@ -15,6 +15,7 @@ import com.example.slnn3r.wallettrackermvp.Model.ObjectClass.WalletAccount
 import com.example.slnn3r.wallettrackermvp.Model.RealmAccess
 import android.app.Activity
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import androidx.navigation.Navigation.findNavController
 import com.example.slnn3r.wallettrackermvp.Model.ObjectClass.TransactionCategory
@@ -41,6 +42,34 @@ import kotlin.collections.ArrayList
 
 
 class Presenter: PresenterInterface.Presenter{
+    override fun syncData(mainContext: Context, userID: String) {
+
+        syncDataObservable(mainContext, userID)
+        .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(object : Observer<Unit> {
+
+                    override fun onSubscribe(d: Disposable) {
+                    }
+
+                    override fun onNext(value: Unit) {
+                        Log.e("load","Done")
+                        loginView.syncDataSuccess(mainContext)
+
+                    }
+
+                    override fun onError(e: Throwable) {
+                        loginView.syncDataFail(mainContext, e.toString())
+                    }
+
+                    override fun onComplete() {
+                    }
+                })
+    }
+
+    private fun syncDataObservable(mainContext: Context, userID: String): Observable<Unit>{
+        return Observable.defer { Observable.just(firebaseModel.syncDataFirebase(mainContext, userID))}
+    }
 
 
     private lateinit var mainView: ViewInterface.MainView
@@ -409,9 +438,9 @@ class Presenter: PresenterInterface.Presenter{
 
 
     // Menu Activity
-    override fun syncDataManually(mainContext: Context, userID: String) {
+    override fun backupDataManually(mainContext: Context, userID: String) {
 
-        syncDataManuallyObservable(mainContext,userID)
+        backupDataManuallyObservable(mainContext,userID)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(object : Observer<Unit>
@@ -424,12 +453,12 @@ class Presenter: PresenterInterface.Presenter{
                     {
                         // Store to Value Shared Preference HERE
 
-                        menuView.syncDataSuccess(mainContext)
+                        menuView.backupDataSuccess(mainContext)
                     }
 
                     override fun onError(e: Throwable)
                     {
-                        menuView.syncDataFail(mainContext,e.toString())
+                        menuView.backupDataFail(mainContext,e.toString())
                     }
 
                     override fun onComplete()
@@ -438,13 +467,13 @@ class Presenter: PresenterInterface.Presenter{
                 })
     }
 
-    private fun syncDataManuallyObservable(mainContext: Context, userID:String): Observable<Unit>{
-        return Observable.defer { Observable.just(firebaseModel.syncDataManuallyFirebase(mainContext,userID)) }
+    private fun backupDataManuallyObservable(mainContext: Context, userID:String): Observable<Unit>{
+        return Observable.defer { Observable.just(firebaseModel.backupDataManuallyFirebase(mainContext,userID)) }
     }
 
-    override fun syncDataPeriodically(mainContext: Context, userID: String) {
+    override fun backupDataPeriodically(mainContext: Context, userID: String) {
 
-        syncDataPeriodicallyObservable(mainContext,userID)
+        backupDataPeriodicallyObservable(mainContext,userID)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(object : Observer<Unit>
@@ -457,12 +486,12 @@ class Presenter: PresenterInterface.Presenter{
                     {
                         // Store to Value Shared Preference HERE
 
-                        menuView.startPeriodicSyncSuccess(mainContext)
+                        menuView.startPeriodicBackupSuccess(mainContext)
                     }
 
                     override fun onError(e: Throwable)
                     {
-                        menuView.startPeriodicSyncFail(mainContext,e.toString())
+                        menuView.startPeriodicBackupFail(mainContext,e.toString())
                     }
 
                     override fun onComplete()
@@ -471,8 +500,8 @@ class Presenter: PresenterInterface.Presenter{
                 })
     }
 
-    private fun syncDataPeriodicallyObservable(mainContext: Context, userID:String): Observable<Unit>{
-        return Observable.defer { Observable.just(firebaseModel.syncDataPeriodicallyFirebase(mainContext,userID)) }
+    private fun backupDataPeriodicallyObservable(mainContext: Context, userID:String): Observable<Unit>{
+        return Observable.defer { Observable.just(firebaseModel.backupDataPeriodicallyFirebase(mainContext,userID)) }
     }
 
 

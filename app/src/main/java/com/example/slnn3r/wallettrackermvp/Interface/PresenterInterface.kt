@@ -42,10 +42,12 @@ interface PresenterInterface{
 
         // Login activity
         fun loginGoogleExecute(mainContext: Context?, requestCode: Int, resultCode: Int, data: Intent)
+        fun syncData(mainContext: Context, userID: String)
+
 
         // Menu Activity
-        fun syncDataManually(mainContext: Context, userID: String)
-        fun syncDataPeriodically(mainContext: Context, userID: String)
+        fun backupDataManually(mainContext: Context, userID: String)
+        fun backupDataPeriodically(mainContext: Context, userID: String)
 
         fun logoutGoogleExecute(mainContext: Context)
         fun logoutGoogleStatus(mainContext: Context, logoutStatus:Boolean, statusMessage:String)

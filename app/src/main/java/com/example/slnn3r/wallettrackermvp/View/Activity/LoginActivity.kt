@@ -6,6 +6,7 @@ import android.content.Context
 import android.content.Intent
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.widget.Toast
 import com.example.slnn3r.wallettrackermvp.R
 import com.example.slnn3r.wallettrackermvp.Interface.ViewInterface
@@ -18,6 +19,17 @@ import kotlinx.android.synthetic.main.activity_login.*
 
 
 class LoginActivity : AppCompatActivity(), ViewInterface.LoginView {
+    override fun syncDataSuccess(mainContext: Context) {
+        val myIntent = Intent(mainContext, MenuActivity::class.java)
+        mainContext?.startActivity(myIntent)
+        Toast.makeText(mainContext, "Sync Done",Toast.LENGTH_LONG).show()
+
+        (mainContext as Activity).finish()
+    }
+
+    override fun syncDataFail(mainContext: Context, errorMessage: String) {
+        Toast.makeText(mainContext, "Sync Failed: "+errorMessage,Toast.LENGTH_LONG).show()
+    }
 
     private lateinit var presenter: PresenterInterface.Presenter
     private lateinit var mGoogleApiClient: GoogleApiClient
@@ -65,11 +77,16 @@ class LoginActivity : AppCompatActivity(), ViewInterface.LoginView {
 
     override fun loginSuccess(mainContext: Context?, successLoginMessage: String) {
 
-        val myIntent = Intent(mainContext, MenuActivity::class.java)
-        mainContext?.startActivity(myIntent)
+        //val myIntent = Intent(mainContext, MenuActivity::class.java)
+        //mainContext?.startActivity(myIntent)
         Toast.makeText(mainContext, successLoginMessage,Toast.LENGTH_LONG).show()
 
-        (mainContext as Activity).finish()
+        //(mainContext as Activity).finish()
+
+        Log.e("load","Start")
+        val user = presenter.getUserData(mainContext!!)
+        presenter.syncData(mainContext, user.UserUID)
+
     }
 
     override fun loginFail(mainContext: Context?, errorMessage: String) {

@@ -25,16 +25,18 @@ interface ViewInterface{
         fun displayLoginLoading(mainContext:Context): ProgressDialog
         fun dismissLoginLoading(loginLoading:ProgressDialog)
 
+        fun syncDataSuccess(mainContext: Context)
+        fun syncDataFail(mainContext: Context, errorMessage:String)
 
     }
 
     interface MenuView{
 
-        fun syncDataSuccess(mainContext: Context)
-        fun syncDataFail(mainContext: Context, errorMessage: String)
+        fun backupDataSuccess(mainContext: Context)
+        fun backupDataFail(mainContext: Context, errorMessage: String)
 
-        fun startPeriodicSyncSuccess(mainContext: Context)
-        fun startPeriodicSyncFail(mainContext: Context, errorMessage: String)
+        fun startPeriodicBackupSuccess(mainContext: Context)
+        fun startPeriodicBackupFail(mainContext: Context, errorMessage: String)
 
         fun logoutSuccess(mainContext: Context, successLogoutMessage:String)
         fun logoutFail(mainContext: Context, errorMessage:String)

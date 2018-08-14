@@ -65,7 +65,7 @@ class MenuActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         // display User info to Drawer
         displayUserInfo()
         displaySyncDateTime()
-        presenter.syncDataPeriodically(this, userProfile.UserUID)
+        presenter.backupDataPeriodically(this, userProfile.UserUID)
 
         nav_view.setNavigationItemSelectedListener(this)
 
@@ -268,7 +268,7 @@ class MenuActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                 }
                 R.id.navDrawer_SyncData -> {
                     val userProfile = presenter.getUserData(this)
-                    presenter.syncDataManually(this, userProfile.UserUID)
+                    presenter.backupDataManually(this, userProfile.UserUID)
 
 
                 }
@@ -283,17 +283,17 @@ class MenuActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
 
 
-    override fun startPeriodicSyncSuccess(mainContext: Context) {
+    override fun startPeriodicBackupSuccess(mainContext: Context) {
 
-        Toast.makeText(mainContext, "Auto Sync Run Every 15mins from Now", Toast.LENGTH_LONG).show()
+        Toast.makeText(mainContext, "Auto Backup Every 15mins, Close Apps from Background to Stop.", Toast.LENGTH_LONG).show()
     }
 
-    override fun startPeriodicSyncFail(mainContext: Context, errorMessage: String) {
+    override fun startPeriodicBackupFail(mainContext: Context, errorMessage: String) {
 
         Toast.makeText(mainContext, "Auto Sync Failed: "+errorMessage, Toast.LENGTH_LONG).show()
     }
 
-    override fun syncDataSuccess(mainContext: Context) {
+    override fun backupDataSuccess(mainContext: Context) {
 
         //Handler().postDelayed({
 
@@ -302,7 +302,7 @@ class MenuActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         //}, 200)
     }
 
-    override fun syncDataFail(mainContext: Context, errorMessage: String) {
+    override fun backupDataFail(mainContext: Context, errorMessage: String) {
 
         Toast.makeText(mainContext, "Sync Data have Failed: "+errorMessage, Toast.LENGTH_LONG).show()
     }

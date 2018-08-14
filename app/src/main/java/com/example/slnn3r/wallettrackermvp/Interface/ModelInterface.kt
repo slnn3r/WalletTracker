@@ -14,12 +14,11 @@ interface ModelInterface {
         fun checkLoginFirebase(): String?
 
         // Login Activity
+        fun syncDataFirebase(mainContext: Context, userID: String)
 
         // Menu Activity
-        fun syncDataManuallyFirebase(mainContext: Context,userID: String)
-        fun syncDataPeriodicallyFirebase(mainContext: Context,userID: String)
-
-        // DashBoard Fragment
+        fun backupDataManuallyFirebase(mainContext: Context,userID: String)
+        fun backupDataPeriodicallyFirebase(mainContext: Context,userID: String)
 
 
     }

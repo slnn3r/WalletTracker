@@ -43,7 +43,7 @@
         <menu>
             <item
                 android:id="@+id/navDrawer_SyncData"
-                android:icon="@drawable/sync_icon"
+                android:icon="@drawable/backup_icon"
                 android:title="@string/navDrawer_SyncData" />
 
         </menu>

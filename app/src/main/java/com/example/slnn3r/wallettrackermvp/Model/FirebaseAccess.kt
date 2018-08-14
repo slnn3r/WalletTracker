@@ -28,10 +28,12 @@ import java.util.concurrent.TimeUnit
 
 
 class FirebaseAccess: ModelInterface.FirebaseAccess{
+    override fun syncDataFirebase(mainContext: Context, userID: String) {
+
+    }
 
 
     private var mAuth: FirebaseAuth? = null
-    private var database:FirebaseDatabase? = FirebaseDatabase.getInstance()
 
     // Main Activity
     override fun checkLoginFirebase():String? {
@@ -54,7 +56,7 @@ class FirebaseAccess: ModelInterface.FirebaseAccess{
 
     // Menu Activity
 
-    override fun syncDataPeriodicallyFirebase(mainContext: Context, userID: String){
+    override fun backupDataPeriodicallyFirebase(mainContext: Context, userID: String){
 
         val bundle = PersistableBundle()
         bundle.putString("user", userID)
@@ -79,7 +81,7 @@ class FirebaseAccess: ModelInterface.FirebaseAccess{
     }
 
 
-    override fun syncDataManuallyFirebase(mainContext: Context, userID: String) {
+    override fun backupDataManuallyFirebase(mainContext: Context, userID: String) {
 
         val bundle = PersistableBundle()
         bundle.putString("user", userID)
