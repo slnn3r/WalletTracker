@@ -100,7 +100,7 @@ class FirebaseAccess: ModelInterface.FirebaseAccess{
         })
 
 
-        database.reference.child(mainContext.getString(R.string.WalletAccountFirebase)).addListenerForSingleValueEvent(object : ValueEventListener {
+        database.reference.child(mainContext.getString(R.string.TransactionFirebase)).addListenerForSingleValueEvent(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
                 for (dataSnapshot in snapshot.children) {
 

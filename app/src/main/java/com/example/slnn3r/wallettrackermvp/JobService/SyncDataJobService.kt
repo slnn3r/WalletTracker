@@ -20,6 +20,7 @@ import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.ValueEventListener
+import java.text.SimpleDateFormat
 import java.util.*
 
 
@@ -118,7 +119,20 @@ class SyncDataJobService: JobService() {
                 updateWalletAccount(accountList)
 
                 val editor = applicationContext.getSharedPreferences(userID, AppCompatActivity.MODE_PRIVATE)!!.edit()
-                editor.putString(userID, Calendar.getInstance().time.toString())
+
+
+                val df = SimpleDateFormat(applicationContext.getString(R.string.dateFormat))
+                val date12Format = SimpleDateFormat(applicationContext.getString(R.string.timeFormat12))
+                val date24Format = SimpleDateFormat(applicationContext.getString(R.string.timeFormat24))
+
+                val date = Calendar.getInstance().time
+
+                val formattedDate = df.format(date).toString()
+                val formattedTime = date12Format.format(date).toString()
+
+               // val convertedTime = date12Format.format(date24Format.parse(cal.))
+
+                editor.putString(userID, applicationContext.getString(R.string.formatDisplayDateTime,formattedDate,formattedTime))
                 editor.apply()
                 editor.commit()
 

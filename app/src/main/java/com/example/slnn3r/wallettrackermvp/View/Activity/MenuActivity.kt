@@ -92,10 +92,17 @@ class MenuActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     private fun displaySyncDateTime(){
         val editor = getSharedPreferences(userProfile.UserUID, AppCompatActivity.MODE_PRIVATE)
 
+        val datetime = editor.getString(userProfile.UserUID,"").toString()
+
         val navigationView = findViewById<View>(R.id.nav_view) as NavigationView
         val menu = navigationView.menu
         val navSyncData = menu.findItem(R.id.navDrawer_title2)
-        navSyncData.title = getString(R.string.navDrawer_title2, editor.getString(userProfile.UserUID,""))
+
+        if(datetime!=""){
+            navSyncData.title = getString(R.string.navDrawer_title2, editor.getString(userProfile.UserUID,""))
+        }else{
+            navSyncData.title =getString(R.string.navDrawer_title2, getString(R.string.syncDateTime))
+        }
     }
 
 
