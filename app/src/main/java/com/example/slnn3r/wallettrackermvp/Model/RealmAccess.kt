@@ -22,6 +22,7 @@ import kotlin.collections.ArrayList
 
 
 class RealmAccess: ModelInterface.RealmAccess{
+
     override fun getTransactionDataRealm(mainContext: Context, userID: String): ArrayList<Transaction> {
         var realm: Realm? = null
         val transactionData=ArrayList<Transaction>()

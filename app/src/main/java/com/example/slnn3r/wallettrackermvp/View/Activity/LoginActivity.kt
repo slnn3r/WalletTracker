@@ -85,7 +85,7 @@ class LoginActivity : AppCompatActivity(), ViewInterface.LoginView {
 
         Log.e("load","Start")
         val user = presenter.getUserData(mainContext!!)
-        presenter.syncData(mainContext, user.UserUID)
+        presenter.retrieveData(mainContext, user.UserUID)
 
     }
 

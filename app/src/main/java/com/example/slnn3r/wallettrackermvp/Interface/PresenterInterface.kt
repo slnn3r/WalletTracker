@@ -42,8 +42,7 @@ interface PresenterInterface{
 
         // Login activity
         fun loginGoogleExecute(mainContext: Context?, requestCode: Int, resultCode: Int, data: Intent)
-        fun syncData(mainContext: Context, userID: String)
-
+        fun retrieveData(mainContext: Context, userID: String)
 
         // Menu Activity
         fun backupDataManually(mainContext: Context, userID: String)

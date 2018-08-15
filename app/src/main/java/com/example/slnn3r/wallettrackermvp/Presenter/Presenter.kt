@@ -42,9 +42,9 @@ import kotlin.collections.ArrayList
 
 
 class Presenter: PresenterInterface.Presenter{
-    override fun syncData(mainContext: Context, userID: String) {
+    override fun retrieveData(mainContext: Context, userID: String) {
 
-        syncDataObservable(mainContext, userID)
+        retrieveDataObservable(mainContext, userID)
         .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(object : Observer<Unit> {
@@ -54,6 +54,7 @@ class Presenter: PresenterInterface.Presenter{
 
                     override fun onNext(value: Unit) {
                         Log.e("load","Done")
+
                         loginView.syncDataSuccess(mainContext)
 
                     }
@@ -67,8 +68,8 @@ class Presenter: PresenterInterface.Presenter{
                 })
     }
 
-    private fun syncDataObservable(mainContext: Context, userID: String): Observable<Unit>{
-        return Observable.defer { Observable.just(firebaseModel.syncDataFirebase(mainContext, userID))}
+    private fun retrieveDataObservable(mainContext: Context, userID: String): Observable<Unit>{
+        return Observable.defer { Observable.just(firebaseModel.retrieveDataFirebase(mainContext, userID))}
     }
 
 

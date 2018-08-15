@@ -76,9 +76,6 @@ class DashBoardFragment : Fragment(),ViewInterface.DashBoardView {
 
         // Listener Setter
         DBIncomeFab.setOnClickListener{
-            /*val scheduler: JobScheduler = context!!.applicationContext.getSystemService(JOB_SCHEDULER_SERVICE) as JobScheduler
-            scheduler.cancel(123)
-            Log.e("","Job Cancelled")*/
 
             onIncomeButtonClick(view, userID)
         }
@@ -223,8 +220,6 @@ class DashBoardFragment : Fragment(),ViewInterface.DashBoardView {
 
 
     override fun firstTimeSetupSuccess(mainContext: Context, walletAccount: WalletAccount) {
-
-
 
         presenter = Presenter(this)
         presenter.checkWalletAccount(mainContext, walletAccount.UserUID )

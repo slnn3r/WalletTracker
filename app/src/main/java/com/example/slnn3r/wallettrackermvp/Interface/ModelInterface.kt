@@ -1,6 +1,9 @@
 package com.example.slnn3r.wallettrackermvp.Interface
 
 import android.content.Context
+import com.example.slnn3r.wallettrackermvp.Model.FirebaseClass.TransactionCategoryFirebase
+import com.example.slnn3r.wallettrackermvp.Model.FirebaseClass.TransactionFirebase
+import com.example.slnn3r.wallettrackermvp.Model.FirebaseClass.WalletAccountFirebase
 import com.example.slnn3r.wallettrackermvp.Model.ObjectClass.Transaction
 import com.example.slnn3r.wallettrackermvp.Model.ObjectClass.TransactionCategory
 import com.example.slnn3r.wallettrackermvp.Model.ObjectClass.UserProfile
@@ -14,7 +17,7 @@ interface ModelInterface {
         fun checkLoginFirebase(): String?
 
         // Login Activity
-        fun syncDataFirebase(mainContext: Context, userID: String)
+        fun retrieveDataFirebase(mainContext: Context, userID: String)
 
         // Menu Activity
         fun backupDataManuallyFirebase(mainContext: Context,userID: String)
@@ -33,6 +36,9 @@ interface ModelInterface {
 
         fun getAccountDataByNameRealm(mainContext: Context, userID: String, accountName: String): WalletAccount
         fun getCategoryDataByNameRealm(mainContext: Context, userID: String, categoryName: String): TransactionCategory
+
+        // Login Activity
+        //fun syncDataRealm(mainContext: Context, userID: String, walletAccountList:ArrayList<WalletAccountFirebase>, transactionList:ArrayList<TransactionFirebase>, transactionCategoryList:ArrayList<TransactionCategoryFirebase>)
 
         // DashBoard Fragment
         fun checkWalletAccountRealm(mainContext: Context, userID: String): ArrayList<WalletAccount> //(used by WalletAccount Fragment as well)
