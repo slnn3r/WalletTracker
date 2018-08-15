@@ -1,5 +1,6 @@
 package com.example.slnn3r.wallettrackermvp.Model
 
+import android.app.Activity
 import android.app.job.JobInfo
 import android.app.job.JobScheduler
 import android.content.ComponentName
@@ -28,6 +29,7 @@ import com.example.slnn3r.wallettrackermvp.Model.RealmClass.TransactionCategoryR
 import com.example.slnn3r.wallettrackermvp.Model.RealmClass.TransactionRealm
 import com.example.slnn3r.wallettrackermvp.Model.RealmClass.WalletAccountRealm
 import com.example.slnn3r.wallettrackermvp.R
+import com.example.slnn3r.wallettrackermvp.View.Activity.LoginActivity
 import com.google.gson.Gson
 import io.realm.Realm
 import io.realm.RealmConfiguration
@@ -78,10 +80,12 @@ class FirebaseAccess: ModelInterface.FirebaseAccess{
                 Log.e("TC: ",transactionCategoryList.size.toString())
 
                 syncTransactionCategoryRealm(mainContext, userID, transactionCategoryList)
+
             }
 
             override fun onCancelled(databaseError: DatabaseError) {
                 Log.w("TAG: ", databaseError.message)
+                (mainContext as LoginActivity).loadFailed()
             }
 
         })
@@ -100,10 +104,13 @@ class FirebaseAccess: ModelInterface.FirebaseAccess{
 
                 Log.e("WA: ",walletAccountList.size.toString())
                 syncWalletAccountRealm(mainContext, userID, walletAccountList)
+                (mainContext as LoginActivity).finishLoad() // Load all then trigger this to open to DashBoard
+
             }
 
             override fun onCancelled(databaseError: DatabaseError) {
                 Log.w("TAG: ", databaseError.message)
+                (mainContext as LoginActivity).loadFailed()
             }
         })
 
@@ -125,6 +132,7 @@ class FirebaseAccess: ModelInterface.FirebaseAccess{
 
             override fun onCancelled(databaseError: DatabaseError) {
                 Log.w("TAG: ", databaseError.message)
+                (mainContext as LoginActivity).loadFailed()
             }
         })
 
@@ -132,6 +140,8 @@ class FirebaseAccess: ModelInterface.FirebaseAccess{
     }
 
     private fun syncWalletAccountRealm(mainContext: Context, userID:String, walletAccountList:ArrayList<WalletAccountFirebase>){
+
+        try{
 
         var realm: Realm? = null
         Realm.init(mainContext)
@@ -170,10 +180,15 @@ class FirebaseAccess: ModelInterface.FirebaseAccess{
         realm.close()
         Log.e("WA: ","DONE CREATE")
 
+        }catch (e:Exception){
+            (mainContext as LoginActivity).loadFailed()
+        }
     }
 
 
     private fun syncTransactionCategoryRealm(mainContext: Context, userID:String, transactionCategoryList:ArrayList<TransactionCategoryFirebase>){
+
+        try{
 
         var realm: Realm? = null
         Realm.init(mainContext)
@@ -212,10 +227,16 @@ class FirebaseAccess: ModelInterface.FirebaseAccess{
         realm.close()
         Log.e("TC: ","DONE CREATE")
 
+        }catch (e:Exception){
+            (mainContext as LoginActivity).loadFailed()
+        }
     }
 
 
     private fun syncTransaction(mainContext: Context, userID:String, transactionList:ArrayList<TransactionFirebase>){
+
+        try{
+
         var realm: Realm? = null
         Realm.init(mainContext)
 
@@ -264,6 +285,9 @@ class FirebaseAccess: ModelInterface.FirebaseAccess{
         realm.close()
         Log.e("T: ","DONE CREATE")
 
+        }catch (e:Exception){
+            (mainContext as LoginActivity).loadFailed()
+        }
     }
 
 

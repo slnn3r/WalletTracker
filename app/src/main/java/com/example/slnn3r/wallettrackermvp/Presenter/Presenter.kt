@@ -28,6 +28,7 @@ import com.google.android.gms.auth.api.Auth
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.common.api.GoogleApiClient
+import com.google.android.gms.tasks.TaskCompletionSource
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.GoogleAuthProvider
 import com.google.gson.Gson
@@ -42,6 +43,14 @@ import kotlin.collections.ArrayList
 
 
 class Presenter: PresenterInterface.Presenter{
+    /*override fun retrieveData(mainContext: Context, userID: String) {
+
+
+        firebaseModel.retrieveDataFirebase(mainContext, userID)
+
+        loginView.syncDataSuccess(mainContext)
+
+    }*/
     override fun retrieveData(mainContext: Context, userID: String) {
 
         retrieveDataObservable(mainContext, userID)
