@@ -360,7 +360,7 @@ class RealmAccess: ModelInterface.RealmAccess{
 
         // Save Never Sync Before
         val sync = mainContext.getSharedPreferences(userID, AppCompatActivity.MODE_PRIVATE)!!.edit()
-        sync.putString(userID, "Never Sync Before")
+        sync.putString(userID, mainContext.getString(R.string.syncDateTime))
         sync.apply()
         sync.commit()
 

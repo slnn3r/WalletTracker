@@ -15,7 +15,6 @@ import com.example.slnn3r.wallettrackermvp.Model.ObjectClass.WalletAccount
 import com.example.slnn3r.wallettrackermvp.Model.RealmAccess
 import android.app.Activity
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import androidx.navigation.Navigation.findNavController
 import com.example.slnn3r.wallettrackermvp.Model.ObjectClass.TransactionCategory
@@ -28,7 +27,6 @@ import com.google.android.gms.auth.api.Auth
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.common.api.GoogleApiClient
-import com.google.android.gms.tasks.TaskCompletionSource
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.GoogleAuthProvider
 import com.google.gson.Gson
@@ -43,44 +41,6 @@ import kotlin.collections.ArrayList
 
 
 class Presenter: PresenterInterface.Presenter{
-    /*override fun retrieveData(mainContext: Context, userID: String) {
-
-
-        firebaseModel.retrieveDataFirebase(mainContext, userID)
-
-        loginView.syncDataSuccess(mainContext)
-
-    }*/
-    override fun retrieveData(mainContext: Context, userID: String) {
-
-        retrieveDataObservable(mainContext, userID)
-        .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(object : Observer<Unit> {
-
-                    override fun onSubscribe(d: Disposable) {
-                    }
-
-                    override fun onNext(value: Unit) {
-                        Log.e("load","Done")
-
-                        loginView.syncDataSuccess(mainContext)
-
-                    }
-
-                    override fun onError(e: Throwable) {
-                        loginView.syncDataFail(mainContext, e.toString())
-                    }
-
-                    override fun onComplete() {
-                    }
-                })
-    }
-
-    private fun retrieveDataObservable(mainContext: Context, userID: String): Observable<Unit>{
-        return Observable.defer { Observable.just(firebaseModel.retrieveDataFirebase(mainContext, userID))}
-    }
-
 
     private lateinit var mainView: ViewInterface.MainView
     private lateinit var loginView: ViewInterface.LoginView
@@ -445,6 +405,34 @@ class Presenter: PresenterInterface.Presenter{
     }
 
 
+    override fun retrieveData(mainContext: Context, userID: String) {
+
+        retrieveDataObservable(mainContext, userID)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(object : Observer<Unit> {
+
+                    override fun onSubscribe(d: Disposable) {
+                    }
+
+                    override fun onNext(value: Unit) {
+
+                        loginView.syncDataSuccess(mainContext)
+                    }
+
+                    override fun onError(e: Throwable) {
+                        loginView.syncDataFail(mainContext, e.toString())
+                    }
+
+                    override fun onComplete() {
+                    }
+                })
+    }
+
+    private fun retrieveDataObservable(mainContext: Context, userID: String): Observable<Unit>{
+        return Observable.defer { Observable.just(firebaseModel.retrieveDataFirebase(mainContext, userID))}
+    }
+
 
 
     // Menu Activity
@@ -461,8 +449,6 @@ class Presenter: PresenterInterface.Presenter{
 
                     override fun onNext(value: Unit)
                     {
-                        // Store to Value Shared Preference HERE
-
                         menuView.backupDataSuccess(mainContext)
                     }
 
@@ -494,8 +480,6 @@ class Presenter: PresenterInterface.Presenter{
 
                     override fun onNext(value: Unit)
                     {
-                        // Store to Value Shared Preference HERE
-
                         menuView.startPeriodicBackupSuccess(mainContext)
                     }
 

@@ -14,7 +14,6 @@ interface ViewInterface{
         fun navigateToLoginScreen()
         fun navigateToMenuScreen(userName: String?)
         fun checkLoginFail(errorMessage: String)
-
     }
 
     interface LoginView{
@@ -27,7 +26,6 @@ interface ViewInterface{
 
         fun syncDataSuccess(mainContext: Context)
         fun syncDataFail(mainContext: Context, errorMessage:String)
-
     }
 
     interface MenuView{
@@ -40,7 +38,6 @@ interface ViewInterface{
 
         fun logoutSuccess(mainContext: Context, successLogoutMessage:String)
         fun logoutFail(mainContext: Context, errorMessage:String)
-
     }
 
     interface DashBoardView{
@@ -59,7 +56,6 @@ interface ViewInterface{
         fun populateThisMonthExpense(mainContext: Context, thisMonthExpense:Double)
 
         fun populateExpenseGraph(mainContext: Context, entryList: ArrayList<Entry>, xAxisList: ArrayList<String>)
-
     }
 
 
@@ -70,15 +66,12 @@ interface ViewInterface{
 
         fun createButtonStatus(mainContext: Context, walletAccountCount:Int)
         fun createButtonStatusFail(mainContext: Context, errorMessage: String)
-
     }
 
     interface CreateWalletAccountView{
 
         fun createWalletAccountSuccess(mainContext: Context)
         fun createWalletAccountFail(mainContext: Context, errorMessage:String)
-
-
     }
 
     interface DetailsWalletAccountView{
@@ -88,8 +81,6 @@ interface ViewInterface{
 
         fun deleteWalletAccountSuccess(mainContext: Context)
         fun deleteWalletAccountFail(mainContext: Context, errorMessage:String)
-
-
     }
 
 
@@ -97,7 +88,6 @@ interface ViewInterface{
 
         fun populateTrxCategoryRecycleView(mainContext: Context, trxCategoryList: ArrayList<TransactionCategory>)
         fun populateTrxCategoryRecycleViewFail(mainContext: Context, errorMessage: String)
-
     }
 
 
@@ -105,7 +95,6 @@ interface ViewInterface{
 
         fun createTrxCategorySuccess(mainContext: Context)
         fun createTrxCategoryFail(mainContext: Context, errorMessage:String)
-
     }
 
     interface DetailsTrxCategoryView{
@@ -115,7 +104,6 @@ interface ViewInterface{
 
         fun deleteTrxCategorySuccess(mainContext: Context)
         fun deleteTrxCategoryFail(mainContext: Context, errorMessage:String)
-
     }
 
     interface NewTrxView{
@@ -128,7 +116,6 @@ interface ViewInterface{
 
         fun createNewTrxSuccess(mainContext: Context)
         fun createNewTrxFail(mainContext: Context, errorMessage: String)
-
     }
 
     interface DetailsTrxView{
@@ -144,9 +131,6 @@ interface ViewInterface{
 
         fun deleteDetailsTrxSuccess(mainContext: Context)
         fun deleteDetailsTrxFail(mainContext: Context, errorMessage: String)
-
-
-
     }
 
     interface TrxHistorySpecificView{
@@ -177,7 +161,6 @@ interface ViewInterface{
 
         fun populateTrxHistoryRangeRecycleView(mainContext: Context, transactionList: ArrayList<Transaction>)
         fun populateTrxHistoryRangeRecycleViewFail(mainContext: Context, errorMessage: String)
-
     }
 
 

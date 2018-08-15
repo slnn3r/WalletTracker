@@ -1,30 +1,21 @@
 package com.example.slnn3r.wallettrackermvp.Model
 
-import android.app.Activity
 import android.app.job.JobInfo
 import android.app.job.JobScheduler
 import android.content.ComponentName
 import android.content.Context
-import android.os.Handler
 import android.os.PersistableBundle
 import android.util.Log
-import android.widget.Toast
 import com.example.slnn3r.wallettrackermvp.Interface.ModelInterface
 import com.example.slnn3r.wallettrackermvp.JobService.SyncDataJobService
 import com.example.slnn3r.wallettrackermvp.Model.FirebaseClass.TransactionCategoryFirebase
 import com.example.slnn3r.wallettrackermvp.Model.FirebaseClass.TransactionFirebase
 import com.example.slnn3r.wallettrackermvp.Model.FirebaseClass.WalletAccountFirebase
-import com.example.slnn3r.wallettrackermvp.Model.ObjectClass.Transaction
-import com.example.slnn3r.wallettrackermvp.Model.ObjectClass.TransactionCategory
-import com.example.slnn3r.wallettrackermvp.Model.ObjectClass.WalletAccount
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
-import java.util.*
-
-import android.net.ConnectivityManager
 import com.example.slnn3r.wallettrackermvp.Model.RealmClass.TransactionCategoryRealm
 import com.example.slnn3r.wallettrackermvp.Model.RealmClass.TransactionRealm
 import com.example.slnn3r.wallettrackermvp.Model.RealmClass.WalletAccountRealm
@@ -57,7 +48,7 @@ class FirebaseAccess: ModelInterface.FirebaseAccess{
     }
 
 
-    // Login Activity
+    // Login Activity (Include Bad Error Handling for Realm+Firebase)
     override fun retrieveDataFirebase(mainContext: Context, userID: String) {
 
         database = FirebaseDatabase.getInstance()
@@ -66,7 +57,7 @@ class FirebaseAccess: ModelInterface.FirebaseAccess{
         val transactionList= ArrayList<TransactionFirebase>()
         val walletAccountList= ArrayList<WalletAccountFirebase>()
 
-        database.reference.child("TransactionCategory").addListenerForSingleValueEvent(object : ValueEventListener {
+        database.reference.child(mainContext.getString(R.string.TransactionCategoryFirebase)).addListenerForSingleValueEvent(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
                 for (dataSnapshot in snapshot.children) {
 
@@ -77,21 +68,17 @@ class FirebaseAccess: ModelInterface.FirebaseAccess{
                     }
                 }
 
-                Log.e("TC: ",transactionCategoryList.size.toString())
-
                 syncTransactionCategoryRealm(mainContext, userID, transactionCategoryList)
-
             }
 
             override fun onCancelled(databaseError: DatabaseError) {
                 Log.w("TAG: ", databaseError.message)
                 (mainContext as LoginActivity).loadFailed()
             }
-
         })
 
 
-        database.reference.child("WalletAccount").addListenerForSingleValueEvent(object : ValueEventListener {
+        database.reference.child(mainContext.getString(R.string.WalletAccountFirebase)).addListenerForSingleValueEvent(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
                 for (dataSnapshot in snapshot.children) {
 
@@ -102,10 +89,8 @@ class FirebaseAccess: ModelInterface.FirebaseAccess{
                     }
                 }
 
-                Log.e("WA: ",walletAccountList.size.toString())
                 syncWalletAccountRealm(mainContext, userID, walletAccountList)
                 (mainContext as LoginActivity).finishLoad() // Load all then trigger this to open to DashBoard
-
             }
 
             override fun onCancelled(databaseError: DatabaseError) {
@@ -115,7 +100,7 @@ class FirebaseAccess: ModelInterface.FirebaseAccess{
         })
 
 
-        database.reference.child("Transaction").addListenerForSingleValueEvent(object : ValueEventListener {
+        database.reference.child(mainContext.getString(R.string.WalletAccountFirebase)).addListenerForSingleValueEvent(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
                 for (dataSnapshot in snapshot.children) {
 
@@ -126,7 +111,6 @@ class FirebaseAccess: ModelInterface.FirebaseAccess{
                     }
                 }
 
-                Log.e("T: ",transactionList.size.toString())
                 syncTransaction(mainContext, userID, transactionList)
             }
 
@@ -135,26 +119,24 @@ class FirebaseAccess: ModelInterface.FirebaseAccess{
                 (mainContext as LoginActivity).loadFailed()
             }
         })
-
-
     }
 
     private fun syncWalletAccountRealm(mainContext: Context, userID:String, walletAccountList:ArrayList<WalletAccountFirebase>){
 
         try{
 
-        var realm: Realm? = null
-        Realm.init(mainContext)
+            var realm: Realm? = null
+            Realm.init(mainContext)
 
-        val config = RealmConfiguration.Builder()
-                .name(mainContext.getString(R.string.walletAccountRealm))
-                .build()
+            val config = RealmConfiguration.Builder()
+                    .name(mainContext.getString(R.string.walletAccountRealm))
+                    .build()
 
-        realm = Realm.getInstance(config)
+            realm = Realm.getInstance(config)
 
-        realm!!.executeTransaction {
+            realm!!.executeTransaction {
 
-            val getWalletAccount = realm.where(WalletAccountRealm::class.java).equalTo("userUID",userID).findAll()
+            val getWalletAccount = realm.where(WalletAccountRealm::class.java).equalTo(mainContext.getString(R.string.UserUID),userID).findAll()
 
             getWalletAccount.forEach{
                 dataList->
@@ -173,12 +155,9 @@ class FirebaseAccess: ModelInterface.FirebaseAccess{
                     creating.userUID = data.UserUID
                 }
             }
-
-
         }
 
         realm.close()
-        Log.e("WA: ","DONE CREATE")
 
         }catch (e:Exception){
             (mainContext as LoginActivity).loadFailed()
@@ -190,18 +169,18 @@ class FirebaseAccess: ModelInterface.FirebaseAccess{
 
         try{
 
-        var realm: Realm? = null
-        Realm.init(mainContext)
+            var realm: Realm? = null
+            Realm.init(mainContext)
 
-        val config = RealmConfiguration.Builder()
-                .name(mainContext.getString(R.string.transactionCategoryRealm))
-                .build()
+            val config = RealmConfiguration.Builder()
+                    .name(mainContext.getString(R.string.transactionCategoryRealm))
+                    .build()
 
-        realm = Realm.getInstance(config)
+            realm = Realm.getInstance(config)
 
-        realm!!.executeTransaction {
+            realm!!.executeTransaction {
 
-            val getTransactionCategory = realm.where(TransactionCategoryRealm::class.java).equalTo("userUID",userID).findAll()
+            val getTransactionCategory = realm.where(TransactionCategoryRealm::class.java).equalTo(mainContext.getString(R.string.UserUID),userID).findAll()
 
             getTransactionCategory.forEach{
                 dataList->
@@ -220,12 +199,9 @@ class FirebaseAccess: ModelInterface.FirebaseAccess{
                     creating.userUID = data.UserUID
                 }
             }
-
-
         }
 
         realm.close()
-        Log.e("TC: ","DONE CREATE")
 
         }catch (e:Exception){
             (mainContext as LoginActivity).loadFailed()
@@ -237,16 +213,16 @@ class FirebaseAccess: ModelInterface.FirebaseAccess{
 
         try{
 
-        var realm: Realm? = null
-        Realm.init(mainContext)
+            var realm: Realm? = null
+            Realm.init(mainContext)
 
-        val config = RealmConfiguration.Builder()
-                .name(mainContext.getString(R.string.transactionRealm))
-                .build()
+            val config = RealmConfiguration.Builder()
+                    .name(mainContext.getString(R.string.transactionRealm))
+                    .build()
 
-        realm = Realm.getInstance(config)
+            realm = Realm.getInstance(config)
 
-        realm!!.executeTransaction {
+            realm!!.executeTransaction {
 
             val getTrx = realm.where(TransactionRealm::class.java).findAll()
             val gson = Gson()
@@ -278,12 +254,9 @@ class FirebaseAccess: ModelInterface.FirebaseAccess{
 
                 }
             }
-
-
         }
 
         realm.close()
-        Log.e("T: ","DONE CREATE")
 
         }catch (e:Exception){
             (mainContext as LoginActivity).loadFailed()
@@ -297,11 +270,10 @@ class FirebaseAccess: ModelInterface.FirebaseAccess{
     override fun backupDataPeriodicallyFirebase(mainContext: Context, userID: String){
 
         val bundle = PersistableBundle()
-        bundle.putString("user", userID)
-
+        bundle.putString(mainContext.getString(R.string.userIDServiceKey), userID)
 
         val component= ComponentName(mainContext, SyncDataJobService::class.java)
-        val info = JobInfo.Builder(123, component)
+        val info = JobInfo.Builder(mainContext.getString(R.string.JobServiceID).toInt(), component)
                 .setPeriodic(TimeUnit.MINUTES.toMillis(1))
                 .setExtras(bundle)
                 .setRequiredNetworkType(JobInfo.NETWORK_TYPE_ANY)
@@ -314,7 +286,6 @@ class FirebaseAccess: ModelInterface.FirebaseAccess{
             Log.e("","Job Schedule")
         }else{
             Log.e("","Job Schedule Failed")
-
         }
     }
 
@@ -322,11 +293,10 @@ class FirebaseAccess: ModelInterface.FirebaseAccess{
     override fun backupDataManuallyFirebase(mainContext: Context, userID: String) {
 
         val bundle = PersistableBundle()
-        bundle.putString("user", userID)
-
+        bundle.putString(mainContext.getString(R.string.userIDServiceKey), userID)
 
         val component= ComponentName(mainContext, SyncDataJobService::class.java)
-        val info = JobInfo.Builder(123, component)
+        val info = JobInfo.Builder(mainContext.getString(R.string.JobServiceID).toInt(), component)
                 //.setPeriodic(TimeUnit.MINUTES.toMillis(1))
                 .setExtras(bundle)
                 .setRequiredNetworkType(JobInfo.NETWORK_TYPE_ANY)
@@ -339,12 +309,6 @@ class FirebaseAccess: ModelInterface.FirebaseAccess{
             Log.e("","Job Schedule")
         }else{
             Log.e("","Job Schedule Failed")
-
         }
-
-
     }
-
-
-
 }

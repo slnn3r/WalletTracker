@@ -1,13 +1,10 @@
 package com.example.slnn3r.wallettrackermvp.JobService
 
-import android.app.Activity
 import android.app.job.JobParameters
 import android.app.job.JobService
 import android.os.Handler
-import android.support.design.widget.NavigationView
 import android.support.v7.app.AppCompatActivity
 import android.util.Log
-import android.view.View
 import android.widget.Toast
 import com.example.slnn3r.wallettrackermvp.Interface.PresenterInterface
 import com.example.slnn3r.wallettrackermvp.Model.FirebaseClass.TransactionCategoryFirebase
@@ -19,8 +16,6 @@ import com.example.slnn3r.wallettrackermvp.Model.ObjectClass.WalletAccount
 import com.example.slnn3r.wallettrackermvp.Presenter.Presenter
 import com.example.slnn3r.wallettrackermvp.R
 import com.example.slnn3r.wallettrackermvp.View.Fragment.DashBoardFragment
-import com.google.gson.Gson
-import com.google.gson.reflect.TypeToken
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.DataSnapshot
@@ -36,62 +31,52 @@ class SyncDataJobService: JobService() {
 
     override fun onStartJob(params: JobParameters?): Boolean {
 
-        Log.e("","JobStarted")
-
+        Log.e("Job Scheduler Service","JobStarted")
         doBackgroundWork(params!!)
-
-
         return true
-
     }
 
     override fun onStopJob(params: JobParameters?): Boolean {
 
-        Log.e("","Job Cancel")
+        Log.e("Job Scheduler Service","Job Cancel")
         jobCancelled=true
         return true
-
     }
 
 
-    /////
     private fun updateTransactionCategory(categoryList:ArrayList<TransactionCategory>){
 
         categoryList.forEach {
             data->
-            database.reference.child("TransactionCategory").push().setValue(data)
+            database.reference.child(applicationContext.getString(R.string.TransactionCategoryFirebase)).push().setValue(data)
         }
 
-        Log.e("","TransactionCategory DONE")
-
+        Log.e("Job Scheduler Service","TransactionCategory Push DONE")
     }
 
     private fun updateWalletAccount(accountList:ArrayList<WalletAccount>){
         accountList.forEach {
             data->
-            database.reference.child("WalletAccount").push().setValue(data)
+            database.reference.child(applicationContext.getString(R.string.WalletAccountFirebase)).push().setValue(data)
         }
 
-        Log.e("","WalletAccount DONE")
-
-
-
+        Log.e("Job Scheduler Service","WalletAccount Push DONE")
     }
 
     private fun updateTransaction(transactionList:ArrayList<Transaction>){
         transactionList.forEach {
             data->
-            database.reference.child("Transaction").push().setValue(data)
+            database.reference.child(applicationContext.getString(R.string.TransactionFirebase)).push().setValue(data)
         }
 
-        Log.e("","Transaction DONE")
-
+        Log.e("Job Scheduler Service","Transaction Push DONE")
     }
 
 
+    //(No Error Handling for Firebase)
     private fun doBackgroundWork( params:JobParameters){
 
-        val userID = params.extras.getString("user")
+        val userID = params.extras.getString(applicationContext.getString(R.string.userIDServiceKey))
 
         presenter = Presenter(DashBoardFragment())
 
@@ -99,7 +84,7 @@ class SyncDataJobService: JobService() {
         val categoryList = presenter.getCategoryData(applicationContext, userID)
         val transactionList = presenter.getTransactionData(applicationContext,userID)
 
-        database.reference.child("TransactionCategory").addListenerForSingleValueEvent(object : ValueEventListener {
+        database.reference.child(applicationContext.getString(R.string.TransactionCategoryFirebase)).addListenerForSingleValueEvent(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
                 for (dataSnapshot in snapshot.children) {
 
@@ -108,7 +93,6 @@ class SyncDataJobService: JobService() {
                     if(message!!.UserUID==userID){
                         dataSnapshot.ref.setValue(null)
                     }
-
                 }
 
                 updateTransactionCategory(categoryList)
@@ -120,7 +104,7 @@ class SyncDataJobService: JobService() {
         })
 
 
-        database.reference.child("WalletAccount").addListenerForSingleValueEvent(object : ValueEventListener {
+        database.reference.child(applicationContext.getString(R.string.WalletAccountFirebase)).addListenerForSingleValueEvent(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
                 for (dataSnapshot in snapshot.children) {
 
@@ -129,7 +113,6 @@ class SyncDataJobService: JobService() {
                     if(message!!.UserUID==userID){
                         dataSnapshot.ref.setValue(null)
                     }
-
                 }
 
                 updateWalletAccount(accountList)
@@ -141,11 +124,9 @@ class SyncDataJobService: JobService() {
 
                 Handler().postDelayed({
 
-                    Toast.makeText(applicationContext, "Wallet Tracker Sync Completed", Toast.LENGTH_LONG).show()
+                    Toast.makeText(applicationContext, applicationContext.getString(R.string.syncServiceSuccess), Toast.LENGTH_LONG).show()
 
                 }, 200)
-
-
             }
 
             override fun onCancelled(databaseError: DatabaseError) {
@@ -153,7 +134,8 @@ class SyncDataJobService: JobService() {
             }
         })
 
-        database.reference.child("Transaction").addListenerForSingleValueEvent(object : ValueEventListener {
+
+        database.reference.child(applicationContext.getString(R.string.TransactionFirebase)).addListenerForSingleValueEvent(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
                 for (dataSnapshot in snapshot.children) {
 
@@ -162,7 +144,6 @@ class SyncDataJobService: JobService() {
                     if(message!!.WalletAccount.UserUID==userID){
                         dataSnapshot.ref.setValue(null)
                     }
-
                 }
 
                 updateTransaction(transactionList)
@@ -172,12 +153,5 @@ class SyncDataJobService: JobService() {
                 Log.w("TAG: ", databaseError.message)
             }
         })
-
-
-
     }
-
-
-
-
 }

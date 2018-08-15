@@ -1,9 +1,6 @@
 package com.example.slnn3r.wallettrackermvp.Interface
 
 import android.content.Context
-import com.example.slnn3r.wallettrackermvp.Model.FirebaseClass.TransactionCategoryFirebase
-import com.example.slnn3r.wallettrackermvp.Model.FirebaseClass.TransactionFirebase
-import com.example.slnn3r.wallettrackermvp.Model.FirebaseClass.WalletAccountFirebase
 import com.example.slnn3r.wallettrackermvp.Model.ObjectClass.Transaction
 import com.example.slnn3r.wallettrackermvp.Model.ObjectClass.TransactionCategory
 import com.example.slnn3r.wallettrackermvp.Model.ObjectClass.UserProfile
@@ -22,8 +19,6 @@ interface ModelInterface {
         // Menu Activity
         fun backupDataManuallyFirebase(mainContext: Context,userID: String)
         fun backupDataPeriodicallyFirebase(mainContext: Context,userID: String)
-
-
     }
 
     interface RealmAccess{
@@ -36,9 +31,6 @@ interface ModelInterface {
 
         fun getAccountDataByNameRealm(mainContext: Context, userID: String, accountName: String): WalletAccount
         fun getCategoryDataByNameRealm(mainContext: Context, userID: String, categoryName: String): TransactionCategory
-
-        // Login Activity
-        //fun syncDataRealm(mainContext: Context, userID: String, walletAccountList:ArrayList<WalletAccountFirebase>, transactionList:ArrayList<TransactionFirebase>, transactionCategoryList:ArrayList<TransactionCategoryFirebase>)
 
         // DashBoard Fragment
         fun checkWalletAccountRealm(mainContext: Context, userID: String): ArrayList<WalletAccount> //(used by WalletAccount Fragment as well)
@@ -98,7 +90,6 @@ interface ModelInterface {
 
         fun saveSelectedAccount(mainContext: Context, selection:String)
         fun getSelectedAccountData(mainContext: Context): String
-
     }
 
 }

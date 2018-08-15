@@ -17,18 +17,11 @@ import com.example.slnn3r.wallettrackermvp.Model.ObjectClass.WalletAccount
 import com.example.slnn3r.wallettrackermvp.Presenter.Presenter
 import java.util.*
 import android.app.Activity
-import android.app.job.JobInfo
-import android.app.job.JobScheduler
-import android.content.ComponentName
-import android.content.Context.JOB_SCHEDULER_SERVICE
 import android.graphics.Color
 import android.graphics.Paint
-import android.os.PersistableBundle
 import android.support.v7.widget.RecyclerView
-import android.util.Log
 import android.view.inputmethod.InputMethodManager
 import android.widget.*
-import com.example.slnn3r.wallettrackermvp.JobService.SyncDataJobService
 import com.example.slnn3r.wallettrackermvp.Model.ObjectClass.Transaction
 import com.example.slnn3r.wallettrackermvp.Utility.CustomMarkerView
 import kotlin.collections.ArrayList
@@ -39,7 +32,6 @@ import com.github.mikephil.charting.formatter.IAxisValueFormatter
 import com.github.mikephil.charting.utils.ViewPortHandler
 import com.github.mikephil.charting.formatter.IValueFormatter
 import com.github.mikephil.charting.data.LineDataSet
-import java.util.concurrent.TimeUnit
 
 
 class DashBoardFragment : Fragment(),ViewInterface.DashBoardView {

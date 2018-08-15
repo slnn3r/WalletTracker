@@ -31,7 +31,6 @@ import androidx.navigation.Navigation
 import androidx.navigation.findNavController
 import com.example.slnn3r.wallettrackermvp.Model.ObjectClass.UserProfile
 import com.example.slnn3r.wallettrackermvp.Utility.AlertDialog
-import com.google.firebase.database.FirebaseDatabase
 
 
 class MenuActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener,  ViewInterface.MenuView {
@@ -282,29 +281,25 @@ class MenuActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     }
 
 
-
+    // Sync In Construction
     override fun startPeriodicBackupSuccess(mainContext: Context) {
 
-        Toast.makeText(mainContext, "Auto Backup Every 15mins, Close Apps from Background to Stop.", Toast.LENGTH_LONG).show()
+        Toast.makeText(mainContext, mainContext.getString(R.string.syncAutoMessage), Toast.LENGTH_LONG).show()
     }
 
     override fun startPeriodicBackupFail(mainContext: Context, errorMessage: String) {
 
-        Toast.makeText(mainContext, "Auto Sync Failed: "+errorMessage, Toast.LENGTH_LONG).show()
+        Toast.makeText(mainContext, mainContext.getString(R.string.syncAutoFail)+errorMessage, Toast.LENGTH_LONG).show()
     }
 
     override fun backupDataSuccess(mainContext: Context) {
 
-        //Handler().postDelayed({
-
-            Toast.makeText(mainContext, "Sync is Executed on Background", Toast.LENGTH_SHORT).show()
-
-        //}, 200)
+        Toast.makeText(mainContext, mainContext.getString(R.string.syncStarted), Toast.LENGTH_SHORT).show()
     }
 
     override fun backupDataFail(mainContext: Context, errorMessage: String) {
 
-        Toast.makeText(mainContext, "Sync Data have Failed: "+errorMessage, Toast.LENGTH_LONG).show()
+        Toast.makeText(mainContext, mainContext.getText(R.string.syncStartFail).toString()+errorMessage, Toast.LENGTH_LONG).show()
     }
 
     override fun logoutSuccess(mainContext: Context, successLogoutMessage: String) {

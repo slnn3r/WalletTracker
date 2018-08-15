@@ -98,8 +98,6 @@ interface PresenterInterface{
 
         // TrxHistoryRangeDate Fragment
         fun getTrxForRangeDateFilter(mainContext: Context, userID: String, accountID: String, trxType:String, trxCategory:String, startDate:String, endDate:String)
-
-
     }
     
 }

@@ -205,6 +205,9 @@
     <string name="trxCategoryPassArgKey">trxCategorySelection</string>
     <string name="transactionPassArgKey">transactionSelection</string>
 
+    <!-- Argument Bundle Key -->
+    <string name="userIDServiceKey">userID</string>
+
     <!-- Arg Bundle Passing to DialogFragment -->
     <string name="trxAmountPassArgKey">trxAmount</string>
 
@@ -225,6 +228,8 @@
     <string name="GoogleSignInOptionKey">866059954529-u7ki0u0si1veh1ul9slartd6ejnq0js7.apps.googleusercontent.com</string>
     <string name="REQUEST_CODE_SIGN_IN">1</string>
 
+    <!-- Job Scheduler Service -->
+    <string name="JobServiceID">123</string>
 
     <!-- Realm Database File -->
     <string name="walletAccountRealm">walletaccount.realm</string>
@@ -286,9 +291,10 @@
     <string name="maxCalAmount">999999999.99</string>
     <string name="minCalAmount">-999999999.99</string>
 
-
-
-
+    <!-- Firebase Push Key -->
+    <string name="TransactionCategoryFirebase">TransactionCategory</string>
+    <string name="WalletAccountFirebase">WalletAccount</string>
+    <string name="TransactionFirebase">Transaction</string>
 
 
 
@@ -371,6 +377,18 @@
 
     <string name="loginSuccess">Successfully Login</string>
     <string name="logoutSuccess">Successfully Logout</string>
+
+    <!-- Job Service Related Message -->
+    <string name="syncServiceSuccess">Wallet Tracker Backup Completed</string>
+    <string name="syncDateTime">Never Backup Before</string>
+    <string name="syncDialogTitle">Sync Data</string>
+    <string name="syncDialogMessage">Sync Loading…</string>
+    <string name="syncComplete">Sync Complete</string>
+    <string name="syncFail">Sync Failed</string>
+    <string name="syncAutoMessage">Auto Backup Every 15mins, Close Apps from Background to Stop.</string>
+    <string name="syncAutoFail">"Auto Sync Failed: "</string>
+    <string name="syncStarted">Sync is Executed on Background</string>
+    <string name="syncStartFail">Sync Data have Failed: </string>
 
     <!-- Button Message -->
     <string name="accExceedQuota">Wallet Account Max</string>
