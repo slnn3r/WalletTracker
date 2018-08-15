@@ -439,4 +439,7 @@
     <string name="dialogTitleDeleteTrx">Delete Account Confirmation</string>
     <string name="dialogMessageDeleteTrx">Are you sure to Delete the Category?</string>
 
+    <string name="dialogSignOut">Sign Out</string>
+    <string name="dialogSignOutMessage">Please Make Sure to Backup Data Before Sign Out. All Pending Backup Process will Remove.</string>
+
 </resources>

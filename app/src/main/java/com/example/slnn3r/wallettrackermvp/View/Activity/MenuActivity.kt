@@ -254,12 +254,12 @@ class MenuActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                 }
                 R.id.navDrawer_SignOut -> {
 
-                    alertDialog.confirmationDialog(this,"Sign Out","Please Make Sure to Complete the Sync Data Before Sign Out. All Pending Sync Data Process will Remove.",resources.getDrawable(android.R.drawable.ic_dialog_alert),
+                    alertDialog.confirmationDialog(this,getString(R.string.dialogSignOut),getString(R.string.dialogSignOutMessage),resources.getDrawable(android.R.drawable.ic_dialog_alert),
                             DialogInterface.OnClickListener { dialogBox, which ->
 
                                 // Cancel Job Schedule
                                 val scheduler: JobScheduler = this.applicationContext.getSystemService(JOB_SCHEDULER_SERVICE) as JobScheduler
-                                scheduler.cancel(123)
+                                scheduler.cancel(getString(R.string.JobServiceID).toInt())
 
                                 presenter.logoutGoogleExecute(this)
 
