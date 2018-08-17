@@ -123,7 +123,7 @@ class SyncDataJobService: JobService() {
 
                 val df = SimpleDateFormat(applicationContext.getString(R.string.dateFormat))
                 val date12Format = SimpleDateFormat(applicationContext.getString(R.string.timeFormat12))
-                val date24Format = SimpleDateFormat(applicationContext.getString(R.string.timeFormat24))
+                // val date24Format = SimpleDateFormat(applicationContext.getString(R.string.timeFormat24))
 
                 val date = Calendar.getInstance().time
 
