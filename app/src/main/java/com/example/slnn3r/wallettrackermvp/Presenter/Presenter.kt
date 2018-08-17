@@ -1,24 +1,24 @@
 package com.example.slnn3r.wallettrackermvp.Presenter
 
+import android.app.Activity
 import android.app.ProgressDialog
 import android.content.Context
 import android.content.Intent
 import android.net.ConnectivityManager
-import android.support.v4.app.FragmentActivity
-import com.example.slnn3r.wallettrackermvp.Interface.PresenterInterface
-import com.example.slnn3r.wallettrackermvp.Interface.ViewInterface
-import com.example.slnn3r.wallettrackermvp.Interface.ModelInterface
-import com.example.slnn3r.wallettrackermvp.Model.FirebaseAccess
 import android.net.NetworkInfo
-import com.example.slnn3r.wallettrackermvp.Model.ObjectClass.Transaction
-import com.example.slnn3r.wallettrackermvp.Model.ObjectClass.WalletAccount
-import com.example.slnn3r.wallettrackermvp.Model.RealmAccess
-import android.app.Activity
 import android.os.Bundle
+import android.support.v4.app.FragmentActivity
 import android.view.View
 import androidx.navigation.Navigation.findNavController
+import com.example.slnn3r.wallettrackermvp.Interface.ModelInterface
+import com.example.slnn3r.wallettrackermvp.Interface.PresenterInterface
+import com.example.slnn3r.wallettrackermvp.Interface.ViewInterface
+import com.example.slnn3r.wallettrackermvp.Model.FirebaseAccess
+import com.example.slnn3r.wallettrackermvp.Model.ObjectClass.Transaction
 import com.example.slnn3r.wallettrackermvp.Model.ObjectClass.TransactionCategory
 import com.example.slnn3r.wallettrackermvp.Model.ObjectClass.UserProfile
+import com.example.slnn3r.wallettrackermvp.Model.ObjectClass.WalletAccount
+import com.example.slnn3r.wallettrackermvp.Model.RealmAccess
 import com.example.slnn3r.wallettrackermvp.Model.SharedPreferenceAccess
 import com.example.slnn3r.wallettrackermvp.R
 import com.github.mikephil.charting.data.BarEntry
@@ -40,7 +40,7 @@ import java.util.*
 import kotlin.collections.ArrayList
 
 
-class Presenter: PresenterInterface.Presenter{
+class Presenter : PresenterInterface.Presenter {
 
     private lateinit var mainView: ViewInterface.MainView
     private lateinit var loginView: ViewInterface.LoginView
@@ -69,62 +69,61 @@ class Presenter: PresenterInterface.Presenter{
     private var mGoogleApiClient: GoogleApiClient? = null
 
 
-    constructor(mainView: ViewInterface.MainView){
+    constructor(mainView: ViewInterface.MainView) {
         this.mainView = mainView
     }
 
-    constructor(loginView: ViewInterface.LoginView){
+    constructor(loginView: ViewInterface.LoginView) {
         this.loginView = loginView
     }
 
-    constructor(menuView: ViewInterface.MenuView){
+    constructor(menuView: ViewInterface.MenuView) {
         this.menuView = menuView
     }
 
-    constructor(dashBoardView: ViewInterface.DashBoardView){
-        this.dashBoardView=dashBoardView
+    constructor(dashBoardView: ViewInterface.DashBoardView) {
+        this.dashBoardView = dashBoardView
     }
 
-    constructor(walletAccountView: ViewInterface.WalletAccountView){
-        this.walletAccountView=walletAccountView
+    constructor(walletAccountView: ViewInterface.WalletAccountView) {
+        this.walletAccountView = walletAccountView
     }
 
-    constructor(createWalletAccountView: ViewInterface.CreateWalletAccountView){
-        this.createWalletAccountView=createWalletAccountView
+    constructor(createWalletAccountView: ViewInterface.CreateWalletAccountView) {
+        this.createWalletAccountView = createWalletAccountView
     }
 
-    constructor(detailsWalletAccountView: ViewInterface.DetailsWalletAccountView){
-        this.detailsWalletAccountView=detailsWalletAccountView
+    constructor(detailsWalletAccountView: ViewInterface.DetailsWalletAccountView) {
+        this.detailsWalletAccountView = detailsWalletAccountView
     }
 
-    constructor(trxCategoryView: ViewInterface.TrxCategoryView){
-        this.trxCategoryView=trxCategoryView
+    constructor(trxCategoryView: ViewInterface.TrxCategoryView) {
+        this.trxCategoryView = trxCategoryView
     }
 
-    constructor(createTrxCategoryView: ViewInterface.CreateTrxCategoryView){
-        this.createTrxCategoryView=createTrxCategoryView
+    constructor(createTrxCategoryView: ViewInterface.CreateTrxCategoryView) {
+        this.createTrxCategoryView = createTrxCategoryView
     }
 
-    constructor(detailsTrxCategoryView: ViewInterface.DetailsTrxCategoryView){
-        this.detailsTrxCategoryView=detailsTrxCategoryView
+    constructor(detailsTrxCategoryView: ViewInterface.DetailsTrxCategoryView) {
+        this.detailsTrxCategoryView = detailsTrxCategoryView
     }
 
-    constructor(newTrxView: ViewInterface.NewTrxView){
-        this.newTrxView=newTrxView
+    constructor(newTrxView: ViewInterface.NewTrxView) {
+        this.newTrxView = newTrxView
     }
 
-    constructor(detailsTrxView: ViewInterface.DetailsTrxView){
-        this.detailsTrxView=detailsTrxView
+    constructor(detailsTrxView: ViewInterface.DetailsTrxView) {
+        this.detailsTrxView = detailsTrxView
     }
 
-    constructor(trxHistorySpecificView: ViewInterface.TrxHistorySpecificView){
-        this.trxHistorySpecificView=trxHistorySpecificView
+    constructor(trxHistorySpecificView: ViewInterface.TrxHistorySpecificView) {
+        this.trxHistorySpecificView = trxHistorySpecificView
     }
 
-    constructor(trxHistoryRangeView: ViewInterface.TrxHistoryRangeView){
-        this.trxHistoryRangeView=trxHistoryRangeView
+    constructor(trxHistoryRangeView: ViewInterface.TrxHistoryRangeView) {
+        this.trxHistoryRangeView = trxHistoryRangeView
     }
-
 
 
     // SharedPreference Retreive
@@ -133,7 +132,7 @@ class Presenter: PresenterInterface.Presenter{
     }
 
     override fun setSelectedAccount(mainContext: Context, selection: String) {
-        sharedPreferenceModel.saveSelectedAccount(mainContext,selection)
+        sharedPreferenceModel.saveSelectedAccount(mainContext, selection)
     }
 
     override fun getSelectedAccount(mainContext: Context): String {
@@ -141,18 +140,17 @@ class Presenter: PresenterInterface.Presenter{
     }
 
     override fun getTransactionData(mainContext: Context, userID: String): ArrayList<Transaction> {
-        return realmModel.getTransactionDataRealm(mainContext,userID)
+        return realmModel.getTransactionDataRealm(mainContext, userID)
     }
-
 
 
     // Get Data Only
     override fun getAccountData(mainContext: Context, userID: String): ArrayList<WalletAccount> {
-        return realmModel.getAccountDataRealm(mainContext,userID)
+        return realmModel.getAccountDataRealm(mainContext, userID)
     }
 
     override fun getCategoryData(mainContext: Context, userID: String): ArrayList<TransactionCategory> {
-        return realmModel.getCategoryDataRealm(mainContext,userID)
+        return realmModel.getCategoryDataRealm(mainContext, userID)
     }
 
     override fun getAccountDataByName(mainContext: Context, userID: String, accountName: String): WalletAccount {
@@ -164,54 +162,50 @@ class Presenter: PresenterInterface.Presenter{
     }
 
 
-
-
     // Wallet Account Input Validation
-    override fun walletAccountNameValidation(mainContext: Context, input: String, accountNameList: ArrayList<WalletAccount>, updateID:String?): String? {
+    override fun walletAccountNameValidation(mainContext: Context, input: String, accountNameList: ArrayList<WalletAccount>, updateID: String?): String? {
 
-        val errorMessage:String?
+        val errorMessage: String?
 
         val rex = mainContext.getString(R.string.regExNoCharacterOnly).toRegex()
 
-        if (input.length>mainContext.getString(R.string.maxAccNameInputField).toInt()){
-            errorMessage= mainContext.getString(R.string.accNameInputErrorMaxLength)
+        if (input.length > mainContext.getString(R.string.maxAccNameInputField).toInt()) {
+            errorMessage = mainContext.getString(R.string.accNameInputErrorMaxLength)
 
-        }else if(!input.matches(rex)){
-            errorMessage= mainContext.getString(R.string.accNameInputErrorInvalid)
+        } else if (!input.matches(rex)) {
+            errorMessage = mainContext.getString(R.string.accNameInputErrorInvalid)
 
-        }else if(accountNameList.size>0) {
+        } else if (accountNameList.size > 0) {
 
-            var detectMatched=0
+            var detectMatched = 0
 
-            if(updateID==null){
-                accountNameList.forEach{
-                    data->
-                    if(data.WalletAccountName.equals(input,ignoreCase = true)){
-                        detectMatched+=1
+            if (updateID == null) {
+                accountNameList.forEach { data ->
+                    if (data.WalletAccountName.equals(input, ignoreCase = true)) {
+                        detectMatched += 1
                     }
                 }
-            }else{
-                accountNameList.forEach{
-                    data->
-                    if(data.WalletAccountName.equals(input,ignoreCase = true)&&data.WalletAccountID!=updateID){
-                        detectMatched+=1
+            } else {
+                accountNameList.forEach { data ->
+                    if (data.WalletAccountName.equals(input, ignoreCase = true) && data.WalletAccountID != updateID) {
+                        detectMatched += 1
                     }
                 }
             }
 
 
-            errorMessage = if(detectMatched>0){
+            errorMessage = if (detectMatched > 0) {
                 mainContext.getString(R.string.accNameUsedError)
-            }else{
+            } else {
                 null
             }
 
-        }else if(accountNameList.size==0){ //when retrieve nothing database error
+        } else if (accountNameList.size == 0) { //when retrieve nothing database error
 
-            errorMessage= mainContext.getString(R.string.accNameRetreiveError)
+            errorMessage = mainContext.getString(R.string.accNameRetreiveError)
 
-        }else{
-            errorMessage=null
+        } else {
+            errorMessage = null
         }
 
         return errorMessage
@@ -220,9 +214,9 @@ class Presenter: PresenterInterface.Presenter{
 
     override fun walletAccountBalanceValidation(mainContext: Context, input: String): String? {
 
-        return if (input.isEmpty()){
+        return if (input.isEmpty()) {
             mainContext.getString(R.string.promptToEnter)
-        }else{
+        } else {
             null
         }
     }
@@ -231,48 +225,46 @@ class Presenter: PresenterInterface.Presenter{
     // Transaction Category Input Validation
     override fun transactionCategoryNameValidation(mainContext: Context, input: String, categoryNameList: ArrayList<TransactionCategory>, updateID: String?): String? {
 
-        val errorMessage:String?
+        val errorMessage: String?
 
         val rex = mainContext.getString(R.string.regExNoCharacterOnly).toRegex()
 
-        if (input.length>mainContext.getString(R.string.maxAccNameInputField).toInt()){
-            errorMessage= mainContext.getString(R.string.categoryNameInputErrorMaxLength)
-        }else if(!input.matches(rex)){
-            errorMessage= mainContext.getString(R.string.categoryNameInputErrorInvalid)
+        if (input.length > mainContext.getString(R.string.maxAccNameInputField).toInt()) {
+            errorMessage = mainContext.getString(R.string.categoryNameInputErrorMaxLength)
+        } else if (!input.matches(rex)) {
+            errorMessage = mainContext.getString(R.string.categoryNameInputErrorInvalid)
 
-        }else if(categoryNameList.size>0) {
+        } else if (categoryNameList.size > 0) {
 
-            var detectMatched=0
+            var detectMatched = 0
 
-            if(updateID==null){
-                categoryNameList.forEach{
-                    data->
-                    if(data.TransactionCategoryName.equals(input,ignoreCase = true)){
-                        detectMatched+=1
+            if (updateID == null) {
+                categoryNameList.forEach { data ->
+                    if (data.TransactionCategoryName.equals(input, ignoreCase = true)) {
+                        detectMatched += 1
                     }
                 }
-            }else{
-                categoryNameList.forEach{
-                    data->
-                    if(data.TransactionCategoryName.equals(input,ignoreCase = true) && updateID!=data.TransactionCategoryID){
-                        detectMatched+=1
+            } else {
+                categoryNameList.forEach { data ->
+                    if (data.TransactionCategoryName.equals(input, ignoreCase = true) && updateID != data.TransactionCategoryID) {
+                        detectMatched += 1
                     }
                 }
             }
 
 
-            errorMessage = if(detectMatched>0){
+            errorMessage = if (detectMatched > 0) {
                 mainContext.getString(R.string.categoryNameUsedError)
-            }else{
+            } else {
                 null
             }
 
-        }else if(categoryNameList.size==0){ //when retrieve nothing database error
+        } else if (categoryNameList.size == 0) { //when retrieve nothing database error
 
-            errorMessage= mainContext.getString(R.string.categoryNameRetreiveError)
+            errorMessage = mainContext.getString(R.string.categoryNameRetreiveError)
 
-        }else{
-            errorMessage=null
+        } else {
+            errorMessage = null
         }
 
         return errorMessage
@@ -281,25 +273,24 @@ class Presenter: PresenterInterface.Presenter{
     // NewTrx+DetailsTrx TrxInput Validation
     override fun transactionInputValidation(mainContext: Context, input: String): String? {
 
-        return if (input.isEmpty()){
+        return if (input.isEmpty()) {
             mainContext.getString(R.string.promptToEnter)
-        }else if(input.toDoubleOrNull()==null){
+        } else if (input.toDoubleOrNull() == null) {
             mainContext.getString(R.string.noZeroInput)
 
-        }else if(input.toDoubleOrNull()!=null){
+        } else if (input.toDoubleOrNull() != null) {
 
-            return if(input.toDouble()<=0.0){
+            return if (input.toDouble() <= 0.0) {
                 mainContext.getString(R.string.noZeroInput)
-            }else{
+            } else {
                 null
             }
 
-        }else{
+        } else {
             null
         }
 
     }
-
 
 
     // Main Activity
@@ -310,37 +301,36 @@ class Presenter: PresenterInterface.Presenter{
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(object : Observer<String> {
 
-            override fun onSubscribe(d: Disposable) {
-            }
+                    override fun onSubscribe(d: Disposable) {
+                    }
 
-            override fun onNext(loginResult: String) {
+                    override fun onNext(loginResult: String) {
 
-                if(!loginResult.isEmpty()){
-                    mainView.navigateToMenuScreen(loginResult)
-                }else{
-                    mainView.navigateToLoginScreen()
-                }
-            }
+                        if (!loginResult.isEmpty()) {
+                            mainView.navigateToMenuScreen(loginResult)
+                        } else {
+                            mainView.navigateToLoginScreen()
+                        }
+                    }
 
-            override fun onError(e: Throwable) {
-                mainView.checkLoginFail(e.toString())
-            }
+                    override fun onError(e: Throwable) {
+                        mainView.checkLoginFail(e.toString())
+                    }
 
-            override fun onComplete() {
-            }
-        })
+                    override fun onComplete() {
+                    }
+                })
     }
 
-    private fun checkLoginObservable(): Observable<String>{
-        return Observable.defer { Observable.just(firebaseModel.checkLoginFirebase())}
+    private fun checkLoginObservable(): Observable<String> {
+        return Observable.defer { Observable.just(firebaseModel.checkLoginFirebase()) }
     }
-
 
 
     // Login activity
-    override fun loginGoogleExecute(mainContext: Context?, requestCode: Int, resultCode: Int, data: Intent){
+    override fun loginGoogleExecute(mainContext: Context?, requestCode: Int, resultCode: Int, data: Intent) {
 
-        if(resultCode!=0){
+        if (resultCode != 0) {
 
             if (requestCode == mainContext!!.getString(R.string.REQUEST_CODE_SIGN_IN).toInt()) {
                 val result = Auth.GoogleSignInApi.getSignInResultFromIntent(data)
@@ -350,26 +340,26 @@ class Presenter: PresenterInterface.Presenter{
                     firebaseAuthWithGoogle(account!!, mainContext, loginView.displayLoginLoading(mainContext))
                 } else {
                     // failed -> update UI
-                    loginView.loginFail(mainContext,mainContext.getString(R.string.FAWGError))
+                    loginView.loginFail(mainContext, mainContext.getString(R.string.FAWGError))
                 }
             }
 
-        }else{
-            var errorMessage= mainContext!!.getString(R.string.loginCancel)
+        } else {
+            var errorMessage = mainContext!!.getString(R.string.loginCancel)
 
             val cm = mainContext.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
             val activeNetwork: NetworkInfo? = cm.activeNetworkInfo
             val isConnected: Boolean = activeNetwork?.isConnectedOrConnecting == true
 
-            if(!isConnected){
-                errorMessage=mainContext.getString(R.string.loginCancelNoInternet)
+            if (!isConnected) {
+                errorMessage = mainContext.getString(R.string.loginCancelNoInternet)
             }
 
             loginView.loginFail(mainContext, errorMessage)
         }
     }
 
-    private fun firebaseAuthWithGoogle(acct: GoogleSignInAccount, mainContext: Context?, loginLoading:ProgressDialog){
+    private fun firebaseAuthWithGoogle(acct: GoogleSignInAccount, mainContext: Context?, loginLoading: ProgressDialog) {
 
         val successLoginMessage = mainContext!!.getString(R.string.loginSuccess)
         val errorMessage = mainContext.getString(R.string.SIWCError)
@@ -378,7 +368,8 @@ class Presenter: PresenterInterface.Presenter{
 
         val credential = GoogleAuthProvider.getCredential(acct.idToken, null)
         mAuth!!.signInWithCredential(credential)
-                .addOnCompleteListener( mainContext as Activity) { task ->    // RXJAVA ISSUE: Before Firebase Response to here, RXJava will thought the function have complete and call onNext
+                .addOnCompleteListener(mainContext as Activity) { task ->
+                    // RXJAVA ISSUE: Before Firebase Response to here, RXJava will thought the function have complete and call onNext
                     if (task.isSuccessful) {                    // So without wait for Firebase loading, the ProgressDialog will be dismiss immediately at the onNext
                         // Sign in success
                         val user = mAuth.currentUser
@@ -393,7 +384,7 @@ class Presenter: PresenterInterface.Presenter{
 
 
                         loginView.dismissLoginLoading(loginLoading)
-                        loginView.loginSuccess(mainContext,successLoginMessage)
+                        loginView.loginSuccess(mainContext, successLoginMessage)
 
                     } else {
                         // Sign in fails
@@ -429,73 +420,62 @@ class Presenter: PresenterInterface.Presenter{
                 })
     }
 
-    private fun retrieveDataObservable(mainContext: Context, userID: String): Observable<Unit>{
-        return Observable.defer { Observable.just(firebaseModel.retrieveDataFirebase(mainContext, userID))}
+    private fun retrieveDataObservable(mainContext: Context, userID: String): Observable<Unit> {
+        return Observable.defer { Observable.just(firebaseModel.retrieveDataFirebase(mainContext, userID)) }
     }
-
 
 
     // Menu Activity
     override fun backupDataManually(mainContext: Context, userID: String) {
 
-        backupDataManuallyObservable(mainContext,userID)
+        backupDataManuallyObservable(mainContext, userID)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(object : Observer<Unit>
-                {
-                    override fun onSubscribe(d: Disposable)
-                    {
+                .subscribe(object : Observer<Unit> {
+                    override fun onSubscribe(d: Disposable) {
                     }
 
-                    override fun onNext(value: Unit)
-                    {
+                    override fun onNext(value: Unit) {
                         menuView.backupDataSuccess(mainContext)
                     }
 
-                    override fun onError(e: Throwable)
-                    {
-                        menuView.backupDataFail(mainContext,e.toString())
+                    override fun onError(e: Throwable) {
+                        menuView.backupDataFail(mainContext, e.toString())
                     }
 
-                    override fun onComplete()
-                    {
+                    override fun onComplete() {
                     }
                 })
     }
 
-    private fun backupDataManuallyObservable(mainContext: Context, userID:String): Observable<Unit>{
-        return Observable.defer { Observable.just(firebaseModel.backupDataManuallyFirebase(mainContext,userID)) }
+    private fun backupDataManuallyObservable(mainContext: Context, userID: String): Observable<Unit> {
+        return Observable.defer { Observable.just(firebaseModel.backupDataManuallyFirebase(mainContext, userID)) }
     }
 
     override fun backupDataPeriodically(mainContext: Context, userID: String) {
 
-        backupDataPeriodicallyObservable(mainContext,userID)
+        backupDataPeriodicallyObservable(mainContext, userID)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(object : Observer<Unit>
-                {
-                    override fun onSubscribe(d: Disposable)
-                    {
+                .subscribe(object : Observer<Unit> {
+                    override fun onSubscribe(d: Disposable) {
                     }
 
-                    override fun onNext(value: Unit)
-                    {
+                    override fun onNext(value: Unit) {
                         menuView.startPeriodicBackupSuccess(mainContext)
                     }
 
-                    override fun onError(e: Throwable)
-                    {
-                        menuView.startPeriodicBackupFail(mainContext,e.toString())
+                    override fun onError(e: Throwable) {
+                        menuView.startPeriodicBackupFail(mainContext, e.toString())
                     }
 
-                    override fun onComplete()
-                    {
+                    override fun onComplete() {
                     }
                 })
     }
 
-    private fun backupDataPeriodicallyObservable(mainContext: Context, userID:String): Observable<Unit>{
-        return Observable.defer { Observable.just(firebaseModel.backupDataPeriodicallyFirebase(mainContext,userID)) }
+    private fun backupDataPeriodicallyObservable(mainContext: Context, userID: String): Observable<Unit> {
+        return Observable.defer { Observable.just(firebaseModel.backupDataPeriodicallyFirebase(mainContext, userID)) }
     }
 
 
@@ -514,7 +494,7 @@ class Presenter: PresenterInterface.Presenter{
         mGoogleApiClient = GoogleApiClient.Builder(mainContext)
                 .enableAutoManage(fragment) {
 
-                    menuView.logoutFail(mainContext,errorMessage)
+                    menuView.logoutFail(mainContext, errorMessage)
                 }
                 .addApi(Auth.GOOGLE_SIGN_IN_API, gso)
                 .build()
@@ -531,9 +511,9 @@ class Presenter: PresenterInterface.Presenter{
         mGoogleApiClient?.registerConnectionCallbacks(object : GoogleApiClient.ConnectionCallbacks {
 
             override fun onConnectionSuspended(p0: Int) {
-                errorMessage=mainContext.getString(R.string.GCSError)
+                errorMessage = mainContext.getString(R.string.GCSError)
 
-                menuView.logoutFail(mainContext,errorMessage)
+                menuView.logoutFail(mainContext, errorMessage)
 
                 mGoogleApiClient?.stopAutoManage(mainContext as FragmentActivity)
                 mGoogleApiClient?.disconnect()
@@ -549,14 +529,14 @@ class Presenter: PresenterInterface.Presenter{
                             // remove SharedPreference data
                             sharedPreferenceModel.removeUserData(mainContext)
 
-                            menuView.logoutSuccess(mainContext,successLoginMessage)
+                            menuView.logoutSuccess(mainContext, successLoginMessage)
 
                             mGoogleApiClient?.stopAutoManage(mainContext as FragmentActivity)
                             mGoogleApiClient?.disconnect()
 
-                        }else{
+                        } else {
 
-                            menuView.logoutFail(mainContext,errorMessage)
+                            menuView.logoutFail(mainContext, errorMessage)
 
                             mGoogleApiClient?.stopAutoManage(mainContext as FragmentActivity)
                             mGoogleApiClient?.disconnect()
@@ -569,10 +549,10 @@ class Presenter: PresenterInterface.Presenter{
 
     override fun logoutGoogleStatus(mainContext: Context, logoutStatus: Boolean, statusMessage: String) {
 
-        if(logoutStatus){
-            menuView.logoutSuccess(mainContext,statusMessage)
-        }else{
-            menuView.logoutFail(mainContext,statusMessage)
+        if (logoutStatus) {
+            menuView.logoutSuccess(mainContext, statusMessage)
+        } else {
+            menuView.logoutFail(mainContext, statusMessage)
         }
     }
 
@@ -589,128 +569,116 @@ class Presenter: PresenterInterface.Presenter{
         checkWalletAccountObservable(mainContext, userID)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(object : Observer<ArrayList<WalletAccount>>
-                {
-                    override fun onSubscribe(d: Disposable)
-                    {
+                .subscribe(object : Observer<ArrayList<WalletAccount>> {
+                    override fun onSubscribe(d: Disposable) {
                     }
 
-                    override fun onNext(value: ArrayList<WalletAccount>)
-                    {
+                    override fun onNext(value: ArrayList<WalletAccount>) {
 
-                        if(currentDestination==R.id.dashBoardFragment){
+                        if (currentDestination == R.id.dashBoardFragment) {
 
-                            if(value.size<1){
+                            if (value.size < 1) {
                                 dashBoardView.firstTimeSetup(mainContext)
-                            }else{
-                                dashBoardView.populateWalletAccountSpinner(mainContext,value)
+                            } else {
+                                dashBoardView.populateWalletAccountSpinner(mainContext, value)
                             }
 
-                        }else if(currentDestination==R.id.viewWalletAccountFragment){
+                        } else if (currentDestination == R.id.viewWalletAccountFragment) {
 
-                            walletAccountView.populateWalletAccountRecycleView(mainContext,value)
+                            walletAccountView.populateWalletAccountRecycleView(mainContext, value)
 
-                        }else if(currentDestination==R.id.newTrxFragment ){
+                        } else if (currentDestination == R.id.newTrxFragment) {
 
-                            newTrxView.populateSelectedAccountSpinner(mainContext,value)
+                            newTrxView.populateSelectedAccountSpinner(mainContext, value)
 
-                        }else if(currentDestination==R.id.detailsTrxFragment){
-                            detailsTrxView.populateDetailTrxAccountSpinner(mainContext,value)
+                        } else if (currentDestination == R.id.detailsTrxFragment) {
+                            detailsTrxView.populateDetailTrxAccountSpinner(mainContext, value)
 
-                        }else if(currentDestination==R.id.trxHistoryFragment){
+                        } else if (currentDestination == R.id.trxHistoryFragment) {
 
                             val fragmentView = mainContext.findViewById(R.id.trxHistoryFragmentNavMenu) as View
                             val fragmentDestination = findNavController(fragmentView).currentDestination.id
 
-                            if(fragmentDestination==R.id.trxHistorySpecificDateFragment){
-                                trxHistorySpecificView.populateTrxHistorySpecificAccountSpinner(mainContext,value)
+                            if (fragmentDestination == R.id.trxHistorySpecificDateFragment) {
+                                trxHistorySpecificView.populateTrxHistorySpecificAccountSpinner(mainContext, value)
 
-                            }else if(fragmentDestination==R.id.trxHistoryRangeDateFragment){
-                                trxHistoryRangeView.populateTrxHistoryRangeAccountSpinner(mainContext,value)
+                            } else if (fragmentDestination == R.id.trxHistoryRangeDateFragment) {
+                                trxHistoryRangeView.populateTrxHistoryRangeAccountSpinner(mainContext, value)
 
-                            }else if(fragmentDestination==R.id.detailsTrxFragmentTrxHistory){  //?!!
+                            } else if (fragmentDestination == R.id.detailsTrxFragmentTrxHistory) {  //?!!
                                 detailsTrxView.populateDetailTrxAccountSpinner(mainContext, value)
                             }
 
                         }
                     }
 
-                    override fun onError(e: Throwable)
-                    {
+                    override fun onError(e: Throwable) {
 
-                        if(currentDestination==R.id.dashBoardFragment){
-                            dashBoardView.populateWalletAccountSpinnerFail(mainContext,e.toString())
+                        if (currentDestination == R.id.dashBoardFragment) {
+                            dashBoardView.populateWalletAccountSpinnerFail(mainContext, e.toString())
 
-                        }else if(currentDestination==R.id.viewWalletAccountFragment){
-                            walletAccountView.populateWalletAccountRecycleViewFail(mainContext,e.toString())
+                        } else if (currentDestination == R.id.viewWalletAccountFragment) {
+                            walletAccountView.populateWalletAccountRecycleViewFail(mainContext, e.toString())
 
-                        }else if(currentDestination==R.id.newTrxFragment){
-                            newTrxView.populateSelectedAccountSpinnerFail(mainContext,e.toString())
+                        } else if (currentDestination == R.id.newTrxFragment) {
+                            newTrxView.populateSelectedAccountSpinnerFail(mainContext, e.toString())
 
-                        }else if(currentDestination==R.id.detailsTrxFragment){
-                            detailsTrxView.populateDetailTrxAccountSpinnerFail(mainContext,e.toString())
+                        } else if (currentDestination == R.id.detailsTrxFragment) {
+                            detailsTrxView.populateDetailTrxAccountSpinnerFail(mainContext, e.toString())
 
-                        }else if(currentDestination==R.id.trxHistoryFragment){
+                        } else if (currentDestination == R.id.trxHistoryFragment) {
 
                             val fragmentView = mainContext.findViewById(R.id.trxHistoryFragmentNavMenu) as View
                             val fragmentDestination = findNavController(fragmentView).currentDestination.id
 
-                            if(fragmentDestination==R.id.trxHistorySpecificDateFragment){
-                                trxHistorySpecificView.populateTrxHistorySpecificAccountSpinnerFail(mainContext,e.toString())
+                            if (fragmentDestination == R.id.trxHistorySpecificDateFragment) {
+                                trxHistorySpecificView.populateTrxHistorySpecificAccountSpinnerFail(mainContext, e.toString())
 
-                            }else if(fragmentDestination==R.id.trxHistoryRangeDateFragment){
-                                trxHistoryRangeView.populateTrxHistoryRangeAccountSpinnerFail(mainContext,e.toString())
+                            } else if (fragmentDestination == R.id.trxHistoryRangeDateFragment) {
+                                trxHistoryRangeView.populateTrxHistoryRangeAccountSpinnerFail(mainContext, e.toString())
 
-                            }else if(fragmentDestination==R.id.detailsTrxFragmentTrxHistory){  //?!!
+                            } else if (fragmentDestination == R.id.detailsTrxFragmentTrxHistory) {  //?!!
                                 detailsTrxView.populateDetailTrxAccountSpinnerFail(mainContext, e.toString())
                             }
 
                         }
                     }
 
-                    override fun onComplete()
-                    {
+                    override fun onComplete() {
                     }
                 })
     }
 
-    private fun checkWalletAccountObservable(mainContext: Context, userID: String): Observable<ArrayList<WalletAccount>>{
-        return Observable.defer { Observable.just(realmModel.checkWalletAccountRealm(mainContext,userID)) }
+    private fun checkWalletAccountObservable(mainContext: Context, userID: String): Observable<ArrayList<WalletAccount>> {
+        return Observable.defer { Observable.just(realmModel.checkWalletAccountRealm(mainContext, userID)) }
     }
-
 
 
     override fun firstTimeDatabaseSetup(mainContext: Context, userID: String) {
 
-        firstTimeDatabaseSetupObservable(mainContext,userID)
+        firstTimeDatabaseSetupObservable(mainContext, userID)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(object : Observer<WalletAccount>
-                {
-                    override fun onSubscribe(d: Disposable)
-                    {
+                .subscribe(object : Observer<WalletAccount> {
+                    override fun onSubscribe(d: Disposable) {
                     }
 
-                    override fun onNext(value: WalletAccount)
-                    {
-                        dashBoardView.firstTimeSetupSuccess(mainContext,value)
+                    override fun onNext(value: WalletAccount) {
+                        dashBoardView.firstTimeSetupSuccess(mainContext, value)
                     }
 
-                    override fun onError(e: Throwable)
-                    {
-                        dashBoardView.firstTimeSetupFail(mainContext,e.toString())
+                    override fun onError(e: Throwable) {
+                        dashBoardView.firstTimeSetupFail(mainContext, e.toString())
                     }
 
-                    override fun onComplete()
-                    {
+                    override fun onComplete() {
                     }
                 })
     }
 
-    private fun firstTimeDatabaseSetupObservable(mainContext: Context, userID: String): Observable<WalletAccount>{
-        return Observable.defer { Observable.just(realmModel.firstTimeRealmSetup(mainContext,userID)) }
+    private fun firstTimeDatabaseSetupObservable(mainContext: Context, userID: String): Observable<WalletAccount> {
+        return Observable.defer { Observable.just(realmModel.firstTimeRealmSetup(mainContext, userID)) }
     }
-
 
 
     override fun checkTransaction(mainContext: Context, accountID: String, userID: String) {
@@ -718,64 +686,54 @@ class Presenter: PresenterInterface.Presenter{
         checkTransactionObservable(mainContext, accountID, userID)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(object : Observer<ArrayList<Transaction>>
-                {
-                    override fun onSubscribe(d: Disposable)
-                    {
+                .subscribe(object : Observer<ArrayList<Transaction>> {
+                    override fun onSubscribe(d: Disposable) {
                     }
 
-                    override fun onNext(value: ArrayList<Transaction>)
-                    {
+                    override fun onNext(value: ArrayList<Transaction>) {
                         dashBoardView.populateTransactionRecycleView(mainContext, value)
                     }
 
-                    override fun onError(e: Throwable)
-                    {
-                        dashBoardView.populateTransactionRecycleViewFail(mainContext,e.toString())
+                    override fun onError(e: Throwable) {
+                        dashBoardView.populateTransactionRecycleViewFail(mainContext, e.toString())
                     }
 
-                    override fun onComplete()
-                    {
+                    override fun onComplete() {
                     }
                 })
     }
 
-    private fun checkTransactionObservable(mainContext: Context, accountID: String, userID: String): Observable<ArrayList<Transaction>>{
-        return Observable.defer { Observable.just(realmModel.checkTransactionRealm(mainContext,accountID,userID)) }
+    private fun checkTransactionObservable(mainContext: Context, accountID: String, userID: String): Observable<ArrayList<Transaction>> {
+        return Observable.defer { Observable.just(realmModel.checkTransactionRealm(mainContext, accountID, userID)) }
     }
 
 
     override fun getAllIncome(mainContext: Context, userID: String, accountID: String) {
 
         val accountBalance = realmModel.getCurrentBalanceRealm(mainContext, userID, accountID)
-        val allExpenses = realmModel.getAllExpense(mainContext,userID,accountID)
+        val allExpenses = realmModel.getAllExpense(mainContext, userID, accountID)
 
         getAllIncomeObservable(mainContext, userID, accountID)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(object : Observer<Double>
-                {
-                    override fun onSubscribe(d: Disposable)
-                    {
+                .subscribe(object : Observer<Double> {
+                    override fun onSubscribe(d: Disposable) {
                     }
 
-                    override fun onNext(value: Double)
-                    {
-                        dashBoardView.populateCurrentBalance(mainContext, value+accountBalance-allExpenses)
+                    override fun onNext(value: Double) {
+                        dashBoardView.populateCurrentBalance(mainContext, value + accountBalance - allExpenses)
                     }
 
-                    override fun onError(e: Throwable)
-                    {
+                    override fun onError(e: Throwable) {
                     }
 
-                    override fun onComplete()
-                    {
+                    override fun onComplete() {
                     }
                 })
     }
 
-    private fun getAllIncomeObservable(mainContext: Context, userID: String, accountID: String): Observable<Double>{
-        return Observable.defer { Observable.just(realmModel.getAllIncome(mainContext,userID,accountID)) }
+    private fun getAllIncomeObservable(mainContext: Context, userID: String, accountID: String): Observable<Double> {
+        return Observable.defer { Observable.just(realmModel.getAllIncome(mainContext, userID, accountID)) }
     }
 
 
@@ -784,16 +742,13 @@ class Presenter: PresenterInterface.Presenter{
         getThisMonthExpenseObservable(mainContext, userID, accountID)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(object : Observer< ArrayList<Transaction>>
-                {
-                    override fun onSubscribe(d: Disposable)
-                    {
+                .subscribe(object : Observer<ArrayList<Transaction>> {
+                    override fun onSubscribe(d: Disposable) {
                     }
 
-                    override fun onNext(value:  ArrayList<Transaction>)
-                    {
+                    override fun onNext(value: ArrayList<Transaction>) {
 
-                        var expenses=0.0
+                        var expenses = 0.0
 
                         value.forEach { dataList ->
 
@@ -803,8 +758,8 @@ class Presenter: PresenterInterface.Presenter{
                             cal.time = d
                             val month = cal.getDisplayName(Calendar.MONTH, Calendar.LONG, Locale.getDefault())
 
-                            if(month==thisMonth){
-                                expenses+=dataList.TransactionAmount
+                            if (month == thisMonth) {
+                                expenses += dataList.TransactionAmount
                             }
 
                         }
@@ -812,18 +767,16 @@ class Presenter: PresenterInterface.Presenter{
                         dashBoardView.populateThisMonthExpense(mainContext, expenses)
                     }
 
-                    override fun onError(e: Throwable)
-                    {
+                    override fun onError(e: Throwable) {
                     }
 
-                    override fun onComplete()
-                    {
+                    override fun onComplete() {
                     }
                 })
     }
 
-    private fun getThisMonthExpenseObservable(mainContext: Context, userID: String, accountID: String): Observable<ArrayList<Transaction>>{
-        return Observable.defer { Observable.just(realmModel.getThisMonthExpenseRealm(mainContext,userID,accountID)) }
+    private fun getThisMonthExpenseObservable(mainContext: Context, userID: String, accountID: String): Observable<ArrayList<Transaction>> {
+        return Observable.defer { Observable.just(realmModel.getThisMonthExpenseRealm(mainContext, userID, accountID)) }
     }
 
 
@@ -832,18 +785,15 @@ class Presenter: PresenterInterface.Presenter{
         getRecentExpensesObservable(mainContext, userID, accountID)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(object : Observer< ArrayList<Transaction>>
-                {
-                    override fun onSubscribe(d: Disposable)
-                    {
+                .subscribe(object : Observer<ArrayList<Transaction>> {
+                    override fun onSubscribe(d: Disposable) {
                     }
 
-                    override fun onNext(value:  ArrayList<Transaction>)
-                    {
+                    override fun onNext(value: ArrayList<Transaction>) {
                         val entries = ArrayList<Entry>()
                         val xAxisLabel = ArrayList<String>()
 
-                        val sdf=SimpleDateFormat(mainContext.getString(R.string.dateFormat))
+                        val sdf = SimpleDateFormat(mainContext.getString(R.string.dateFormat))
 
                         for (a in 0..30) {
                             val tempCalander = Calendar.getInstance()
@@ -869,21 +819,19 @@ class Presenter: PresenterInterface.Presenter{
                             entries.add(BarEntry(a.toFloat(), expense.toFloat()))
                         }
 
-                        dashBoardView.populateExpenseGraph(mainContext, entries,xAxisLabel)
+                        dashBoardView.populateExpenseGraph(mainContext, entries, xAxisLabel)
                     }
 
-                    override fun onError(e: Throwable)
-                    {
+                    override fun onError(e: Throwable) {
                     }
 
-                    override fun onComplete()
-                    {
+                    override fun onComplete() {
                     }
                 })
     }
 
-    private fun getRecentExpensesObservable(mainContext: Context, userID: String, accountID: String): Observable<ArrayList<Transaction>>{
-        return Observable.defer { Observable.just(realmModel.getRecentExpenseRealm(mainContext,userID,accountID)) }
+    private fun getRecentExpensesObservable(mainContext: Context, userID: String, accountID: String): Observable<ArrayList<Transaction>> {
+        return Observable.defer { Observable.just(realmModel.getRecentExpenseRealm(mainContext, userID, accountID)) }
     }
 
 
@@ -894,29 +842,24 @@ class Presenter: PresenterInterface.Presenter{
         checkWalletAccountCountObservable(mainContext, userID)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(object : Observer<Int>
-                {
-                    override fun onSubscribe(d: Disposable)
-                    {
+                .subscribe(object : Observer<Int> {
+                    override fun onSubscribe(d: Disposable) {
                     }
 
-                    override fun onNext(value: Int)
-                    {
+                    override fun onNext(value: Int) {
                         walletAccountView.createButtonStatus(mainContext, value)
                     }
 
-                    override fun onError(e: Throwable)
-                    {
-                        walletAccountView.createButtonStatusFail(mainContext,e.toString())
+                    override fun onError(e: Throwable) {
+                        walletAccountView.createButtonStatusFail(mainContext, e.toString())
                     }
 
-                    override fun onComplete()
-                    {
+                    override fun onComplete() {
                     }
                 })
     }
 
-    private fun checkWalletAccountCountObservable(mainContext: Context, userID: String): Observable<Int>{
+    private fun checkWalletAccountCountObservable(mainContext: Context, userID: String): Observable<Int> {
         return Observable.defer { Observable.just(realmModel.checkWalletAccountCountRealm(mainContext, userID)) }
     }
 
@@ -928,64 +871,53 @@ class Presenter: PresenterInterface.Presenter{
         createWalletAccountObservable(mainContext, walletAccountInput)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(object : Observer<Unit>
-                {
-                    override fun onSubscribe(d: Disposable)
-                    {
+                .subscribe(object : Observer<Unit> {
+                    override fun onSubscribe(d: Disposable) {
                     }
 
-                    override fun onNext(value: Unit)
-                    {
+                    override fun onNext(value: Unit) {
                         createWalletAccountView.createWalletAccountSuccess(mainContext)
                     }
 
-                    override fun onError(e: Throwable)
-                    {
-                        createWalletAccountView.createWalletAccountFail(mainContext,e.toString())
+                    override fun onError(e: Throwable) {
+                        createWalletAccountView.createWalletAccountFail(mainContext, e.toString())
                     }
 
-                    override fun onComplete()
-                    {
+                    override fun onComplete() {
                     }
                 })
     }
 
-    private fun createWalletAccountObservable(mainContext: Context, walletAccountInput: WalletAccount): Observable<Unit>{
+    private fun createWalletAccountObservable(mainContext: Context, walletAccountInput: WalletAccount): Observable<Unit> {
         return Observable.defer { Observable.just(realmModel.createWalletAccountRealm(mainContext, walletAccountInput)) }
     }
-
 
 
     // DetailsWalletAccount Fragment
 
     override fun updateWalletAccount(mainContext: Context, walletAccountData: WalletAccount) {
 
-        updateWalletAccountObservable(mainContext,walletAccountData)
+        updateWalletAccountObservable(mainContext, walletAccountData)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(object : Observer<Unit>
-                {
-                    override fun onSubscribe(d: Disposable)
-                    {
+                .subscribe(object : Observer<Unit> {
+                    override fun onSubscribe(d: Disposable) {
                     }
 
-                    override fun onNext(value: Unit)
-                    {
+                    override fun onNext(value: Unit) {
                         detailsWalletAccountView.updateWalletAccountSuccess(mainContext)
                     }
 
-                    override fun onError(e: Throwable)
-                    {
-                        detailsWalletAccountView.updateWalletAccountFail(mainContext,e.toString())
+                    override fun onError(e: Throwable) {
+                        detailsWalletAccountView.updateWalletAccountFail(mainContext, e.toString())
                     }
 
-                    override fun onComplete()
-                    {
+                    override fun onComplete() {
                     }
                 })
     }
 
-    private fun updateWalletAccountObservable(mainContext: Context, walletAccountData: WalletAccount): Observable<Unit>{
+    private fun updateWalletAccountObservable(mainContext: Context, walletAccountData: WalletAccount): Observable<Unit> {
         return Observable.defer { Observable.just(realmModel.updateWalletAccountRealm(mainContext, walletAccountData)) }
     }
 
@@ -995,32 +927,26 @@ class Presenter: PresenterInterface.Presenter{
         deleteWalletAccountObservable(mainContext, walletAccountID)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(object : Observer<Unit>
-                {
-                    override fun onSubscribe(d: Disposable)
-                    {
+                .subscribe(object : Observer<Unit> {
+                    override fun onSubscribe(d: Disposable) {
                     }
 
-                    override fun onNext(value: Unit)
-                    {
+                    override fun onNext(value: Unit) {
                         detailsWalletAccountView.deleteWalletAccountSuccess(mainContext)
                     }
 
-                    override fun onError(e: Throwable)
-                    {
-                        detailsWalletAccountView.deleteWalletAccountFail(mainContext,e.toString())
+                    override fun onError(e: Throwable) {
+                        detailsWalletAccountView.deleteWalletAccountFail(mainContext, e.toString())
                     }
 
-                    override fun onComplete()
-                    {
+                    override fun onComplete() {
                     }
                 })
     }
 
-    private fun deleteWalletAccountObservable(mainContext: Context, walletAccountID: String): Observable<Unit>{
+    private fun deleteWalletAccountObservable(mainContext: Context, walletAccountID: String): Observable<Unit> {
         return Observable.defer { Observable.just(realmModel.deleteWalletAccountRealm(mainContext, walletAccountID)) }
     }
-
 
 
     // ViewTrxCategory Fragment
@@ -1032,143 +958,128 @@ class Presenter: PresenterInterface.Presenter{
         checkTransactionCategoryObservable(mainContext, userID, filterSelection)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(object : Observer<ArrayList<TransactionCategory>>
-                {
-                    override fun onSubscribe(d: Disposable)
-                    {
+                .subscribe(object : Observer<ArrayList<TransactionCategory>> {
+                    override fun onSubscribe(d: Disposable) {
                     }
 
-                    override fun onNext(value: ArrayList<TransactionCategory>)
-                    {
-                        if(currentDestination==R.id.viewTrxCategoryFragment){
+                    override fun onNext(value: ArrayList<TransactionCategory>) {
+                        if (currentDestination == R.id.viewTrxCategoryFragment) {
                             trxCategoryView.populateTrxCategoryRecycleView(mainContext, value)
 
-                        }else if(currentDestination==R.id.newTrxFragment){
+                        } else if (currentDestination == R.id.newTrxFragment) {
                             newTrxView.populateNewTrxCategorySpinner(mainContext, value)
 
-                        }else if(currentDestination==R.id.detailsTrxFragment){
+                        } else if (currentDestination == R.id.detailsTrxFragment) {
                             detailsTrxView.populateDetailTrxCategorySpinner(mainContext, value)
 
-                        }else if(currentDestination==R.id.trxHistoryFragment){
+                        } else if (currentDestination == R.id.trxHistoryFragment) {
 
                             val fragmentView = mainContext.findViewById(R.id.trxHistoryFragmentNavMenu) as View
                             val fragmentDestination = findNavController(fragmentView).currentDestination.id
 
-                            if(fragmentDestination==R.id.trxHistorySpecificDateFragment){
-                                trxHistorySpecificView.populateTrxHistorySpecificCategorySpinner(mainContext,value)
+                            if (fragmentDestination == R.id.trxHistorySpecificDateFragment) {
+                                trxHistorySpecificView.populateTrxHistorySpecificCategorySpinner(mainContext, value)
 
-                            }else if(fragmentDestination==R.id.trxHistoryRangeDateFragment){
-                                trxHistoryRangeView.populateTrxHistoryRangeCategorySpinner(mainContext,value)
+                            } else if (fragmentDestination == R.id.trxHistoryRangeDateFragment) {
+                                trxHistoryRangeView.populateTrxHistoryRangeCategorySpinner(mainContext, value)
 
-                            }else if(fragmentDestination==R.id.detailsTrxFragmentTrxHistory){  //?!!
+                            } else if (fragmentDestination == R.id.detailsTrxFragmentTrxHistory) {  //?!!
                                 detailsTrxView.populateDetailTrxCategorySpinner(mainContext, value)
                             }
 
                         }
                     }
 
-                    override fun onError(e: Throwable)
-                    {
-                        if(currentDestination==R.id.viewTrxCategoryFragment){
-                            trxCategoryView.populateTrxCategoryRecycleViewFail(mainContext,e.toString())
+                    override fun onError(e: Throwable) {
+                        if (currentDestination == R.id.viewTrxCategoryFragment) {
+                            trxCategoryView.populateTrxCategoryRecycleViewFail(mainContext, e.toString())
 
-                        }else if(currentDestination==R.id.newTrxFragment){
-                            newTrxView.populateNewTrxCategorySpinnerFail(mainContext,e.toString())
+                        } else if (currentDestination == R.id.newTrxFragment) {
+                            newTrxView.populateNewTrxCategorySpinnerFail(mainContext, e.toString())
 
-                        }else if(currentDestination==R.id.detailsTrxFragment){
+                        } else if (currentDestination == R.id.detailsTrxFragment) {
                             detailsTrxView.populateDetailTrxAccountSpinnerFail(mainContext, e.toString())
 
-                        }else if(currentDestination==R.id.trxHistoryFragment){
+                        } else if (currentDestination == R.id.trxHistoryFragment) {
 
                             val fragmentView = mainContext.findViewById(R.id.trxHistoryFragmentNavMenu) as View
                             val fragmentDestination = findNavController(fragmentView).currentDestination.id
 
-                            if(fragmentDestination==R.id.trxHistorySpecificDateFragment){
-                                trxHistorySpecificView.populateTrxHistorySpecificCategorySpinnerFail(mainContext,e.toString())
+                            if (fragmentDestination == R.id.trxHistorySpecificDateFragment) {
+                                trxHistorySpecificView.populateTrxHistorySpecificCategorySpinnerFail(mainContext, e.toString())
 
-                            }else if(fragmentDestination==R.id.trxHistoryRangeDateFragment){
-                                trxHistoryRangeView.populateTrxHistoryRangeCategorySpinnerFail(mainContext,e.toString())
+                            } else if (fragmentDestination == R.id.trxHistoryRangeDateFragment) {
+                                trxHistoryRangeView.populateTrxHistoryRangeCategorySpinnerFail(mainContext, e.toString())
 
-                            }else if(fragmentDestination==R.id.detailsTrxFragmentTrxHistory){  //?!!
+                            } else if (fragmentDestination == R.id.detailsTrxFragmentTrxHistory) {  //?!!
                                 detailsTrxView.populateDetailTrxCategorySpinnerFail(mainContext, e.toString())
                             }
 
                         }
                     }
 
-                    override fun onComplete()
-                    {
+                    override fun onComplete() {
                     }
                 })
     }
 
-    private fun checkTransactionCategoryObservable(mainContext: Context, userID: String, filterSelection: String): Observable<ArrayList<TransactionCategory>>{
-        return Observable.defer { Observable.just(realmModel.checkTransactionCategoryRealm(mainContext,userID,filterSelection)) }
+    private fun checkTransactionCategoryObservable(mainContext: Context, userID: String, filterSelection: String): Observable<ArrayList<TransactionCategory>> {
+        return Observable.defer { Observable.just(realmModel.checkTransactionCategoryRealm(mainContext, userID, filterSelection)) }
     }
 
 
     // CreateTrxCategory Fragment
     override fun createTransactionCategory(mainContext: Context, trxCategoryInput: TransactionCategory) {
 
-        createTransactionCategoryObservable(mainContext,trxCategoryInput)
+        createTransactionCategoryObservable(mainContext, trxCategoryInput)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(object : Observer<Unit>
-                {
-                    override fun onSubscribe(d: Disposable)
-                    {
+                .subscribe(object : Observer<Unit> {
+                    override fun onSubscribe(d: Disposable) {
                     }
 
-                    override fun onNext(value: Unit)
-                    {
+                    override fun onNext(value: Unit) {
                         createTrxCategoryView.createTrxCategorySuccess(mainContext)
                     }
 
-                    override fun onError(e: Throwable)
-                    {
-                        createTrxCategoryView.createTrxCategoryFail(mainContext,e.toString())
+                    override fun onError(e: Throwable) {
+                        createTrxCategoryView.createTrxCategoryFail(mainContext, e.toString())
                     }
 
-                    override fun onComplete()
-                    {
+                    override fun onComplete() {
                     }
-        })
+                })
     }
 
-    private fun createTransactionCategoryObservable(mainContext: Context, trxCategoryInput: TransactionCategory): Observable<Unit>{
-        return Observable.defer { Observable.just(realmModel.createTransactionCategoryRealm(mainContext,trxCategoryInput)) }
+    private fun createTransactionCategoryObservable(mainContext: Context, trxCategoryInput: TransactionCategory): Observable<Unit> {
+        return Observable.defer { Observable.just(realmModel.createTransactionCategoryRealm(mainContext, trxCategoryInput)) }
     }
 
 
     // DetailsTrxCategory Fragment
     override fun updateTransactionCategory(mainContext: Context, trxCategoryInput: TransactionCategory) {
 
-        updateTransactionCategoryObservable(mainContext,trxCategoryInput)
+        updateTransactionCategoryObservable(mainContext, trxCategoryInput)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(object : Observer<Unit>
-                {
-                    override fun onSubscribe(d: Disposable)
-                    {
+                .subscribe(object : Observer<Unit> {
+                    override fun onSubscribe(d: Disposable) {
                     }
 
-                    override fun onNext(value: Unit)
-                    {
+                    override fun onNext(value: Unit) {
                         detailsTrxCategoryView.updateTrxCategorySuccess(mainContext)
                     }
 
-                    override fun onError(e: Throwable)
-                    {
-                        detailsTrxCategoryView.updateTrxCategoryFail(mainContext,e.toString())
+                    override fun onError(e: Throwable) {
+                        detailsTrxCategoryView.updateTrxCategoryFail(mainContext, e.toString())
                     }
 
-                    override fun onComplete()
-                    {
+                    override fun onComplete() {
                     }
                 })
     }
 
-    private fun updateTransactionCategoryObservable(mainContext: Context, trxCategoryInput: TransactionCategory): Observable<Unit>{
+    private fun updateTransactionCategoryObservable(mainContext: Context, trxCategoryInput: TransactionCategory): Observable<Unit> {
         return Observable.defer { Observable.just(realmModel.updateTransactionCategoryRealm(mainContext, trxCategoryInput)) }
     }
 
@@ -1195,10 +1106,9 @@ class Presenter: PresenterInterface.Presenter{
                 })
     }
 
-    private fun deleteTransactionCategoryObservable(mainContext: Context, trxCategoryID: String): Observable<Unit>{
-        return Observable.defer { Observable.just(realmModel.deleteTransactionCategoryRealm(mainContext,trxCategoryID)) }
+    private fun deleteTransactionCategoryObservable(mainContext: Context, trxCategoryID: String): Observable<Unit> {
+        return Observable.defer { Observable.just(realmModel.deleteTransactionCategoryRealm(mainContext, trxCategoryID)) }
     }
-
 
 
     // NewTrx Fragment
@@ -1207,32 +1117,26 @@ class Presenter: PresenterInterface.Presenter{
         createNewTrxObservable(mainContext, newTrxInput)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(object : Observer<Unit>
-                {
-                    override fun onSubscribe(d: Disposable)
-                    {
+                .subscribe(object : Observer<Unit> {
+                    override fun onSubscribe(d: Disposable) {
                     }
 
-                    override fun onNext(value: Unit)
-                    {
+                    override fun onNext(value: Unit) {
                         newTrxView.createNewTrxSuccess(mainContext)
                     }
 
-                    override fun onError(e: Throwable)
-                    {
+                    override fun onError(e: Throwable) {
                         newTrxView.createNewTrxFail(mainContext, e.toString())
                     }
 
-                    override fun onComplete()
-                    {
+                    override fun onComplete() {
                     }
                 })
     }
 
-    private fun createNewTrxObservable(mainContext: Context, newTrxInput: Transaction): Observable<Unit>{
+    private fun createNewTrxObservable(mainContext: Context, newTrxInput: Transaction): Observable<Unit> {
         return Observable.defer { Observable.just(realmModel.createNewTrxRealm(mainContext, newTrxInput)) }
     }
-
 
 
     // DetailsTrx Fragment
@@ -1242,29 +1146,24 @@ class Presenter: PresenterInterface.Presenter{
         updateDetailsTrxObservable(mainContext, detailsTrxInput)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(object : Observer<Unit>
-                {
-                    override fun onSubscribe(d: Disposable)
-                    {
+                .subscribe(object : Observer<Unit> {
+                    override fun onSubscribe(d: Disposable) {
                     }
 
-                    override fun onNext(value: Unit)
-                    {
+                    override fun onNext(value: Unit) {
                         detailsTrxView.updateDetailsTrxSuccess(mainContext)
                     }
 
-                    override fun onError(e: Throwable)
-                    {
+                    override fun onError(e: Throwable) {
                         detailsTrxView.updateDetailsTrxFail(mainContext, e.toString())
                     }
 
-                    override fun onComplete()
-                    {
+                    override fun onComplete() {
                     }
                 })
     }
 
-    private fun updateDetailsTrxObservable(mainContext: Context, detailsTrxInput: Transaction): Observable<Unit>{
+    private fun updateDetailsTrxObservable(mainContext: Context, detailsTrxInput: Transaction): Observable<Unit> {
         return Observable.defer { Observable.just(realmModel.updateDetailsTrxRealm(mainContext, detailsTrxInput)) }
     }
 
@@ -1274,29 +1173,24 @@ class Presenter: PresenterInterface.Presenter{
         deleteDetailsTrxObservable(mainContext, transactionID)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(object : Observer<Unit>
-                {
-                    override fun onSubscribe(d: Disposable)
-                    {
+                .subscribe(object : Observer<Unit> {
+                    override fun onSubscribe(d: Disposable) {
                     }
 
-                    override fun onNext(value: Unit)
-                    {
+                    override fun onNext(value: Unit) {
                         detailsTrxView.deleteDetailsTrxSuccess(mainContext)
                     }
 
-                    override fun onError(e: Throwable)
-                    {
+                    override fun onError(e: Throwable) {
                         detailsTrxView.deleteDetailsTrxFail(mainContext, e.toString())
                     }
 
-                    override fun onComplete()
-                    {
+                    override fun onComplete() {
                     }
                 })
     }
 
-    private fun deleteDetailsTrxObservable(mainContext: Context, transactionID: String): Observable<Unit>{
+    private fun deleteDetailsTrxObservable(mainContext: Context, transactionID: String): Observable<Unit> {
         return Observable.defer { Observable.just(realmModel.deleteDetailsTrxRealm(mainContext, transactionID)) }
     }
 
@@ -1304,38 +1198,34 @@ class Presenter: PresenterInterface.Presenter{
     // TrxHistorySpecificDate Fragment
     override fun getTrxForSpecificDateFilter(mainContext: Context, userID: String, accountID: String, trxType: String, trxCategory: String, day: String, month: String, year: String) {
 
-        getTrxForSpecificDateFilterObservable(mainContext, userID, accountID,trxType, trxCategory, day, month, year)
+        getTrxForSpecificDateFilterObservable(mainContext, userID, accountID, trxType, trxCategory, day, month, year)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(object : Observer<ArrayList<Transaction>>
-                {
-                    override fun onSubscribe(d: Disposable)
-                    {
+                .subscribe(object : Observer<ArrayList<Transaction>> {
+                    override fun onSubscribe(d: Disposable) {
                         trxHistorySpecificView.disableBottomNavWhileLoading(mainContext)
                     }
 
-                    override fun onNext(value: ArrayList<Transaction>)
-                    {
+                    override fun onNext(value: ArrayList<Transaction>) {
 
                         //!!! Filtering urself HERE
                         val filteredData = ArrayList<Transaction>()
 
                         val noResult = mainContext.getString(R.string.noResult)
 
-                        val nullData= Transaction(noResult,
+                        val nullData = Transaction(noResult,
                                 noResult,
                                 noResult,
                                 0.0,
                                 noResult,
-                                TransactionCategory("","","","","")
-                                ,WalletAccount("","",0.0,"","")
+                                TransactionCategory("", "", "", "", "")
+                                , WalletAccount("", "", 0.0, "", "")
                         )
 
 
-                        val sdf=SimpleDateFormat(mainContext.getString(R.string.dateFormat))
+                        val sdf = SimpleDateFormat(mainContext.getString(R.string.dateFormat))
 
-                        value.forEach {
-                            data->
+                        value.forEach { data ->
 
                             val mytime = data.TransactionDate
 
@@ -1344,21 +1234,21 @@ class Presenter: PresenterInterface.Presenter{
 
                             val calendar = Calendar.getInstance()
                             calendar.time = myDate
-                            val dataDay= calendar.get(Calendar.DAY_OF_MONTH).toString()
+                            val dataDay = calendar.get(Calendar.DAY_OF_MONTH).toString()
 
-                            val dataMonth= calendar.get(Calendar.MONTH).toString()
+                            val dataMonth = calendar.get(Calendar.MONTH).toString()
 
-                            var selectedMonth =""
-                            if(month!=mainContext.getString(R.string.allMonth)){
+                            var selectedMonth = ""
+                            if (month != mainContext.getString(R.string.allMonth)) {
                                 val cal = Calendar.getInstance()
                                 cal.time = SimpleDateFormat(mainContext.getString(R.string.monthFormat)).parse(month)
                                 selectedMonth = (cal.get(Calendar.MONTH)).toString()
                             }
 
-                            val dataYear= calendar.get(Calendar.YEAR).toString()
+                            val dataYear = calendar.get(Calendar.YEAR).toString()
 
 
-                            if(trxType==mainContext.getString(R.string.allType)) {
+                            if (trxType == mainContext.getString(R.string.allType)) {
 
                                 if (trxCategory == mainContext.getString(R.string.allCategory)) {
 
@@ -1370,7 +1260,7 @@ class Presenter: PresenterInterface.Presenter{
                                             if (day == mainContext.getString(R.string.allDay)) {
                                                 filteredData.add(data)
 
-                                            } else if (day != mainContext.getString(R.string.allDay) && day == dataDay){
+                                            } else if (day != mainContext.getString(R.string.allDay) && day == dataDay) {
                                                 filteredData.add(data)
                                             }
 
@@ -1386,14 +1276,14 @@ class Presenter: PresenterInterface.Presenter{
 
                                         }
 
-                                    } else if(year != mainContext.getString(R.string.allYear) && year==dataYear) {
+                                    } else if (year != mainContext.getString(R.string.allYear) && year == dataYear) {
 
                                         if (month == mainContext.getString(R.string.allMonth)) {
 
                                             if (day == mainContext.getString(R.string.allDay)) {
                                                 filteredData.add(data)
 
-                                            } else if (day != mainContext.getString(R.string.allDay) && day == dataDay){
+                                            } else if (day != mainContext.getString(R.string.allDay) && day == dataDay) {
                                                 filteredData.add(data)
                                             }
 
@@ -1411,7 +1301,7 @@ class Presenter: PresenterInterface.Presenter{
 
                                     }
 
-                                }else if(trxCategory!=mainContext.getString(R.string.allCategory) && data.TransactionCategory.TransactionCategoryName==trxCategory){
+                                } else if (trxCategory != mainContext.getString(R.string.allCategory) && data.TransactionCategory.TransactionCategoryName == trxCategory) {
 
                                     if (year == mainContext.getString(R.string.allYear)) {
 
@@ -1420,7 +1310,7 @@ class Presenter: PresenterInterface.Presenter{
                                             if (day == mainContext.getString(R.string.allDay)) {
                                                 filteredData.add(data)
 
-                                            } else if (day != mainContext.getString(R.string.allDay) && day == dataDay){
+                                            } else if (day != mainContext.getString(R.string.allDay) && day == dataDay) {
                                                 filteredData.add(data)
                                             }
 
@@ -1435,14 +1325,14 @@ class Presenter: PresenterInterface.Presenter{
                                             }
                                         }
 
-                                    } else if(year != mainContext.getString(R.string.allYear) && year==dataYear) {
+                                    } else if (year != mainContext.getString(R.string.allYear) && year == dataYear) {
 
                                         if (month == mainContext.getString(R.string.allMonth)) {
 
                                             if (day == mainContext.getString(R.string.allDay)) {
                                                 filteredData.add(data)
 
-                                            } else if (day != mainContext.getString(R.string.allDay) && day == dataDay){
+                                            } else if (day != mainContext.getString(R.string.allDay) && day == dataDay) {
                                                 filteredData.add(data)
                                             }
 
@@ -1459,9 +1349,9 @@ class Presenter: PresenterInterface.Presenter{
                                     }
                                 }
 
-                            }else if(trxType!=mainContext.getString(R.string.allType)){
+                            } else if (trxType != mainContext.getString(R.string.allType)) {
 
-                                if(trxCategory==mainContext.getString(R.string.allCategory) && data.TransactionCategory.TransactionCategoryType==trxType){
+                                if (trxCategory == mainContext.getString(R.string.allCategory) && data.TransactionCategory.TransactionCategoryType == trxType) {
                                     ///////!!!!
                                     if (year == mainContext.getString(R.string.allYear)) {
 
@@ -1470,7 +1360,7 @@ class Presenter: PresenterInterface.Presenter{
                                             if (day == mainContext.getString(R.string.allDay)) {
                                                 filteredData.add(data)
 
-                                            } else if (day != mainContext.getString(R.string.allDay) && day == dataDay){
+                                            } else if (day != mainContext.getString(R.string.allDay) && day == dataDay) {
                                                 filteredData.add(data)
                                             }
 
@@ -1485,14 +1375,14 @@ class Presenter: PresenterInterface.Presenter{
                                             }
                                         }
 
-                                    } else if(year != mainContext.getString(R.string.allYear) && year==dataYear) {
+                                    } else if (year != mainContext.getString(R.string.allYear) && year == dataYear) {
 
                                         if (month == mainContext.getString(R.string.allMonth)) {
 
                                             if (day == mainContext.getString(R.string.allDay)) {
                                                 filteredData.add(data)
 
-                                            } else if (day != mainContext.getString(R.string.allDay) && day == dataDay){
+                                            } else if (day != mainContext.getString(R.string.allDay) && day == dataDay) {
                                                 filteredData.add(data)
                                             }
 
@@ -1508,7 +1398,7 @@ class Presenter: PresenterInterface.Presenter{
                                         }
                                     }
 
-                                }else if(trxCategory!=mainContext.getString(R.string.allCategory) && data.TransactionCategory.TransactionCategoryName==trxCategory && data.TransactionCategory.TransactionCategoryType==trxType){
+                                } else if (trxCategory != mainContext.getString(R.string.allCategory) && data.TransactionCategory.TransactionCategoryName == trxCategory && data.TransactionCategory.TransactionCategoryType == trxType) {
 
                                     if (year == mainContext.getString(R.string.allYear)) {
 
@@ -1517,7 +1407,7 @@ class Presenter: PresenterInterface.Presenter{
                                             if (day == mainContext.getString(R.string.allDay)) {
                                                 filteredData.add(data)
 
-                                            } else if (day != mainContext.getString(R.string.allDay) && day == dataDay){
+                                            } else if (day != mainContext.getString(R.string.allDay) && day == dataDay) {
                                                 filteredData.add(data)
                                             }
 
@@ -1532,14 +1422,14 @@ class Presenter: PresenterInterface.Presenter{
                                             }
                                         }
 
-                                    } else if(year != mainContext.getString(R.string.allYear) && year==dataYear) {
+                                    } else if (year != mainContext.getString(R.string.allYear) && year == dataYear) {
 
                                         if (month == mainContext.getString(R.string.allMonth)) {
 
                                             if (day == mainContext.getString(R.string.allDay)) {
                                                 filteredData.add(data)
 
-                                            } else if (day != mainContext.getString(R.string.allDay) && day == dataDay){
+                                            } else if (day != mainContext.getString(R.string.allDay) && day == dataDay) {
                                                 filteredData.add(data)
                                             }
 
@@ -1557,7 +1447,7 @@ class Presenter: PresenterInterface.Presenter{
                             }
                         }
 
-                        if(filteredData.size<1){
+                        if (filteredData.size < 1) {
                             filteredData.add(nullData)
                         }
 
@@ -1574,15 +1464,15 @@ class Presenter: PresenterInterface.Presenter{
                 })
     }
 
-    private fun getTrxForSpecificDateFilterObservable(mainContext: Context, userID: String, accountID: String, trxType: String, trxCategory: String, day: String, month: String, year: String): Observable<ArrayList<Transaction>>{
-        return Observable.defer{ Observable.just(realmModel.getTrxForSpecificDateFilterRealm(mainContext, userID,accountID)) }
+    private fun getTrxForSpecificDateFilterObservable(mainContext: Context, userID: String, accountID: String, trxType: String, trxCategory: String, day: String, month: String, year: String): Observable<ArrayList<Transaction>> {
+        return Observable.defer { Observable.just(realmModel.getTrxForSpecificDateFilterRealm(mainContext, userID, accountID)) }
     }
 
 
     // TrxHistoryRangeDate Fragment
     override fun getTrxForRangeDateFilter(mainContext: Context, userID: String, accountID: String, trxType: String, trxCategory: String, startDate: String, endDate: String) {
 
-        getTrxForRangeDateFilterObservable(mainContext, userID, accountID,trxType, trxCategory, startDate, endDate)
+        getTrxForRangeDateFilterObservable(mainContext, userID, accountID, trxType, trxCategory, startDate, endDate)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(object : Observer<ArrayList<Transaction>> {
@@ -1605,20 +1495,19 @@ class Presenter: PresenterInterface.Presenter{
                                 , WalletAccount("", "", 0.0, "", "")
                         )
 
-                        value.forEach {
-                            data->
+                        value.forEach { data ->
 
                             if (trxType == mainContext.getString(R.string.allType)) {
 
                                 if (trxCategory == mainContext.getString(R.string.allCategory)) {
 
-                                    if(data.TransactionDate in startDate..endDate){
+                                    if (data.TransactionDate in startDate..endDate) {
                                         filteredData.add(data)
                                     }
 
                                 } else if (trxCategory != mainContext.getString(R.string.allCategory) && data.TransactionCategory.TransactionCategoryName == trxCategory) {
 
-                                    if(data.TransactionDate in startDate..endDate){
+                                    if (data.TransactionDate in startDate..endDate) {
                                         filteredData.add(data)
                                     }
                                 }
@@ -1627,20 +1516,20 @@ class Presenter: PresenterInterface.Presenter{
 
                                 if (trxCategory == mainContext.getString(R.string.allCategory) && data.TransactionCategory.TransactionCategoryType == trxType) {
 
-                                    if(data.TransactionDate in startDate..endDate){
+                                    if (data.TransactionDate in startDate..endDate) {
                                         filteredData.add(data)
                                     }
 
                                 } else if (trxCategory != mainContext.getString(R.string.allCategory) && data.TransactionCategory.TransactionCategoryName == trxCategory && data.TransactionCategory.TransactionCategoryType == trxType) {
 
-                                    if(data.TransactionDate in startDate..endDate){
+                                    if (data.TransactionDate in startDate..endDate) {
                                         filteredData.add(data)
                                     }
                                 }
                             }
                         }
 
-                        if(filteredData.size<1){
+                        if (filteredData.size < 1) {
                             filteredData.add(nullData)
                         }
 
@@ -1657,7 +1546,7 @@ class Presenter: PresenterInterface.Presenter{
                 })
     }
 
-    private fun getTrxForRangeDateFilterObservable(mainContext: Context, userID: String, accountID: String, trxType: String, trxCategory: String, startDate: String, endDate: String): Observable<ArrayList<Transaction>>{
-        return Observable.defer{ Observable.just(realmModel.getTrxForRangeDateFilterRealm(mainContext, userID,accountID)) }
+    private fun getTrxForRangeDateFilterObservable(mainContext: Context, userID: String, accountID: String, trxType: String, trxCategory: String, startDate: String, endDate: String): Observable<ArrayList<Transaction>> {
+        return Observable.defer { Observable.just(realmModel.getTrxForRangeDateFilterRealm(mainContext, userID, accountID)) }
     }
 }

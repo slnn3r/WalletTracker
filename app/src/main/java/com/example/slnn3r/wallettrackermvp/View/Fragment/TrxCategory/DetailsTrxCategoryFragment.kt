@@ -21,15 +21,15 @@ import com.example.slnn3r.wallettrackermvp.Interface.ViewInterface
 import com.example.slnn3r.wallettrackermvp.Model.ObjectClass.TransactionCategory
 import com.example.slnn3r.wallettrackermvp.Presenter.Presenter
 import com.example.slnn3r.wallettrackermvp.R
+import com.example.slnn3r.wallettrackermvp.Utility.AlertDialog
 import com.google.gson.Gson
 import kotlinx.android.synthetic.main.fragment_details_trx_category.*
-import com.example.slnn3r.wallettrackermvp.Utility.AlertDialog
 
 
 class DetailsTrxCategoryFragment : Fragment(), ViewInterface.DetailsTrxCategoryView {
 
     private lateinit var presenter: PresenterInterface.Presenter
-    private val alertDialog:AlertDialog  = AlertDialog()
+    private val alertDialog: AlertDialog = AlertDialog()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
@@ -59,14 +59,14 @@ class DetailsTrxCategoryFragment : Fragment(), ViewInterface.DetailsTrxCategoryV
         setupInitialUI(trxCategory) // InitialUI
 
         // for database validation (no same name input)
-        val categoryNameList = presenter.getCategoryData(context!!,userID.UserUID)
+        val categoryNameList = presenter.getCategoryData(context!!, userID.UserUID)
 
         // Listener Setter
-        DTCUpdateSubmit.setOnClickListener{
+        DTCUpdateSubmit.setOnClickListener {
             updateSubmitClick(trxCategory)
         }
 
-        DTCDeleteSubmit.setOnClickListener{
+        DTCDeleteSubmit.setOnClickListener {
             deleteSubmitClick(trxCategory)
         }
 
@@ -81,9 +81,9 @@ class DetailsTrxCategoryFragment : Fragment(), ViewInterface.DetailsTrxCategoryV
         }
 
         //// TextWatcher Validation
-        DTCCategoryNameInput.addTextChangedListener(object: TextWatcher {
+        DTCCategoryNameInput.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
-                Log.d("","")
+                Log.d("", "")
             }
 
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
@@ -95,7 +95,6 @@ class DetailsTrxCategoryFragment : Fragment(), ViewInterface.DetailsTrxCategoryV
             }
         })
     }
-
 
 
     // Function Implementation
@@ -113,7 +112,7 @@ class DetailsTrxCategoryFragment : Fragment(), ViewInterface.DetailsTrxCategoryV
     }
 
     private fun setupInitialUI(trxCategory: TransactionCategory) {
-        if(trxCategory.TransactionCategoryStatus==getString(R.string.statusDefault)){
+        if (trxCategory.TransactionCategoryStatus == getString(R.string.statusDefault)) {
             DTCDeleteSubmit.isEnabled = false
             DTCDeleteSubmit.text = getString(R.string.unDeletableCategory)
         }
@@ -122,7 +121,7 @@ class DetailsTrxCategoryFragment : Fragment(), ViewInterface.DetailsTrxCategoryV
     }
 
     private fun updateSubmitClick(trxCategory: TransactionCategory) {
-        alertDialog.confirmationDialog(context!!,getString(R.string.dialogTitleUpdateCategory),getString(R.string.dialogMessageUpdateCategory),resources.getDrawable(android.R.drawable.ic_dialog_info),
+        alertDialog.confirmationDialog(context!!, getString(R.string.dialogTitleUpdateCategory), getString(R.string.dialogMessageUpdateCategory), resources.getDrawable(android.R.drawable.ic_dialog_info),
                 DialogInterface.OnClickListener { dialogBox, which ->
 
                     val trxCategoryInput = TransactionCategory(trxCategory.TransactionCategoryID, DTCCategoryNameInput.text.toString(), DTCTrxTypeSpinner.selectedItem.toString(), trxCategory.TransactionCategoryStatus, trxCategory.UserUID)
@@ -132,7 +131,7 @@ class DetailsTrxCategoryFragment : Fragment(), ViewInterface.DetailsTrxCategoryV
     }
 
     private fun deleteSubmitClick(trxCategory: TransactionCategory) {
-        alertDialog.confirmationDialog(context!!,getString(R.string.dialogTitleDeleteCategory),getString(R.string.dialogMessageDeleteCategory),resources.getDrawable(android.R.drawable.ic_dialog_alert),
+        alertDialog.confirmationDialog(context!!, getString(R.string.dialogTitleDeleteCategory), getString(R.string.dialogMessageDeleteCategory), resources.getDrawable(android.R.drawable.ic_dialog_alert),
                 DialogInterface.OnClickListener { dialogBox, which ->
 
                     presenter.deleteTransactionCategory(context!!, trxCategory.TransactionCategoryID)
@@ -140,29 +139,29 @@ class DetailsTrxCategoryFragment : Fragment(), ViewInterface.DetailsTrxCategoryV
                 }).show()
     }
 
-    private fun trxTypeSpinnerClick(){
+    private fun trxTypeSpinnerClick() {
 
-        if(DTCTrxTypeSpinner.selectedItem==getString(R.string.expense)){
+        if (DTCTrxTypeSpinner.selectedItem == getString(R.string.expense)) {
             DTCImageView.setImageDrawable(resources.getDrawable(R.drawable.expense_icon))
             DTCImageView.background = resources.getDrawable(R.drawable.fui_idp_button_background_email)
-        }else{
+        } else {
             DTCImageView.setImageDrawable(resources.getDrawable(R.drawable.income_icon))
             DTCImageView.background = resources.getDrawable(R.drawable.fui_idp_button_background_phone)
         }
     }
 
     private fun validateCategoryName(categoryNameList: ArrayList<TransactionCategory>, trxCategory: TransactionCategory) {
-        val validationResult = presenter.transactionCategoryNameValidation(context!!,DTCCategoryNameInput.text.toString(),categoryNameList,trxCategory.TransactionCategoryID)
+        val validationResult = presenter.transactionCategoryNameValidation(context!!, DTCCategoryNameInput.text.toString(), categoryNameList, trxCategory.TransactionCategoryID)
 
-        if(validationResult!=null){
+        if (validationResult != null) {
             DTCUpdateSubmit.isEnabled = false
         }
 
-        DTCCategoryNameInput.error=validationResult
+        DTCCategoryNameInput.error = validationResult
     }
 
-    private fun validationFinalized(){
-        if(DTCCategoryNameInput.error==null){
+    private fun validationFinalized() {
+        if (DTCCategoryNameInput.error == null) {
             DTCUpdateSubmit.isEnabled = true
         }
     }
@@ -171,24 +170,24 @@ class DetailsTrxCategoryFragment : Fragment(), ViewInterface.DetailsTrxCategoryV
     // Presenter Callback
     override fun updateTrxCategorySuccess(mainContext: Context) {
 
-        Toast.makeText(mainContext,mainContext.getString(R.string.updateTrxCategorySuccess), Toast.LENGTH_LONG).show()
+        Toast.makeText(mainContext, mainContext.getString(R.string.updateTrxCategorySuccess), Toast.LENGTH_LONG).show()
         (mainContext as Activity).onBackPressed()
 
     }
 
     override fun updateTrxCategoryFail(mainContext: Context, errorMessage: String) {
 
-        Toast.makeText(mainContext,mainContext.getString(R.string.updateTrxCategoryFail)+errorMessage,Toast.LENGTH_LONG).show()
+        Toast.makeText(mainContext, mainContext.getString(R.string.updateTrxCategoryFail) + errorMessage, Toast.LENGTH_LONG).show()
     }
 
     override fun deleteTrxCategorySuccess(mainContext: Context) {
 
-        Toast.makeText(mainContext,mainContext.getString(R.string.deleteTrxCategorySuccess), Toast.LENGTH_LONG).show()
+        Toast.makeText(mainContext, mainContext.getString(R.string.deleteTrxCategorySuccess), Toast.LENGTH_LONG).show()
         (mainContext as Activity).onBackPressed()
     }
 
     override fun deleteTrxCategoryFail(mainContext: Context, errorMessage: String) {
 
-        Toast.makeText(mainContext,mainContext.getString(R.string.deleteTrxCategoryFail)+errorMessage,Toast.LENGTH_LONG).show()
+        Toast.makeText(mainContext, mainContext.getString(R.string.deleteTrxCategoryFail) + errorMessage, Toast.LENGTH_LONG).show()
     }
 }

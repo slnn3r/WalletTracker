@@ -9,7 +9,6 @@ import android.view.View
 import android.view.ViewGroup
 import com.example.slnn3r.wallettrackermvp.R
 
-
 class TrxHistoryFragment : Fragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,

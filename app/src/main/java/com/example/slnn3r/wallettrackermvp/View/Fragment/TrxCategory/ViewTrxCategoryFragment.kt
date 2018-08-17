@@ -67,7 +67,6 @@ class ViewTrxCategoryFragment : Fragment(), ViewInterface.TrxCategoryView {
     }
 
 
-
     // Function Implementation
     private fun hideDisplayedKeyboard(view: View) {
         // To Hide KeyBoard
@@ -85,10 +84,10 @@ class ViewTrxCategoryFragment : Fragment(), ViewInterface.TrxCategoryView {
         navController.navigate(R.id.action_viewTrxCategoryFragment_to_createTrxCategoryFragment)
     }
 
-    private fun trxTypeSpinnerClick(position: Int, userID: String){
+    private fun trxTypeSpinnerClick(position: Int, userID: String) {
 
         if (position >= 0) {
-            presenter.checkTransactionCategory(context!!, userID,VTCTrxTypeSpinner.selectedItem.toString())
+            presenter.checkTransactionCategory(context!!, userID, VTCTrxTypeSpinner.selectedItem.toString())
         }
     }
 
@@ -104,6 +103,6 @@ class ViewTrxCategoryFragment : Fragment(), ViewInterface.TrxCategoryView {
 
 
     override fun populateTrxCategoryRecycleViewFail(mainContext: Context, errorMessage: String) {
-        Toast.makeText(mainContext,errorMessage,Toast.LENGTH_LONG).show()
+        Toast.makeText(mainContext, errorMessage, Toast.LENGTH_LONG).show()
     }
 }

@@ -2,7 +2,7 @@ package com.example.slnn3r.wallettrackermvp.Utility
 
 import com.example.slnn3r.wallettrackermvp.Model.ObjectClass.TransactionCategory
 
-class DefaultDataCategoryListItem{
+class DefaultDataCategoryListItem {
 
     fun getListItem(): ArrayList<TransactionCategory> {
 

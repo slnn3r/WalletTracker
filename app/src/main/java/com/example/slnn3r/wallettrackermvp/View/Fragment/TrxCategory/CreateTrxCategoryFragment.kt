@@ -20,16 +20,15 @@ import com.example.slnn3r.wallettrackermvp.Interface.ViewInterface
 import com.example.slnn3r.wallettrackermvp.Model.ObjectClass.TransactionCategory
 import com.example.slnn3r.wallettrackermvp.Presenter.Presenter
 import com.example.slnn3r.wallettrackermvp.R
+import com.example.slnn3r.wallettrackermvp.Utility.AlertDialog
 import kotlinx.android.synthetic.main.fragment_create_trx_category.*
 import java.util.*
-import com.example.slnn3r.wallettrackermvp.Utility.AlertDialog
-import kotlin.collections.ArrayList
 
 
 class CreateTrxCategoryFragment : Fragment(), ViewInterface.CreateTrxCategoryView {
 
     private lateinit var presenter: PresenterInterface.Presenter
-    private val alertDialog:AlertDialog= AlertDialog()
+    private val alertDialog: AlertDialog = AlertDialog()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
@@ -46,7 +45,7 @@ class CreateTrxCategoryFragment : Fragment(), ViewInterface.CreateTrxCategoryVie
 
         // for database validation (no same name input)
         val userID = presenter.getUserData(context!!)
-        val categoryNameList = presenter.getCategoryData(context!!,userID.UserUID)
+        val categoryNameList = presenter.getCategoryData(context!!, userID.UserUID)
 
         setupInitialUI() // Initial UI
 
@@ -62,15 +61,15 @@ class CreateTrxCategoryFragment : Fragment(), ViewInterface.CreateTrxCategoryVie
             }
         }
 
-        CTCCreateSubmit.setOnClickListener{
+        CTCCreateSubmit.setOnClickListener {
             createSubmitClick()
         }
 
 
         // TextWatcher Validation
-        CTCCategoryNameInput.addTextChangedListener(object: TextWatcher {
+        CTCCategoryNameInput.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
-                Log.d("","")
+                Log.d("", "")
             }
 
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
@@ -86,19 +85,18 @@ class CreateTrxCategoryFragment : Fragment(), ViewInterface.CreateTrxCategoryVie
     }
 
 
-
     // Function Implementation
     private fun setupInitialUI() {
-        CTCCreateSubmit.isEnabled=false
+        CTCCreateSubmit.isEnabled = false
         CTCCategoryNameInput.error = getString(R.string.promptToEnter)
     }
 
-    private fun trxTypeSpinnerClick(){
+    private fun trxTypeSpinnerClick() {
 
-        if(CTCTrxTypeSpinner.selectedItem==getString(R.string.expense)){
+        if (CTCTrxTypeSpinner.selectedItem == getString(R.string.expense)) {
             CTCImageView.setImageDrawable(resources.getDrawable(R.drawable.expense_icon))
             CTCImageView.background = resources.getDrawable(R.drawable.fui_idp_button_background_email)
-        }else{
+        } else {
             CTCImageView.setImageDrawable(resources.getDrawable(R.drawable.income_icon))
             CTCImageView.background = resources.getDrawable(R.drawable.fui_idp_button_background_phone)
         }
@@ -106,7 +104,7 @@ class CreateTrxCategoryFragment : Fragment(), ViewInterface.CreateTrxCategoryVie
 
     private fun createSubmitClick() {
 
-        alertDialog.confirmationDialog(context!!,getString(R.string.dialogTitleCreateCategory),getString(R.string.dialogMessageCreateCategory),resources.getDrawable(android.R.drawable.ic_dialog_info),
+        alertDialog.confirmationDialog(context!!, getString(R.string.dialogTitleCreateCategory), getString(R.string.dialogMessageCreateCategory), resources.getDrawable(android.R.drawable.ic_dialog_info),
                 DialogInterface.OnClickListener { dialogBox, which ->
 
                     val uniqueID = UUID.randomUUID().toString()
@@ -115,7 +113,7 @@ class CreateTrxCategoryFragment : Fragment(), ViewInterface.CreateTrxCategoryVie
                     val userProfile = presenter.getUserData(context!!)
                     val userID = userProfile.UserUID
 
-                    val trxCategoryInput= TransactionCategory(
+                    val trxCategoryInput = TransactionCategory(
                             uniqueID,
                             CTCCategoryNameInput.text.toString(),
                             CTCTrxTypeSpinner.selectedItem.toString(),
@@ -130,32 +128,31 @@ class CreateTrxCategoryFragment : Fragment(), ViewInterface.CreateTrxCategoryVie
 
     private fun validateCategoryName(categoryNameList: ArrayList<TransactionCategory>) {
 
-        val validationResult = presenter.transactionCategoryNameValidation(context!!,CTCCategoryNameInput.text.toString(),categoryNameList,null)
+        val validationResult = presenter.transactionCategoryNameValidation(context!!, CTCCategoryNameInput.text.toString(), categoryNameList, null)
 
-        if(validationResult!=null){
+        if (validationResult != null) {
             CTCCreateSubmit.isEnabled = false
         }
 
-        CTCCategoryNameInput.error=validationResult
+        CTCCategoryNameInput.error = validationResult
     }
 
-    private fun validationFinalized(){
+    private fun validationFinalized() {
 
-        if(CTCCategoryNameInput.error==null){
+        if (CTCCategoryNameInput.error == null) {
             CTCCreateSubmit.isEnabled = true
         }
     }
 
 
-
     // Presenter Callback
     override fun createTrxCategorySuccess(mainContext: Context) {
 
-        Toast.makeText(mainContext,mainContext.getString(R.string.createTrxCategorySuccess), Toast.LENGTH_LONG).show()
+        Toast.makeText(mainContext, mainContext.getString(R.string.createTrxCategorySuccess), Toast.LENGTH_LONG).show()
         (mainContext as Activity).onBackPressed()
     }
 
     override fun createTrxCategoryFail(mainContext: Context, errorMessage: String) {
-        Toast.makeText(mainContext,mainContext.getString(R.string.createTrxCategoryFail)+errorMessage,Toast.LENGTH_LONG).show()
+        Toast.makeText(mainContext, mainContext.getString(R.string.createTrxCategoryFail) + errorMessage, Toast.LENGTH_LONG).show()
     }
 }

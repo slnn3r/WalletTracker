@@ -12,9 +12,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
-import com.example.slnn3r.wallettrackermvp.R
-import kotlinx.android.synthetic.main.fragment_trx_history_specific_date.*
-import java.util.*
 import androidx.navigation.findNavController
 import androidx.navigation.ui.setupWithNavController
 import com.example.slnn3r.wallettrackermvp.Adapter.TrxHistorySpecificAdapter
@@ -25,6 +22,9 @@ import com.example.slnn3r.wallettrackermvp.Model.ObjectClass.TransactionCategory
 import com.example.slnn3r.wallettrackermvp.Model.ObjectClass.UserProfile
 import com.example.slnn3r.wallettrackermvp.Model.ObjectClass.WalletAccount
 import com.example.slnn3r.wallettrackermvp.Presenter.Presenter
+import com.example.slnn3r.wallettrackermvp.R
+import kotlinx.android.synthetic.main.fragment_trx_history_specific_date.*
+import java.util.*
 import kotlin.collections.ArrayList
 
 
@@ -62,7 +62,7 @@ class TrxHistorySpecificDateFragment : Fragment(), ViewInterface.TrxHistorySpeci
         val userProfile = presenter.getUserData(context!!)
 
         // populate Account Spinner
-        presenter.checkWalletAccount(context!!,userProfile.UserUID)
+        presenter.checkWalletAccount(context!!, userProfile.UserUID)
 
         setupUI(userProfile)
 
@@ -80,9 +80,9 @@ class TrxHistorySpecificDateFragment : Fragment(), ViewInterface.TrxHistorySpeci
             }
         }
 
-        THSFilterButton.setOnClickListener{
+        THSFilterButton.setOnClickListener {
             // populate RecycleView for 1st Time
-            val accountData=presenter.getAccountData(context!!, userProfile.UserUID)
+            val accountData = presenter.getAccountData(context!!, userProfile.UserUID)
 
             presenter.setSelectedAccount(context!!, accountData[THSAccountSpinner.selectedItemPosition].WalletAccountName) //Save Select Account in SharedPreference for future use
 
@@ -101,20 +101,20 @@ class TrxHistorySpecificDateFragment : Fragment(), ViewInterface.TrxHistorySpeci
 
     // Function Implementation
     private fun trxTypeSpinnerClick(userProfile: UserProfile) {
-        if(THSTrxTypeSpinner.selectedItem==getString(R.string.expense)){
+        if (THSTrxTypeSpinner.selectedItem == getString(R.string.expense)) {
 
             presenter.checkTransactionCategory(context!!, userProfile.UserUID, THSTrxTypeSpinner.selectedItem.toString())
 
-        }else if(THSTrxTypeSpinner.selectedItem==getString(R.string.income)){
+        } else if (THSTrxTypeSpinner.selectedItem == getString(R.string.income)) {
 
             presenter.checkTransactionCategory(context!!, userProfile.UserUID, THSTrxTypeSpinner.selectedItem.toString())
 
-        }else{
+        } else {
             disableTrxTypeSpinner()
         }
     }
 
-    private fun disableTrxTypeSpinner(){
+    private fun disableTrxTypeSpinner() {
         val spinnerItem = ArrayList<String>()
 
         spinnerItem.add(getString(R.string.allCategory))
@@ -132,10 +132,10 @@ class TrxHistorySpecificDateFragment : Fragment(), ViewInterface.TrxHistorySpeci
 
     private fun setDays() {
 
-        if(THSYearSpinner.selectedItem.toString()==getString(R.string.allYear) || THSMonthSpinner.selectedItem.toString()==getString(R.string.allMonth)){
+        if (THSYearSpinner.selectedItem.toString() == getString(R.string.allYear) || THSMonthSpinner.selectedItem.toString() == getString(R.string.allMonth)) {
 
-            THSDaySpinner.isEnabled=false
-            THSMonthSpinner.isEnabled=false
+            THSDaySpinner.isEnabled = false
+            THSMonthSpinner.isEnabled = false
 
             val daysArray = arrayOfNulls<String>(1)
             daysArray[0] = getString(R.string.allDay)
@@ -149,29 +149,29 @@ class TrxHistorySpecificDateFragment : Fragment(), ViewInterface.TrxHistorySpeci
             THSMonthSpinner.setSelection(0)
         }
 
-        if(THSYearSpinner.selectedItem.toString()!=getString(R.string.allYear) && THSMonthSpinner.selectedItem.toString()==getString(R.string.allMonth)){
-            THSMonthSpinner.isEnabled=true
+        if (THSYearSpinner.selectedItem.toString() != getString(R.string.allYear) && THSMonthSpinner.selectedItem.toString() == getString(R.string.allMonth)) {
+            THSMonthSpinner.isEnabled = true
         }
 
-        if(THSMonthSpinner.selectedItem.toString()!=getString(R.string.allMonth) && THSYearSpinner.selectedItem.toString()!=getString(R.string.allYear)){
+        if (THSMonthSpinner.selectedItem.toString() != getString(R.string.allMonth) && THSYearSpinner.selectedItem.toString() != getString(R.string.allYear)) {
 
-            THSDaySpinner.isEnabled=true
+            THSDaySpinner.isEnabled = true
 
             val year = Integer.parseInt(THSYearSpinner.selectedItem.toString())
             val month = THSMonthSpinner.selectedItem.toString()
 
             val months = resources.getStringArray(R.array.months)
 
-            val mycal = GregorianCalendar(year, months.indexOf(month)-1, 1)
+            val mycal = GregorianCalendar(year, months.indexOf(month) - 1, 1)
 
             // Get the number of days in that month
             val daysInMonth = mycal.getActualMaximum(Calendar.DAY_OF_MONTH)
 
-            val daysArray = arrayOfNulls<String>(daysInMonth+1)
+            val daysArray = arrayOfNulls<String>(daysInMonth + 1)
 
             daysArray[0] = getString(R.string.allDay)
 
-            for (k in 1 until daysInMonth+1)
+            for (k in 1 until daysInMonth + 1)
                 daysArray[k] = "" + (k)
 
             val spinnerArrayAdapter = ArrayAdapter(context,
@@ -185,7 +185,7 @@ class TrxHistorySpecificDateFragment : Fragment(), ViewInterface.TrxHistorySpeci
 
     private fun populateYears(minYear: Int, maxYear: Int) {
 
-        val yearsArray = arrayOfNulls<String>(maxYear - minYear+2)
+        val yearsArray = arrayOfNulls<String>(maxYear - minYear + 2)
 
         yearsArray[0] = getString(R.string.allYear)
 
@@ -202,18 +202,17 @@ class TrxHistorySpecificDateFragment : Fragment(), ViewInterface.TrxHistorySpeci
     }
 
 
-    private fun setupUI(userProfile: UserProfile){
+    private fun setupUI(userProfile: UserProfile) {
         // populate RecycleView for 1st Time
-        val accountData=presenter.getAccountData(context!!, userProfile.UserUID)
+        val accountData = presenter.getAccountData(context!!, userProfile.UserUID)
 
         val go = presenter.getSelectedAccount(context!!)
 
-        var selectedAccountID=""
+        var selectedAccountID = ""
 
-        accountData.forEach {
-            data->
-            if(data.WalletAccountName==go){
-                selectedAccountID=data.WalletAccountID
+        accountData.forEach { data ->
+            if (data.WalletAccountName == go) {
+                selectedAccountID = data.WalletAccountID
             }
         }
 
@@ -227,19 +226,19 @@ class TrxHistorySpecificDateFragment : Fragment(), ViewInterface.TrxHistorySpeci
                 getString(R.string.allYear)
         )
 
-        populateYears(Calendar.getInstance().get(Calendar.YEAR)-5, Calendar.getInstance().get(Calendar.YEAR))
+        populateYears(Calendar.getInstance().get(Calendar.YEAR) - 5, Calendar.getInstance().get(Calendar.YEAR))
     }
 
 
     // Presenter Callback
-    override fun disableBottomNavWhileLoading(mainContext: Context){
+    override fun disableBottomNavWhileLoading(mainContext: Context) {
 
         // Disable navigation through override the navigation path
         val navController = (mainContext as Activity).findNavController(R.id.navMenu)
         mainContext.bottomNavigationFragmentView.setupWithNavController(navController)
     }
 
-    override fun enableBottomNavAfterLoading(mainContext: Context){
+    override fun enableBottomNavAfterLoading(mainContext: Context) {
 
         // enable back the navigation by override the navigation path to the right one
         val navController = (mainContext as Activity).findNavController(R.id.trxHistoryFragmentNavMenu)
@@ -250,8 +249,7 @@ class TrxHistorySpecificDateFragment : Fragment(), ViewInterface.TrxHistorySpeci
 
         val categories = ArrayList<String>()
 
-        walletAccountList.forEach {
-            data->
+        walletAccountList.forEach { data ->
             categories.add(data.WalletAccountName)
         }
 
@@ -273,7 +271,7 @@ class TrxHistorySpecificDateFragment : Fragment(), ViewInterface.TrxHistorySpeci
     }
 
     override fun populateTrxHistorySpecificAccountSpinnerFail(mainContext: Context, errorMessage: String) {
-        Toast.makeText(mainContext,errorMessage, Toast.LENGTH_LONG).show()
+        Toast.makeText(mainContext, errorMessage, Toast.LENGTH_LONG).show()
     }
 
     override fun populateTrxHistorySpecificCategorySpinner(mainContext: Context, trxCategoryList: ArrayList<TransactionCategory>) {
@@ -282,8 +280,7 @@ class TrxHistorySpecificDateFragment : Fragment(), ViewInterface.TrxHistorySpeci
 
         spinnerItem.add(mainContext.getString(R.string.allCategory))
 
-        trxCategoryList.forEach {
-            data ->
+        trxCategoryList.forEach { data ->
             spinnerItem.add(data.TransactionCategoryName)
         }
 
@@ -298,41 +295,40 @@ class TrxHistorySpecificDateFragment : Fragment(), ViewInterface.TrxHistorySpeci
     }
 
     override fun populateTrxHistorySpecificCategorySpinnerFail(mainContext: Context, errorMessage: String) {
-        Toast.makeText(mainContext,errorMessage, Toast.LENGTH_LONG).show()
+        Toast.makeText(mainContext, errorMessage, Toast.LENGTH_LONG).show()
     }
 
 
     override fun populateTrxHistorySpecificRecycleView(mainContext: Context, transactionList: ArrayList<Transaction>) {
 
-        var income=0.0
-        var expense=0.0
+        var income = 0.0
+        var expense = 0.0
         val balance: Double
 
-        transactionList.forEach {
-            data->
-            if(data.TransactionCategory.TransactionCategoryType==mainContext.getString(R.string.income)){
-                income+=data.TransactionAmount
-            }else{
-                expense+=data.TransactionAmount
+        transactionList.forEach { data ->
+            if (data.TransactionCategory.TransactionCategoryType == mainContext.getString(R.string.income)) {
+                income += data.TransactionAmount
+            } else {
+                expense += data.TransactionAmount
             }
         }
 
-        balance= income-expense
+        balance = income - expense
 
         //Display Summary Figure
         val incomeView = (mainContext as Activity).findViewById(R.id.THSIncomeTextView) as TextView
         val expenseView = mainContext.findViewById(R.id.THSExpenseTextView) as TextView
         val balanceView = mainContext.findViewById(R.id.THSBalanceTextView) as TextView
 
-        if(balance<0){
+        if (balance < 0) {
             balanceView.setTextColor(Color.RED)
-        }else{
+        } else {
             balanceView.setTextColor(Color.GREEN)
         }
 
-        incomeView.text=mainContext.getString(R.string.formatTotalIncome, income)
-        expenseView.text=mainContext.getString(R.string.formatTotalExpense, expense)
-        balanceView.text=mainContext.getString(R.string.formatTotalBalance, balance)
+        incomeView.text = mainContext.getString(R.string.formatTotalIncome, income)
+        expenseView.text = mainContext.getString(R.string.formatTotalExpense, expense)
+        balanceView.text = mainContext.getString(R.string.formatTotalBalance, balance)
 
         val trxRecyclerView = mainContext.findViewById(R.id.THSRecyclerView) as RecyclerView
 
@@ -341,6 +337,6 @@ class TrxHistorySpecificDateFragment : Fragment(), ViewInterface.TrxHistorySpeci
     }
 
     override fun populateTrxHistorySpecificRecycleViewFail(mainContext: Context, errorMessage: String) {
-        Toast.makeText(mainContext,errorMessage, Toast.LENGTH_LONG).show()
+        Toast.makeText(mainContext, errorMessage, Toast.LENGTH_LONG).show()
     }
 }

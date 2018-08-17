@@ -12,7 +12,6 @@ import com.github.mikephil.charting.utils.MPPointF
 class CustomMarkerView(context: Context, layoutResource: Int) : MarkerView(context, layoutResource) {
 
     private val tvContent: TextView = findViewById(R.id.tvContent)
-
     private var mOffset: MPPointF? = null
 
     // callbacks everytime the MarkerView is redrawn, can be used to update the

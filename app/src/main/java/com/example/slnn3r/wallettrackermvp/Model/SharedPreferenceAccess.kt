@@ -7,7 +7,7 @@ import com.example.slnn3r.wallettrackermvp.Model.ObjectClass.UserProfile
 import com.example.slnn3r.wallettrackermvp.R
 import com.google.gson.Gson
 
-class SharedPreferenceAccess: ModelInterface.SharedPreference{
+class SharedPreferenceAccess : ModelInterface.SharedPreference {
 
 
     override fun getUserData(mainContext: Context): UserProfile {
@@ -31,10 +31,10 @@ class SharedPreferenceAccess: ModelInterface.SharedPreference{
     override fun getSelectedAccountData(mainContext: Context): String {
         val editor = mainContext.getSharedPreferences(mainContext.getString(R.string.selectedAccount), AppCompatActivity.MODE_PRIVATE)
 
-        return editor.getString(mainContext.getString(R.string.selectedAccount),"")
+        return editor.getString(mainContext.getString(R.string.selectedAccount), "")
     }
 
-    override fun saveUserData(mainContext: Context, userData: String){
+    override fun saveUserData(mainContext: Context, userData: String) {
         val editor = mainContext.getSharedPreferences(mainContext.getString(R.string.userProfileKey), AppCompatActivity.MODE_PRIVATE)!!.edit()
         editor.putString(mainContext.getString(R.string.userProfileKey), userData)
         editor.apply()

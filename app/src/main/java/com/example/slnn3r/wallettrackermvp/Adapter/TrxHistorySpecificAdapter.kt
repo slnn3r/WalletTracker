@@ -14,10 +14,10 @@ import com.google.gson.Gson
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.transaction_list_row.view.*
 
-class TrxHistorySpecificAdapter(private val transactionList: ArrayList<Transaction>): RecyclerView.Adapter<TrxHistorySpecificViewHolder>(){
+class TrxHistorySpecificAdapter(private val transactionList: ArrayList<Transaction>) : RecyclerView.Adapter<TrxHistorySpecificViewHolder>() {
 
     // numberOfItems
-    override  fun getItemCount(): Int{
+    override fun getItemCount(): Int {
         return transactionList.count()
     }
 
@@ -39,7 +39,7 @@ class TrxHistorySpecificAdapter(private val transactionList: ArrayList<Transacti
 
         val transactionData = transactionList[position]
 
-        if(transactionData.TransactionDate == holder.view.context.getString(R.string.noResult)){
+        if (transactionData.TransactionDate == holder.view.context.getString(R.string.noResult)) {
 
 
             Picasso.get().load(R.drawable.not_found).into(holder.view.DBTrxImageView)
@@ -47,23 +47,23 @@ class TrxHistorySpecificAdapter(private val transactionList: ArrayList<Transacti
             holder.view.DBBalTextView.text = holder.view.context.getString(R.string.noDataInDatabase)
             holder.view.DBTrxCategoryTextView.text = holder.view.context.getString(R.string.tabToAddTrx)
 
-        }else{
+        } else {
 
-            holder.view.DBAccNameTextView.text = holder.view.DBTrxImageView.context.getString(R.string.formatDisplayDateTime,transactionData.TransactionDate,transactionData.TransactionTime)
+            holder.view.DBAccNameTextView.text = holder.view.DBTrxImageView.context.getString(R.string.formatDisplayDateTime, transactionData.TransactionDate, transactionData.TransactionTime)
             holder.view.DBBalTextView.text = transactionData.TransactionCategory.TransactionCategoryName
             holder.view.DBTrxCategoryTextView.text = String.format(holder.view.DBTrxImageView.context.getString(R.string.formatDisplay2DecimalMoney), transactionData.TransactionAmount)
 
-            if(transactionData.TransactionCategory.TransactionCategoryType == holder.view.context.getString(R.string.expense)){
+            if (transactionData.TransactionCategory.TransactionCategoryType == holder.view.context.getString(R.string.expense)) {
                 holder.view.DBTrxImageView.background = holder.view.DBTrxImageView.context.resources.getDrawable(R.drawable.fui_idp_button_background_email)
 
                 // Picasso get LAGGY and affect Navigation Drawer Animation when does not crop it, as it will load full size image
-                Picasso.get().load(R.drawable.expense_icon).resize(200,200).centerCrop().into(holder.view.DBTrxImageView)
+                Picasso.get().load(R.drawable.expense_icon).resize(200, 200).centerCrop().into(holder.view.DBTrxImageView)
                 //holder.view.DBTrxImageView.setImageDrawable(holder.view.DBTrxImageView.context.resources.getDrawable(R.drawable.expense_icon))
 
-            }else{
+            } else {
 
                 // Picasso get LAGGY and affect Navigation Drawer Animation when does not crop it, as it will load full size image
-                Picasso.get().load(R.drawable.income_icon).resize(200,200).centerCrop().into(holder.view.DBTrxImageView)
+                Picasso.get().load(R.drawable.income_icon).resize(200, 200).centerCrop().into(holder.view.DBTrxImageView)
                 //holder.view.DBTrxImageView.setImageDrawable(holder.view.DBTrxImageView.context.resources.getDrawable(R.drawable.income_icon))
             }
         }
@@ -73,19 +73,19 @@ class TrxHistorySpecificAdapter(private val transactionList: ArrayList<Transacti
 }
 
 
-class TrxHistorySpecificViewHolder(val view: View, var passData: Transaction?= null): RecyclerView.ViewHolder(view){
+class TrxHistorySpecificViewHolder(val view: View, var passData: Transaction? = null) : RecyclerView.ViewHolder(view) {
 
-    init{
-        view.setOnClickListener{
+    init {
+        view.setOnClickListener {
 
             val context = view.context
             val noResult = view.context.getString(R.string.noResult)
 
-            if(view.DBAccNameTextView.text == noResult){
+            if (view.DBAccNameTextView.text == noResult) {
 
                 Toast.makeText(context, noResult, Toast.LENGTH_SHORT).show()
 
-            }else{
+            } else {
 
                 val gson = Gson()
                 val transactionData = Transaction(

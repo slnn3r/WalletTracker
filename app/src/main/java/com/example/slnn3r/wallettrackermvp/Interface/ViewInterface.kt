@@ -7,28 +7,28 @@ import com.example.slnn3r.wallettrackermvp.Model.ObjectClass.TransactionCategory
 import com.example.slnn3r.wallettrackermvp.Model.ObjectClass.WalletAccount
 import com.github.mikephil.charting.data.Entry
 
-interface ViewInterface{
+interface ViewInterface {
 
-    interface MainView{
+    interface MainView {
 
         fun navigateToLoginScreen()
         fun navigateToMenuScreen(userName: String?)
         fun checkLoginFail(errorMessage: String)
     }
 
-    interface LoginView{
+    interface LoginView {
 
-        fun loginSuccess(mainContext: Context?, successLoginMessage:String)
-        fun loginFail(mainContext: Context?, errorMessage:String)
+        fun loginSuccess(mainContext: Context?, successLoginMessage: String)
+        fun loginFail(mainContext: Context?, errorMessage: String)
 
-        fun displayLoginLoading(mainContext:Context): ProgressDialog
-        fun dismissLoginLoading(loginLoading:ProgressDialog)
+        fun displayLoginLoading(mainContext: Context): ProgressDialog
+        fun dismissLoginLoading(loginLoading: ProgressDialog)
 
         fun syncDataSuccess(mainContext: Context)
-        fun syncDataFail(mainContext: Context, errorMessage:String)
+        fun syncDataFail(mainContext: Context, errorMessage: String)
     }
 
-    interface MenuView{
+    interface MenuView {
 
         fun backupDataSuccess(mainContext: Context)
         fun backupDataFail(mainContext: Context, errorMessage: String)
@@ -36,11 +36,11 @@ interface ViewInterface{
         fun startPeriodicBackupSuccess(mainContext: Context)
         fun startPeriodicBackupFail(mainContext: Context, errorMessage: String)
 
-        fun logoutSuccess(mainContext: Context, successLogoutMessage:String)
-        fun logoutFail(mainContext: Context, errorMessage:String)
+        fun logoutSuccess(mainContext: Context, successLogoutMessage: String)
+        fun logoutFail(mainContext: Context, errorMessage: String)
     }
 
-    interface DashBoardView{
+    interface DashBoardView {
 
         fun populateWalletAccountSpinner(mainContext: Context, walletAccountList: ArrayList<WalletAccount>)
         fun populateWalletAccountSpinnerFail(mainContext: Context, errorMessage: String)
@@ -52,61 +52,61 @@ interface ViewInterface{
         fun populateTransactionRecycleView(mainContext: Context, transactionList: ArrayList<Transaction>)
         fun populateTransactionRecycleViewFail(mainContext: Context, errorMessage: String)
 
-        fun populateCurrentBalance(mainContext: Context, currentBalance:Double)
-        fun populateThisMonthExpense(mainContext: Context, thisMonthExpense:Double)
+        fun populateCurrentBalance(mainContext: Context, currentBalance: Double)
+        fun populateThisMonthExpense(mainContext: Context, thisMonthExpense: Double)
 
         fun populateExpenseGraph(mainContext: Context, entryList: ArrayList<Entry>, xAxisList: ArrayList<String>)
     }
 
 
-    interface WalletAccountView{
+    interface WalletAccountView {
 
         fun populateWalletAccountRecycleView(mainContext: Context, walletAccountList: ArrayList<WalletAccount>)
         fun populateWalletAccountRecycleViewFail(mainContext: Context, errorMessage: String)
 
-        fun createButtonStatus(mainContext: Context, walletAccountCount:Int)
+        fun createButtonStatus(mainContext: Context, walletAccountCount: Int)
         fun createButtonStatusFail(mainContext: Context, errorMessage: String)
     }
 
-    interface CreateWalletAccountView{
+    interface CreateWalletAccountView {
 
         fun createWalletAccountSuccess(mainContext: Context)
-        fun createWalletAccountFail(mainContext: Context, errorMessage:String)
+        fun createWalletAccountFail(mainContext: Context, errorMessage: String)
     }
 
-    interface DetailsWalletAccountView{
+    interface DetailsWalletAccountView {
 
         fun updateWalletAccountSuccess(mainContext: Context)
-        fun updateWalletAccountFail(mainContext: Context, errorMessage:String)
+        fun updateWalletAccountFail(mainContext: Context, errorMessage: String)
 
         fun deleteWalletAccountSuccess(mainContext: Context)
-        fun deleteWalletAccountFail(mainContext: Context, errorMessage:String)
+        fun deleteWalletAccountFail(mainContext: Context, errorMessage: String)
     }
 
 
-    interface TrxCategoryView{
+    interface TrxCategoryView {
 
         fun populateTrxCategoryRecycleView(mainContext: Context, trxCategoryList: ArrayList<TransactionCategory>)
         fun populateTrxCategoryRecycleViewFail(mainContext: Context, errorMessage: String)
     }
 
 
-    interface CreateTrxCategoryView{
+    interface CreateTrxCategoryView {
 
         fun createTrxCategorySuccess(mainContext: Context)
-        fun createTrxCategoryFail(mainContext: Context, errorMessage:String)
+        fun createTrxCategoryFail(mainContext: Context, errorMessage: String)
     }
 
-    interface DetailsTrxCategoryView{
+    interface DetailsTrxCategoryView {
 
         fun updateTrxCategorySuccess(mainContext: Context)
-        fun updateTrxCategoryFail(mainContext: Context, errorMessage:String)
+        fun updateTrxCategoryFail(mainContext: Context, errorMessage: String)
 
         fun deleteTrxCategorySuccess(mainContext: Context)
-        fun deleteTrxCategoryFail(mainContext: Context, errorMessage:String)
+        fun deleteTrxCategoryFail(mainContext: Context, errorMessage: String)
     }
 
-    interface NewTrxView{
+    interface NewTrxView {
 
         fun populateNewTrxCategorySpinner(mainContext: Context, trxCategoryList: ArrayList<TransactionCategory>)
         fun populateNewTrxCategorySpinnerFail(mainContext: Context, errorMessage: String)
@@ -118,7 +118,7 @@ interface ViewInterface{
         fun createNewTrxFail(mainContext: Context, errorMessage: String)
     }
 
-    interface DetailsTrxView{
+    interface DetailsTrxView {
 
         fun populateDetailTrxCategorySpinner(mainContext: Context, trxCategoryList: ArrayList<TransactionCategory>)
         fun populateDetailTrxCategorySpinnerFail(mainContext: Context, errorMessage: String)
@@ -133,7 +133,7 @@ interface ViewInterface{
         fun deleteDetailsTrxFail(mainContext: Context, errorMessage: String)
     }
 
-    interface TrxHistorySpecificView{
+    interface TrxHistorySpecificView {
 
         fun disableBottomNavWhileLoading(mainContext: Context)
         fun enableBottomNavAfterLoading(mainContext: Context)
@@ -148,7 +148,7 @@ interface ViewInterface{
         fun populateTrxHistorySpecificRecycleViewFail(mainContext: Context, errorMessage: String)
     }
 
-    interface TrxHistoryRangeView{
+    interface TrxHistoryRangeView {
 
         fun disableBottomNavWhileLoading(mainContext: Context)
         fun enableBottomNavAfterLoading(mainContext: Context)

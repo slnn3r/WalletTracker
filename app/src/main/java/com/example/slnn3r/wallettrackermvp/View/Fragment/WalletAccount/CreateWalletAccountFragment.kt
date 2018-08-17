@@ -19,16 +19,15 @@ import com.example.slnn3r.wallettrackermvp.Interface.ViewInterface
 import com.example.slnn3r.wallettrackermvp.Model.ObjectClass.WalletAccount
 import com.example.slnn3r.wallettrackermvp.Presenter.Presenter
 import com.example.slnn3r.wallettrackermvp.R
+import com.example.slnn3r.wallettrackermvp.Utility.AlertDialog
 import kotlinx.android.synthetic.main.fragment_create_wallet_account.*
 import java.util.*
-import com.example.slnn3r.wallettrackermvp.Utility.AlertDialog
-import kotlin.collections.ArrayList
 
 
 class CreateWalletAccountFragment : Fragment(), ViewInterface.CreateWalletAccountView {
 
     private lateinit var presenter: PresenterInterface.Presenter
-    private val alertDialog:AlertDialog= AlertDialog()
+    private val alertDialog: AlertDialog = AlertDialog()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
@@ -45,22 +44,22 @@ class CreateWalletAccountFragment : Fragment(), ViewInterface.CreateWalletAccoun
 
         // for database validation (no same name input)
         val userID = presenter.getUserData(context!!)
-        val accountNameList = presenter.getAccountData(context!!,userID.UserUID)
+        val accountNameList = presenter.getAccountData(context!!, userID.UserUID)
 
         // Initial UI
         setupInitialUI()
 
 
         // Listener Setter
-        CWACreateSubmit.setOnClickListener{
+        CWACreateSubmit.setOnClickListener {
             createSubmitClick()
         }
 
 
         //// TextWatcher Validation
-        CWAAccNameInput.addTextChangedListener(object: TextWatcher {
+        CWAAccNameInput.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
-                Log.d("","")
+                Log.d("", "")
             }
 
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
@@ -72,9 +71,9 @@ class CreateWalletAccountFragment : Fragment(), ViewInterface.CreateWalletAccoun
             }
         })
 
-        CWAAccBalanceInput.addTextChangedListener(object: TextWatcher {
+        CWAAccBalanceInput.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
-                Log.d("","")
+                Log.d("", "")
             }
 
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
@@ -90,7 +89,7 @@ class CreateWalletAccountFragment : Fragment(), ViewInterface.CreateWalletAccoun
 
     // Function Implementation
     private fun createSubmitClick() {
-        alertDialog.confirmationDialog(context!!,getString(R.string.dialogTitleCreateAccount),getString(R.string.dialogMessageCreateAccount),resources.getDrawable(android.R.drawable.ic_dialog_info),
+        alertDialog.confirmationDialog(context!!, getString(R.string.dialogTitleCreateAccount), getString(R.string.dialogMessageCreateAccount), resources.getDrawable(android.R.drawable.ic_dialog_info),
                 DialogInterface.OnClickListener { dialogBox, which ->
 
                     val uniqueID = UUID.randomUUID().toString()
@@ -101,7 +100,7 @@ class CreateWalletAccountFragment : Fragment(), ViewInterface.CreateWalletAccoun
                     val userID = userProfile.UserUID
 
 
-                    val walletAccountInput= WalletAccount(
+                    val walletAccountInput = WalletAccount(
                             uniqueID,
                             CWAAccNameInput.text.toString(),
                             CWAAccBalanceInput.text.toString().toDouble(),
@@ -115,22 +114,22 @@ class CreateWalletAccountFragment : Fragment(), ViewInterface.CreateWalletAccoun
     }
 
     private fun validateAccNameInput(accountNameList: ArrayList<WalletAccount>) {
-        val validationResult = presenter.walletAccountNameValidation(context!!,CWAAccNameInput.text.toString(),accountNameList,null)
+        val validationResult = presenter.walletAccountNameValidation(context!!, CWAAccNameInput.text.toString(), accountNameList, null)
 
-        if(validationResult!=null){
+        if (validationResult != null) {
             CWACreateSubmit.isEnabled = false
         }
 
-        CWAAccNameInput.error=validationResult
+        CWAAccNameInput.error = validationResult
     }
 
-    private fun validationFinalized(){
-        if(CWAAccNameInput.error==null&&CWAAccBalanceInput.error==null){
+    private fun validationFinalized() {
+        if (CWAAccNameInput.error == null && CWAAccBalanceInput.error == null) {
             CWACreateSubmit.isEnabled = true
         }
     }
 
-    private fun validateAccBalanceInput(){
+    private fun validateAccBalanceInput() {
         // Force 2 Decimal Input only (SOLVED)
         val text = CWAAccBalanceInput.text.toString()
         if (text.contains(".") && text.substring(text.indexOf(".") + 1).length > 2) {
@@ -138,18 +137,18 @@ class CreateWalletAccountFragment : Fragment(), ViewInterface.CreateWalletAccoun
             CWAAccBalanceInput.setSelection(CWAAccBalanceInput.text.length)
         }
 
-        val validationResult = presenter.walletAccountBalanceValidation(context!!,text)
+        val validationResult = presenter.walletAccountBalanceValidation(context!!, text)
 
-        if(validationResult!=null){
+        if (validationResult != null) {
             CWACreateSubmit.isEnabled = false
         }
 
-        CWAAccBalanceInput.error=validationResult
+        CWAAccBalanceInput.error = validationResult
     }
 
     private fun setupInitialUI() {
-        CWAAccNameInput.error=getString(R.string.promptToEnter)
-        CWAAccBalanceInput.error=getString(R.string.promptToEnter)
+        CWAAccNameInput.error = getString(R.string.promptToEnter)
+        CWAAccBalanceInput.error = getString(R.string.promptToEnter)
         CWACreateSubmit.isEnabled = false
     }
 
@@ -157,12 +156,12 @@ class CreateWalletAccountFragment : Fragment(), ViewInterface.CreateWalletAccoun
     // Presenter Callback
     override fun createWalletAccountSuccess(mainContext: Context) {
 
-        Toast.makeText(mainContext,mainContext.getString(R.string.createWalletAccountSuccess),Toast.LENGTH_LONG).show()
+        Toast.makeText(mainContext, mainContext.getString(R.string.createWalletAccountSuccess), Toast.LENGTH_LONG).show()
         (mainContext as Activity).onBackPressed()
     }
 
     override fun createWalletAccountFail(mainContext: Context, errorMessage: String) {
 
-        Toast.makeText(mainContext,mainContext.getString(R.string.createWalletAccountFail)+errorMessage,Toast.LENGTH_LONG).show()
+        Toast.makeText(mainContext, mainContext.getString(R.string.createWalletAccountFail) + errorMessage, Toast.LENGTH_LONG).show()
     }
 }

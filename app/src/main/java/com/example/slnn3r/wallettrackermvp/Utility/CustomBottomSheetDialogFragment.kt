@@ -3,6 +3,8 @@ package com.example.slnn3r.wallettrackermvp.Utility
 import android.content.Context
 import android.graphics.Color
 import android.os.Bundle
+import android.support.design.widget.BottomSheetBehavior
+import android.support.design.widget.BottomSheetDialog
 import android.support.design.widget.BottomSheetDialogFragment
 import android.text.Editable
 import android.text.TextWatcher
@@ -10,18 +12,16 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.FrameLayout
 import com.example.slnn3r.wallettrackermvp.R
 import kotlinx.android.synthetic.main.calculator_custom_dialog.*
 import java.text.DecimalFormat
-import android.support.design.widget.BottomSheetBehavior
-import android.widget.FrameLayout
-import android.support.design.widget.BottomSheetDialog
 
 
 class CustomBottomSheetDialogFragment() : BottomSheetDialogFragment() {
 
-    interface OnInputSelected{
-        fun calculatorInput( input:String)
+    interface OnInputSelected {
+        fun calculatorInput(input: String)
     }
 
     private lateinit var go: OnInputSelected
@@ -29,25 +29,23 @@ class CustomBottomSheetDialogFragment() : BottomSheetDialogFragment() {
     private var valueOne = java.lang.Double.NaN
     private var valueTwo: Double = 0.toDouble()
 
-    private lateinit var addition:String
-    private lateinit var subtraction:String
-    private lateinit var multiplication:String
-    private lateinit var division:String
+    private lateinit var addition: String
+    private lateinit var subtraction: String
+    private lateinit var multiplication: String
+    private lateinit var division: String
     private var currentAction = ""
 
-    private var rewriting=false
+    private var rewriting = false
 
     private lateinit var decFormat: DecimalFormat
 
 
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
 
-    override fun onCreateView
-            (inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-
-        addition=getString(R.string.additionStatus)
-        subtraction=getString(R.string.subtractionStatus)
-        multiplication=getString(R.string.multiplicationStatus)
-        division=getString(R.string.divisionStatus)
+        addition = getString(R.string.additionStatus)
+        subtraction = getString(R.string.subtractionStatus)
+        multiplication = getString(R.string.multiplicationStatus)
+        division = getString(R.string.divisionStatus)
         decFormat = DecimalFormat(getString(R.string.decimalFormat))
 
         return inflater.inflate(R.layout.calculator_custom_dialog, container, false)
@@ -80,9 +78,9 @@ class CustomBottomSheetDialogFragment() : BottomSheetDialogFragment() {
         val myValue = mArgs!!.getString(getString(R.string.trxAmountPassArgKey))
         calCustomDialogTextView.setText(myValue)
 
-        calCustomDialogTextView.addTextChangedListener(object: TextWatcher {
+        calCustomDialogTextView.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
-                Log.d("","")
+                Log.d("", "")
             }
 
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
@@ -95,152 +93,152 @@ class CustomBottomSheetDialogFragment() : BottomSheetDialogFragment() {
             }
 
             override fun afterTextChanged(s: Editable?) {
-                Log.d("","")
+                Log.d("", "")
             }
         })
 
-        btnConfirm.setOnClickListener{
+        btnConfirm.setOnClickListener {
 
-            if(calCustomDialogTextView.text.toString()==getString(R.string.NotANumber)){
+            if (calCustomDialogTextView.text.toString() == getString(R.string.NotANumber)) {
                 go.calculatorInput("")
-            }else{
+            } else {
                 go.calculatorInput(calCustomDialogTextView.text.toString())
             }
 
             dialog.dismiss()
         }
 
-        btnCancel.setOnClickListener{
+        btnCancel.setOnClickListener {
             go.calculatorInput(myValue)
             dialog.dismiss()
         }
 
-        btn0.setOnClickListener{
+        btn0.setOnClickListener {
             calCustomDialogTextView.setTextColor(Color.BLACK)
 
-            if(!rewriting){
+            if (!rewriting) {
                 calCustomDialogTextView.text = calCustomDialogTextView.text.append(btn0.text)
 
-            }else{
+            } else {
                 calCustomDialogTextView.setText(btn0.text.toString())
-                rewriting=false
+                rewriting = false
             }
         }
 
-        btn1.setOnClickListener{
+        btn1.setOnClickListener {
             calCustomDialogTextView.setTextColor(Color.BLACK)
 
-            if(!rewriting){
+            if (!rewriting) {
                 calCustomDialogTextView.text = calCustomDialogTextView.text.append(btn1.text)
-            }else{
+            } else {
                 calCustomDialogTextView.setText(btn1.text.toString())
-                rewriting=false
+                rewriting = false
             }
         }
 
-        btn2.setOnClickListener{
+        btn2.setOnClickListener {
             calCustomDialogTextView.setTextColor(Color.BLACK)
 
-            if(!rewriting){
+            if (!rewriting) {
                 calCustomDialogTextView.text = calCustomDialogTextView.text.append(btn2.text)
-            }else{
+            } else {
                 calCustomDialogTextView.setText(btn2.text.toString())
-                rewriting=false
+                rewriting = false
             }
         }
 
-        btn3.setOnClickListener{
+        btn3.setOnClickListener {
 
             calCustomDialogTextView.setTextColor(Color.BLACK)
 
-            if(!rewriting){
+            if (!rewriting) {
                 calCustomDialogTextView.text = calCustomDialogTextView.text.append(btn3.text)
-            }else{
+            } else {
                 calCustomDialogTextView.setText(btn3.text.toString())
-                rewriting=false
+                rewriting = false
             }
         }
 
-        btn4.setOnClickListener{
+        btn4.setOnClickListener {
             calCustomDialogTextView.setTextColor(Color.BLACK)
 
-            if(!rewriting){
+            if (!rewriting) {
                 calCustomDialogTextView.text = calCustomDialogTextView.text.append(btn4.text)
-            }else{
+            } else {
                 calCustomDialogTextView.setText(btn4.text.toString())
-                rewriting=false
+                rewriting = false
             }
         }
 
-        btn5.setOnClickListener{
+        btn5.setOnClickListener {
             calCustomDialogTextView.setTextColor(Color.BLACK)
 
-            if(!rewriting){
+            if (!rewriting) {
                 calCustomDialogTextView.text = calCustomDialogTextView.text.append(btn5.text)
-            }else{
+            } else {
                 calCustomDialogTextView.setText(btn5.text.toString())
-                rewriting=false
+                rewriting = false
             }
         }
 
-        btn6.setOnClickListener{
+        btn6.setOnClickListener {
             calCustomDialogTextView.setTextColor(Color.BLACK)
 
-            if(!rewriting){
+            if (!rewriting) {
                 calCustomDialogTextView.text = calCustomDialogTextView.text.append(btn6.text)
-            }else{
+            } else {
                 calCustomDialogTextView.setText(btn6.text.toString())
-                rewriting=false
+                rewriting = false
             }
         }
 
-        btn7.setOnClickListener{
+        btn7.setOnClickListener {
             calCustomDialogTextView.setTextColor(Color.BLACK)
 
-            if(!rewriting){
+            if (!rewriting) {
                 calCustomDialogTextView.text = calCustomDialogTextView.text.append(btn7.text)
-            }else{
+            } else {
                 calCustomDialogTextView.setText(btn7.text.toString())
-                rewriting=false
+                rewriting = false
             }
         }
 
-        btn8.setOnClickListener{
+        btn8.setOnClickListener {
             calCustomDialogTextView.setTextColor(Color.BLACK)
 
-            if(!rewriting){
+            if (!rewriting) {
                 calCustomDialogTextView.text = calCustomDialogTextView.text.append(btn8.text)
-            }else{
+            } else {
                 calCustomDialogTextView.setText(btn8.text.toString())
-                rewriting=false
+                rewriting = false
             }
         }
 
-        btn9.setOnClickListener{
+        btn9.setOnClickListener {
             calCustomDialogTextView.setTextColor(Color.BLACK)
 
-            if(!rewriting){
+            if (!rewriting) {
                 calCustomDialogTextView.text = calCustomDialogTextView.text.append(btn9.text)
-            }else{
+            } else {
                 calCustomDialogTextView.setText(btn9.text.toString())
-                rewriting=false
+                rewriting = false
             }
         }
 
-        btnDot.setOnClickListener{
+        btnDot.setOnClickListener {
             calCustomDialogTextView.setTextColor(Color.BLACK)
 
-            if(!rewriting){
+            if (!rewriting) {
                 calCustomDialogTextView.text = calCustomDialogTextView.text.append(btnDot.text)
-            }else{
+            } else {
                 calCustomDialogTextView.setText(btnDot.text.toString())
-                rewriting=false
+                rewriting = false
             }
         }
 
-        btnDelete.setOnClickListener{
+        btnDelete.setOnClickListener {
 
-            if(!rewriting){
+            if (!rewriting) {
                 val length = calCustomDialogTextView.text.length
                 if (length > 0) {
                     calCustomDialogTextView.text.delete(length - 1, length)
@@ -248,12 +246,12 @@ class CustomBottomSheetDialogFragment() : BottomSheetDialogFragment() {
             }
         }
 
-        btnClear.setOnClickListener{
+        btnClear.setOnClickListener {
             calCustomDialogTextView.setText("")
             resetCalculator()
         }
 
-        btnPlus.setOnClickListener{
+        btnPlus.setOnClickListener {
 
             computeCalculation()
             currentAction = addition
@@ -265,10 +263,10 @@ class CustomBottomSheetDialogFragment() : BottomSheetDialogFragment() {
 
             calCustomDialogTextView.setText(decFormat.format(valueOne))
             calCustomDialogTextView.setTextColor(Color.BLUE)
-            rewriting=true
+            rewriting = true
         }
 
-        btnMinus.setOnClickListener{
+        btnMinus.setOnClickListener {
 
             computeCalculation()
             currentAction = subtraction
@@ -280,10 +278,10 @@ class CustomBottomSheetDialogFragment() : BottomSheetDialogFragment() {
 
             calCustomDialogTextView.setText(decFormat.format(valueOne))
             calCustomDialogTextView.setTextColor(Color.BLUE)
-            rewriting=true
+            rewriting = true
         }
 
-        btnMultiply.setOnClickListener{
+        btnMultiply.setOnClickListener {
 
             computeCalculation()
             currentAction = multiplication
@@ -295,10 +293,10 @@ class CustomBottomSheetDialogFragment() : BottomSheetDialogFragment() {
 
             calCustomDialogTextView.setText(decFormat.format(valueOne))
             calCustomDialogTextView.setTextColor(Color.BLUE)
-            rewriting=true
+            rewriting = true
         }
 
-        btnDivide.setOnClickListener{
+        btnDivide.setOnClickListener {
 
             computeCalculation()
             currentAction = division
@@ -310,11 +308,11 @@ class CustomBottomSheetDialogFragment() : BottomSheetDialogFragment() {
 
             calCustomDialogTextView.setText(decFormat.format(valueOne))
             calCustomDialogTextView.setTextColor(Color.BLUE)
-            rewriting=true
+            rewriting = true
         }
 
 
-        btnEqual.setOnClickListener{
+        btnEqual.setOnClickListener {
 
             computeCalculation()
             calCustomDialogTextView.setText(decFormat.format(valueOne))
@@ -327,25 +325,25 @@ class CustomBottomSheetDialogFragment() : BottomSheetDialogFragment() {
     private fun computeCalculation() {
         if (!java.lang.Double.isNaN(valueOne)) {
 
-            valueTwo = if(calCustomDialogTextView.text.toString().toDoubleOrNull()==null){
+            valueTwo = if (calCustomDialogTextView.text.toString().toDoubleOrNull() == null) {
                 Double.NaN
-            }else{
+            } else {
                 calCustomDialogTextView.text.toString().toDouble()
             }
 
             calCustomDialogTextView.text = null
 
-            if (currentAction == addition){
+            if (currentAction == addition) {
                 valueOne += valueTwo
                 checkExcessiveAmount()
-            }else if (currentAction == subtraction){
+            } else if (currentAction == subtraction) {
                 valueOne -= valueTwo
                 checkExcessiveAmount()
-            }else if (currentAction == multiplication){
+            } else if (currentAction == multiplication) {
                 valueOne *= valueTwo
                 checkExcessiveAmount()
 
-            }else if (currentAction == division){
+            } else if (currentAction == division) {
                 valueOne /= valueTwo
                 checkExcessiveAmount()
 
@@ -359,34 +357,34 @@ class CustomBottomSheetDialogFragment() : BottomSheetDialogFragment() {
     }
 
     private fun checkExcessiveAmount() {
-        if(valueOne>getString(R.string.maxCalAmount).toDouble() || valueOne<getString(R.string.minCalAmount).toDouble()){
+        if (valueOne > getString(R.string.maxCalAmount).toDouble() || valueOne < getString(R.string.minCalAmount).toDouble()) {
             valueOne = Double.NaN
             calCustomDialogTextView.setText(decFormat.format(valueOne))
             calCustomDialogTextView.setTextColor(Color.BLUE)
             currentAction = ""
-            rewriting=false
+            rewriting = false
         }
     }
 
     override fun onAttach(context: Context?) {
         super.onAttach(context)
 
-        try{
+        try {
 
             go = this.targetFragment as OnInputSelected
 
-        }catch (e:ClassCastException){
-            Log.e("",e.toString())
+        } catch (e: ClassCastException) {
+            Log.e("", e.toString())
         }
     }
 
-    private fun resetCalculator(){
+    private fun resetCalculator() {
         btnPlus.setTextColor(Color.BLACK)
         btnMinus.setTextColor(Color.BLACK)
         btnMultiply.setTextColor(Color.BLACK)
         btnDivide.setTextColor(Color.BLACK)
         valueOne = Double.NaN
         currentAction = ""
-        rewriting=true
+        rewriting = true
     }
 }

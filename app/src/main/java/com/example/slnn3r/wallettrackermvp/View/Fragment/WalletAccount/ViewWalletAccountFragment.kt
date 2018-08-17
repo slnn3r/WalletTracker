@@ -11,6 +11,7 @@ import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.inputmethod.InputMethodManager
 import android.widget.Button
 import android.widget.Toast
 import androidx.navigation.findNavController
@@ -21,7 +22,6 @@ import com.example.slnn3r.wallettrackermvp.Model.ObjectClass.WalletAccount
 import com.example.slnn3r.wallettrackermvp.Presenter.Presenter
 import com.example.slnn3r.wallettrackermvp.R
 import kotlinx.android.synthetic.main.fragment_view_wallet_account.*
-import android.view.inputmethod.InputMethodManager
 
 
 class ViewWalletAccountFragment : Fragment(), ViewInterface.WalletAccountView {
@@ -45,7 +45,7 @@ class ViewWalletAccountFragment : Fragment(), ViewInterface.WalletAccountView {
 
 
         // Listener Setter
-        WVAGoToCWA.setOnClickListener{
+        WVAGoToCWA.setOnClickListener {
             createButtonClick(view)
         }
 
@@ -89,18 +89,18 @@ class ViewWalletAccountFragment : Fragment(), ViewInterface.WalletAccountView {
 
     override fun populateWalletAccountRecycleViewFail(mainContext: Context, errorMessage: String) {
 
-        Toast.makeText(mainContext,errorMessage,Toast.LENGTH_LONG).show()
+        Toast.makeText(mainContext, errorMessage, Toast.LENGTH_LONG).show()
     }
 
 
-    override fun createButtonStatus(mainContext: Context, walletAccountCount:Int) {
+    override fun createButtonStatus(mainContext: Context, walletAccountCount: Int) {
 
         val createSubmitButton = (mainContext as Activity).findViewById(R.id.WVAGoToCWA) as Button
 
-        if(walletAccountCount<mainContext.getString(R.string.maxAccount).toInt()){
+        if (walletAccountCount < mainContext.getString(R.string.maxAccount).toInt()) {
             createSubmitButton.isEnabled = true
 
-        }else{
+        } else {
             createSubmitButton.isEnabled = false
             createSubmitButton.text = mainContext.getString(R.string.accExceedQuota)
         }
@@ -111,6 +111,6 @@ class ViewWalletAccountFragment : Fragment(), ViewInterface.WalletAccountView {
         val createSubmitButton = (mainContext as Activity).findViewById(R.id.WVAGoToCWA) as Button
 
         createSubmitButton.isEnabled = false
-        Toast.makeText(mainContext,errorMessage,Toast.LENGTH_LONG).show()
+        Toast.makeText(mainContext, errorMessage, Toast.LENGTH_LONG).show()
     }
 }

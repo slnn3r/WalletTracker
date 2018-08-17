@@ -16,66 +16,63 @@ import com.example.slnn3r.wallettrackermvp.Model.ObjectClass.WalletAccount
 import com.example.slnn3r.wallettrackermvp.Presenter.Presenter
 import com.example.slnn3r.wallettrackermvp.R
 import com.example.slnn3r.wallettrackermvp.View.Fragment.DashBoardFragment
-import com.google.firebase.database.FirebaseDatabase
-import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 import java.text.SimpleDateFormat
 import java.util.*
 
 
-class SyncDataJobService: JobService() {
+class SyncDataJobService : JobService() {
 
-    private var jobCancelled:Boolean = false
+    private var jobCancelled: Boolean = false
     private val database = FirebaseDatabase.getInstance()
     private lateinit var presenter: PresenterInterface.Presenter
 
     override fun onStartJob(params: JobParameters?): Boolean {
 
-        Log.e("Job Scheduler Service","JobStarted")
+        Log.e("Job Scheduler Service", "JobStarted")
         doBackgroundWork(params!!)
         return true
     }
 
     override fun onStopJob(params: JobParameters?): Boolean {
 
-        Log.e("Job Scheduler Service","Job Cancel")
-        jobCancelled=true
+        Log.e("Job Scheduler Service", "Job Cancel")
+        jobCancelled = true
         return true
     }
 
 
-    private fun updateTransactionCategory(categoryList:ArrayList<TransactionCategory>){
+    private fun updateTransactionCategory(categoryList: ArrayList<TransactionCategory>) {
 
-        categoryList.forEach {
-            data->
+        categoryList.forEach { data ->
             database.reference.child(applicationContext.getString(R.string.TransactionCategoryFirebase)).push().setValue(data)
         }
 
-        Log.e("Job Scheduler Service","TransactionCategory Push DONE")
+        Log.e("Job Scheduler Service", "TransactionCategory Push DONE")
     }
 
-    private fun updateWalletAccount(accountList:ArrayList<WalletAccount>){
-        accountList.forEach {
-            data->
+    private fun updateWalletAccount(accountList: ArrayList<WalletAccount>) {
+        accountList.forEach { data ->
             database.reference.child(applicationContext.getString(R.string.WalletAccountFirebase)).push().setValue(data)
         }
 
-        Log.e("Job Scheduler Service","WalletAccount Push DONE")
+        Log.e("Job Scheduler Service", "WalletAccount Push DONE")
     }
 
-    private fun updateTransaction(transactionList:ArrayList<Transaction>){
-        transactionList.forEach {
-            data->
+    private fun updateTransaction(transactionList: ArrayList<Transaction>) {
+        transactionList.forEach { data ->
             database.reference.child(applicationContext.getString(R.string.TransactionFirebase)).push().setValue(data)
         }
 
-        Log.e("Job Scheduler Service","Transaction Push DONE")
+        Log.e("Job Scheduler Service", "Transaction Push DONE")
     }
 
 
     //(No Error Handling for Firebase)
-    private fun doBackgroundWork( params:JobParameters){
+    private fun doBackgroundWork(params: JobParameters) {
 
         val userID = params.extras.getString(applicationContext.getString(R.string.userIDServiceKey))
 
@@ -83,7 +80,7 @@ class SyncDataJobService: JobService() {
 
         val accountList = presenter.getAccountData(applicationContext, userID)
         val categoryList = presenter.getCategoryData(applicationContext, userID)
-        val transactionList = presenter.getTransactionData(applicationContext,userID)
+        val transactionList = presenter.getTransactionData(applicationContext, userID)
 
         database.reference.child(applicationContext.getString(R.string.TransactionCategoryFirebase)).addListenerForSingleValueEvent(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
@@ -91,7 +88,7 @@ class SyncDataJobService: JobService() {
 
                     val message = dataSnapshot.getValue(TransactionCategoryFirebase::class.java)
 
-                    if(message!!.UserUID==userID){
+                    if (message!!.UserUID == userID) {
                         dataSnapshot.ref.setValue(null)
                     }
                 }
@@ -111,7 +108,7 @@ class SyncDataJobService: JobService() {
 
                     val message = dataSnapshot.getValue(WalletAccountFirebase::class.java)
 
-                    if(message!!.UserUID==userID){
+                    if (message!!.UserUID == userID) {
                         dataSnapshot.ref.setValue(null)
                     }
                 }
@@ -130,9 +127,9 @@ class SyncDataJobService: JobService() {
                 val formattedDate = df.format(date).toString()
                 val formattedTime = date12Format.format(date).toString()
 
-               // val convertedTime = date12Format.format(date24Format.parse(cal.))
+                // val convertedTime = date12Format.format(date24Format.parse(cal.))
 
-                editor.putString(userID, applicationContext.getString(R.string.formatDisplayDateTime,formattedDate,formattedTime))
+                editor.putString(userID, applicationContext.getString(R.string.formatDisplayDateTime, formattedDate, formattedTime))
                 editor.apply()
                 editor.commit()
 
@@ -155,7 +152,7 @@ class SyncDataJobService: JobService() {
 
                     val message = dataSnapshot.getValue(TransactionFirebase::class.java)
 
-                    if(message!!.WalletAccount.UserUID==userID){
+                    if (message!!.WalletAccount.UserUID == userID) {
                         dataSnapshot.ref.setValue(null)
                     }
                 }

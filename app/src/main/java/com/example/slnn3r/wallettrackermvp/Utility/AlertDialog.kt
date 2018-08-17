@@ -7,9 +7,9 @@ import android.graphics.drawable.Drawable
 import android.support.v7.app.AlertDialog
 import com.example.slnn3r.wallettrackermvp.R
 
-class AlertDialog{
+class AlertDialog {
 
-    fun confirmationDialog(mainContext: Context, title: String, message: String, icon: Drawable ,dialogOnClickListener: DialogInterface.OnClickListener): Dialog {
+    fun confirmationDialog(mainContext: Context, title: String, message: String, icon: Drawable, dialogOnClickListener: DialogInterface.OnClickListener): Dialog {
 
         val confirmationDialog = AlertDialog.Builder(mainContext)
         confirmationDialog.setTitle(title)

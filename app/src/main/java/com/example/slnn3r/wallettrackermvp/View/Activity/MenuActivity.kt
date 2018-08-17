@@ -1,4 +1,3 @@
-
 package com.example.slnn3r.wallettrackermvp.View.Activity
 
 import android.animation.ValueAnimator
@@ -15,37 +14,37 @@ import android.support.v4.widget.DrawerLayout
 import android.support.v7.app.ActionBarDrawerToggle
 import android.support.v7.app.AppCompatActivity
 import android.view.MenuItem
-import android.widget.Toast
-import com.example.slnn3r.wallettrackermvp.Interface.PresenterInterface
-import com.example.slnn3r.wallettrackermvp.Interface.ViewInterface
-import com.example.slnn3r.wallettrackermvp.Presenter.Presenter
-import com.example.slnn3r.wallettrackermvp.R
-import kotlinx.android.synthetic.main.activity_menu.*
-import kotlinx.android.synthetic.main.app_bar_menu.*
 import android.view.View
 import android.view.animation.DecelerateInterpolator
 import android.widget.ImageView
 import android.widget.TextView
-import com.squareup.picasso.Picasso
+import android.widget.Toast
 import androidx.navigation.Navigation
 import androidx.navigation.findNavController
+import com.example.slnn3r.wallettrackermvp.Interface.PresenterInterface
+import com.example.slnn3r.wallettrackermvp.Interface.ViewInterface
 import com.example.slnn3r.wallettrackermvp.Model.ObjectClass.UserProfile
+import com.example.slnn3r.wallettrackermvp.Presenter.Presenter
+import com.example.slnn3r.wallettrackermvp.R
 import com.example.slnn3r.wallettrackermvp.Utility.AlertDialog
+import com.squareup.picasso.Picasso
+import kotlinx.android.synthetic.main.activity_menu.*
+import kotlinx.android.synthetic.main.app_bar_menu.*
 
 
-class MenuActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener,  ViewInterface.MenuView {
+class MenuActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener, ViewInterface.MenuView {
 
 
     private lateinit var presenter: PresenterInterface.Presenter
 
-    private var isNavigated:String? ="" // Set Initial Navigation Status to false
-    private var trxScreenSelection=""
+    private var isNavigated: String? = "" // Set Initial Navigation Status to false
+    private var trxScreenSelection = ""
 
-    private val initialScreen:Int = R.id.dashBoardFragment
+    private val initialScreen: Int = R.id.dashBoardFragment
 
     private var doubleBackToExitPressedOnce = false
 
-    private lateinit var toggle:ActionBarDrawerToggle
+    private lateinit var toggle: ActionBarDrawerToggle
 
     private val alertDialog: AlertDialog = AlertDialog()
 
@@ -72,7 +71,6 @@ class MenuActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     }
 
 
-
     private fun displayUserInfo() {
 
         val navigationView = findViewById<View>(R.id.nav_view) as NavigationView
@@ -89,19 +87,19 @@ class MenuActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
     }
 
-    private fun displaySyncDateTime(){
+    private fun displaySyncDateTime() {
         val editor = getSharedPreferences(userProfile.UserUID, AppCompatActivity.MODE_PRIVATE)
 
-        val datetime = editor.getString(userProfile.UserUID,"").toString()
+        val datetime = editor.getString(userProfile.UserUID, "").toString()
 
         val navigationView = findViewById<View>(R.id.nav_view) as NavigationView
         val menu = navigationView.menu
         val navSyncData = menu.findItem(R.id.navDrawer_title2)
 
-        if(datetime!=""){
-            navSyncData.title = getString(R.string.navDrawer_title2, editor.getString(userProfile.UserUID,""))
-        }else{
-            navSyncData.title =getString(R.string.navDrawer_title2, getString(R.string.syncDateTime))
+        if (datetime != "") {
+            navSyncData.title = getString(R.string.navDrawer_title2, editor.getString(userProfile.UserUID, ""))
+        } else {
+            navSyncData.title = getString(R.string.navDrawer_title2, getString(R.string.syncDateTime))
         }
     }
 
@@ -118,25 +116,25 @@ class MenuActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         toolbar.setNavigationOnClickListener {
 
             // Check if Screen is navigated or not
-            if (isNavigated==getString(R.string.navigatedIndicate)) {
+            if (isNavigated == getString(R.string.navigatedIndicate)) {
                 setupNavigationFlow()
-            } else if(isNavigated==getString(R.string.trxHistoryNavigatedIndicate)){
+            } else if (isNavigated == getString(R.string.trxHistoryNavigatedIndicate)) {
 
-                if(trxScreenSelection==getString(R.string.trxHistoryNavSpecificKey)){
+                if (trxScreenSelection == getString(R.string.trxHistoryNavSpecificKey)) {
 
                     val navController = (this as Activity).findNavController(R.id.trxHistoryFragmentNavMenu)
                     navController.navigate(R.id.action_detailsTrxFragment_to_trxHistorySpecificDateFragment)
 
-                }else{
+                } else {
 
                     val navController = (this as Activity).findNavController(R.id.trxHistoryFragmentNavMenu)
                     navController.navigate(R.id.action_detailsTrxFragment_to_trxHistoryRangeDateFragment)
                 }
 
                 setupNavigationMode()
-            }else if(isNavigated==getString(R.string.disableNavigatedIndicate)){
+            } else if (isNavigated == getString(R.string.disableNavigatedIndicate)) {
                 // Do Nothing for the ToolBar at Dialogfragment Display
-            }else {
+            } else {
                 displaySyncDateTime()
                 drawer_layout.openDrawer(GravityCompat.START)
             }
@@ -157,32 +155,32 @@ class MenuActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     private fun setupDrawerMode() {
         isNavigated = ""
         drawer_layout.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED)
-        animateIcon(1,0,800) // with Animation no need to deal with any Icon Change stuff
+        animateIcon(1, 0, 800) // with Animation no need to deal with any Icon Change stuff
 
         //supportActionBar!!.setDisplayHomeAsUpEnabled(false) // Remove the ActionBar
         //setupNavigationUpButton() // Recreate new Action Bar with Drawer Icon
     }
 
-    fun setupToDisable(){
+    fun setupToDisable() {
         isNavigated = getString(R.string.disableNavigatedIndicate)
     }
 
     fun setupNavigationMode() {
         isNavigated = getString(R.string.navigatedIndicate)
         drawer_layout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED)
-        animateIcon(0,1,800) // with Animation no need to deal with any Icon Change stuff
+        animateIcon(0, 1, 800) // with Animation no need to deal with any Icon Change stuff
 
         //supportActionBar!!.setDisplayHomeAsUpEnabled(true) // Make the button become Back Icon
     }
 
-    fun trxHistoryBack(trxScreen:String){
-        trxScreenSelection=trxScreen
+    fun trxHistoryBack(trxScreen: String) {
+        trxScreenSelection = trxScreen
         isNavigated = getString(R.string.trxHistoryNavigatedIndicate)
     }
 
-    private fun animateIcon(start:Int, end:Int, duration:Int){
+    private fun animateIcon(start: Int, end: Int, duration: Int) {
 
-        val anim= ValueAnimator.ofFloat(start.toFloat(),end.toFloat())
+        val anim = ValueAnimator.ofFloat(start.toFloat(), end.toFloat())
 
         anim.addUpdateListener { animation ->
             val slideOffset = animation?.animatedValue as Float
@@ -197,27 +195,27 @@ class MenuActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     override fun onBackPressed() {
         if (drawer_layout.isDrawerOpen(GravityCompat.START)) {
             drawer_layout.closeDrawer(GravityCompat.START)
-        } else if (isNavigated==getString(R.string.navigatedIndicate)) {
+        } else if (isNavigated == getString(R.string.navigatedIndicate)) {
             setupNavigationFlow()
-        } else if(isNavigated==getString(R.string.trxHistoryNavigatedIndicate)){ // for TrxHistory Navigation
+        } else if (isNavigated == getString(R.string.trxHistoryNavigatedIndicate)) { // for TrxHistory Navigation
 
-            if(trxScreenSelection==getString(R.string.trxHistoryNavSpecificKey)){
+            if (trxScreenSelection == getString(R.string.trxHistoryNavSpecificKey)) {
 
                 val navController = (this as Activity).findNavController(R.id.trxHistoryFragmentNavMenu)
                 navController.navigate(R.id.action_detailsTrxFragment_to_trxHistorySpecificDateFragment)
 
-            }else{
+            } else {
 
                 val navController = (this as Activity).findNavController(R.id.trxHistoryFragmentNavMenu)
                 navController.navigate(R.id.action_detailsTrxFragment_to_trxHistoryRangeDateFragment)
             }
 
             setupNavigationMode()
-        }else{
+        } else {
 
             val currentScreen = findNavController(R.id.navMenu).currentDestination.id
 
-            if(currentScreen==initialScreen){
+            if (currentScreen == initialScreen) {
                 if (doubleBackToExitPressedOnce) {
                     super.onBackPressed()
                     return
@@ -227,7 +225,7 @@ class MenuActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                 Toast.makeText(this, getString(R.string.exitAppConfirmation), Toast.LENGTH_SHORT).show()
 
                 Handler().postDelayed({ doubleBackToExitPressedOnce = false }, 2000)
-            }else{
+            } else {
 
                 super.onBackPressed()
             }
@@ -240,7 +238,8 @@ class MenuActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
         presenter = Presenter(this)
 
-        Handler().postDelayed({ //For Avoid Lagging Animation
+        Handler().postDelayed({
+            //For Avoid Lagging Animation
 
             // Handle navigation view item clicks here.
             when (item.itemId) {
@@ -261,7 +260,7 @@ class MenuActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                 }
                 R.id.navDrawer_SignOut -> {
 
-                    alertDialog.confirmationDialog(this,getString(R.string.dialogSignOut),getString(R.string.dialogSignOutMessage),resources.getDrawable(android.R.drawable.ic_dialog_alert),
+                    alertDialog.confirmationDialog(this, getString(R.string.dialogSignOut), getString(R.string.dialogSignOutMessage), resources.getDrawable(android.R.drawable.ic_dialog_alert),
                             DialogInterface.OnClickListener { dialogBox, which ->
 
                                 // Cancel Job Schedule
@@ -296,7 +295,7 @@ class MenuActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
     override fun startPeriodicBackupFail(mainContext: Context, errorMessage: String) {
 
-        Toast.makeText(mainContext, mainContext.getString(R.string.syncAutoFail)+errorMessage, Toast.LENGTH_LONG).show()
+        Toast.makeText(mainContext, mainContext.getString(R.string.syncAutoFail) + errorMessage, Toast.LENGTH_LONG).show()
     }
 
     override fun backupDataSuccess(mainContext: Context) {
@@ -306,7 +305,7 @@ class MenuActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
     override fun backupDataFail(mainContext: Context, errorMessage: String) {
 
-        Toast.makeText(mainContext, mainContext.getText(R.string.syncStartFail).toString()+errorMessage, Toast.LENGTH_LONG).show()
+        Toast.makeText(mainContext, mainContext.getText(R.string.syncStartFail).toString() + errorMessage, Toast.LENGTH_LONG).show()
     }
 
     override fun logoutSuccess(mainContext: Context, successLogoutMessage: String) {

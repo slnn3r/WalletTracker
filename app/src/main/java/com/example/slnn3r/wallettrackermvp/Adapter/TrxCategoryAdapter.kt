@@ -12,10 +12,10 @@ import com.google.gson.Gson
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.trx_category_list_row.view.*
 
-class TrxCategoryAdapter(private val transactionCategoryList: ArrayList<TransactionCategory>): RecyclerView.Adapter<TrxCategoryViewHolder>(){
+class TrxCategoryAdapter(private val transactionCategoryList: ArrayList<TransactionCategory>) : RecyclerView.Adapter<TrxCategoryViewHolder>() {
 
     // numberOfItems
-    override  fun getItemCount(): Int{
+    override fun getItemCount(): Int {
         return transactionCategoryList.count()
     }
 
@@ -39,17 +39,17 @@ class TrxCategoryAdapter(private val transactionCategoryList: ArrayList<Transact
 
         holder.view.VTCAccNameTextView.text = transactionCategoryData.TransactionCategoryName
 
-        if(transactionCategoryData.TransactionCategoryType == holder.view.context.getString(R.string.expense)){
+        if (transactionCategoryData.TransactionCategoryType == holder.view.context.getString(R.string.expense)) {
             holder.view.VTCImageView.background = holder.view.VTCImageView.context.resources.getDrawable(R.drawable.fui_idp_button_background_email)
 
             // Picasso get LAGGY and affect Navigation Drawer Animation when does not crop it, as it will load full size image
-            Picasso.get().load(R.drawable.expense_icon).resize(400,400).centerCrop().into(holder.view.VTCImageView)
+            Picasso.get().load(R.drawable.expense_icon).resize(400, 400).centerCrop().into(holder.view.VTCImageView)
             //holder.view.DBTrxImageView.setImageDrawable(holder.view.DBTrxImageView.context.resources.getDrawable(R.drawable.expense_icon))
 
-        }else{
+        } else {
 
             // Picasso get LAGGY and affect Navigation Drawer Animation when does not crop it, as it will load full size image
-            Picasso.get().load(R.drawable.income_icon).resize(400,400).centerCrop().into(holder.view.VTCImageView)
+            Picasso.get().load(R.drawable.income_icon).resize(400, 400).centerCrop().into(holder.view.VTCImageView)
             //holder.view.DBTrxImageView.setImageDrawable(holder.view.DBTrxImageView.context.resources.getDrawable(R.drawable.income_icon))
         }
 
@@ -58,15 +58,15 @@ class TrxCategoryAdapter(private val transactionCategoryList: ArrayList<Transact
 }
 
 
-class TrxCategoryViewHolder(val view: View, var passData: TransactionCategory?= null): RecyclerView.ViewHolder(view){
+class TrxCategoryViewHolder(val view: View, var passData: TransactionCategory? = null) : RecyclerView.ViewHolder(view) {
 
-    init{
-        view.setOnClickListener{
+    init {
+        view.setOnClickListener {
 
-            if(passData!=null){
+            if (passData != null) {
 
                 val gson = Gson()
-                val walletAccountData = TransactionCategory(passData!!.TransactionCategoryID,passData!!.TransactionCategoryName,passData!!.TransactionCategoryType, passData!!.TransactionCategoryStatus, passData!!.UserUID)
+                val walletAccountData = TransactionCategory(passData!!.TransactionCategoryID, passData!!.TransactionCategoryName, passData!!.TransactionCategoryType, passData!!.TransactionCategoryStatus, passData!!.UserUID)
                 val json = gson.toJson(walletAccountData)
 
                 val navController = view.findNavController()

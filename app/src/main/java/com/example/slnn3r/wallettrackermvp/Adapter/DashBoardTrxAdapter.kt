@@ -7,15 +7,15 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.navigation.findNavController
+import com.example.slnn3r.wallettrackermvp.Model.ObjectClass.Transaction
 import com.example.slnn3r.wallettrackermvp.R
 import com.example.slnn3r.wallettrackermvp.View.Activity.MenuActivity
-import kotlinx.android.synthetic.main.transaction_list_row.view.*
-import com.example.slnn3r.wallettrackermvp.Model.ObjectClass.Transaction
 import com.google.gson.Gson
 import com.squareup.picasso.Picasso
+import kotlinx.android.synthetic.main.transaction_list_row.view.*
 
 
-class DashBoardTrxAdapter(private val transactionList: ArrayList<Transaction>): RecyclerView.Adapter<DashBoardViewHolder>() {
+class DashBoardTrxAdapter(private val transactionList: ArrayList<Transaction>) : RecyclerView.Adapter<DashBoardViewHolder>() {
 
     // numberOfItems
     override fun getItemCount(): Int {
@@ -73,20 +73,19 @@ class DashBoardTrxAdapter(private val transactionList: ArrayList<Transaction>): 
 }
 
 
+class DashBoardViewHolder(val view: View, var passData: Transaction? = null) : RecyclerView.ViewHolder(view) {
 
-class DashBoardViewHolder(val view: View, var passData: Transaction?= null): RecyclerView.ViewHolder(view){
-
-    init{
-        view.setOnClickListener{
+    init {
+        view.setOnClickListener {
 
             val context = view.context
             val noResult = view.context.getString(R.string.noResult)
 
-            if(view.DBAccNameTextView.text == noResult){
+            if (view.DBAccNameTextView.text == noResult) {
 
                 Toast.makeText(context, noResult, Toast.LENGTH_SHORT).show()
 
-            }else{
+            } else {
 
                 val gson = Gson()
                 val transactionData = Transaction(

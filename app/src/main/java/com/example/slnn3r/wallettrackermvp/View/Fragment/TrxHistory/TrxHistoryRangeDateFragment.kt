@@ -90,7 +90,6 @@ class TrxHistoryRangeDateFragment : Fragment(), ViewInterface.TrxHistoryRangeVie
                     THRTrxCategorySpinner.selectedItem.toString(),
                     THRStartDateInput.text.toString(),
                     THREndDateInput.text.toString()
-
             )
         }
     }

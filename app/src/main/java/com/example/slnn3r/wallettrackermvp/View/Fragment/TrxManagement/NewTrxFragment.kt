@@ -2,25 +2,21 @@ package com.example.slnn3r.wallettrackermvp.View.Fragment.TrxManagement
 
 
 import android.app.Activity
+import android.app.DatePickerDialog
+import android.app.TimePickerDialog
+import android.content.Context
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v7.app.AppCompatActivity
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
-import android.widget.ArrayAdapter
-import com.example.slnn3r.wallettrackermvp.R
-import kotlinx.android.synthetic.main.fragment_new_trx.*
-import android.widget.AdapterView
-import android.widget.AdapterView.OnItemSelectedListener
-import android.app.DatePickerDialog
-import java.text.SimpleDateFormat
-import java.util.*
-import android.app.TimePickerDialog
-import android.content.Context
 import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import android.widget.AdapterView
+import android.widget.AdapterView.OnItemSelectedListener
+import android.widget.ArrayAdapter
 import android.widget.Spinner
 import android.widget.Toast
 import com.example.slnn3r.wallettrackermvp.Interface.PresenterInterface
@@ -30,21 +26,25 @@ import com.example.slnn3r.wallettrackermvp.Model.ObjectClass.TransactionCategory
 import com.example.slnn3r.wallettrackermvp.Model.ObjectClass.UserProfile
 import com.example.slnn3r.wallettrackermvp.Model.ObjectClass.WalletAccount
 import com.example.slnn3r.wallettrackermvp.Presenter.Presenter
+import com.example.slnn3r.wallettrackermvp.R
 import com.example.slnn3r.wallettrackermvp.Utility.CustomBottomSheetDialogFragment
 import com.example.slnn3r.wallettrackermvp.View.Activity.MenuActivity
+import kotlinx.android.synthetic.main.fragment_new_trx.*
 import java.sql.Time
+import java.text.SimpleDateFormat
+import java.util.*
 import kotlin.collections.ArrayList
 
 
 class NewTrxFragment : Fragment(), ViewInterface.NewTrxView, CustomBottomSheetDialogFragment.OnInputSelected {
 
     private val myCalendar = Calendar.getInstance()
-    private lateinit var simpleDateFormat:SimpleDateFormat
+    private lateinit var simpleDateFormat: SimpleDateFormat
 
     private val mcurrentTime = Calendar.getInstance()
     private val hour = mcurrentTime.get(Calendar.HOUR_OF_DAY)
     private val minute = mcurrentTime.get(Calendar.MINUTE)
-    private lateinit var simpleTimeFormat:SimpleDateFormat
+    private lateinit var simpleTimeFormat: SimpleDateFormat
 
     private lateinit var presenter: PresenterInterface.Presenter
 
@@ -67,7 +67,7 @@ class NewTrxFragment : Fragment(), ViewInterface.NewTrxView, CustomBottomSheetDi
         val userProfile = presenter.getUserData(context!!)
 
         // Setup + Populate Account Spinner Item
-        presenter.checkWalletAccount(context!!, userProfile.UserUID )
+        presenter.checkWalletAccount(context!!, userProfile.UserUID)
 
         // Receive Argumemt
         val trxTypeSelection = arguments?.getString(getString(R.string.trxTypePassArgKey))
@@ -91,11 +91,12 @@ class NewTrxFragment : Fragment(), ViewInterface.NewTrxView, CustomBottomSheetDi
             }
         }
 
-        NewTrxSubmit.setOnClickListener{
+        NewTrxSubmit.setOnClickListener {
             newTrxSubmitClick(userProfile)
         }
 
-        NewTrxAmountInput.setOnClickListener{ // Dialog Fragment
+        NewTrxAmountInput.setOnClickListener {
+            // Dialog Fragment
 
             disableUIComponents()
             displayCalculatorInput()
@@ -103,18 +104,18 @@ class NewTrxFragment : Fragment(), ViewInterface.NewTrxView, CustomBottomSheetDi
 
 
         // TextWatcher Validation
-        NewTrxAmountInput.addTextChangedListener(object: TextWatcher {
-                    override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
-                        Log.d("","")
-                    }
+        NewTrxAmountInput.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+                Log.d("", "")
+            }
 
-                    override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                        validateAmountInput()
-                    }
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                validateAmountInput()
+            }
 
-                    override fun afterTextChanged(s: Editable?) {
-                        validationFinalized()
-                    }
+            override fun afterTextChanged(s: Editable?) {
+                validationFinalized()
+            }
         })
     }
 
@@ -153,7 +154,7 @@ class NewTrxFragment : Fragment(), ViewInterface.NewTrxView, CustomBottomSheetDi
 
     private fun setupTimePicker() {
 
-        NewTrxTimeInput.setOnClickListener{
+        NewTrxTimeInput.setOnClickListener {
 
             val mTimePicker: TimePickerDialog
 
@@ -179,18 +180,18 @@ class NewTrxFragment : Fragment(), ViewInterface.NewTrxView, CustomBottomSheetDi
     }
 
     private fun trxTypeSpinnerClick(userProfile: UserProfile) {
-        if(NewTrxTypeSpinner.selectedItem==getString(R.string.expense)){
+        if (NewTrxTypeSpinner.selectedItem == getString(R.string.expense)) {
 
             NewTrxTypeImageView.setImageDrawable(resources.getDrawable(R.drawable.expense_icon))
             NewTrxTypeImageView.background = resources.getDrawable(R.drawable.fui_idp_button_background_email)
-            NewTrxSubmit.background= resources.getDrawable(R.drawable.fui_idp_button_background_email)
+            NewTrxSubmit.background = resources.getDrawable(R.drawable.fui_idp_button_background_email)
 
             presenter.checkTransactionCategory(context!!, userProfile.UserUID, NewTrxTypeSpinner.selectedItem.toString())
 
-        }else{
+        } else {
             NewTrxTypeImageView.setImageDrawable(resources.getDrawable(R.drawable.income_icon))
             NewTrxTypeImageView.background = resources.getDrawable(R.drawable.fui_idp_button_background_phone)
-            NewTrxSubmit.background= resources.getDrawable(R.drawable.fui_idp_button_background_phone)
+            NewTrxSubmit.background = resources.getDrawable(R.drawable.fui_idp_button_background_phone)
 
             presenter.checkTransactionCategory(context!!, userProfile.UserUID, NewTrxTypeSpinner.selectedItem.toString())
         }
@@ -212,35 +213,35 @@ class NewTrxFragment : Fragment(), ViewInterface.NewTrxView, CustomBottomSheetDi
         val newTrxInput =
 
                 Transaction(
-                        uniqueID,NewTrxDateInput.text.toString()
-                        ,convertedTime
-                        ,NewTrxAmountInput.text.toString().toDouble()
-                        ,NewTrxRemarksInput.text.toString()
-                        ,selectedTrxCategory
-                        ,selectedWalletAccount
+                        uniqueID, NewTrxDateInput.text.toString()
+                        , convertedTime
+                        , NewTrxAmountInput.text.toString().toDouble()
+                        , NewTrxRemarksInput.text.toString()
+                        , selectedTrxCategory
+                        , selectedWalletAccount
                 )
 
-        presenter.createNewTrx(context!!,newTrxInput)
+        presenter.createNewTrx(context!!, newTrxInput)
     }
 
     private fun setupInitialUI() {
         NewTrxSubmit.isEnabled = false
-        NewTrxAmountInput.error=getString(R.string.promptToEnter)
+        NewTrxAmountInput.error = getString(R.string.promptToEnter)
     }
 
-    private fun validateAmountInput(){
+    private fun validateAmountInput() {
 
-        val validationResult = presenter.transactionInputValidation(context!!,NewTrxAmountInput.text.toString())
+        val validationResult = presenter.transactionInputValidation(context!!, NewTrxAmountInput.text.toString())
 
-        if(validationResult!=null){
+        if (validationResult != null) {
             NewTrxSubmit.isEnabled = false
         }
 
-        NewTrxAmountInput.error=validationResult
+        NewTrxAmountInput.error = validationResult
     }
 
-    private fun validationFinalized(){
-        if(NewTrxAmountInput.error==null){
+    private fun validationFinalized() {
+        if (NewTrxAmountInput.error == null) {
             NewTrxSubmit.isEnabled = true
         }
     }
@@ -249,7 +250,7 @@ class NewTrxFragment : Fragment(), ViewInterface.NewTrxView, CustomBottomSheetDi
 
         (context as MenuActivity).setupToDisable()
         NewTrxRemarksInput.isEnabled = false
-        NewTrxAmountInput.isEnabled= false
+        NewTrxAmountInput.isEnabled = false
         NewTrxSelectedAccSpinner.isEnabled = false
         NewTrxTypeSpinner.isEnabled = false
         NewTrxCategorySpinner.isEnabled = false
@@ -261,7 +262,7 @@ class NewTrxFragment : Fragment(), ViewInterface.NewTrxView, CustomBottomSheetDi
         (context as MenuActivity).setupNavigationMode()
 
         NewTrxRemarksInput.isEnabled = true
-        NewTrxAmountInput.isEnabled=true
+        NewTrxAmountInput.isEnabled = true
         NewTrxSelectedAccSpinner.isEnabled = true
         NewTrxTypeSpinner.isEnabled = true
         NewTrxCategorySpinner.isEnabled = true
@@ -272,9 +273,9 @@ class NewTrxFragment : Fragment(), ViewInterface.NewTrxView, CustomBottomSheetDi
     private fun displayCalculatorInput() {
 
         val args = Bundle()
-        if(NewTrxAmountInput.text.toString().toDoubleOrNull()!=null){
+        if (NewTrxAmountInput.text.toString().toDoubleOrNull() != null) {
             args.putString(getString(R.string.trxAmountPassArgKey), NewTrxAmountInput.text.toString())
-        }else{
+        } else {
             args.putString(getString(R.string.trxAmountPassArgKey), "")
 
         }
@@ -283,11 +284,10 @@ class NewTrxFragment : Fragment(), ViewInterface.NewTrxView, CustomBottomSheetDi
 
         val calCustomDialog = CustomBottomSheetDialogFragment()
         calCustomDialog.arguments = args
-        calCustomDialog.isCancelable= false
-        calCustomDialog.setTargetFragment(this,1)
-        calCustomDialog.show(this.fragmentManager,"")
+        calCustomDialog.isCancelable = false
+        calCustomDialog.setTargetFragment(this, 1)
+        calCustomDialog.show(this.fragmentManager, "")
     }
-
 
 
     // Presenter Callback
@@ -295,8 +295,7 @@ class NewTrxFragment : Fragment(), ViewInterface.NewTrxView, CustomBottomSheetDi
 
         val spinnerItem = ArrayList<String>()
 
-        trxCategoryList.forEach {
-            data ->
+        trxCategoryList.forEach { data ->
             spinnerItem.add(data.TransactionCategoryName)
         }
 
@@ -312,15 +311,14 @@ class NewTrxFragment : Fragment(), ViewInterface.NewTrxView, CustomBottomSheetDi
 
     override fun populateNewTrxCategorySpinnerFail(mainContext: Context, errorMessage: String) {
 
-        Toast.makeText(mainContext,errorMessage, Toast.LENGTH_LONG).show()
+        Toast.makeText(mainContext, errorMessage, Toast.LENGTH_LONG).show()
     }
 
     override fun populateSelectedAccountSpinner(mainContext: Context, walletAccountList: ArrayList<WalletAccount>) {
 
         val categories = ArrayList<String>()
 
-        walletAccountList.forEach {
-            data->
+        walletAccountList.forEach { data ->
             categories.add(data.WalletAccountName)
         }
 
@@ -336,30 +334,29 @@ class NewTrxFragment : Fragment(), ViewInterface.NewTrxView, CustomBottomSheetDi
 
         // Get SharedPreference saved Selection and Set to Spinner Selection
         val go = presenter.getSelectedAccount(mainContext)
-        var count= 0
-        categories.forEach {
-            data ->
-            if(go==data){
+        var count = 0
+        categories.forEach { data ->
+            if (go == data) {
                 spinner.setSelection(count)
             }
-            count+=1
+            count += 1
         }
     }
 
     override fun populateSelectedAccountSpinnerFail(mainContext: Context, errorMessage: String) {
 
-        Toast.makeText(mainContext,errorMessage, Toast.LENGTH_LONG).show()
+        Toast.makeText(mainContext, errorMessage, Toast.LENGTH_LONG).show()
     }
 
 
     override fun createNewTrxSuccess(mainContext: Context) {
 
-        Toast.makeText(mainContext,mainContext.getString(R.string.createNewTrx), Toast.LENGTH_SHORT).show()
+        Toast.makeText(mainContext, mainContext.getString(R.string.createNewTrx), Toast.LENGTH_SHORT).show()
         (mainContext as Activity).onBackPressed()
     }
 
     override fun createNewTrxFail(mainContext: Context, errorMessage: String) {
-        Toast.makeText(mainContext,errorMessage, Toast.LENGTH_LONG).show()
+        Toast.makeText(mainContext, errorMessage, Toast.LENGTH_LONG).show()
     }
 
 
@@ -367,9 +364,9 @@ class NewTrxFragment : Fragment(), ViewInterface.NewTrxView, CustomBottomSheetDi
 
         enableUIComponents()
 
-        if(input==""){
+        if (input == "") {
             NewTrxAmountInput.setText(getString(R.string.NewTrxDefaultAmount))
-        }else{
+        } else {
             NewTrxAmountInput.setText(input)
         }
     }

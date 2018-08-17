@@ -1,40 +1,43 @@
 package com.example.slnn3r.wallettrackermvp.View.Fragment
 
+import android.app.Activity
 import android.content.Context
+import android.graphics.Color
+import android.graphics.Paint
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
-import android.view.*
-import androidx.navigation.findNavController
-import com.example.slnn3r.wallettrackermvp.Adapter.DashBoardTrxAdapter
-import com.example.slnn3r.wallettrackermvp.R
-import com.example.slnn3r.wallettrackermvp.View.Activity.MenuActivity
-import kotlinx.android.synthetic.main.fragment_dash_board.*
-import com.example.slnn3r.wallettrackermvp.Interface.PresenterInterface
-import com.example.slnn3r.wallettrackermvp.Interface.ViewInterface
-import com.example.slnn3r.wallettrackermvp.Model.ObjectClass.WalletAccount
-import com.example.slnn3r.wallettrackermvp.Presenter.Presenter
-import java.util.*
-import android.app.Activity
-import android.graphics.Color
-import android.graphics.Paint
 import android.support.v7.widget.RecyclerView
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
 import android.widget.*
+import androidx.navigation.findNavController
+import com.example.slnn3r.wallettrackermvp.Adapter.DashBoardTrxAdapter
+import com.example.slnn3r.wallettrackermvp.Interface.PresenterInterface
+import com.example.slnn3r.wallettrackermvp.Interface.ViewInterface
 import com.example.slnn3r.wallettrackermvp.Model.ObjectClass.Transaction
+import com.example.slnn3r.wallettrackermvp.Model.ObjectClass.WalletAccount
+import com.example.slnn3r.wallettrackermvp.Presenter.Presenter
+import com.example.slnn3r.wallettrackermvp.R
 import com.example.slnn3r.wallettrackermvp.Utility.CustomMarkerView
-import kotlin.collections.ArrayList
+import com.example.slnn3r.wallettrackermvp.View.Activity.MenuActivity
 import com.github.mikephil.charting.components.AxisBase
 import com.github.mikephil.charting.components.XAxis
-import com.github.mikephil.charting.data.*
-import com.github.mikephil.charting.formatter.IAxisValueFormatter
-import com.github.mikephil.charting.utils.ViewPortHandler
-import com.github.mikephil.charting.formatter.IValueFormatter
+import com.github.mikephil.charting.data.Entry
+import com.github.mikephil.charting.data.LineData
 import com.github.mikephil.charting.data.LineDataSet
+import com.github.mikephil.charting.formatter.IAxisValueFormatter
+import com.github.mikephil.charting.formatter.IValueFormatter
+import com.github.mikephil.charting.utils.ViewPortHandler
+import kotlinx.android.synthetic.main.fragment_dash_board.*
+import java.util.*
+import kotlin.collections.ArrayList
 
 
-class DashBoardFragment : Fragment(),ViewInterface.DashBoardView {
+class DashBoardFragment : Fragment(), ViewInterface.DashBoardView {
 
     private lateinit var presenter: PresenterInterface.Presenter
     private val mCalendar = Calendar.getInstance()
@@ -61,18 +64,18 @@ class DashBoardFragment : Fragment(),ViewInterface.DashBoardView {
         val userID = userProfile.UserUID
 
         // Display Account Selection to Spinner
-        presenter.checkWalletAccount(context!!, userID )
+        presenter.checkWalletAccount(context!!, userID)
 
         setupUI(userID)
 
 
         // Listener Setter
-        DBIncomeFab.setOnClickListener{
+        DBIncomeFab.setOnClickListener {
 
             onIncomeButtonClick(view, userID)
         }
 
-        DBExpenseFab.setOnClickListener{
+        DBExpenseFab.setOnClickListener {
 
             onExpenseButtonClick(view, userID)
         }
@@ -80,15 +83,12 @@ class DashBoardFragment : Fragment(),ViewInterface.DashBoardView {
 
 
     // Function Implementation
-    private fun setupUI(userID: String){
+    private fun setupUI(userID: String) {
         DBTrxGraph.setNoDataText(getString(R.string.DBGraphLoading))
 
         // Initial Input
-        val thisMonth =mCalendar.getDisplayName(Calendar.MONTH, Calendar.LONG, Locale.getDefault())
-        DBMonthTextView.text = getString(R.string.formatDisplayMonth,thisMonth)
-
-
-
+        val thisMonth = mCalendar.getDisplayName(Calendar.MONTH, Calendar.LONG, Locale.getDefault())
+        DBMonthTextView.text = getString(R.string.formatDisplayMonth, thisMonth)
     }
 
     private fun hideDisplayedKeyboard(view: View) {
@@ -129,12 +129,12 @@ class DashBoardFragment : Fragment(),ViewInterface.DashBoardView {
         bundle.putString(getString(R.string.walletAccountPassArgKey), walletAccountData[DBAccountSpinner.selectedItemPosition].WalletAccountName)
 
 
-        navController.navigate(R.id.action_dashBoardFragment_to_addNewTrx,bundle)
+        navController.navigate(R.id.action_dashBoardFragment_to_addNewTrx, bundle)
 
         (activity as MenuActivity).setupNavigationMode()
     }
 
-    private fun displayDummyDateGraph(entries:ArrayList<Entry>, xAxisLabel:ArrayList<String>) {
+    private fun displayDummyDateGraph(entries: ArrayList<Entry>, xAxisLabel: ArrayList<String>) {
 
         val dataSet = LineDataSet(entries, null)
 
@@ -156,7 +156,7 @@ class DashBoardFragment : Fragment(),ViewInterface.DashBoardView {
 
         DBTrxGraph.description.text = getString(R.string.DBGraphInfo)
         DBTrxGraph.description.textAlign = Paint.Align.CENTER
-        DBTrxGraph.description.setPosition(DBTrxGraph.pivotX,25f)
+        DBTrxGraph.description.setPosition(DBTrxGraph.pivotX, 25f)
 
         DBTrxGraph.data = data
         //DBTrxGraph.setTouchEnabled(false)
@@ -198,7 +198,6 @@ class DashBoardFragment : Fragment(),ViewInterface.DashBoardView {
     }
 
 
-
     //// Presenter Callback
     override fun firstTimeSetup(mainContext: Context) {
 
@@ -214,14 +213,13 @@ class DashBoardFragment : Fragment(),ViewInterface.DashBoardView {
     override fun firstTimeSetupSuccess(mainContext: Context, walletAccount: WalletAccount) {
 
         presenter = Presenter(this)
-        presenter.checkWalletAccount(mainContext, walletAccount.UserUID )
+        presenter.checkWalletAccount(mainContext, walletAccount.UserUID)
     }
 
     override fun firstTimeSetupFail(mainContext: Context, errorMessage: String) {
 
-        Toast.makeText(mainContext,errorMessage,Toast.LENGTH_LONG).show()
+        Toast.makeText(mainContext, errorMessage, Toast.LENGTH_LONG).show()
     }
-
 
 
     override fun populateWalletAccountSpinner(mainContext: Context, walletAccountList: ArrayList<WalletAccount>) {
@@ -230,8 +228,7 @@ class DashBoardFragment : Fragment(),ViewInterface.DashBoardView {
 
         val categories = ArrayList<String>()
 
-        walletAccountList.forEach {
-            data->
+        walletAccountList.forEach { data ->
             categories.add(data.WalletAccountName)
         }
 
@@ -255,7 +252,7 @@ class DashBoardFragment : Fragment(),ViewInterface.DashBoardView {
 
         val userProfile = presenter.getUserData(mainContext)
 
-        spinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener{
+        spinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
 
             override fun onNothingSelected(parent: AdapterView<*>?) {}
 
@@ -269,32 +266,31 @@ class DashBoardFragment : Fragment(),ViewInterface.DashBoardView {
                 //!!!!!!! LOAD TRX LIST, BALANCE FIGURE IS HERE
                 presenter.getAllIncome(mainContext, userProfile.UserUID, walletAccountList[spinner.selectedItemPosition].WalletAccountID)
 
-                val thisMonth =mCalendar.getDisplayName(Calendar.MONTH, Calendar.LONG, Locale.getDefault())
+                val thisMonth = mCalendar.getDisplayName(Calendar.MONTH, Calendar.LONG, Locale.getDefault())
                 presenter.getThisMonthExpense(mainContext, userProfile.UserUID, walletAccountList[spinner.selectedItemPosition].WalletAccountID, thisMonth)
 
-                presenter.getRecentExpenses(mainContext,userProfile.UserUID,walletAccountList[spinner.selectedItemPosition].WalletAccountID)
+                presenter.getRecentExpenses(mainContext, userProfile.UserUID, walletAccountList[spinner.selectedItemPosition].WalletAccountID)
             }
         }
     }
 
     override fun populateWalletAccountSpinnerFail(mainContext: Context, errorMessage: String) {
 
-        Toast.makeText(mainContext,errorMessage,Toast.LENGTH_LONG).show()
+        Toast.makeText(mainContext, errorMessage, Toast.LENGTH_LONG).show()
     }
-
 
 
     override fun populateTransactionRecycleView(mainContext: Context, transactionList: ArrayList<Transaction>) {
 
         val dBTrxRecyclerView = (mainContext as Activity).findViewById(R.id.DBTrxRecyclerView) as RecyclerView
-        
+
         dBTrxRecyclerView.layoutManager = LinearLayoutManager(mainContext)
         dBTrxRecyclerView.adapter = DashBoardTrxAdapter(transactionList)
     }
 
     override fun populateTransactionRecycleViewFail(mainContext: Context, errorMessage: String) {
 
-        Toast.makeText(mainContext,errorMessage,Toast.LENGTH_LONG).show()
+        Toast.makeText(mainContext, errorMessage, Toast.LENGTH_LONG).show()
     }
 
 
@@ -302,11 +298,11 @@ class DashBoardFragment : Fragment(),ViewInterface.DashBoardView {
 
         val currentBalanceView = (mainContext as Activity).findViewById(R.id.DBCurrentBalTextView) as TextView
 
-        if(currentBalance>0){
+        if (currentBalance > 0) {
 
             currentBalanceView.text = String.format(mainContext.getString(R.string.formatDisplay2DecimalMoney), currentBalance)
             currentBalanceView.setTextColor(Color.GREEN)
-        }else{
+        } else {
 
             currentBalanceView.text = String.format(mainContext.getString(R.string.formatDisplay2DecimalMoney), currentBalance)
             currentBalanceView.setTextColor(Color.RED)

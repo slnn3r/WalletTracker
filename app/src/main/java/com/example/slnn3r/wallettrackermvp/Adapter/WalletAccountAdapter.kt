@@ -12,10 +12,10 @@ import com.google.gson.Gson
 import kotlinx.android.synthetic.main.wallet_account_list_row.view.*
 
 
-class WalletAccountAdapter(private val walletAccountList: ArrayList<WalletAccount>): RecyclerView.Adapter<WalletAccountViewHolder>(){
+class WalletAccountAdapter(private val walletAccountList: ArrayList<WalletAccount>) : RecyclerView.Adapter<WalletAccountViewHolder>() {
 
     // numberOfItems
-    override  fun getItemCount(): Int{
+    override fun getItemCount(): Int {
         return walletAccountList.count()
     }
 
@@ -43,15 +43,15 @@ class WalletAccountAdapter(private val walletAccountList: ArrayList<WalletAccoun
     }
 }
 
-class WalletAccountViewHolder(val view: View, var passData: WalletAccount?= null): RecyclerView.ViewHolder(view){
+class WalletAccountViewHolder(val view: View, var passData: WalletAccount? = null) : RecyclerView.ViewHolder(view) {
 
-    init{
-        view.setOnClickListener{
+    init {
+        view.setOnClickListener {
 
-            if(passData!=null){
+            if (passData != null) {
 
                 val gson = Gson()
-                val walletAccountData = WalletAccount(passData!!.WalletAccountID,passData!!.WalletAccountName,passData!!.WalletAccountInitialBalance,passData!!.UserUID,passData!!.WalletAccountStatus)
+                val walletAccountData = WalletAccount(passData!!.WalletAccountID, passData!!.WalletAccountName, passData!!.WalletAccountInitialBalance, passData!!.UserUID, passData!!.WalletAccountStatus)
                 val json = gson.toJson(walletAccountData)
 
                 val navController = view.findNavController()
