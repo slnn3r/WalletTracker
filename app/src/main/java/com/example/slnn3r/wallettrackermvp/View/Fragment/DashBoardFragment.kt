@@ -16,6 +16,9 @@ import android.view.inputmethod.InputMethodManager
 import android.widget.*
 import androidx.navigation.findNavController
 import com.example.slnn3r.wallettrackermvp.Adapter.DashBoardTrxAdapter
+import com.example.slnn3r.wallettrackermvp.Adapter.loadBal
+import com.example.slnn3r.wallettrackermvp.Adapter.loadExp
+import com.example.slnn3r.wallettrackermvp.Adapter.loadGraph
 import com.example.slnn3r.wallettrackermvp.Interface.PresenterInterface
 import com.example.slnn3r.wallettrackermvp.Interface.ViewInterface
 import com.example.slnn3r.wallettrackermvp.Model.ObjectClass.Transaction
@@ -33,6 +36,7 @@ import com.github.mikephil.charting.formatter.IAxisValueFormatter
 import com.github.mikephil.charting.formatter.IValueFormatter
 import com.github.mikephil.charting.utils.ViewPortHandler
 import kotlinx.android.synthetic.main.fragment_dash_board.*
+import kotlinx.android.synthetic.main.transaction_list_row.*
 import java.util.*
 import kotlin.collections.ArrayList
 
@@ -84,6 +88,9 @@ class DashBoardFragment : Fragment(), ViewInterface.DashBoardView {
 
     // Function Implementation
     private fun setupUI(userID: String) {
+
+        disableButtonClick()
+
         DBTrxGraph.setNoDataText(getString(R.string.DBGraphLoading))
 
         // Initial Input
@@ -170,6 +177,18 @@ class DashBoardFragment : Fragment(), ViewInterface.DashBoardView {
         DBTrxGraph.notifyDataSetChanged() // this line solve weird auto resize when refresh graph(becuz of being call from spinner listener change)
         DBTrxGraph.invalidate() // refresh
 
+        enableButtonClick()
+        loadGraph = true
+    }
+
+    private fun enableButtonClick() {
+        DBExpenseFab.isEnabled = true
+        DBIncomeFab.isEnabled = true
+    }
+
+    private fun disableButtonClick() {
+        DBExpenseFab.isEnabled = false
+        DBIncomeFab.isEnabled = false
     }
 
     // Format the Y Axis Value to 2Decimal value + add Dollar Sign
@@ -286,6 +305,7 @@ class DashBoardFragment : Fragment(), ViewInterface.DashBoardView {
 
         dBTrxRecyclerView.layoutManager = LinearLayoutManager(mainContext)
         dBTrxRecyclerView.adapter = DashBoardTrxAdapter(transactionList)
+
     }
 
     override fun populateTransactionRecycleViewFail(mainContext: Context, errorMessage: String) {
@@ -307,6 +327,8 @@ class DashBoardFragment : Fragment(), ViewInterface.DashBoardView {
             currentBalanceView.text = String.format(mainContext.getString(R.string.formatDisplay2DecimalMoney), currentBalance)
             currentBalanceView.setTextColor(Color.RED)
         }
+
+        loadBal = true
     }
 
     override fun populateThisMonthExpense(mainContext: Context, thisMonthExpense: Double) {
@@ -314,6 +336,8 @@ class DashBoardFragment : Fragment(), ViewInterface.DashBoardView {
         val thisMonthExpenseView = (mainContext as Activity).findViewById(R.id.DBMonthlyExpTextView) as TextView
         thisMonthExpenseView.text = String.format(mainContext.getString(R.string.formatDisplay2DecimalMoney), thisMonthExpense)
         thisMonthExpenseView.setTextColor(Color.RED)
+
+        loadExp = true
     }
 
 
@@ -321,5 +345,4 @@ class DashBoardFragment : Fragment(), ViewInterface.DashBoardView {
 
         displayDummyDateGraph(entryList, xAxisList)
     }
-
 }

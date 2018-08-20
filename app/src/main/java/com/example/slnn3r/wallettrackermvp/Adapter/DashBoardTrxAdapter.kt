@@ -14,6 +14,9 @@ import com.google.gson.Gson
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.transaction_list_row.view.*
 
+var loadGraph = false
+var loadBal = false
+var loadExp = false
 
 class DashBoardTrxAdapter(private val transactionList: ArrayList<Transaction>) : RecyclerView.Adapter<DashBoardViewHolder>() {
 
@@ -76,38 +79,47 @@ class DashBoardTrxAdapter(private val transactionList: ArrayList<Transaction>) :
 class DashBoardViewHolder(val view: View, var passData: Transaction? = null) : RecyclerView.ViewHolder(view) {
 
     init {
+        loadGraph=false
+        loadExp=false
+        loadBal=false
+
         view.setOnClickListener {
 
-            val context = view.context
-            val noResult = view.context.getString(R.string.noResult)
-
-            if (view.DBAccNameTextView.text == noResult) {
-
-                Toast.makeText(context, noResult, Toast.LENGTH_SHORT).show()
-
-            } else {
-
-                val gson = Gson()
-                val transactionData = Transaction(
-                        passData!!.TransactionID,
-                        passData!!.TransactionDate,
-                        passData!!.TransactionTime,
-                        passData!!.TransactionAmount,
-                        passData!!.TransactionRemark,
-                        passData!!.TransactionCategory,
-                        passData!!.WalletAccount
-                )
-
-                val json = gson.toJson(transactionData)
-
-                val bundle = Bundle()
-                bundle.putString(view.context.getString(R.string.transactionPassArgKey), json)
-
-                val navController = view.findNavController()
-                navController.navigate(R.id.action_dashBoardFragment_to_detailsTrxFragment, bundle)
-
-                (context as MenuActivity).setupNavigationMode()
+            if(!loadGraph || !loadExp || !loadBal){
+                return@setOnClickListener
             }
+
+                val context = view.context
+                val noResult = view.context.getString(R.string.noResult)
+
+                if (view.DBAccNameTextView.text == noResult) {
+
+                    Toast.makeText(context, noResult, Toast.LENGTH_SHORT).show()
+
+                } else {
+
+                    val gson = Gson()
+                    val transactionData = Transaction(
+                            passData!!.TransactionID,
+                            passData!!.TransactionDate,
+                            passData!!.TransactionTime,
+                            passData!!.TransactionAmount,
+                            passData!!.TransactionRemark,
+                            passData!!.TransactionCategory,
+                            passData!!.WalletAccount
+                    )
+
+                    val json = gson.toJson(transactionData)
+
+                    val bundle = Bundle()
+                    bundle.putString(view.context.getString(R.string.transactionPassArgKey), json)
+
+                    val navController = view.findNavController()
+                    navController.navigate(R.id.action_dashBoardFragment_to_detailsTrxFragment, bundle)
+
+                    (context as MenuActivity).setupNavigationMode()
+                }
+
         }
     }
 }
