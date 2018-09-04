@@ -81,7 +81,6 @@ class DashBoardTrxAdapter(private val transactionList: ArrayList<Transaction>) :
 class DashBoardViewHolder(val view: View, var passData: Transaction? = null) : RecyclerView.ViewHolder(view) {
 
     init {
-
         if(firstLoad){
             loadGraph=false
             loadExp=false
