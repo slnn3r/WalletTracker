@@ -239,7 +239,6 @@ class TrxHistoryRangeDateFragment : Fragment(), ViewInterface.TrxHistoryRangeVie
         val spinnerPosition = dataAdapter.getPosition(go)
         spinner.setSelection(spinnerPosition)
 
-        categoryNeverLoad = false
         loadAccountSpinner = true
         checkingAllLoaded()
     }
@@ -268,6 +267,7 @@ class TrxHistoryRangeDateFragment : Fragment(), ViewInterface.TrxHistoryRangeVie
         tHRTrxCategorySpinner.adapter = dataAdapter
         tHRTrxCategorySpinner.isEnabled = true
 
+        categoryNeverLoad = false
         loadCategorySpinner = true
         checkingAllLoaded()
     }
