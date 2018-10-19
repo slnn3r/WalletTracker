@@ -80,10 +80,18 @@ class DashBoardFragment : Fragment(), ViewInterface.DashBoardView {
         // Listener Setter
         DBIncomeFab.setOnClickListener {
 
+            if(!loadGraph || !loadExp || !loadBal){
+                return@setOnClickListener
+            }
+
             onIncomeButtonClick(view, userID)
         }
 
         DBExpenseFab.setOnClickListener {
+
+            if(!loadGraph || !loadExp || !loadBal){
+                return@setOnClickListener
+            }
 
             onExpenseButtonClick(view, userID)
         }
@@ -92,8 +100,6 @@ class DashBoardFragment : Fragment(), ViewInterface.DashBoardView {
 
     // Function Implementation
     private fun setupUI(userID: String) {
-
-        disableButtonClick()
 
         DBTrxGraph.setNoDataText(getString(R.string.DBGraphLoading))
 
@@ -181,18 +187,7 @@ class DashBoardFragment : Fragment(), ViewInterface.DashBoardView {
         DBTrxGraph.notifyDataSetChanged() // this line solve weird auto resize when refresh graph(becuz of being call from spinner listener change)
         DBTrxGraph.invalidate() // refresh
 
-        enableButtonClick()
         loadGraph = true
-    }
-
-    private fun enableButtonClick() {
-        DBExpenseFab.isEnabled = true
-        DBIncomeFab.isEnabled = true
-    }
-
-    private fun disableButtonClick() {
-        DBExpenseFab.isEnabled = false
-        DBIncomeFab.isEnabled = false
     }
 
     // Format the Y Axis Value to 2Decimal value + add Dollar Sign
