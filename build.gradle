@@ -5,6 +5,7 @@ buildscript {
     repositories {
         google()
         jcenter()
+        maven { url 'https://maven.fabric.io/public' } // Crashlytics
     }
     dependencies {
         classpath 'com.android.tools.build:gradle:3.2.0'
@@ -15,6 +16,9 @@ buildscript {
 
         // Firebase Online Database
         classpath 'com.google.gms:google-services:4.0.0'
+
+        // Crashlytics
+        classpath 'io.fabric.tools:gradle:1.25.4'
     }
 }
 
@@ -23,7 +27,7 @@ allprojects {
         google()
         jcenter()
         maven { url 'https://jitpack.io' } // MPAndroidChart
-
+        maven { url 'https://maven.google.com/' } // Crashlytics
     }
 }
 

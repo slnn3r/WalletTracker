@@ -4,10 +4,12 @@ import android.content.Intent
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.widget.Toast
+import com.crashlytics.android.Crashlytics
 import com.example.slnn3r.wallettrackermvp.Interface.PresenterInterface
 import com.example.slnn3r.wallettrackermvp.Interface.ViewInterface
 import com.example.slnn3r.wallettrackermvp.Presenter.Presenter
 import com.example.slnn3r.wallettrackermvp.R
+import io.fabric.sdk.android.Fabric
 
 class MainActivity : AppCompatActivity(), ViewInterface.MainView {
 
@@ -16,6 +18,12 @@ class MainActivity : AppCompatActivity(), ViewInterface.MainView {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
+        val fabric = Fabric.Builder(this)
+                .kits(Crashlytics())
+                .debuggable(true)  // Enables Crashlytics debugger
+                .build()
+        Fabric.with(fabric)
 
         presenter = Presenter(this)
         presenter.checkLogin()

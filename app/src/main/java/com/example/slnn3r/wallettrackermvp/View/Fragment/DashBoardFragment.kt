@@ -67,7 +67,6 @@ class DashBoardFragment : Fragment(), ViewInterface.DashBoardView {
 
         hideDisplayedKeyboard(view) // Hide Keyboard
 
-
         // Get SharedPreference data
         val userProfile = presenter.getUserData(context!!)
         val userID = userProfile.UserUID

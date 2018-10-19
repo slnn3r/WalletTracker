@@ -55,6 +55,7 @@ dependencies {
 
     implementation 'com.github.PhilJay:MPAndroidChart:v3.0.3' // Graph
 
+    implementation 'com.crashlytics.sdk.android:crashlytics:2.9.5' // Crashlytics
 
     // Android Navigation Library
     def nav_version = "1.0.0-alpha02"

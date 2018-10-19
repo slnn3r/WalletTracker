@@ -13,6 +13,7 @@ import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.inputmethod.InputMethodManager
 import android.widget.*
 import androidx.navigation.findNavController
 import androidx.navigation.ui.setupWithNavController
@@ -48,6 +49,8 @@ class TrxHistoryRangeDateFragment : Fragment(), ViewInterface.TrxHistoryRangeVie
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        hideDisplayedKeyboard(view)
 
         // setup bottom navigation
         val navController = (context as Activity).findNavController(R.id.trxHistoryFragmentNavMenu)
@@ -299,5 +302,17 @@ class TrxHistoryRangeDateFragment : Fragment(), ViewInterface.TrxHistoryRangeVie
 
     override fun populateTrxHistoryRangeRecycleViewFail(mainContext: Context, errorMessage: String) {
         Toast.makeText(mainContext,errorMessage, Toast.LENGTH_LONG).show()
+    }
+
+    private fun hideDisplayedKeyboard(view: View) {
+
+        // To Hide KeyBoard
+        val inputManager = view
+                .context
+                .getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+
+        val binder = view.windowToken
+        inputManager.hideSoftInputFromWindow(binder,
+                InputMethodManager.HIDE_NOT_ALWAYS)
     }
 }
