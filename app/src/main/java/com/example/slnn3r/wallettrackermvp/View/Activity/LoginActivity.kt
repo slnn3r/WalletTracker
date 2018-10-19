@@ -55,8 +55,8 @@ class LoginActivity : AppCompatActivity(), ViewInterface.LoginView {
 
         val intent = Auth.GoogleSignInApi.getSignInIntent(mGoogleApiClient)
 
-        mGoogleApiClient.stopAutoManage(this)
-        mGoogleApiClient.disconnect()
+        //mGoogleApiClient.stopAutoManage(this)
+        //mGoogleApiClient.disconnect()
 
         this.startActivityForResult(intent, REQUEST_CODE_SIGN_IN)
     }
@@ -66,23 +66,23 @@ class LoginActivity : AppCompatActivity(), ViewInterface.LoginView {
     }
 
 
-    override fun loginSuccess(mainContext: Context?, successLoginMessage: String) {
+    override fun loginSuccess(successLoginMessage: String) {
 
-        Toast.makeText(mainContext, successLoginMessage, Toast.LENGTH_LONG).show()
+        Toast.makeText(this, successLoginMessage, Toast.LENGTH_LONG).show()
 
-        val user = presenter.getUserData(mainContext!!)
-        presenter.retrieveData(mainContext, user.UserUID) //Sync now
+        val user = presenter.getUserData(this)
+        presenter.retrieveData(this, user.UserUID) //Sync now
     }
 
-    override fun loginFail(mainContext: Context?, errorMessage: String) {
+    override fun loginFail(errorMessage: String) {
 
-        Toast.makeText(mainContext, errorMessage, Toast.LENGTH_LONG).show()
+        Toast.makeText(this, errorMessage, Toast.LENGTH_LONG).show()
     }
 
 
-    override fun displayLoginLoading(mainContext: Context): ProgressDialog {
+    override fun displayLoginLoading(): ProgressDialog {
 
-        return ProgressDialog.show(mainContext, getString(R.string.loadingTitle), getString(R.string.loadingMessage))
+        return ProgressDialog.show(this, getString(R.string.loadingTitle), getString(R.string.loadingMessage))
     }
 
     override fun dismissLoginLoading(loginLoading: ProgressDialog) {
@@ -92,8 +92,8 @@ class LoginActivity : AppCompatActivity(), ViewInterface.LoginView {
 
 
     // Sync Implementation in Construction
-    override fun syncDataSuccess(mainContext: Context) {
-        ProgressDialog.show(mainContext, mainContext.getString(R.string.syncDialogTitle), mainContext.getString(R.string.syncDialogMessage))
+    override fun syncDataSuccess() {
+        ProgressDialog.show(this, getString(R.string.syncDialogTitle), getString(R.string.syncDialogMessage))
     }
 
     fun finishLoad() {
@@ -162,8 +162,8 @@ class LoginActivity : AppCompatActivity(), ViewInterface.LoginView {
         })
     }
 
-    override fun syncDataFail(mainContext: Context, errorMessage: String) {
-        Toast.makeText(mainContext, getString(R.string.syncFail) + errorMessage, Toast.LENGTH_LONG).show()
+    override fun syncDataFail(errorMessage: String) {
+        Toast.makeText(this, getString(R.string.syncFail) + errorMessage, Toast.LENGTH_LONG).show()
     }
 
 }

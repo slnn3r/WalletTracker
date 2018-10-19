@@ -240,8 +240,6 @@ class MenuActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
         presenter = Presenter(this)
 
-        Handler().postDelayed({ //For Avoid Lagging Animation
-
             // Handle navigation view item clicks here.
             when (item.itemId) {
                 R.id.navDrawer_WalletAccount -> {
@@ -280,44 +278,42 @@ class MenuActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
             }
 
-        }, 200)
-
         drawer_layout.closeDrawer(GravityCompat.START)
         return true
     }
 
 
     // Sync In Construction
-    override fun startPeriodicBackupSuccess(mainContext: Context) {
+    override fun startPeriodicBackupSuccess() {
 
-        Toast.makeText(mainContext, mainContext.getString(R.string.syncAutoMessage), Toast.LENGTH_LONG).show()
+        Toast.makeText(this, getString(R.string.syncAutoMessage), Toast.LENGTH_LONG).show()
     }
 
-    override fun startPeriodicBackupFail(mainContext: Context, errorMessage: String) {
+    override fun startPeriodicBackupFail(errorMessage: String) {
 
-        Toast.makeText(mainContext, mainContext.getString(R.string.syncAutoFail)+errorMessage, Toast.LENGTH_LONG).show()
+        Toast.makeText(this, getString(R.string.syncAutoFail)+errorMessage, Toast.LENGTH_LONG).show()
     }
 
-    override fun backupDataSuccess(mainContext: Context) {
+    override fun backupDataSuccess() {
 
-        Toast.makeText(mainContext, mainContext.getString(R.string.syncStarted), Toast.LENGTH_SHORT).show()
+        Toast.makeText(this, getString(R.string.syncStarted), Toast.LENGTH_SHORT).show()
     }
 
-    override fun backupDataFail(mainContext: Context, errorMessage: String) {
+    override fun backupDataFail(errorMessage: String) {
 
-        Toast.makeText(mainContext, mainContext.getText(R.string.syncStartFail).toString()+errorMessage, Toast.LENGTH_LONG).show()
+        Toast.makeText(this, getText(R.string.syncStartFail).toString()+errorMessage, Toast.LENGTH_LONG).show()
     }
 
-    override fun logoutSuccess(mainContext: Context, successLogoutMessage: String) {
+    override fun logoutSuccess(successLogoutMessage: String) {
 
-        val myIntent = Intent(mainContext, LoginActivity::class.java)
-        mainContext.startActivity(myIntent)
-        Toast.makeText(mainContext, successLogoutMessage, Toast.LENGTH_LONG).show()
-        (mainContext as Activity).finish()
+        val myIntent = Intent(this, LoginActivity::class.java)
+        startActivity(myIntent)
+        Toast.makeText(this, successLogoutMessage, Toast.LENGTH_LONG).show()
+        (this as Activity).finish()
 
     }
 
-    override fun logoutFail(mainContext: Context, errorMessage: String) {
-        Toast.makeText(mainContext, errorMessage, Toast.LENGTH_LONG).show()
+    override fun logoutFail(errorMessage: String) {
+        Toast.makeText(this, errorMessage, Toast.LENGTH_LONG).show()
     }
 }

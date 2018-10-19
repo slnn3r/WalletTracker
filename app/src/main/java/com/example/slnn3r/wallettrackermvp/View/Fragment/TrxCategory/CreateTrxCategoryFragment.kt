@@ -104,7 +104,10 @@ class CreateTrxCategoryFragment : Fragment(), ViewInterface.CreateTrxCategoryVie
 
     private fun createSubmitClick() {
 
-        alertDialog.confirmationDialog(context!!, getString(R.string.dialogTitleCreateCategory), getString(R.string.dialogMessageCreateCategory), resources.getDrawable(android.R.drawable.ic_dialog_info),
+        alertDialog.confirmationDialog(context!!, getString(R.string.dialogTitleCreateCategory),
+                getString(R.string.dialogMessageCreateCategory),
+                resources.getDrawable(android.R.drawable.ic_dialog_info),
+
                 DialogInterface.OnClickListener { dialogBox, which ->
 
                     val uniqueID = UUID.randomUUID().toString()

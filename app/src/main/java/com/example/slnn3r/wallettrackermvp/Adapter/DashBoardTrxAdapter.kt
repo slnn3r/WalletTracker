@@ -18,8 +18,6 @@ var loadGraph = false
 var loadBal = false
 var loadExp = false
 
-var firstLoad = true
-
 class DashBoardTrxAdapter(private val transactionList: ArrayList<Transaction>) : RecyclerView.Adapter<DashBoardViewHolder>() {
 
     // numberOfItems
@@ -81,13 +79,7 @@ class DashBoardTrxAdapter(private val transactionList: ArrayList<Transaction>) :
 class DashBoardViewHolder(val view: View, var passData: Transaction? = null) : RecyclerView.ViewHolder(view) {
 
     init {
-        if(firstLoad){
-            loadGraph=false
-            loadExp=false
-            loadBal=false
-            firstLoad=false
-        }
-        
+
         view.setOnClickListener {
 
             if(!loadGraph || !loadExp || !loadBal){

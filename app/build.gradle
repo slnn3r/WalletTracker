@@ -11,7 +11,8 @@ apply plugin: 'realm-android' // Realm Local Database
 apply plugin: 'com.google.gms.google-services' // Firebase Online Database
 
 android {
-    compileSdkVersion 27
+    buildToolsVersion "28.0.3"
+    compileSdkVersion 28
     defaultConfig {
         applicationId "com.example.slnn3r.wallettrackermvp"
         minSdkVersion 21

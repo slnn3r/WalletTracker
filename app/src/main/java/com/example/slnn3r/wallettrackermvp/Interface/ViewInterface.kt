@@ -18,26 +18,26 @@ interface ViewInterface {
 
     interface LoginView {
 
-        fun loginSuccess(mainContext: Context?, successLoginMessage: String)
-        fun loginFail(mainContext: Context?, errorMessage: String)
+        fun loginSuccess(successLoginMessage: String)
+        fun loginFail(errorMessage: String)
 
-        fun displayLoginLoading(mainContext: Context): ProgressDialog
+        fun displayLoginLoading(): ProgressDialog
         fun dismissLoginLoading(loginLoading: ProgressDialog)
 
-        fun syncDataSuccess(mainContext: Context)
-        fun syncDataFail(mainContext: Context, errorMessage: String)
+        fun syncDataSuccess()
+        fun syncDataFail(errorMessage: String)
     }
 
     interface MenuView {
 
-        fun backupDataSuccess(mainContext: Context)
-        fun backupDataFail(mainContext: Context, errorMessage: String)
+        fun backupDataSuccess()
+        fun backupDataFail(errorMessage: String)
 
-        fun startPeriodicBackupSuccess(mainContext: Context)
-        fun startPeriodicBackupFail(mainContext: Context, errorMessage: String)
+        fun startPeriodicBackupSuccess()
+        fun startPeriodicBackupFail(errorMessage: String)
 
-        fun logoutSuccess(mainContext: Context, successLogoutMessage: String)
-        fun logoutFail(mainContext: Context, errorMessage: String)
+        fun logoutSuccess(successLogoutMessage: String)
+        fun logoutFail(errorMessage: String)
     }
 
     interface DashBoardView {

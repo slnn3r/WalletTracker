@@ -51,6 +51,11 @@ class DashBoardFragment : Fragment(), ViewInterface.DashBoardView {
 
         (activity as? AppCompatActivity)?.supportActionBar?.title = getString(R.string.dashBoardFragmentTitle)
 
+        // First Time Indicate all not loaded so that RecycleView wont clickable
+        loadGraph=false
+        loadExp=false
+        loadBal=false
+
         return inflater.inflate(R.layout.fragment_dash_board, container, false)
     }
 

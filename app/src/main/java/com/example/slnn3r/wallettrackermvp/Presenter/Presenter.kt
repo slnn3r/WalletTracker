@@ -337,10 +337,10 @@ class Presenter : PresenterInterface.Presenter {
                 if (result.isSuccess) {
                     // successful -> authenticate with Firebase
                     val account = result.signInAccount
-                    firebaseAuthWithGoogle(account!!, mainContext, loginView.displayLoginLoading(mainContext))
+                    firebaseAuthWithGoogle(account!!, mainContext, loginView.displayLoginLoading())
                 } else {
                     // failed -> update UI
-                    loginView.loginFail(mainContext, mainContext.getString(R.string.FAWGError))
+                    loginView.loginFail(mainContext.getString(R.string.FAWGError))
                 }
             }
 
@@ -355,7 +355,7 @@ class Presenter : PresenterInterface.Presenter {
                 errorMessage = mainContext.getString(R.string.loginCancelNoInternet)
             }
 
-            loginView.loginFail(mainContext, errorMessage)
+            loginView.loginFail(errorMessage)
         }
     }
 
@@ -384,12 +384,12 @@ class Presenter : PresenterInterface.Presenter {
 
 
                         loginView.dismissLoginLoading(loginLoading)
-                        loginView.loginSuccess(mainContext, successLoginMessage)
+                        loginView.loginSuccess(successLoginMessage)
 
                     } else {
                         // Sign in fails
                         loginView.dismissLoginLoading(loginLoading)
-                        loginView.loginFail(mainContext, errorMessage)
+                        loginView.loginFail(errorMessage)
 
                     }
                 }
@@ -408,11 +408,11 @@ class Presenter : PresenterInterface.Presenter {
 
                     override fun onNext(value: Unit) {
 
-                        loginView.syncDataSuccess(mainContext)
+                        loginView.syncDataSuccess()
                     }
 
                     override fun onError(e: Throwable) {
-                        loginView.syncDataFail(mainContext, e.toString())
+                        loginView.syncDataFail(e.toString())
                     }
 
                     override fun onComplete() {
@@ -436,11 +436,11 @@ class Presenter : PresenterInterface.Presenter {
                     }
 
                     override fun onNext(value: Unit) {
-                        menuView.backupDataSuccess(mainContext)
+                        menuView.backupDataSuccess()
                     }
 
                     override fun onError(e: Throwable) {
-                        menuView.backupDataFail(mainContext, e.toString())
+                        menuView.backupDataFail(e.toString())
                     }
 
                     override fun onComplete() {
@@ -462,11 +462,11 @@ class Presenter : PresenterInterface.Presenter {
                     }
 
                     override fun onNext(value: Unit) {
-                        menuView.startPeriodicBackupSuccess(mainContext)
+                        menuView.startPeriodicBackupSuccess()
                     }
 
                     override fun onError(e: Throwable) {
-                        menuView.startPeriodicBackupFail(mainContext, e.toString())
+                        menuView.startPeriodicBackupFail(e.toString())
                     }
 
                     override fun onComplete() {
@@ -494,7 +494,7 @@ class Presenter : PresenterInterface.Presenter {
         mGoogleApiClient = GoogleApiClient.Builder(mainContext)
                 .enableAutoManage(fragment) {
 
-                    menuView.logoutFail(mainContext, errorMessage)
+                    menuView.logoutFail(errorMessage)
                 }
                 .addApi(Auth.GOOGLE_SIGN_IN_API, gso)
                 .build()
@@ -513,7 +513,7 @@ class Presenter : PresenterInterface.Presenter {
             override fun onConnectionSuspended(p0: Int) {
                 errorMessage = mainContext.getString(R.string.GCSError)
 
-                menuView.logoutFail(mainContext, errorMessage)
+                menuView.logoutFail(errorMessage)
 
                 mGoogleApiClient?.stopAutoManage(mainContext as FragmentActivity)
                 mGoogleApiClient?.disconnect()
@@ -529,14 +529,14 @@ class Presenter : PresenterInterface.Presenter {
                             // remove SharedPreference data
                             sharedPreferenceModel.removeUserData(mainContext)
 
-                            menuView.logoutSuccess(mainContext, successLoginMessage)
+                            menuView.logoutSuccess(successLoginMessage)
 
                             mGoogleApiClient?.stopAutoManage(mainContext as FragmentActivity)
                             mGoogleApiClient?.disconnect()
 
                         } else {
 
-                            menuView.logoutFail(mainContext, errorMessage)
+                            menuView.logoutFail(errorMessage)
 
                             mGoogleApiClient?.stopAutoManage(mainContext as FragmentActivity)
                             mGoogleApiClient?.disconnect()
@@ -547,14 +547,6 @@ class Presenter : PresenterInterface.Presenter {
         })
     }
 
-    override fun logoutGoogleStatus(mainContext: Context, logoutStatus: Boolean, statusMessage: String) {
-
-        if (logoutStatus) {
-            menuView.logoutSuccess(mainContext, statusMessage)
-        } else {
-            menuView.logoutFail(mainContext, statusMessage)
-        }
-    }
 
 
     // DashBoard Fragment

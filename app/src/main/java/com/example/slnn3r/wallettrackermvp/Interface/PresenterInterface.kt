@@ -54,7 +54,6 @@ interface PresenterInterface {
         fun backupDataPeriodically(mainContext: Context, userID: String)
 
         fun logoutGoogleExecute(mainContext: Context)
-        fun logoutGoogleStatus(mainContext: Context, logoutStatus: Boolean, statusMessage: String)
 
 
         // DashBoard Fragment
