@@ -48,6 +48,8 @@ class NewTrxFragment : Fragment(), ViewInterface.NewTrxView, CustomBottomSheetDi
 
     private lateinit var presenter: PresenterInterface.Presenter
 
+    private var loadAccountSpinner = false
+    private var loadCategorySpinner = false
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
@@ -62,6 +64,8 @@ class NewTrxFragment : Fragment(), ViewInterface.NewTrxView, CustomBottomSheetDi
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        disableUIComponents()
 
         presenter = Presenter(this)
         val userProfile = presenter.getUserData(context!!)
@@ -307,6 +311,16 @@ class NewTrxFragment : Fragment(), ViewInterface.NewTrxView, CustomBottomSheetDi
         dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
 
         newTrxCategorySpinner.adapter = dataAdapter
+
+        loadCategorySpinner = true
+        checkingAllLoaded()
+    }
+
+    private fun checkingAllLoaded(){
+
+        if(loadAccountSpinner&&loadCategorySpinner){
+            enableUIComponents()
+        }
     }
 
     override fun populateNewTrxCategorySpinnerFail(mainContext: Context, errorMessage: String) {
@@ -341,6 +355,9 @@ class NewTrxFragment : Fragment(), ViewInterface.NewTrxView, CustomBottomSheetDi
             }
             count += 1
         }
+
+        loadAccountSpinner = true
+        checkingAllLoaded()
     }
 
     override fun populateSelectedAccountSpinnerFail(mainContext: Context, errorMessage: String) {

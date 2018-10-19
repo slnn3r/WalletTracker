@@ -56,6 +56,9 @@ class DetailsTrxFragment : Fragment(), ViewInterface.DetailsTrxView, CustomBotto
 
     private var firstLaunchCheck = 0 // for check if it is first launch or not
 
+    private var loadAccountSpinner = false
+    private var loadCategorySpinner = false
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
 
@@ -70,6 +73,8 @@ class DetailsTrxFragment : Fragment(), ViewInterface.DetailsTrxView, CustomBotto
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        disableUIComponents()
 
         presenter = Presenter(this)
 
@@ -352,6 +357,9 @@ class DetailsTrxFragment : Fragment(), ViewInterface.DetailsTrxView, CustomBotto
         }
 
         firstLaunchCheck += 1
+
+        loadCategorySpinner=true
+        checkingAllLoaded()
     }
 
     override fun populateDetailTrxCategorySpinnerFail(mainContext: Context, errorMessage: String) {
@@ -382,6 +390,9 @@ class DetailsTrxFragment : Fragment(), ViewInterface.DetailsTrxView, CustomBotto
 
         val spinnerPosition = dataAdapter.getPosition(go)
         spinner.setSelection(spinnerPosition)
+
+        loadAccountSpinner=true
+        checkingAllLoaded()
     }
 
     override fun populateDetailTrxAccountSpinnerFail(mainContext: Context, errorMessage: String) {
@@ -416,6 +427,13 @@ class DetailsTrxFragment : Fragment(), ViewInterface.DetailsTrxView, CustomBotto
             DetailsTrxAmountInput.setText(getString(R.string.NewTrxDefaultAmount))
         } else {
             DetailsTrxAmountInput.setText(input)
+        }
+    }
+
+    private fun checkingAllLoaded(){
+
+        if(loadAccountSpinner&&loadCategorySpinner){
+            enableUIComponents()
         }
     }
 }
