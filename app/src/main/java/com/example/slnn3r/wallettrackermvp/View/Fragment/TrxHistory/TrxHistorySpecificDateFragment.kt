@@ -24,6 +24,7 @@ import com.example.slnn3r.wallettrackermvp.Model.ObjectClass.UserProfile
 import com.example.slnn3r.wallettrackermvp.Model.ObjectClass.WalletAccount
 import com.example.slnn3r.wallettrackermvp.Presenter.Presenter
 import com.example.slnn3r.wallettrackermvp.R
+import com.example.slnn3r.wallettrackermvp.View.Activity.MenuActivity
 import kotlinx.android.synthetic.main.fragment_trx_history_specific_date.*
 import java.util.*
 import kotlin.collections.ArrayList
@@ -32,6 +33,12 @@ import kotlin.collections.ArrayList
 class TrxHistorySpecificDateFragment : Fragment(), ViewInterface.TrxHistorySpecificView {
 
     private lateinit var presenter: PresenterInterface.Presenter
+
+    private var loadAccountSpinner = false
+    private var loadCategorySpinner = false
+    private var loadRecycleView = false
+
+    private var categoryNeverLoad = true
 
     private var fixDays: AdapterView.OnItemSelectedListener = object : AdapterView.OnItemSelectedListener {
         override fun onItemSelected(parent: AdapterView<*>, view: View, position: Int, id: Long) {
@@ -55,6 +62,8 @@ class TrxHistorySpecificDateFragment : Fragment(), ViewInterface.TrxHistorySpeci
         super.onViewCreated(view, savedInstanceState)
 
         hideDisplayedKeyboard(view)
+
+        (context as MenuActivity).setupToDisable()
 
         // setup bottom navigation
         val navController = (context as Activity).findNavController(R.id.trxHistoryFragmentNavMenu)
@@ -271,6 +280,9 @@ class TrxHistorySpecificDateFragment : Fragment(), ViewInterface.TrxHistorySpeci
 
         val spinnerPosition = dataAdapter.getPosition(go)
         spinner.setSelection(spinnerPosition)
+
+        loadAccountSpinner = true
+        checkingAllLoaded()
     }
 
     override fun populateTrxHistorySpecificAccountSpinnerFail(mainContext: Context, errorMessage: String) {
@@ -295,6 +307,10 @@ class TrxHistorySpecificDateFragment : Fragment(), ViewInterface.TrxHistorySpeci
 
         tHSTrxCategorySpinner.adapter = dataAdapter
         tHSTrxCategorySpinner.isEnabled = true
+
+        categoryNeverLoad = false
+        loadCategorySpinner = true
+        checkingAllLoaded()
     }
 
     override fun populateTrxHistorySpecificCategorySpinnerFail(mainContext: Context, errorMessage: String) {
@@ -337,6 +353,9 @@ class TrxHistorySpecificDateFragment : Fragment(), ViewInterface.TrxHistorySpeci
 
         trxRecyclerView.layoutManager = LinearLayoutManager(mainContext)
         trxRecyclerView.adapter = TrxHistorySpecificAdapter(transactionList)
+
+        loadRecycleView = true
+        checkingAllLoaded()
     }
 
     override fun populateTrxHistorySpecificRecycleViewFail(mainContext: Context, errorMessage: String) {
@@ -353,5 +372,18 @@ class TrxHistorySpecificDateFragment : Fragment(), ViewInterface.TrxHistorySpeci
         val binder = view.windowToken
         inputManager.hideSoftInputFromWindow(binder,
                 InputMethodManager.HIDE_NOT_ALWAYS)
+    }
+
+    private fun checkingAllLoaded(){
+
+        if(categoryNeverLoad){
+            if(loadAccountSpinner&&loadRecycleView){
+                (context as MenuActivity).setupNavigationMode()
+            }
+        }else{
+            if(loadAccountSpinner&&loadCategorySpinner&&loadRecycleView){
+                (context as MenuActivity).setupNavigationMode()
+            }
+        }
     }
 }

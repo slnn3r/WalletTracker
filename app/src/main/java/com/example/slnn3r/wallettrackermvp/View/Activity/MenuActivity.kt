@@ -126,11 +126,13 @@ class MenuActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
                     val navController = (this as Activity).findNavController(R.id.trxHistoryFragmentNavMenu)
                     navController.navigate(R.id.action_detailsTrxFragment_to_trxHistorySpecificDateFragment)
-
+                    isNavigated = getString(R.string.navigatedIndicate)
                 }else{
 
                     val navController = (this as Activity).findNavController(R.id.trxHistoryFragmentNavMenu)
                     navController.navigate(R.id.action_detailsTrxFragment_to_trxHistoryRangeDateFragment)
+                    isNavigated = getString(R.string.navigatedIndicate)
+
                 }
 
                 setupNavigationMode()
@@ -164,11 +166,16 @@ class MenuActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     }
 
     fun setupToDisable(){
-        isNavigated = getString(R.string.disableNavigatedIndicate)
+        if(isNavigated!=getString(R.string.trxHistoryNavigatedIndicate)){
+            isNavigated = getString(R.string.disableNavigatedIndicate)
+        }
     }
 
     fun setupNavigationMode() {
-        isNavigated = getString(R.string.navigatedIndicate)
+        if(isNavigated!=getString(R.string.trxHistoryNavigatedIndicate)){
+            isNavigated = getString(R.string.navigatedIndicate)
+        }
+
         drawer_layout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED)
         animateIcon(0,1,800) // with Animation no need to deal with any Icon Change stuff
 
@@ -205,14 +212,19 @@ class MenuActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
                 val navController = (this as Activity).findNavController(R.id.trxHistoryFragmentNavMenu)
                 navController.navigate(R.id.action_detailsTrxFragment_to_trxHistorySpecificDateFragment)
+                isNavigated = getString(R.string.navigatedIndicate)
 
             }else{
 
                 val navController = (this as Activity).findNavController(R.id.trxHistoryFragmentNavMenu)
                 navController.navigate(R.id.action_detailsTrxFragment_to_trxHistoryRangeDateFragment)
+                isNavigated = getString(R.string.navigatedIndicate)
+
             }
 
             setupNavigationMode()
+        }else if(isNavigated==getString(R.string.disableNavigatedIndicate)){
+            // Do Nothing for the ToolBar at Dialogfragment Display
         }else{
 
             val currentScreen = findNavController(R.id.navMenu).currentDestination.id
@@ -239,6 +251,9 @@ class MenuActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
 
         presenter = Presenter(this)
+
+        Handler().postDelayed({ //For Avoid Lagging Animation
+
 
             // Handle navigation view item clicks here.
             when (item.itemId) {
@@ -277,6 +292,7 @@ class MenuActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                 }
 
             }
+        }, 300)
 
         drawer_layout.closeDrawer(GravityCompat.START)
         return true
