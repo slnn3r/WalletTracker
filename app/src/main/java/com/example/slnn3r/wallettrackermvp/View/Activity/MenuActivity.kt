@@ -156,7 +156,7 @@ class MenuActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         }
     }
 
-    private fun setupDrawerMode() {
+    fun setupDrawerMode() {
         isNavigated = ""
         drawer_layout.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED)
         animateIcon(1,0,800) // with Animation no need to deal with any Icon Change stuff

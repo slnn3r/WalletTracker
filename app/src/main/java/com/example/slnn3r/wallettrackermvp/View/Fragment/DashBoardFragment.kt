@@ -67,6 +67,8 @@ class DashBoardFragment : Fragment(), ViewInterface.DashBoardView {
 
         hideDisplayedKeyboard(view) // Hide Keyboard
 
+        (context as MenuActivity).setupToDisable()
+
         // Get SharedPreference data
         val userProfile = presenter.getUserData(context!!)
         val userID = userProfile.UserUID
@@ -188,6 +190,7 @@ class DashBoardFragment : Fragment(), ViewInterface.DashBoardView {
         DBTrxGraph.invalidate() // refresh
 
         loadGraph = true
+        checkingAllLoaded()
     }
 
     // Format the Y Axis Value to 2Decimal value + add Dollar Sign
@@ -328,6 +331,7 @@ class DashBoardFragment : Fragment(), ViewInterface.DashBoardView {
         }
 
         loadBal = true
+        checkingAllLoaded()
     }
 
     override fun populateThisMonthExpense(mainContext: Context, thisMonthExpense: Double) {
@@ -337,11 +341,20 @@ class DashBoardFragment : Fragment(), ViewInterface.DashBoardView {
         thisMonthExpenseView.setTextColor(Color.RED)
 
         loadExp = true
+        checkingAllLoaded()
     }
 
 
     override fun populateExpenseGraph(mainContext: Context, entryList: ArrayList<Entry>, xAxisList: ArrayList<String>) {
 
         displayDummyDateGraph(entryList, xAxisList)
+    }
+
+    private fun checkingAllLoaded(){
+
+            if(loadBal&& loadExp&& loadGraph){
+                (context as MenuActivity).setupDrawerMode()
+            }
+
     }
 }
