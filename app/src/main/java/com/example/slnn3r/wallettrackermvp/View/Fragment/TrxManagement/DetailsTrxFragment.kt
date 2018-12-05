@@ -330,7 +330,8 @@ class DetailsTrxFragment : Fragment(), ViewInterface.DetailsTrxView, CustomBotto
         }
 
         val dataAdapter = ArrayAdapter(mainContext, android.R.layout.simple_spinner_item, spinnerItem)
-        val detailsTrxCategorySpinner = (mainContext as Activity).findViewById(R.id.DetailsTrxCategorySpinner) as Spinner
+        val detailsTrxCategorySpinner =
+                (mainContext as Activity).findViewById(R.id.DetailsTrxCategorySpinner) as Spinner
 
         // Drop down layout style - list view with radio button
         dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
@@ -358,7 +359,7 @@ class DetailsTrxFragment : Fragment(), ViewInterface.DetailsTrxView, CustomBotto
 
         firstLaunchCheck += 1
 
-        loadCategorySpinner=true
+        loadCategorySpinner = true
         checkingAllLoaded()
     }
 
@@ -391,7 +392,7 @@ class DetailsTrxFragment : Fragment(), ViewInterface.DetailsTrxView, CustomBotto
         val spinnerPosition = dataAdapter.getPosition(go)
         spinner.setSelection(spinnerPosition)
 
-        loadAccountSpinner=true
+        loadAccountSpinner = true
         checkingAllLoaded()
     }
 
@@ -430,9 +431,9 @@ class DetailsTrxFragment : Fragment(), ViewInterface.DetailsTrxView, CustomBotto
         }
     }
 
-    private fun checkingAllLoaded(){
+    private fun checkingAllLoaded() {
 
-        if(loadAccountSpinner&&loadCategorySpinner){
+        if (loadAccountSpinner && loadCategorySpinner) {
             enableUIComponents()
         }
     }

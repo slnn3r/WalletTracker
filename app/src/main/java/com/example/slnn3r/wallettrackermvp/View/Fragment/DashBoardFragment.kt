@@ -36,7 +36,6 @@ import com.github.mikephil.charting.formatter.IAxisValueFormatter
 import com.github.mikephil.charting.formatter.IValueFormatter
 import com.github.mikephil.charting.utils.ViewPortHandler
 import kotlinx.android.synthetic.main.fragment_dash_board.*
-import kotlinx.android.synthetic.main.transaction_list_row.*
 import java.util.*
 import kotlin.collections.ArrayList
 
@@ -111,7 +110,6 @@ class DashBoardFragment : Fragment(), ViewInterface.DashBoardView {
     }
 
     private fun hideDisplayedKeyboard(view: View) {
-
         // To Hide KeyBoard
         val inputManager = view
                 .context

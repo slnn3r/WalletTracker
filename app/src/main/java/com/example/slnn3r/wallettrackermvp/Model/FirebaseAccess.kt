@@ -180,7 +180,6 @@ class FirebaseAccess : ModelInterface.FirebaseAccess {
                 val getTransactionCategory = realm.where(TransactionCategoryRealm::class.java).equalTo(mainContext.getString(R.string.UserUID), userID).findAll()
 
                 getTransactionCategory.forEach { dataList ->
-
                     dataList.deleteFromRealm()
                 }
 
@@ -289,7 +288,6 @@ class FirebaseAccess : ModelInterface.FirebaseAccess {
 
         val component = ComponentName(mainContext, SyncDataJobService::class.java)
         val info = JobInfo.Builder(mainContext.getString(R.string.JobServiceID).toInt(), component)
-                //.setPeriodic(TimeUnit.MINUTES.toMillis(1))
                 .setExtras(bundle)
                 .setRequiredNetworkType(JobInfo.NETWORK_TYPE_ANY)
                 .setPersisted(true)

@@ -49,12 +49,10 @@ class CreateWalletAccountFragment : Fragment(), ViewInterface.CreateWalletAccoun
         // Initial UI
         setupInitialUI()
 
-
         // Listener Setter
         CWACreateSubmit.setOnClickListener {
             createSubmitClick()
         }
-
 
         //// TextWatcher Validation
         CWAAccNameInput.addTextChangedListener(object : TextWatcher {

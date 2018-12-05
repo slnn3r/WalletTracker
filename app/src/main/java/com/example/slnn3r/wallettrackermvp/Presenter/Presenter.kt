@@ -557,7 +557,6 @@ class Presenter : PresenterInterface.Presenter {
         val view = (mainContext as Activity).findViewById(R.id.navMenu) as View
         val currentDestination = findNavController(view).currentDestination.id
 
-
         checkWalletAccountObservable(mainContext, userID)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())

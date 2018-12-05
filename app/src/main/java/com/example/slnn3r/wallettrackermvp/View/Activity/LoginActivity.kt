@@ -55,9 +55,6 @@ class LoginActivity : AppCompatActivity(), ViewInterface.LoginView {
 
         val intent = Auth.GoogleSignInApi.getSignInIntent(mGoogleApiClient)
 
-        //mGoogleApiClient.stopAutoManage(this)
-        //mGoogleApiClient.disconnect()
-
         this.startActivityForResult(intent, REQUEST_CODE_SIGN_IN)
     }
 

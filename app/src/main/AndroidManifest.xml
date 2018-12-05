@@ -42,7 +42,9 @@
             android:permission="android.permission.BIND_JOB_SERVICE"
         />
 
-
+        <meta-data
+            android:name="io.fabric.ApiKey"
+            android:value="352e9d82dfa7f135e20b7ff82368e8fb269d9571" />
 
     </application>
 
